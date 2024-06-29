@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}G M A O{% endblock title %}
+
+{% block nav-btn %}
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
+       id="btn-nav">
+        Logout
+    </a>
+    <a href="{% url 'gmao:liste_interventions' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
+        Liste des interventions
+    </a>
+{% endblock nav-btn %}
+
+{% block navbar-content %}
+    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
+    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
+{% endblock navbar-content %}
+
+{% block extra_css %}
+    <!-- ... autres styles ... -->
+{% endblock %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Doléances en cours</h5>
+                    <a href="{% url 'gmao:create_doleance' %}" class="btn btn-light btn-add">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered" id="demandeencours" style="width:100%">
+                            <!-- ... contenu du tableau des doléances ... -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Interventions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered" id="interventions" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>NDI</th>
+                                <th>Début prise en charge</th>
+                                <th>Début travail</th>
+                                <th>Fin travail</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for intervention in interventions %}
+                                <tr>
+                                    <td>{{ intervention.doleance.ndi }}</td>
+                                    <td>{{ intervention.top_depart }}</td>
+                                    <td>{{ intervention.top_debut }}</td>
+                                    <td>{{ intervention.top_terminer }}</td>
+                                    <td>
+                                        {% if intervention.is_done %}
+                                            Terminée
+                                        {% elif intervention.is_half_done %}
+                                            En cours
+                                        {% else %}
+                                            Non commencée
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'gmao:detail_intervention' intervention.id %}"
+                                           class="btn btn-sm btn-primary">Éditer</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Personnels</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered" id="personnel" style="width:100%">
+                            <!-- ... contenu du tableau du personnel ... -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'gmao/js/home.js' %}"></script>
+{% endblock extra_js %}

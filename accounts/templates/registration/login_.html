@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock %}
+{% block navbar-content %}
+    <i style="color: #0ab04f;" class="fa-solid fa-keyboard"></i>&nbsp;&nbsp;Authentification
+{% endblock navbar-content %}
+{% block nav-btn %}
+    <a href="{% url 'accounts:index' %}" class="btn btn-outline-success border-light btn-sm" id="btn-nav">Retour</a>
+{% endblock nav-btn %}
+{% block content %}
+    <section class="position-relative py-0 py-xl-5 mt-1">
+        <div class="container">
+            <div class="row justify-content-center align-items-center" style="height: 100vh;">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-center">Connexion</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="username">Nom d'utilisateur</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Mot de passe</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block mt-4">Se connecter</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

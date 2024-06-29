@@ -1,0 +1,11 @@
+<!-- creer_intervention.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Déclencher une intervention pour la doléance {{ doleance.ndi }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Déclencher l'intervention</button>
+    </form>
+{% endblock %}

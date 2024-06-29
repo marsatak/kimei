@@ -1,0 +1,205 @@
+/* Styles spécifiques pour la page d'accueil */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Assurez-vous que les tables ne se cassent pas */
+table.dataTable td {
+    white-space: nowrap;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+table.dataTable {
+    width: 100% !important;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-fluid {
+    flex: 1;
+    width: 100%;
+}
+
+
+.container-fluid {
+    flex: 1;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Styles pour les badges de statut */
+.badge {
+    font-size: 0.8rem;
+    padding: 0.35em 0.65em;
+}
+
+/* Styles pour les boutons d'export */
+.dt-buttons {
+    margin-bottom: 1rem;
+}
+
+.dt-button {
+    margin-right: 0.5rem;
+}
+
+/* Media queries pour la responsivité */
+@media screen and (max-width: 767px) {
+    table.dataTable > tbody > tr > td:nth-child(2) {
+        font-weight: bold;
+    }
+
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        float: none;
+        text-align: center;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 0.5em;
+    }
+
+    .dt-buttons {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .dt-button {
+        margin-bottom: 0.5rem;
+    }
+}
+
+table.dataTable td {
+    white-space: nowrap;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form .form-group {
+    margin-bottom: 20px;
+}
+
+.login-form .btn-primary {
+    width: 100%;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 0;
+}
+
+.table-responsive {
+    padding: 15px;
+}
+
+table.dataTable {
+    width: 100% !important;
+}
+
+/* Styles pour les couleurs des lignes */
+.table-warning {
+    background-color: #b02a37 !important;
+}
+
+.table-success {
+    background-color: #198754 !important;
+}
+
+.table-danger {
+    background-color: #6610f2 !important;
+}
+
+#demandeencours {
+    width: 100% !important;
+}
+
+table.dataTable tbody tr.odd,
+table.dataTable tbody tr.even {
+    background-color: transparent !important;
+}
+
+/* Styles pour les badges de statut */
+#demandeencours th,
+#demandeencours td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Ajustez cette valeur selon vos besoins */
+}
+
+/* Permettre le retour à la ligne pour certaines colonnes si nécessaire */
+#demandeencours td:nth-child(6),
+#demandeencours td:nth-child(7),
+#demandeencours td:nth-child(9) {
+    white-space: normal;
+}
+
+/* Styles pour les couleurs des lignes */
+.table-warning {
+    background-color: #fff3cd !important;
+}
+
+.table-success {
+    background-color: #d4edda !important;
+}
+
+.table-danger {
+    background-color: #f8d7da !important;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}

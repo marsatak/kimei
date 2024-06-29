@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block nav-btn %}
+    <a href="{% url 'gmao:home' %}" class="btn btn-outline-info border-light btn-sm" id="btn-nav">Login</a>
+{% endblock nav-btn %}
+{% block content %}
+    <style>
+        body {
+            background-image: url('/static/img/home_nb.jpg');
+            opacity: 100%;
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            /* overflow: hidden; */
+
+        }
+    </style>
+{% endblock content %}

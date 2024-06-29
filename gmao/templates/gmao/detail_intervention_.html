@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Détails de l'intervention pour la doléance {{ intervention.doleance.ndi }}</h2>
+    <p>Début de prise en charge : {{ intervention.top_depart }}</p>
+    <p>Début du travail : {{ intervention.top_debut|default:"Non commencé" }}</p>
+    <p>Fin du travail : {{ intervention.top_terminer|default:"Non terminé" }}</p>
+    <p>Durée de l'intervention : {{ intervention.duree_intervention|default:"0" }} secondes</p>
+    <p>Statut :
+        {% if intervention.is_done %}
+            Terminée
+        {% elif intervention.is_half_done %}
+            En cours
+        {% else %}
+            Non commencée
+        {% endif %}
+    </p>
+
+    <h3>Techniciens affectés :</h3>
+    <ul>
+        {% for intervention_personnel in techniciens %}
+            <li>{{ intervention_personnel.personnel.nom_personnel }} {{ intervention_personnel.personnel.prenom_personnel }}</li>
+        {% empty %}
+            <li>Aucun technicien affecté</li>
+        {% endfor %}
+    </ul>
+
+    {% if not intervention.is_done %}
+        {% if not intervention.top_debut %}
+            <a href="{% url 'gmao:commencer_travail' intervention.id %}" class="btn btn-primary">Commencer le
+                travail</a>
+        {% endif %}
+        {% if intervention.top_debut and not intervention.top_terminer %}
+            <a href="{% url 'gmao:terminer_travail' intervention.id %}" class="btn btn-success">Terminer le travail</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

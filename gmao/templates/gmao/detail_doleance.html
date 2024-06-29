@@ -1,0 +1,12 @@
+<!-- detail_doleance.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Détails de la doléance {{ doleance.ndi }}</h2>
+    <!-- Affichez ici les détails de la doléance -->
+
+    {% if doleance.statut == 'ATP' %}
+        <a href="{% url 'declencher_intervention' doleance.id %}" class="btn btn-primary">Déclencher une
+            intervention</a>
+    {% endif %}
+{% endblock %}

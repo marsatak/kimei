@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block nav-btn %}
+    <a href="{% url 'logout' %}"
+       class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2" id="btn-nav">
+        Logout
+    </a>
+    {% comment %}<a href="#" class="btn btn-outline-primary border-light btn-sm" id="btn-nav"><i
+            class="fa-solid fa-plus"></i></a>
+    <a href="#"
+       class="btn btn-outline-secondary text-center text-light border-light btn-sm">Doléances</a>
+    <a href="#"
+       class="btn btn-outline-secondary text-center text-light border-light btn-sm">Interventions</a>{% endcomment %}
+
+{% endblock nav-btn %}
+{% block navbar-content %}
+    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
+    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
+{% endblock navbar-content %}
+
+{% comment %}
+{% block content %}
+    <div class="container">
+        <h2>Créer une nouvelle doléance</h2>
+        <form method="post" id="doleanceForm">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Créer</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function () {
+            $('#id_client').change(function () {
+                const clientId = $(this).val();
+                console.log("Client ID selected:", clientId);
+
+                $.ajax({
+                    url: "{% url 'gmao:load_stations' %}",
+                    data: {
+                        'client': clientId
+                    },
+                    success: function (data) {
+                        console.log("Stations received:", data);
+                        const stationSelect = $('#id_station');
+                        stationSelect.empty();
+                        stationSelect.append('<option value="">---------</option>');
+                        $.each(data, function (index, item) {
+                            stationSelect.append(
+                                $('<option></option>').val(item.id).html(item.libelle_station)
+                            );
+                        });
+                    }
+                });
+
+                $.ajax({
+                    url: "{% url 'gmao:load_appelants' %}",
+                    data: {
+                        'client': clientId
+                    },
+                    success: function (data) {
+                        console.log("Appelants received:", data);
+                        var appelantSelect = $('#id_appelant');
+                        appelantSelect.empty();
+                        appelantSelect.append('<option value="">---------</option>');
+                        $.each(data, function (index, item) {
+                            appelantSelect.append(
+                                $('<option></option>').val(item.id).html(item.nom_appelant)
+                            );
+                        });
+                    }
+                });
+            });
+
+            // Ajoutez ces lignes pour déboguer
+            $('form').submit(function () {
+                console.log("Form submitted");
+                console.log("Client:", $('#id_client').val());
+                console.log("Station:", $('#id_station').val());
+                console.log("Appelant:", $('#id_appelant').val());
+            });
+        });
+    </script>
+{% endblock %}{% endcomment %}
+
+
+{% block content %}
+    <div class="container">
+        <h2>Créer une nouvelle doléance</h2>
+        <form method="post" id="doleanceForm">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Créer</button>
+            <button type="button" class="btn btn-warning">
+                <a class="text-decoration-none" href="{% url 'gmao:home' %}">Annuler</a>
+            </button>
+        </form>
+    </div>
+{% endblock %}
+
+{% comment %}
+{% block extra_js %}
+    <script>
+        $(document).ready(function () {
+            $('#id_client').change(function () {
+                const clientId = $(this).val();
+                updateStationsAndAppelants(clientId);
+                $('#id_element').html('<option value="">Sélectionnez d\'abord une station</option>').prop('disabled', true);
+            });
+
+        });
+
+        $('#id_station').change(function () {
+            let stationId = $(this).val();
+            if (stationId) {
+                updateElements(stationId);
+            } else {
+                $('#id_element').html('<option value="">Sélectionnez d\'abord une station</option>').prop('disabled', true);
+            }
+        });
+
+        function updateStationsAndAppelants(clientId) {
+            $.ajax({
+                url: "{% url 'gmao:load_stations' %}",
+                data: {'client': clientId},
+                success: function (data) {
+                    $('#id_station').html('<option value="">---------</option>');
+                    $.each(data, function (index, item) {
+                        $('#id_station').append($('<option></option>').val(item.id).html(item.libelle_station));
+                    });
+                }
+            });
+
+            $.ajax({
+                url: "{% url 'gmao:load_appelants' %}",
+                data: {'client': clientId},
+                success: function (data) {
+                    $('#id_appelant').html('<option value="">---------</option>');
+                    $.each(data, function (index, item) {
+                        $('#id_appelant').append($('<option></option>').val(item.id).html(item.nom_appelant));
+                    });
+                }
+            });
+        }
+
+        function updateElements(stationId) {
+            $.ajax({
+                url: "{% url 'gmao:load_elements' %}",
+                data: {'station': stationId},
+                success: function (data) {
+                    console.log("Received elements:", data);  // Pour le débogage
+                    const elementSelect = $('#id_element');
+                    elementSelect.empty();
+                    elementSelect.append($('<option></option>').val('').html('Sélectionnez un élément'));
+                    $.each(data, function (index, item) {
+                        elementSelect.append($('<option></option>').val(item[0]).html(item[1]));
+                    });
+                    elementSelect.prop('disabled', false);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching elements:", error);
+                }
+            });
+        }
+
+
+    </script>
+{% endblock %}{% endcomment %}
+{% block extra_js %}
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            $('#id_client').change(function () {
+                console.log("Client changed");
+                const clientId = $(this).val();
+                console.log("Selected client ID:", clientId);
+                updateStationsAndAppelants(clientId);
+            });
+
+            $('#id_station').change(function () {
+                console.log("Station changed");
+                let stationId = $(this).val();
+                console.log("Selected station ID:", stationId);
+                if (stationId) {
+                    updateElements(stationId);
+                } else {
+                    $('#id_element').html('<option value="">Sélectionnez d\'abord une station</option>').prop('disabled', true);
+                }
+            });
+        });
+
+        function updateStations(clientId) {
+            $.ajax({
+                url: "{% url 'gmao:load_stations' %}",
+                data: {'client': clientId},
+                success: function (data) {
+                    console.log("Stations received:", data);
+                    const stationSelect = $('#id_station');
+                    stationSelect.empty();
+                    stationSelect.append('<option value="">---------</option>');
+                    $.each(data, function (index, item) {
+                        stationSelect.append(
+                            $('<option></option>').val(item.id).html(item.libelle_station)
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching stations:", error);
+                }
+            });
+        }
+
+        $('#id_client').change(function () {
+            const clientId = $(this).val();
+            console.log("Client ID selected:", clientId);
+            updateStations(clientId);
+            updateAppelants(clientId);
+            $('#id_element').html('<option value="">Sélectionnez d\'abord une station</option>').prop('disabled', true);
+        });
+
+        function updateAppelants(clientId) {
+            $.ajax({
+                url: "{% url 'gmao:load_appelants' %}",
+                data: {'client': clientId},
+                success: function (data) {
+                    console.log("Appelants received:", data);
+                    var appelantSelect = $('#id_appelant');
+                    appelantSelect.empty();
+                    appelantSelect.append('<option value="">---------</option>');
+                    $.each(data, function (index, item) {
+                        appelantSelect.append(
+                            $('<option></option>').val(item.id).html(item.nom_appelant)
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching appelants:", error);
+                }
+            });
+        }
+
+        {% comment %}function updateElements(stationId) {
+            $.ajax({
+                url: "{% url 'gmao:load_elements' %}",
+                data: {'station': stationId},
+                success: function (data) {
+                    var elementSelect = $('#id_element');
+                    elementSelect.empty();
+                    elementSelect.append('<option value="">Sélectionnez un élément</option>');
+
+                    for (var category in data) {
+                        if (data[category].length > 0) {
+                            var optgroup = $('<optgroup>').attr('label', category);
+                            $.each(data[category], function (index, item) {
+                                optgroup.append($('<option></option>').val(item[0]).html(item[1]));
+                            });
+                            elementSelect.append(optgroup);
+                        }
+                    }
+
+                    elementSelect.prop('disabled', false);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching elements:", error);
+                }
+            });
+        }{% endcomment %}
+
+        function updateElements(stationId) {
+            $.ajax({
+                url: "{% url 'gmao:load_elements' %}",
+                data: {'station': stationId},
+                success: function (data) {
+                    var elementSelect = $('#id_element');
+                    elementSelect.empty();
+                    elementSelect.append('<option value="">Sélectionnez un élément</option>');
+
+                    for (var category in data) {
+                        if (data[category].length > 0) {
+                            var optgroup = $('<optgroup>').attr('label', category);
+                            $.each(data[category], function (index, item) {
+                                optgroup.append($('<option></option>')
+                                    .val(item[1])
+                                    .text(item[1])
+                                    .attr('data-type', item[0].split('_')[0])
+                                    .attr('data-id', item[0].split('_')[1]));
+                            });
+                            elementSelect.append(optgroup);
+                        }
+                    }
+
+                    elementSelect.prop('disabled', false);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching elements:", error);
+                }
+            });
+        }
+    </script>
+{% endblock %}
