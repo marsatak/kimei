@@ -6,7 +6,9 @@ app_name = 'gmao'
 
 urlpatterns = [
     path('home/', views.home, name='home'),
+    path('home/test-db/', views.test_db_connection, name='test_db_connection'),
     path('api/data/', views.api_data, name='api-data'),
+    path('home/test-view/', views.test_view, name='test-view'),
 
     # path('home/getClient', views.getClient, name='get-client'),
     # path('home/getClient/<int:id>/', views.getStation, name='get-station'),
@@ -19,18 +21,24 @@ urlpatterns = [
     # urls.py
     path('home/doleance/<int:doleance_id>/declencher-intervention/', views.declencher_intervention,
          name='declencher_intervention'),
+    path('home/affecter-techniciens/<int:doleance_id>/', views.affecter_techniciens, name='affecter_techniciens'),
     # urls.py
     path('home/get-techniciens-disponibles/', views.get_techniciens_disponibles, name='get_techniciens_disponibles'),
     path('home/declencher-intervention/<int:doleance_id>/', views.declencher_intervention,
          name='declencher_intervention'),
     path('home/commencer-intervention/<int:intervention_id>/', views.commencer_intervention,
          name='commencer_intervention'),
+    path('homeintervention/<int:intervention_id>/annuler/', views.annuler_intervention, name='annuler_intervention'),
     path('home/liste-interventions/', views.liste_interventions, name='liste_interventions'),
     path('home/intervention/<int:intervention_id>/', views.detail_intervention, name='detail_intervention'),
-    path('home/intervention/<int:intervention_id>/commencer/', views.commencer_travail, name='commencer_travail'),
+    # path('home/intervention/<int:intervention_id>/commencer/', views.commencer_travail, name='commencer_travail'),
+    path('home/interventions/', views.liste_interventions, name='liste_interventions'),
+
     path('home/intervention/<int:intervention_id>/terminer/', views.terminer_travail, name='terminer_travail'),
     # path('home/intervention/creer/', views.creer_intervention, name='creer_intervention'),
-    path('home/interventions/', views.liste_interventions, name='liste_interventions'),
+    path('toutes-les-doleances/', views.toutes_les_doleances, name='toutes_les_doleances'),
+    path('api/get-doleances-data/', views.get_doleances_data, name='get_doleances_data'),
+    path('api/get-available-years/', views.get_available_years, name='get_available_years'),
     # path('home/doleanceencours', views.doleanceencours, name='doleanceencours'),
     # Json des doléances / Toutes les doléances terminées
     # path('home/doleanceListTer', views.doleanceListTer, name='doleanceListTer'),

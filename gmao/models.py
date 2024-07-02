@@ -150,12 +150,20 @@ class Cuve(models.Model):
 
 
 class Doleance(models.Model):
+    STATUT_CHOICES = [
+        ('NEW', 'Nouvelle'),
+        ('ATT', 'En attente'),
+        ('INT', 'En intervention'),
+        ('ATP', 'Attente pièces'),
+        ('ATD', 'Attente devis'),
+        ('TER', 'Terminée'),
+    ]
     station = models.ForeignKey('Station', models.DO_NOTHING)
     appelant = models.ForeignKey(Appelant, models.DO_NOTHING, blank=True, null=True)
     date_transmission = models.DateTimeField(blank=True, null=True)
     ndi = models.CharField(max_length=255)
     date_deadline = models.DateTimeField(blank=True, null=True)
-    statut = models.CharField(max_length=20)
+    statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='NEW')
     type_transmission = models.CharField(max_length=50)
     panne_declarer = models.TextField()
     commentaire = models.TextField(blank=True, null=True)
@@ -168,7 +176,7 @@ class Doleance(models.Model):
     num_facture = models.CharField(max_length=25, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'doleance'
 
     def __str__(self):
@@ -917,37 +925,7 @@ class Vehicule(models.Model):
         managed = False
         db_table = 'vehicule'
 
-
 # ... (autres imports et classes existantes)
 
-class Root(models.Model):
-    produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
-    appareil_distribution = models.ForeignKey(AppareilDistribution, on_delete=models.CASCADE)
-    type_contrat = models.CharField(max_length=10)
-    date_flexible = models.CharField(max_length=4, blank=True, null=True)
-    orientation = models.CharField(max_length=2)
-
-    class Meta:
-        managed = True
-        db_table = 'root'
-
-    @classmethod
-    def from_dict(cls, obj):
-        produit_id = obj.get("produit_id")
-        appareil_distribution_id = obj.get("appareil_distribution_id")
-        type_contrat = obj.get("type_contrat")
-        date_flexible = obj.get("date_flexible")
-        orientation = obj.get("orientation")
-
-        return cls.objects.create(
-            produit_id=produit_id,
-            appareil_distribution_id=appareil_distribution_id,
-            type_contrat=type_contrat,
-            date_flexible=date_flexible,
-            orientation=orientation
-        )
-
-    def __str__(self):
-        return f"{self.produit} - {self.appareil_distribution}"
 
 # ... (autres classes existantes)

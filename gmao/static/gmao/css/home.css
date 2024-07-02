@@ -203,3 +203,16 @@ table.dataTable tbody tr.even {
     width: 100%;
     overflow-x: auto;
 }
+
+.ui-dialog {
+    font-size: 14px;
+}
+
+.ui-dialog input[type="radio"] {
+    margin-right: 5px;
+}
+
+.ui-dialog label {
+    display: inline-block;
+    margin-bottom: 5px;
+}

@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'kimei.wsgi.application'
 
 DATABASES = {
     'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+
     },
     'auth_db': {
         'ENGINE': 'django.db.backends.mysql',
@@ -171,4 +171,32 @@ AUTH_USER_MODEL = "accounts.Employee"
 DATABASE_ROUTERS = ['routers.db_routers.AuthRouter',
                     'routers.db_routers.KimeiRouter',
                     ]
+AUTHENTICATION_BACKENDS = [
+    'accounts.auth.PersonnelAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 CORS_ALLOW_ALL_ORIGINS = True
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

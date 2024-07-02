@@ -99,6 +99,10 @@ from .models import (
 
 class DoleanceForm(forms.ModelForm):
     client = forms.ModelChoiceField(queryset=Client.objects.all(), empty_label="Sélectionnez un client")
+    panne_declarer = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}),  # Réduisez le nombre de lignes à 3
+        help_text="Décrivez brièvement la panne ."
+    )
     TYPE_CONTRAT_CHOICES = [
         ('', 'Sélectionnez un type de contrat'),
         ('S', 'Sous Contrat'),
@@ -129,6 +133,11 @@ class DoleanceForm(forms.ModelForm):
 
     element = forms.CharField(required=False, widget=forms.Select())
 
+    # element = forms.ChoiceField(
+    #     choices=[],
+    #     required=False,
+    # )
+
     class Meta:
         model = Doleance
         fields = ['client', 'station', 'appelant', 'type_transmission', 'panne_declarer', 'element', 'type_contrat']
@@ -137,6 +146,7 @@ class DoleanceForm(forms.ModelForm):
         super(DoleanceForm, self).__init__(*args, **kwargs)
         self.fields['station'].queryset = Station.objects.none()
         self.fields['appelant'].queryset = Appelant.objects.none()
+        self.fields['element'].choices = [('', 'Sélectionnez un élément')]
 
         if 'client' in self.data:
             try:

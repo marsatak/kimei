@@ -21,7 +21,7 @@ from rest_framework.decorators import api_view
 from django.db.models.functions import Substr, StrIndex
 
 from django.utils import timezone
-
+from datetime import timedelta
 from accounts.models import Employee, AbstractUser
 from gmao.forms import DoleanceForm
 from gmao.models import (
@@ -36,12 +36,29 @@ from gmao.serializers import (
 )
 from .models import Intervention, InterventionPersonnel
 from django.views.decorators.http import require_POST, require_GET
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponseBadRequest
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 import logging
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.views.decorators.http import require_http_methods
+from django.db.models import Min, Max
+from django.core.exceptions import ValidationError
+from django.db import DatabaseError
+from django.db.models.functions import ExtractYear
+from django.db.models.functions import TruncYear
 
 logger = logging.getLogger(__name__)
+
+
+# #####################Test######################
+@require_http_methods(["GET", "POST"])
+def test_view(request):
+    print('post')
+    return JsonResponse({'message': 'Test réussi'})
 
 
 # #####################TimeStamp######################
@@ -73,11 +90,32 @@ def api_data(request):
     return JsonResponse(data)
 
 
-# #####################Home Page######################
-@login_required(login_url='login')
-# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def test_db_connection(request):
+    try:
+        count = Doleance.objects.using('kimei_db').count()
+        return HttpResponse(f"Nombre de doléances : {count}")
+    except Exception as e:
+        return HttpResponse(f"Erreur : {str(e)}")
+
+
+@login_required
 def home(request):
-    return render(request, 'gmao/home.html', )
+    form = DoleanceForm()
+    if request.user.role == 'ADMIN':
+        doleances = Doleance.objects.using('kimei_db').all()
+        techniciens = Employee.objects.filter(role='TECH', statut='PRS')
+    else:
+        personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+        interventions = InterventionPersonnel.objects.using('kimei_db').filter(personnel=personnel)
+        doleances = Doleance.objects.using('kimei_db').filter(intervention__in=interventions.values('intervention'))
+        techniciens = None
+
+    context = {
+        'form': form,
+        'doleances': doleances,
+        'techniciens': techniciens,
+    }
+    return render(request, 'gmao/home.html', context)
 
 
 # #####################Liste Doléances En Cours######################
@@ -87,11 +125,12 @@ def home(request):
 def getDoleanceEncours(request):
     try:
         # current_date = timezone.now()
-        doleances = (Doleance.objects.all()
-                     .filter(date_transmission__day=datetime.now().day)
+        doleances = (Doleance.objects.all().filter(
+            date_transmission__month=datetime.now().month,
+            date_transmission__year=datetime.now().year,
+            date_transmission__day=datetime.now().day,
+        )
                      .exclude(statut='TER')
-                     .filter(date_transmission__year=datetime.now().year,
-                             date_transmission__month=datetime.now().month)
                      .order_by('-date_transmission'))
 
         doleances_serializer = DoleanceSerializer(doleances, many=True)
@@ -171,23 +210,43 @@ def getPointage(request):
 # #####################Faire Un Pointage######################
 @api_view(['POST'])
 def postPointage(request):
-    date_heure_arrive = datetime.now()
     data = request.data
-    pointageToday = (Pointage.objects.all()
-                     .filter(date_heure_arrive__month=datetime.now().month)
-                     .filter(date_heure_arrive__year=datetime.now().year)
-                     .filter(date_heure_arrive__day=datetime.now().day)
-                     .filter(personnel_id=data['personnel_id']))
-    if pointageToday:
-        print(pointageToday)
-    else:
-        pointage = Pointage.objects.create(
-            personnel_id=data['personnel_id'],
-            date_heure_arrive=date_heure_arrive)
-        serializer = PointageSerializer(pointage, many=False)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    personnel_id = data['personnel_id']
+    today = timezone.now().date()
 
+    existing_pointage = Pointage.objects.filter(
+        personnel_id=personnel_id,
+        date_heure_arrive__date=today
+    ).first()
+
+    if existing_pointage:
+        return Response({'message': 'Un pointage existe déjà pour aujourd\'hui'}, status=status.HTTP_400_BAD_REQUEST)
+
+    pointage = Pointage.objects.create(
+        personnel_id=personnel_id,
+        date_heure_arrive=timezone.now()
+    )
+    serializer = PointageSerializer(pointage)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+# def postPointage(request):
+#     date_heure_arrive = datetime.now()
+#     data = request.data
+#     pointageToday = (Pointage.objects.all()
+#                      .filter(date_heure_arrive__month=datetime.now().month)
+#                      .filter(date_heure_arrive__year=datetime.now().year)
+#                      .filter(date_heure_arrive__day=datetime.now().day)
+#                      .filter(personnel_id=data['personnel_id']))
+#     if pointageToday:
+#         print(pointageToday)
+#     else:
+#         pointage = Pointage.objects.create(
+#             personnel_id=data['personnel_id'],
+#             date_heure_arrive=date_heure_arrive)
+#         serializer = PointageSerializer(pointage, many=False)
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+#     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # #####################Maj Statut Pointage Pour Un Personnel######################
 @api_view(['PUT'])
@@ -223,33 +282,38 @@ def resetPointage(request):
     for personnel in personnels:
         personnel.statut = "ABS"
         personnel.save()
-    return JsonResponse({'message': 'Pointage réinitialisé'}, status=status.HTTP_200_OK)
+    return redirect('logout')
 
 
-# #####################Créer une doléance######################
+@csrf_exempt
+@require_http_methods(["POST"])
 def create_doleance(request):
-    print('create')
     if request.method == 'POST':
         form = DoleanceForm(request.POST)
-        print("POST data:", request.POST)
         if form.is_valid():
             doleance = form.save(commit=False)
             doleance.element = form.cleaned_data['element']
-            doleance.statut = "ATT"
-            print("Form is valid")  # Debug print
+            doleance.panne_declarer = form.cleaned_data['panne_declarer'].upper()
+            doleance.statut = "NEW"
+            doleance.save()
 
-            doleance = form.save()  # This should call the custom save method
-
-            print("Doleance created:", doleance.__dict__)
-            return redirect('gmao:home')
+            return JsonResponse({
+                'success': True,
+                'message': 'Doléance créée avec succès',
+                'id': doleance.id
+            })
         else:
-            print("Form errors:", form.errors)
+            return JsonResponse({
+                'success': False,
+                'errors': form.errors
+            })
     else:
-        form = DoleanceForm()
-    return render(request, 'gmao/create_doleance.html', {'form': form})
+        return JsonResponse({
+            'success': False,
+            'message': 'Méthode non autorisée'
+        }, status=405)
 
 
-# #####################Récupérer la liste station ######################
 def load_stations(request):
     client_id = request.GET.get('client')
     stations = Station.objects.filter(client_id=client_id).order_by('libelle_station')
@@ -257,10 +321,7 @@ def load_stations(request):
 
 
 # #####################Récupérer la liste appelants ######################
-# def load_appelants(request):
-#     client_id = request.GET.get('client')
-#     appelants = Appelant.objects.filter(client_id=client_id).order_by('nom_appelant')
-#     return JsonResponse(list(appelants.values('ilogger.info(f"Dd', 'nom_appelant')), safe=False)
+
 def load_appelants(request):
     client_id = request.GET.get('client')
     logger.info(f"Tentative de chargement des appelants pour le client_id: {client_id}")
@@ -276,8 +337,6 @@ def load_appelants(request):
         logger.error(f"Erreur inattendue lors du chargement des appelants: {str(e)}")
         return JsonResponse({'error': 'Erreur serveur inattendue'}, status=500)
 
-
-# #####################Récupérer la liste des éléments ######################
 
 def load_elements(request):
     station_id = request.GET.get('station')
@@ -303,97 +362,85 @@ def load_elements(request):
     for pistolet in pistolets:
         appareil = pistolet.appareil_distribution
         orientation = pistolet.orientation[0] if pistolet.orientation else ''
-
-        if orientation not in ['R', 'L']:
-            continue
-
-        # Déterminer le numéro du pistolet en fonction de l'orientation et de la face de l'appareil
-        if orientation == 'R':
-            number = int(appareil.face_principal)
-        else:  # 'L'
-            number = int(appareil.face_secondaire)
-
-        if appareil.num_serie and pistolet.produit and pistolet.produit.code_produit and pistolet.type_contrat:
-            element = f"{number}-{appareil.num_serie}{orientation}-{pistolet.produit.code_produit}-{pistolet.type_contrat}"
-            elements['Pistolets'].append((f"pistolet_{pistolet.id}", element))
-
-    elements = {k: v for k, v in elements.items() if v}
+        if orientation in ['R', 'L']:
+            number = int(appareil.face_principal) if orientation == 'R' else int(appareil.face_secondaire)
+            if appareil.num_serie and pistolet.produit and pistolet.produit.code_produit and pistolet.type_contrat:
+                element = f"{number}-{appareil.num_serie}{orientation}-{pistolet.produit.code_produit}-{pistolet.type_contrat}"
+                elements['Pistolets'].append((f"pistolet_{pistolet.id}", element))
 
     return JsonResponse(elements)
 
 
-# #####################Commencer Travail ######################
-def commencer_travail(request, intervention_id):
-    intervention = get_object_or_404(Intervention, id=intervention_id)
-    if not intervention.top_debut:
-        intervention.top_debut = timezone.now()
-        intervention.save()
-    return redirect('gmao:detail_intervention', intervention_id=intervention.id)
+# modifier le 2 juillet 2024 pour intégrer le kilométrage
+# def commencer_intervention(request, intervention_id):
+#     try:
+#         print('Début de commencer_intervention')
+#         intervention = get_object_or_404(Intervention, id=intervention_id)
+#         print(f'Intervention trouvée: {intervention}')
+#
+#         if not intervention.top_debut:
+#             intervention.top_debut = timezone.now()
+#             intervention.is_half_done = True
+#             intervention.etat_doleance = 'INT'
+#             intervention.save()
+#             print(f"Intervention mise à jour: {intervention}")
+#
+#         doleance = intervention.doleance
+#         doleance.statut = 'INT'
+#         doleance.save()
+#         print(f"Doléance mise à jour: {doleance}")
+#
+#         intervention_personnels = InterventionPersonnel.objects.filter(intervention=intervention)
+#
+#         for intervention_personnel in intervention_personnels:
+#             technicien = intervention_personnel.personnel
+#             technicien.statut = 'INT'
+#             technicien.save()
+#             print(f"Technicien mis à jour: {technicien}")
+#
+#         return JsonResponse({
+#             'success': True,
+#             'message': 'Intervention déclenchée avec succès',
+#         })
+#     except Exception as e:
+#         print(f"Erreur lors de la mise à jour de l'intervention: {str(e)}")
+#         return JsonResponse({'success': False, 'message': str(e)})
+#
+#         # return JsonResponse({'success': False, 'message': 'Intervention déjà commencée'})
 
 
-# #####################Commencer interventions######################
-
-@require_POST
+#
+@require_http_methods(["GET", "POST"])
 def commencer_intervention(request, intervention_id):
-    intervention = get_object_or_404(Intervention, id=intervention_id)
-    if not intervention.top_debut:
-        intervention.top_debut = timezone.now()
-        intervention.save()
+    try:
+        intervention = get_object_or_404(Intervention, id=intervention_id)
+        kilometrage = request.POST.get('kilometrage')
 
-        # Mettre à jour le statut des techniciens à INT
-        for intervention_personnel in intervention.interventionpersonnel_set.all():
+        if not intervention.top_debut:
+            intervention.top_debut = timezone.now()
+            intervention.is_half_done = True
+            intervention.etat_doleance = 'INT'
+            intervention.kilometrage_depart_debut = kilometrage
+            intervention.save()
+
+        doleance = intervention.doleance
+        doleance.statut = 'INT'
+        doleance.save()
+
+        intervention_personnels = InterventionPersonnel.objects.filter(intervention=intervention)
+        for intervention_personnel in intervention_personnels:
             technicien = intervention_personnel.personnel
             technicien.statut = 'INT'
             technicien.save()
 
-        return JsonResponse({'success': True, 'message': 'Intervention commencée'})
-    return JsonResponse({'success': False, 'message': 'Intervention déjà commencée'})
+        return JsonResponse({
+            'success': True,
+            'message': 'Intervention déclenchée avec succès',
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})
 
 
-@require_POST
-def terminer_travail(request, intervention_id):
-    intervention = get_object_or_404(Intervention, id=intervention_id)
-    if not intervention.is_done:
-        intervention.top_terminer = timezone.now()
-        intervention.is_done = True
-        intervention.is_half_done = False
-
-        # Récupérer les données du formulaire
-        intervention.description_panne = request.POST.get('description_panne')
-        intervention.travaux_effectues = request.POST.get('travaux_effectues')
-        intervention.observations = request.POST.get('observations')
-        intervention.pieces_changees = request.POST.get('pieces_changees')
-        statut_final = request.POST.get('statut_final')
-
-        # Vérifier que statut_final n'est pas None
-        if statut_final is None:
-            return JsonResponse({'success': False, 'message': 'Le statut final est requis'})
-
-        # Calcul de la durée d'intervention
-        if intervention.top_debut:
-            duree = intervention.top_terminer - intervention.top_debut
-            intervention.duree_intervention = int(duree.total_seconds())
-
-        intervention.save()
-
-        # Mise à jour de la doléance
-        doleance = intervention.doleance
-        doleance.statut = statut_final  # Assurez-vous que cette ligne est présente
-        if statut_final == 'TER':
-            doleance.date_fin = intervention.top_terminer
-        doleance.save()
-
-        # Mise à jour du statut des techniciens
-        for intervention_personnel in intervention.interventionpersonnel_set.all():
-            technicien = intervention_personnel.personnel
-            technicien.statut = 'PRS'
-            technicien.save()
-
-        return JsonResponse({'success': True, 'statut': statut_final})
-    return JsonResponse({'success': False, 'message': 'Intervention déjà terminée'})
-
-
-#
 @require_GET
 def get_techniciens_disponibles(request):
     techniciens = Personnel.objects.filter(statut='PRS')
@@ -402,6 +449,8 @@ def get_techniciens_disponibles(request):
         'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))
     })
 
+
+# #####################Déclencher une intervention######################
 
 @require_POST
 def declencher_intervention(request, doleance_id):
@@ -439,46 +488,33 @@ def declencher_intervention(request, doleance_id):
     })
 
 
-# def load_elements(request):
-#     station_id = request.GET.get('station')
-#     if not station_id:
-#         return JsonResponse([], safe=False)
-#
-#     station = get_object_or_404(Station, id=station_id)
-#     appareils = AppareilDistribution.objects.filter(piste__station_id=station_id)
-#     pistolets = Pistolet.objects.filter(appareil_distribution__piste__station_id=station_id)
-#
-#     elements = {
-#         'Appareil de distribution': [],
-#         'Pistolets': [],
-#         'Autres': [('lot_station', f'LOT STATION - {station.libelle_station}')]
-#     }
-#
-#     for appareil in appareils:
-#         if appareil.face_principal and appareil.face_secondaire and appareil.num_serie and appareil.type_contrat:
-#             element = f"{appareil.face_principal}/{appareil.face_secondaire}-{appareil.num_serie}-{appareil.type_contrat}"
-#             elements['Appareil de distribution'].append((f"appareil_{appareil.id}", element))
-#
-#     pistolet_count = {appareil.id: 0 for appareil in appareils}
-#     for pistolet in pistolets:
-#         appareil = pistolet.appareil_distribution
-#         orientation = pistolet.orientation[0] if pistolet.orientation else ''
-#
-#         if orientation not in ['R', 'L']:
-#             continue
-#
-#         pistolet_count[appareil.id] += 1
-#         number = pistolet_count[appareil.id]
-#         print('pistolet', pistolet)
-#         print('number', number)
-#
-#         if appareil.num_serie and pistolet.produit and pistolet.produit.code_produit and pistolet.type_contrat:
-#             element = f"{number}-{appareil.num_serie}{orientation}-{pistolet.produit.code_produit}-{pistolet.type_contrat}"
-#             elements['Pistolets'].append(({pistolet.id}, element))
-#
-#     elements = {k: v for k, v in elements.items() if v}
-#
-#     return JsonResponse(elements)
+# #####################Annuler une intervention######################
+@require_POST
+def annuler_intervention(request, intervention_id):
+    try:
+        intervention = get_object_or_404(Intervention, id=intervention_id)
+        doleance = intervention.doleance
+
+        # Réinitialiser l'intervention
+        intervention.delete()
+
+        # Réinitialiser la doléance
+        doleance.statut = 'NEW'
+        doleance.save()
+
+        # Réinitialiser le statut des techniciens
+        intervention_personnels = InterventionPersonnel.objects.filter(intervention=intervention)
+        for intervention_personnel in intervention_personnels:
+            technicien = intervention_personnel.personnel
+            technicien.statut = 'PRS'
+            technicien.save()
+
+        return JsonResponse({
+            'success': True,
+            'message': 'Intervention annulée avec succès',
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})
 
 
 # #####################Liste des interventions######################
@@ -501,3 +537,257 @@ def detail_intervention(request, intervention_id):
         'intervention': intervention,
         'techniciens': techniciens
     })
+
+
+# def terminer_travail(request, intervention_id):
+#     try:
+#         intervention = get_object_or_404(Intervention, id=intervention_id)
+#
+#         statut_final = request.POST.get('statut_final', '').upper()
+#
+#         if not statut_final or statut_final not in ['TER', 'ATP', 'ATD']:
+#             return JsonResponse({'success': False, 'message': f'Statut final invalide: {statut_final}'})
+#
+#         intervention.is_done = True
+#         intervention.etat_doleance = statut_final
+#         intervention.description_panne = request.POST.get('description_panne', '').upper()
+#         intervention.resolution = request.POST.get('resolution', '').upper()
+#         intervention.observations = request.POST.get('observations', '').upper()
+#         intervention.pieces_changees = request.POST.get('pieces_changees', '').upper()
+#         intervention.top_terminer = timezone.now()
+#
+#         # Traitement du numéro de fiche
+#         numero_fiche = request.POST.get('numero_fiche', '')
+#         try:
+#             numero_fiche = int(numero_fiche)
+#             if numero_fiche < 0 or numero_fiche > 99999:
+#                 raise ValueError("Le numéro de fiche doit être entre 0 et 99999")
+#
+#             numero_fiche_complet = f"00{numero_fiche:05d}"
+#
+#             if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
+#                 raise ValidationError("Ce numéro de fiche est déjà utilisé")
+#
+#             intervention.numero_fiche = numero_fiche_complet
+#         except ValueError as e:
+#             return JsonResponse({'success': False, 'message': f'Erreur de format pour le numéro de fiche: {str(e)}'})
+#         except ValidationError as e:
+#             return JsonResponse({'success': False, 'message': str(e)})
+#
+#         # Calculer la durée de l'intervention
+#         if intervention.top_debut:
+#             duree = intervention.top_terminer - intervention.top_debut
+#             intervention.duree_intervention = int(duree.total_seconds())
+#         else:
+#             intervention.duree_intervention = 0
+#
+#         intervention.save()
+#
+#         # Mise à jour de la doléance
+#         doleance = intervention.doleance
+#         doleance.statut = statut_final
+#         interventions = Intervention.objects.filter(doleance=doleance)
+#         doleance.date_debut = interventions.aggregate(Min('top_debut'))['top_debut__min']
+#         doleance.date_fin = interventions.aggregate(Max('top_terminer'))['top_terminer__max']
+#         doleance.save()
+#
+#         # Mise à jour des techniciens
+#         intervention = Intervention.objects.get(id=intervention_id)
+#         intervention.doleance.statut = statut_final
+#         intervention.doleance.save()
+#         intervention.personnel.update(statut='PRS')
+#         # InterventionPersonnel.objects.filter(intervention=intervention).update(personnel__statut='PRS')
+#         if form.is_valid():
+#             return JsonResponse({'success': True, 'message': 'Intervention terminée avec succès'})
+#         else:
+#             return JsonResponse({'success': False, 'message': form.errors})
+#     except Exception as e:
+#         return JsonResponse({'success': False, 'message': f'Erreur inattendue: {str(e)}'})
+
+# #####################Terminer une intervention######################
+@csrf_exempt
+@require_POST
+def terminer_travail(request, intervention_id):
+    try:
+        intervention = get_object_or_404(Intervention, id=intervention_id)
+
+        statut_final = request.POST.get('statut_final', '').upper()
+
+        if not statut_final or statut_final not in ['TER', 'ATP', 'ATD']:
+            return JsonResponse({'success': False, 'message': f'Statut final invalide: {statut_final}'})
+
+        intervention.is_done = True
+        intervention.etat_doleance = statut_final
+        intervention.description_panne = request.POST.get('description_panne', '').upper()
+        intervention.resolution = request.POST.get('resolution', '').upper()
+        intervention.observations = request.POST.get('observations', '').upper()
+        intervention.pieces_changees = request.POST.get('pieces_changees', '').upper()
+        intervention.top_terminer = timezone.now()
+
+        # Traitement du numéro de fiche
+        numero_fiche = request.POST.get('numero_fiche', '')
+        try:
+            numero_fiche = int(numero_fiche)
+            if numero_fiche < 0 or numero_fiche > 99999:
+                raise ValueError("Le numéro de fiche doit être entre 0 et 99999")
+
+            numero_fiche_complet = f"00{numero_fiche:05d}"
+
+            if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
+                raise ValidationError("Ce numéro de fiche est déjà utilisé")
+
+            intervention.numero_fiche = numero_fiche_complet
+        except ValueError as e:
+            return JsonResponse({'success': False, 'message': f'Erreur de format pour le numéro de fiche: {str(e)}'})
+        except ValidationError as e:
+            return JsonResponse({'success': False, 'message': str(e)})
+
+        # Calculer la durée de l'intervention
+        if intervention.top_debut:
+            duree = intervention.top_terminer - intervention.top_debut
+            intervention.duree_intervention = int(duree.total_seconds())
+        else:
+            intervention.duree_intervention = 0
+
+        intervention.save()
+
+        # Mise à jour de la doléance
+        doleance = intervention.doleance
+        doleance.statut = statut_final
+        interventions = Intervention.objects.filter(doleance=doleance)
+        doleance.date_debut = interventions.aggregate(Min('top_debut'))['top_debut__min']
+        doleance.date_fin = interventions.aggregate(Max('top_terminer'))['top_terminer__max']
+        doleance.save()
+
+        # Mise à jour des techniciens
+        for intervention_personnel in InterventionPersonnel.objects.filter(intervention=intervention):
+            personnel = intervention_personnel.personnel
+            personnel.statut = 'PRS'
+            personnel.save()
+
+        return JsonResponse({'success': True, 'message': 'Intervention terminée avec succès'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Erreur inattendue: {str(e)}'})
+
+
+@login_required
+@require_GET
+def get_available_years(request):
+    try:
+        years = (
+            Doleance.objects.using('kimei_db')
+            .annotate(year=ExtractYear('date_transmission'))
+            .values_list('year', flat=True)
+            .distinct()
+            .order_by('-year')
+        )
+        return JsonResponse({'years': list(years)})
+    except Exception as e:
+        logger.error(f"Erreur dans get_available_years: {str(e)}", exc_info=True)
+        return JsonResponse({'error': 'Erreur serveur inattendue'}, status=500)
+
+
+@login_required
+def toutes_les_doleances(request):
+    years = Doleance.objects.annotate(year=ExtractYear('date_transmission')) \
+        .values_list('year', flat=True) \
+        .distinct() \
+        .order_by('-year')
+    months = [
+        (1, 'Janvier'), (2, 'Février'), (3, 'Mars'), (4, 'Avril'),
+        (5, 'Mai'), (6, 'Juin'), (7, 'Juillet'), (8, 'Août'),
+        (9, 'Septembre'), (10, 'Octobre'), (11, 'Novembre'), (12, 'Décembre')
+    ]
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    return render(request, 'gmao/toutes_les_doleances.html', {
+        'years': years,
+        'months': months,
+        'current_year': current_year,
+        'current_month': current_month
+    })
+
+
+@login_required
+def get_doleances_data(request):
+    year = request.GET.get('year')
+    month = request.GET.get('month')
+
+    doleances = Doleance.objects.filter(
+        date_transmission__year=year,
+        date_transmission__month=month
+    ).exclude(statut='NEW').order_by('-date_transmission')
+
+    data = [{
+        'id': d.id,
+        'ndi': d.ndi,
+        'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
+        'statut': d.statut,
+        'station': d.station.libelle_station,
+        'element': d.element,
+        'panne_declarer': d.panne_declarer,
+        'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
+        'commentaire': d.commentaire,
+        # Ajoutez d'autres champs si nécessaire
+    } for d in doleances]
+
+    return JsonResponse({'data': data})
+
+
+@require_POST
+@login_required
+def attribuer_tache(request):
+    if request.user.role != 'ADMIN':
+        return JsonResponse({'success': False, 'message': 'Unauthorized'}, status=403)
+
+    doleance_id = request.POST.get('doleance_id')
+    technicien_ids = request.POST.getlist('technicien_ids[]')
+
+    try:
+        doleance = Doleance.objects.using('kimei_db').get(id=doleance_id)
+        techniciens = Employee.objects.filter(id__in=technicien_ids)
+
+        intervention = Intervention.objects.using('kimei_db').create(doleance=doleance)
+        for technicien in techniciens:
+            personnel = Personnel.objects.using('kimei_db').get(matricule=technicien.matricule)
+            InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=personnel)
+            technicien.statut = 'ATT'
+            technicien.save()
+
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})
+
+
+@require_POST
+@login_required
+def affecter_techniciens(request, doleance_id):
+    if request.user.role != 'ADMIN':
+        return JsonResponse({'success': False, 'message': 'Unauthorized'}, status=403)
+
+    data = json.loads(request.body)
+    technicien_ids = data.get('techniciens', [])
+
+    try:
+        doleance = Doleance.objects.using('kimei_db').get(id=doleance_id)
+        techniciens = Personnel.objects.using('kimei_db').filter(id__in=technicien_ids)
+
+        intervention = Intervention.objects.using('kimei_db').create(
+            doleance=doleance,
+            top_depart=timezone.now(),
+            is_done=False,
+            is_half_done=False,
+            etat_doleance='ATT'
+        )
+
+        for technicien in techniciens:
+            InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=technicien)
+            technicien.statut = 'ATT'
+            technicien.save()
+
+        doleance.statut = 'ATT'
+        doleance.save()
+
+        return JsonResponse({'success': True, 'message': 'Techniciens affectés avec succès'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})

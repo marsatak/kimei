@@ -1,4 +1,13 @@
 $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
+        upperCaseInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    });
+
     function offsetAnchor() {
         if (location.hash.length !== 0) {
             window.scrollTo(window.scrollX, window.scrollY - 60);
@@ -14,11 +23,11 @@ $(document).ready(function () {
     window.setTimeout(function () {
         offsetAnchor();
     }, 1);
-
     let doleanceTable = $('#demandeencours').DataTable({
         striping: false,
         'ajax': {
             "type": "GET",
+
             "url": "/home/getDoleanceEncours",
             "dataSrc": function (json) {
                 return json;
@@ -36,7 +45,27 @@ $(document).ready(function () {
                     return data;
                 }
             },
-            {'data': "statut"},
+            {
+                'data': "statut",
+                'render': function (data, type, row) {
+                    switch (data) {
+                        case 'NEW':
+                            return 'NEW';
+                        case 'ATT':
+                            return 'ATT';
+                        case 'INT':
+                            return 'INT';
+                        case 'ATP':
+                            return 'ATP';
+                        case 'ATD':
+                            return 'ATD';
+                        case 'TER':
+                            return 'TER';
+                        default:
+                            return data;
+                    }
+                }
+            },
             {'data': "station.libelle_station"},
             {'data': 'element'},
             {'data': 'panne_declarer'},
@@ -115,72 +144,7 @@ $(document).ready(function () {
         declencherIntervention(doleanceId);
     });
 
-    /*$('#demandeencours tbody').on('click', 'td.details-control', function () {
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
 
-        if (row.child.isShown()) {
-            row.child.hide();
-            tr.removeClass('shown');
-        } else {
-            $.ajax({
-                url: '/home/interventions-doleance/' + row.data().id + '/',
-                type: 'GET',
-                success: function (data) {
-                    row.child(formatInterventions(data, row.data())).show();
-                    tr.addClass('shown');
-                },
-                error: function () {
-                    alert('Erreur lors du chargement des interventions');
-                }
-            });
-        }
-    });*/
-
-    /*$('#personnel').DataTable({
-        'ajax': {
-            "type": "GET",
-            "url": "/home/getPersonnel",
-            "dataSrc": function (json) {
-                console.log("Données reçues:", json);
-                return json;
-            }
-        },
-        'columns': [
-            {'data': "id"},
-            {'data': "nom_personnel"},
-            {'data': "prenom_personnel"},
-            {'data': "statut"},
-        ],
-        responsive: true,
-        autoWidth: false,
-        pageLength: 10,
-        ordering: false,
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-        },
-        dom: 'Bfrtip',
-        columnDefs: [
-            {
-                targets: [0],
-                visible: false,
-                searchable: false,
-            },
-            {
-                targets: [3],
-                render: function (data) {
-                    return data === 'PRS' ? '<span class="badge bg-success">PRS</span>' : '<span class="badge bg-danger">ABS</span>';
-                }
-            },
-            {
-                targets: '_all',
-                className: 'dt-head-nowrap'
-            },
-            {responsivePriority: 1000, targets: 1}, // Nom
-            {responsivePriority: 1, targets: 2}, //
-            {responsivePriority: 2, targets: 3},
-        ]
-    });*/
     let personnelTable = $('#personnel').DataTable({
         'ajax': {
             "type": "GET",
@@ -281,6 +245,9 @@ $(document).ready(function () {
         $('#demandeencours').DataTable().draw();
         $('#personnel').DataTable().draw();
     });
+    $('#doleanceModal').on('show.bs.modal', function () {
+        console.log('Modal is about to open');
+    });
     $('#personnel').on('click', '.mark-arrivee', function () {
         const personnelId = $(this).data('id');
         markArriveeOrDepart(personnelId, true);
@@ -329,28 +296,9 @@ $(document).ready(function () {
         });
     }
 
-//     function commencerIntervention(interventionId) {
-//     $.ajax({
-//         url: '/home/commencer-intervention/' + interventionId + '/',
-//         type: 'POST',
-//         dataType: 'json',
-//         headers: {'X-CSRFToken': getCookie('csrftoken')},
-//         success: function (response) {
-//             if (response.success) {
-//                 alert('Intervention commencée avec succès.');
-//                 table.ajax.reload();
-//             } else {
-//                 alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
-//             }
-//         },
-//         error: function (xhr, status, error) {
-//             console.error("Erreur AJAX:", xhr.responseText);
-//             alert('Erreur lors de la communication avec le serveur: ' + error);
-//         }
-//     });
-// }
 
-    function commencerIntervention(interventionId) {
+    /*function commencerIntervention(interventionId) {
+        console.log("Tentative de commencer l'intervention:", interventionId);
         $.ajax({
             url: '/home/commencer-intervention/' + interventionId + '/',
             type: 'POST',
@@ -360,7 +308,7 @@ $(document).ready(function () {
                 if (response.success) {
                     alert('Intervention commencée avec succès.');
                     // Rafraîchir la table des doléances
-                    $('#demandeencours').DataTable().ajax.reload(null, false);
+                    refreshDoleanceTable();
                     // Rafraîchir la table du personnel
                     refreshPersonnelTable();
                 } else {
@@ -372,7 +320,7 @@ $(document).ready(function () {
                 alert('Erreur lors de la communication avec le serveur: ' + error);
             }
         });
-    }
+    }*/
 
     function afficherSelectionTechniciens(techniciens, doleanceId) {
         let dialog = $('<div title="Sélectionner les techniciens">');
@@ -512,50 +460,46 @@ $(document).ready(function () {
         return html;
     }
 
-    function terminerIntervention(interventionId) {
-        console.log("Tentative de clôture de l'intervention", interventionId);
-        let dialog = $(`<div title="Terminer l'intervention">`);
+    /*function terminerIntervention(interventionId) {
+        // Créer un dialogue modal avec des boutons radio
+        let dialog = $('<div title="Terminer l\'intervention">');
         let form = $('<form>');
-        form.append('<textarea name="description_panne" placeholder="Description de la panne"></textarea>');
-        form.append('<textarea name="travaux_effectues" placeholder="Travaux effectués"></textarea>');
-        form.append('<textarea name="observations" placeholder="Observations"></textarea>');
-        form.append('<textarea name="pieces_changees" placeholder="Pièces changées"></textarea>');
-        form.append('<select name="statut_final"><option value="TER">Terminée</option><option value="ATP">Attente Pièces</option><option value="ATD">Attente Devis</option></select>');
+        form.append('<p>Choisissez le statut final :</p>');
+        form.append('<input type="radio" id="ter" name="statut_final" value="TER"><label for="ter">TER (Terminé)</label><br>');
+        form.append('<input type="radio" id="atp" name="statut_final" value="ATP"><label for="atp">ATP (Attente Pièces)</label><br>');
+        form.append('<input type="radio" id="atd" name="statut_final" value="ATD"><label for="atd">ATD (Attente Décision)</label><br>');
 
         dialog.append(form);
 
         dialog.dialog({
             modal: true,
             buttons: {
-                "Confirmer": function () {
-                    const formData = new FormData(form[0]);
-                    console.log("Données du formulaire:", Object.fromEntries(formData));
+                "Valider": function () {
+                    let statut_final = form.find('input[name="statut_final"]:checked').val();
+                    if (!statut_final) {
+                        alert("Veuillez sélectionner un statut.");
+                        return;
+                    }
+
                     $.ajax({
-                        url: '/home/terminer-intervention/' + interventionId + '/',
+                        url: '/home/intervention/' + interventionId + '/terminer/',
                         type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
+                        data: JSON.stringify({statut_final: statut_final}),
+                        contentType: 'application/json',
                         headers: {'X-CSRFToken': getCookie('csrftoken')},
                         success: function (response) {
-                            console.log("Réponse du serveur:", response);
                             if (response.success) {
-                                alert('Intervention mise à jour avec succès.');
-                                // Rafraîchir la table des doléances
-                                $('#demandeencours').DataTable().ajax.reload(null, false);
-                                // Rafraîchir la table du personnel
-                                $('#personnel').DataTable().ajax.reload(null, false);
-
-                                //table.ajax.reload();
+                                alert('Intervention terminée avec succès.');
+                                location.reload(); // Recharge la page pour actualiser les données
                             } else {
-                                alert(`Erreur lors de la mise à jour de l'intervention: ` + response.message);
+                                alert('Erreur: ' + response.message);
                             }
                         },
                         error: function (xhr, status, error) {
-                            console.error("Erreur AJAX:", xhr.responseText);
-                            alert('Erreur lors de la communication avec le serveur: ' + error);
+                            alert('Erreur: ' + xhr.responseText);
                         }
                     });
+
                     $(this).dialog("close");
                 },
                 "Annuler": function () {
@@ -563,7 +507,7 @@ $(document).ready(function () {
                 }
             }
         });
-    }
+    }*/
 
     function getCookie(name) {
         let cookieValue = null;
@@ -594,6 +538,150 @@ $(document).ready(function () {
         }
         return cookieValue;
     }
+
+    $('#interventionForm').submit(function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        var interventionId = $('#intervention-id-input').val();
+
+        $.ajax({
+            url: '/home/intervention/' + interventionId + '/terminer/',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                console.log("Réponse reçue:", response);  // Log de la réponse complète
+                if (response.success) {
+                    alert('Intervention terminée avec succès.');
+                    window.location.href = '/home/';
+                } else {
+                    console.error("Erreur côté serveur:", response.message);
+                    alert('Erreur lors de la terminaison de l\'intervention: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur AJAX:", xhr.responseText);
+                alert('Erreur lors de la communication avec le serveur: ' + error);
+            }
+        });
+    });
+    /*function terminerIntervention(interventionId, statut) {
+        let formData = new FormData(document.getElementById('interventionForm'));
+        formData.append('statut_final', statut);
+
+        $.ajax({
+            url: '/home/intervention/' + interventionId + '/terminer/',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                if (response.success) {
+                    alert('Intervention terminée avec succès.');
+                    window.location.href = '/home/'; // Redirection vers la page d'accueil
+                } else {
+                    alert('Erreur: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Erreur lors de la communication avec le serveur: ' + error);
+            }
+        });
+    }*/
+
+    /*$('#interventionForm').submit(function (e) {
+        e.preventDefault();
+
+        var statut_final = $('#statut-final-input').val();
+        if (!statut_final) {
+            alert("Veuillez sélectionner un statut final.");
+            return;
+        }
+
+        var interventionId = $('#intervention-id-input').val();
+        /!* récupérez l'ID de l'intervention depuis la page *!/
+        ;
+
+        $.ajax({
+            url: '/home/intervention/' + interventionId + '/terminer/',
+            type: 'POST',
+            data: JSON.stringify({
+                statut_final: statut_final,
+                // Ajoutez ici d'autres données du formulaire si nécessaire
+            }),
+            contentType: 'application/json',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                if (response.success) {
+                    alert('Intervention terminée avec succès.');
+                    window.location.href = '/home/'; // Redirigez vers la page d'accueil ou la liste des interventions
+                } else {
+                    alert('Erreur lors de la terminaison de l\'intervention: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Erreur lors de la communication avec le serveur: ' + error);
+            }
+        });
+    });*/
+    new Sortable(document.getElementById('personnel').querySelector('tbody'), {
+        group: {
+            name: 'shared',
+            pull: 'clone',
+            put: false
+        },
+        sort: false,
+        multiDrag: true,
+        selectedClass: 'selected',
+        animation: 150
+    });
+    new Sortable(document.getElementById('demandeencours').querySelector('tbody'), {
+        group: {
+            name: 'shared',
+            put: true
+        },
+        sort: false,
+        onAdd: function (evt) {
+            const doleanceId = evt.to.closest('tr').getAttribute('data-id');
+            const technicienIds = evt.items.map(item => item.getAttribute('data-id'));
+
+            // Supprimer les éléments dragués
+            evt.items.forEach(item => item.parentNode.removeChild(item));
+
+            // Appeler la fonction pour affecter les techniciens
+            affecterTechniciens(doleanceId, technicienIds);
+        }
+    });
+
+    function affecterTechniciens(doleanceId, technicienIds) {
+        $.ajax({
+            url: '/home/affecter-techniciens/' + doleanceId + '/',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({techniciens: technicienIds}),
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': getCSRFToken()
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Techniciens affectés avec succès.');
+                    refreshTables();
+                } else {
+                    alert('Erreur lors de l\'affectation des techniciens: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur AJAX:", xhr.responseText);
+                alert('Erreur lors de la communication avec le serveur: ' + error);
+            }
+        });
+    }
+
 });
 
 
