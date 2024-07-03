@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    let doleanceTable;
+    let personnelTable;
+    let portofolioTable;
     document.addEventListener('DOMContentLoaded', function () {
         const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
         upperCaseInputs.forEach(input => {
@@ -23,223 +26,252 @@ $(document).ready(function () {
     window.setTimeout(function () {
         offsetAnchor();
     }, 1);
-    let doleanceTable = $('#demandeencours').DataTable({
-        striping: false,
-        'ajax': {
-            "type": "GET",
 
-            "url": "/home/getDoleanceEncours",
-            "dataSrc": function (json) {
-                return json;
-            }
-        },
-        'columns': [
-            {'data': "id"},
-            {'data': "ndi"},
-            {
-                'data': 'date_transmission',
-                render: function (data, type, row) {
-                    if (type === 'display' || type === 'filter') {
-                        return moment(data).format('DD/MM/YYYY HH:mm');
+    function initDoleanceTable() {
+        if ($('#demandeencours').length && !$.fn.DataTable.isDataTable('#demandeencours')) {
+            doleanceTable = $('#demandeencours').DataTable({
+                striping: false,
+                'ajax': {
+                    "type": "GET",
+
+                    "url": "/home/getDoleanceEncours",
+                    "dataSrc": function (json) {
+                        return json;
                     }
-                    return data;
-                }
-            },
-            {
-                'data': "statut",
-                'render': function (data, type, row) {
-                    switch (data) {
-                        case 'NEW':
-                            return 'NEW';
-                        case 'ATT':
-                            return 'ATT';
-                        case 'INT':
-                            return 'INT';
-                        case 'ATP':
-                            return 'ATP';
-                        case 'ATD':
-                            return 'ATD';
-                        case 'TER':
-                            return 'TER';
-                        default:
+                },
+                'columns': [
+                    {'data': "id"},
+                    {'data': "ndi"},
+                    {
+                        'data': 'date_transmission',
+                        render: function (data, type, row) {
+                            if (type === 'display' || type === 'filter') {
+                                return moment(data).format('DD/MM/YYYY HH:mm');
+                            }
                             return data;
+                        }
+                    },
+                    {
+                        'data': "statut",
+                        'render': function (data, type, row) {
+                            switch (data) {
+                                case 'NEW':
+                                    return 'NEW';
+                                case 'ATT':
+                                    return 'ATT';
+                                case 'INT':
+                                    return 'INT';
+                                case 'ATP':
+                                    return 'ATP';
+                                case 'ATD':
+                                    return 'ATD';
+                                case 'TER':
+                                    return 'TER';
+                                default:
+                                    return data;
+                            }
+                        }
+                    },
+                    {'data': "station.libelle_station"},
+                    {'data': 'element'},
+                    {'data': 'panne_declarer'},
+                    {
+                        'data': 'date_deadline',
+                        render: function (data, type, row) {
+                            if (type === 'display' || type === 'filter') {
+                                return moment(data).format('DD/MM/YYYY HH:mm');
+                            }
+                            return data;
+                        }
+                    },
+                    {'data': 'commentaire'},
+                    /*            {
+                                    'className': 'details-control',
+                                    'orderable': false,
+                                    'data': null,
+                                    'defaultContent': ''
+                                },*/
+                    {
+                        'data': null,
+                        'render': function (data, type, row) {
+                            let buttons = '';
+                            if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
+                                buttons += '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">Déclencher intervention</button> ';
+                            }
+                            return buttons;
+                        }
+                    },
+                ],
+                responsive: true,
+                autoWidth: false,
+                pageLength: 10,
+                language: {
+                    // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                ordering: false,
+                columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'dt-head-nowrap',
+                        render: function (data, type, row) {
+                            if (type === 'display' && data != null && data.length > 70) {
+                                return `<span title="${data}">${data.substr(0, 70)}...</span>`;
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        targets: [0],
+                        visible: false,
+                        searchable: false
+                    },
+                    {responsivePriority: 1, targets: 1}, // NDI
+                    {responsivePriority: 2, targets: 3}, // Statut
+                    {responsivePriority: 3, targets: 6}, // Panne déclarée
+                    {responsivePriority: 10000, targets: [2, 4, 5, 7, 8]}
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    if (data.statut === 'NEW') {
+                        $(row).addClass('table-success');
+                    } else if (data.statut === 'ATP') {
+                        $(row).addClass('table-warning');
+                    } else if (data.statut === 'ATD') {
+                        $(row).addClass('table-infodanger');
                     }
-                }
-            },
-            {'data': "station.libelle_station"},
-            {'data': 'element'},
-            {'data': 'panne_declarer'},
-            {
-                'data': 'date_deadline',
-                render: function (data, type, row) {
-                    if (type === 'display' || type === 'filter') {
-                        return moment(data).format('DD/MM/YYYY HH:mm');
-                    }
-                    return data;
-                }
-            },
-            {'data': 'commentaire'},
-            /*            {
-                            'className': 'details-control',
-                            'orderable': false,
-                            'data': null,
-                            'defaultContent': ''
-                        },*/
-            {
-                'data': null,
-                'render': function (data, type, row) {
-                    let buttons = '';
-                    if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
-                        buttons += '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">Déclencher intervention</button> ';
-                    }
-                    return buttons;
-                }
-            },
-        ],
-        responsive: true,
-        autoWidth: false,
-        pageLength: 10,
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-        },
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
-        ordering: false,
-        columnDefs: [
-            {
-                targets: '_all',
-                className: 'dt-head-nowrap',
-                render: function (data, type, row) {
-                    if (type === 'display' && data != null && data.length > 70) {
-                        return `<span title="${data}">${data.substr(0, 70)}...</span>`;
-                    }
-                    return data;
-                }
-            },
-            {
-                targets: [0],
-                visible: false,
-                searchable: false
-            },
-            {responsivePriority: 1, targets: 1}, // NDI
-            {responsivePriority: 2, targets: 3}, // Statut
-            {responsivePriority: 3, targets: 6}, // Panne déclarée
-            {responsivePriority: 10000, targets: [2, 4, 5, 7, 8]}
-        ],
-        createdRow: function (row, data, dataIndex) {
-            if (data.statut === 'NEW') {
-                $(row).addClass('table-success');
-            } else if (data.statut === 'ATP') {
-                $(row).addClass('table-warning');
-            } else if (data.statut === 'ATD') {
-                $(row).addClass('table-infodanger');
-            }
-        },
-    });
+                },
+            });
+        }
 
+    }
+
+    //initDoleanceTable();
     $('#demandeencours').on('click', '.declencher-intervention', function () {
         const doleanceId = $(this).data('id');
         declencherIntervention(doleanceId);
     });
 
-
-    let personnelTable = $('#personnel').DataTable({
-        'ajax': {
-            "type": "GET",
-            "url": "/home/getPersonnel/",
-            "dataSrc": function (json) {
-                console.log("Données du personnel reçues:", json);
-                return json;
-            }
-        },
-        'columns': [
-            {'data': "id"},
-            {'data': "nom_personnel"},
-            {'data': "prenom_personnel"},
-            {
-                'data': "statut",
-                'render': function (data, type, row) {
-                    let statusIcon = '';
-                    let statusText = '';
-                    switch (data) {
-                        case 'PRS':
-                            statusIcon = '<i class="fas fa-check-circle text-success"></i>';
-                            statusText = 'Présent';
-                            break;
-                        case 'ABS':
-                            statusIcon = '<i class="fas fa-times-circle text-danger"></i>';
-                            statusText = 'Absent';
-                            break;
-                        case 'ATT':
-                            statusIcon = '<i class="fas fa-clock text-warning"></i>';
-                            statusText = 'Tâche attribuée';
-                            break;
-                        case 'INT':
-                            statusIcon = '<i class="fas fa-hard-hat text-info"></i>';
-                            statusText = 'En intervention';
-                            break;
+    function initPersonnelTable() {
+        if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
+            personnelTable = $('#personnel').DataTable({
+                'ajax': {
+                    "type": "GET",
+                    "url": "/home/getPersonnel/",
+                    "dataSrc": function (json) {
+                        console.log("Données du personnel reçues:", json);
+                        return json;
                     }
-                    return `${statusIcon} ${statusText}`;
-                }
-            },
-            {
-                'data': null,
-                'render': function (data, type, row) {
-                    if (row.statut === 'ABS') {
-                        return '<button class="btn btn-success btn-sm mark-arrivee" data-id="'
-                            + row.id + '">Marquer arrivée</button>';
-                    } else if (row.statut === 'PRS') {
-                        return '<button class="btn btn-danger btn-sm mark-depart" data-id="'
-                            + row.id + '">Marquer départ</button>';
-                    } else {
-                        return '';
+                },
+                'columns': [
+                    {'data': "id"},
+                    {'data': "nom_personnel"},
+                    {'data': "prenom_personnel"},
+                    {
+                        'data': "statut",
+                        'render': function (data, type, row) {
+                            let statusIcon = '';
+                            let statusText = '';
+                            switch (data) {
+                                case 'PRS':
+                                    statusIcon = '<i class="fas fa-check-circle text-success"></i>';
+                                    statusText = 'Présent';
+                                    break;
+                                case 'ABS':
+                                    statusIcon = '<i class="fas fa-times-circle text-danger"></i>';
+                                    statusText = 'Absent';
+                                    break;
+                                case 'ATT':
+                                    statusIcon = '<i class="fas fa-clock text-warning"></i>';
+                                    statusText = 'Tâche attribuée';
+                                    break;
+                                case 'INT':
+                                    statusIcon = '<i class="fas fa-hard-hat text-info"></i>';
+                                    statusText = 'En intervention';
+                                    break;
+                            }
+                            return `${statusIcon} ${statusText}`;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'render': function (data, type, row) {
+                            if (row.statut === 'ABS') {
+                                return '<button class="btn btn-success btn-sm mark-arrivee" data-id="'
+                                    + row.id + '">Marquer arrivée</button>';
+                            } else if (row.statut === 'PRS') {
+                                return '<button class="btn btn-danger btn-sm mark-depart" data-id="'
+                                    + row.id + '">Marquer départ</button>';
+                            } else {
+                                return '';
+                            }
+                        }
                     }
-                }
-            }
 
-        ],
-        responsive: true,
-        autoWidth: false,
-        pageLength: 10,
-        ordering: false,
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-        },
-        dom: 'Bfrtip',
-        columnDefs: [
-            {
-                targets: [0],
-                visible: false,
-                searchable: false,
-            },
-            {
-                targets: [3],
-                render: function (data) {
-                    return data === 'PRS' ? '<span class="badge bg-success">PRS</span>' :
-                        data === 'ATT' ? '<span class="badge bg-warning">ATT</span>' :
-                            data === 'INT' ? '<span class="badge bg-info">INT</span>' :
-                                '<span class="badge bg-danger">ABS</span>';
-                }
-            },
-            {
-                targets: '_all',
-                className: 'dt-head-nowrap'
-            },
-            {responsivePriority: 1000, targets: 1}, // Nom
-            {responsivePriority: 1, targets: 2}, //
-            {responsivePriority: 2, targets: 3},
-        ]
-    });
-
-    function refreshPersonnelTable() {
-        personnelTable.ajax.reload(null, false);
+                ],
+                responsive: true,
+                autoWidth: false,
+                pageLength: 10,
+                ordering: false,
+                language: {
+                    // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                },
+                dom: 'Bfrtip',
+                columnDefs: [
+                    {
+                        targets: [0],
+                        visible: false,
+                        searchable: false,
+                    },
+                    {
+                        targets: [3],
+                        render: function (data) {
+                            return data === 'PRS' ? '<span class="badge bg-success">PRS</span>' :
+                                data === 'ATT' ? '<span class="badge bg-warning">ATT</span>' :
+                                    data === 'INT' ? '<span class="badge bg-info">INT</span>' :
+                                        '<span class="badge bg-danger">ABS</span>';
+                        }
+                    },
+                    {
+                        targets: '_all',
+                        className: 'dt-head-nowrap'
+                    },
+                    {responsivePriority: 1000, targets: 1}, // Nom
+                    {responsivePriority: 1, targets: 2}, //
+                    {responsivePriority: 2, targets: 3},
+                ]
+            });
+        }
     }
 
+    //initPersonnelTable();
+    if ($('#demandeencours').length && USER_ROLE === 'ADMIN') {
+        if (!$.fn.DataTable.isDataTable('#demandeencours')) {
+            initDoleanceTable();
+        }
+        if (!$.fn.DataTable.isDataTable('#personnel')) {
+            initPersonnelTable();
+        }
+    } else if ($('#portfolioContainer').length) {
+        //loadTechnicienPortfolio();
+    }
+
+    // Fonction pour rafraîchir la table des doléances
     function refreshDoleanceTable() {
-        doleanceTable.ajax.reload(null, false);
+        if (doleanceTable) {
+            doleanceTable.ajax.reload(null, false);
+        }
     }
+
+    // Fonction pour rafraîchir la table du personnel
+    function refreshPersonnelTable() {
+        if (personnelTable) {
+            personnelTable.ajax.reload(null, false);
+        }
+    }
+
 
     $(window).resize(function () {
         $('#demandeencours').DataTable().draw();
@@ -297,42 +329,17 @@ $(document).ready(function () {
     }
 
 
-    /*function commencerIntervention(interventionId) {
-        console.log("Tentative de commencer l'intervention:", interventionId);
-        $.ajax({
-            url: '/home/commencer-intervention/' + interventionId + '/',
-            type: 'POST',
-            dataType: 'json',
-            headers: {'X-CSRFToken': getCookie('csrftoken')},
-            success: function (response) {
-                if (response.success) {
-                    alert('Intervention commencée avec succès.');
-                    // Rafraîchir la table des doléances
-                    refreshDoleanceTable();
-                    // Rafraîchir la table du personnel
-                    refreshPersonnelTable();
-                } else {
-                    alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Erreur AJAX:", xhr.responseText);
-                alert('Erreur lors de la communication avec le serveur: ' + error);
-            }
-        });
-    }*/
-
     function afficherSelectionTechniciens(techniciens, doleanceId) {
         let dialog = $('<div title="Sélectionner les techniciens">');
         let form = $('<form>');
 
         techniciens.forEach(function (tech) {
             form.append(`
-                <div>
-                    <input type="checkbox" id="tech-${tech.id}" name="techniciens" value="${tech.id}">
-                    <label for="tech-${tech.id}">${tech.nom_personnel} ${tech.prenom_personnel}</label>
-                </div>
-            `);
+                    <div>
+                        <input type="checkbox" id="tech-${tech.id}" name="techniciens" value="${tech.id}">
+                        <label for="tech-${tech.id}">${tech.nom_personnel} ${tech.prenom_personnel}</label>
+                    </div>
+                `);
         });
 
         dialog.append(form);
@@ -359,35 +366,6 @@ $(document).ready(function () {
         });
     }
 
-    /*function declencherInterventionAvecTechniciens(doleanceId, techniciens) {
-        $.ajax({
-            url: '/home/declencher-intervention/' + doleanceId + '/',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify({techniciens: techniciens}),
-            contentType: 'application/json',
-            headers: {
-                'X-CSRFToken': getCSRFToken()
-            },
-            success: function (response) {
-                if (response.success) {
-                    // Rafraîchir la table des doléances
-                $('#demandeencours').DataTable().ajax.reload(null, false);
-                // Rafraîchir la table du personnel
-                $('#personnel').DataTable().ajax.reload(null, false);
-
-                    alert('Intervention déclenchée avec succès pour les techniciens sélectionnés.');
-                    window.location.href = '/home/intervention/' + response.intervention_id + '/';
-                } else {
-                    alert('Erreur lors du déclenchement de l\'intervention: ' + response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Erreur AJAX:", xhr.responseText);
-                alert('Erreur lors de la communication avec le serveur: ' + error);
-            }
-        });
-    }*/
     function declencherInterventionAvecTechniciens(doleanceId, techniciens) {
         $.ajax({
             url: '/home/declencher-intervention/' + doleanceId + '/',
@@ -460,54 +438,6 @@ $(document).ready(function () {
         return html;
     }
 
-    /*function terminerIntervention(interventionId) {
-        // Créer un dialogue modal avec des boutons radio
-        let dialog = $('<div title="Terminer l\'intervention">');
-        let form = $('<form>');
-        form.append('<p>Choisissez le statut final :</p>');
-        form.append('<input type="radio" id="ter" name="statut_final" value="TER"><label for="ter">TER (Terminé)</label><br>');
-        form.append('<input type="radio" id="atp" name="statut_final" value="ATP"><label for="atp">ATP (Attente Pièces)</label><br>');
-        form.append('<input type="radio" id="atd" name="statut_final" value="ATD"><label for="atd">ATD (Attente Décision)</label><br>');
-
-        dialog.append(form);
-
-        dialog.dialog({
-            modal: true,
-            buttons: {
-                "Valider": function () {
-                    let statut_final = form.find('input[name="statut_final"]:checked').val();
-                    if (!statut_final) {
-                        alert("Veuillez sélectionner un statut.");
-                        return;
-                    }
-
-                    $.ajax({
-                        url: '/home/intervention/' + interventionId + '/terminer/',
-                        type: 'POST',
-                        data: JSON.stringify({statut_final: statut_final}),
-                        contentType: 'application/json',
-                        headers: {'X-CSRFToken': getCookie('csrftoken')},
-                        success: function (response) {
-                            if (response.success) {
-                                alert('Intervention terminée avec succès.');
-                                location.reload(); // Recharge la page pour actualiser les données
-                            } else {
-                                alert('Erreur: ' + response.message);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            alert('Erreur: ' + xhr.responseText);
-                        }
-                    });
-
-                    $(this).dialog("close");
-                },
-                "Annuler": function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
-    }*/
 
     function getCookie(name) {
         let cookieValue = null;
@@ -568,67 +498,8 @@ $(document).ready(function () {
             }
         });
     });
-    /*function terminerIntervention(interventionId, statut) {
-        let formData = new FormData(document.getElementById('interventionForm'));
-        formData.append('statut_final', statut);
 
-        $.ajax({
-            url: '/home/intervention/' + interventionId + '/terminer/',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            headers: {'X-CSRFToken': getCookie('csrftoken')},
-            success: function (response) {
-                if (response.success) {
-                    alert('Intervention terminée avec succès.');
-                    window.location.href = '/home/'; // Redirection vers la page d'accueil
-                } else {
-                    alert('Erreur: ' + response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                alert('Erreur lors de la communication avec le serveur: ' + error);
-            }
-        });
-    }*/
-
-    /*$('#interventionForm').submit(function (e) {
-        e.preventDefault();
-
-        var statut_final = $('#statut-final-input').val();
-        if (!statut_final) {
-            alert("Veuillez sélectionner un statut final.");
-            return;
-        }
-
-        var interventionId = $('#intervention-id-input').val();
-        /!* récupérez l'ID de l'intervention depuis la page *!/
-        ;
-
-        $.ajax({
-            url: '/home/intervention/' + interventionId + '/terminer/',
-            type: 'POST',
-            data: JSON.stringify({
-                statut_final: statut_final,
-                // Ajoutez ici d'autres données du formulaire si nécessaire
-            }),
-            contentType: 'application/json',
-            headers: {'X-CSRFToken': getCookie('csrftoken')},
-            success: function (response) {
-                if (response.success) {
-                    alert('Intervention terminée avec succès.');
-                    window.location.href = '/home/'; // Redirigez vers la page d'accueil ou la liste des interventions
-                } else {
-                    alert('Erreur lors de la terminaison de l\'intervention: ' + response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                alert('Erreur lors de la communication avec le serveur: ' + error);
-            }
-        });
-    });*/
-    new Sortable(document.getElementById('personnel').querySelector('tbody'), {
+    /*new Sortable(document.getElementById('personnel').querySelector('tbody'), {
         group: {
             name: 'shared',
             pull: 'clone',
@@ -655,7 +526,7 @@ $(document).ready(function () {
             // Appeler la fonction pour affecter les techniciens
             affecterTechniciens(doleanceId, technicienIds);
         }
-    });
+    });*/
 
     function affecterTechniciens(doleanceId, technicienIds) {
         $.ajax({
@@ -681,6 +552,27 @@ $(document).ready(function () {
             }
         });
     }
+
+    /*function loadTechnicienPortfolio() {
+        $.ajax({
+            url: '/get-technicien-portfolio/',
+            type: 'GET',
+            success: function (response) {
+                if (response.success) {
+                    updatePortfolioTable(response.doleances);
+                } else {
+                    alert('Erreur lors du chargement du portefeuille : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur de communication avec le serveur');
+            }
+        });
+    }*/
+
+
+    // Charger le portefeuille au chargement de la page si l'utilisateur est un technicien
+
 
 });
 

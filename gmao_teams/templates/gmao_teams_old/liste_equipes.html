@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Liste des équipes{% endblock title %}
+{% block nav-btn %}
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
+       id="btn-nav">
+        Logout
+    </a>
+    <a href="{% url 'gmao:liste_interventions' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
+        Liste des interventions
+    </a>
+    <a href="{% url 'gmao:toutes_les_doleances' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
+        Liste des doléances
+    </a>
+    {% if user.role == 'ADMIN' %}
+        <a href="{% url 'equipes:liste_equipes' %}"
+           class="btn btn-outline-success text-center text-light border-light btn-sm mx-2" id="btn-nav">
+            Gestion des équipes
+        </a>
+    {% endif %}
+{% endblock nav-btn %}
+{% block navbar-content %}
+    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
+    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
+{% endblock navbar-content %}
+{% block content %}
+    <div class="container mt-4">
+        <h2>Liste des équipes</h2>
+        <table class="table table-striped" id="equipeTable">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for equipe in equipes %}
+                <tr>
+                    <td>{{ equipe.nom }}</td>
+                    <td>{{ equipe.description }}</td>
+                    <td>
+                        <a href="{% url 'equipes:affecter_technicien' equipe.id %}" class="btn btn-sm btn-primary">Affecter
+                            des techniciens</a>
+                        <a href="{% url 'equipes:attribuer_doleance' equipe.id %}" class="btn btn-sm btn-secondary">Attribuer
+                            des doléances</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'gmao_teams/js/equipes.js' %}"></script>
+{% endblock extra_js %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Affecter des techniciens{% endblock title %}
+{% block extra_css %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <style>
+        .select2-container .select2-selection--multiple {
+            min-height: 200px; /* Augmente la hauteur de la boîte de sélection */
+        }
+
+        .select2-container .select2-selection--multiple .select2-selection__rendered {
+            max-height: 190px; /* Permet le défilement si beaucoup d'options sont sélectionnées */
+            overflow-y: auto;
+        }
+
+        .select2-container .select2-results__options {
+            max-height: 400px; /* Augmente la hauteur de la liste déroulante */
+        }
+
+        .select2-container {
+            width: 100% !important; /* Assure que le conteneur prend toute la largeur disponible */
+        }
+    </style>
+{% endblock extra_css %}
+{% block nav-btn %}
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
+       id="btn-nav">
+        Logout
+    </a>
+    <a href="{% url 'gmao:liste_interventions' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
+        Liste des interventions
+    </a>
+    <a href="{% url 'gmao:toutes_les_doleances' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
+        Liste des doléances
+    </a>
+    {% if user.role == 'ADMIN' %}
+        <a href="{% url 'equipes:liste_equipes' %}"
+           class="btn btn-outline-success text-center text-light border-light btn-sm mx-2" id="btn-nav">
+            Gestion des équipes
+        </a>
+    {% endif %}
+{% endblock nav-btn %}
+{% block navbar-content %}
+    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
+    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
+{% endblock navbar-content %}
+{% block content %}
+    <h1>Portefeuille de doléances de l'équipe {{ equipe.nom }}</h1>
+
+    {% if doleances %}
+        <table>
+            <thead>
+            <tr>
+                <th>NDI</th>
+                <th>Panne déclarée</th>
+                <th>Date de transmission</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for doleance in doleances %}
+                <tr>
+                    <td>{{ doleance.ndi }}</td>
+                    <td>{{ doleance.panne_declarer }}</td>
+                    <td>{{ doleance.date_transmission }}</td>
+                    <td>
+                        <a href="{% url 'prendre_en_charge_doleance' equipe.id doleance.id %}">Prendre en charge</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune doléance en attente pour cette équipe.</p>
+    {% endif %}
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{% static 'gmao_teams/js/equipes.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2-multiple').select2({
+                placeholder: "Sélectionnez un ou plusieurs techniciens",
+                allowClear: true,
+                closeOnSelect: false,  // Empêche la fermeture après sélection
+                scrollAfterSelect: false
+            });
+        });
+    </script>
+{% endblock extra_js %}

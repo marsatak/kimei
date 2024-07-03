@@ -48,6 +48,25 @@ logger = logging.getLogger(__name__)
 #         else:
 #             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
 #     return render(request, 'accounts/login.html')
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             try:
+#                 personnel = Personnel.objects.get(matricule=username)
+#                 if personnel.statut not in ['ATT', 'INT']:
+#                     personnel.statut = 'PRS'
+#                     personnel.save()
+#             except Personnel.DoesNotExist:
+#                 messages.warning(request, "Profil personnel non trouvé.")
+#             return redirect('gmao:home')
+#         else:
+#             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
+#     return render(request, 'accounts/login.html')
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']

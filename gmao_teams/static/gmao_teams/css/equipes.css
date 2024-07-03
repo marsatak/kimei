@@ -1,0 +1,103 @@
+/* gmao_teams/static/gmao_teams/css/equipes.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#listeEquipes {
+    margin-bottom: 30px;
+}
+
+#listeEquipes ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#listeEquipes li {
+    margin-bottom: 10px;
+}
+
+.equipe-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.equipe-link:hover {
+    text-decoration: underline;
+}
+
+#detailsEquipe {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#listeTechniciens, #listeDoléances {
+    margin-bottom: 20px;
+}
+
+#listeTechniciens ul, #listeDoléances ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#listeTechniciens li, #listeDoléances li {
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+.modal-content {
+    border-radius: 0;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+/* Styles pour les messages de succès/erreur */
+.alert {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}

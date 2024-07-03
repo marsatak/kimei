@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestion des équipes{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gmao_teams/css/equipes.css' %}">
+{% endblock extra_css %}
+
+{% block nav-btn %}
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
+       id="btn-nav">Logout</a>
+    <a href="{% url 'gmao:liste_interventions' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des
+        interventions</a>
+    <a href="{% url 'gmao:toutes_les_doleances' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des doléances</a>
+    {% if user.role == 'ADMIN' %}
+        <a href="#"
+           class="btn btn-outline-success text-center text-light border-light btn-sm mx-2" id="btn-nav">Gestion des
+            équipes</a>
+    {% endif %}
+{% endblock nav-btn %}
+
+{% block navbar-content %}
+    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
+    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
+{% endblock navbar-content %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Gestion des équipes</h1>
+
+        <button id="creerEquipe" class="btn btn-primary mb-3">Créer une équipe</button>
+
+        <div id="listeEquipes"></div>
+
+        <div id="detailsEquipe" style="display: none;">
+            <h2 id="equipeNom"></h2>
+            <p id="equipeDescription"></p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Techniciens de l'équipe</h3>
+                    <ul id="listeTechniciens"></ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>Techniciens disponibles</h3>
+                    <ul id="listeTechniciensDisponibles"></ul>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h3>Doléances de l'équipe</h3>
+                    <ul id="listeDoléances"></ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>Doléances non attribuées</h3>
+                    <ul id="listeDoléancesNonAttribuées"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour créer une équipe -->
+    <div class="modal fade" id="creerEquipeModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Créer une nouvelle équipe</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="creerEquipeForm">
+                        <div class="form-group">
+                            <label for="nom">Nom de l'équipe</label>
+                            <input type="text" class="form-control" id="nom" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary" id="saveEquipe">Sauvegarder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        var LISTE_EQUIPES_URL = "{% url 'gmao_teams:liste_equipes' %}";
+        var CREER_EQUIPE_URL = "{% url 'gmao_teams:creer_equipe' %}";
+        var GET_EQUIPE_DETAILS_URL = "{% url 'gmao_teams:get_equipe_details' 0 %}";
+        var AFFECTER_TECHNICIEN_URL = "{% url 'gmao_teams:affecter_technicien' 0 %}";
+        var ATTRIBUER_DOLEANCE_URL = "{% url 'gmao_teams:attribuer_doleance' 0 %}";
+        var RETIRER_TECHNICIEN_URL = "{% url 'gmao_teams:retirer_technicien' 0 %}";
+        var RETIRER_DOLEANCE_URL = "{% url 'gmao_teams:retirer_doleance' 0 %}";
+        var GET_TECHNICIENS_DISPONIBLES_URL = "{% url 'gmao_teams:get_techniciens_disponibles' %}";
+        var GET_DOLEANCES_NON_ATTRIBUEES_URL = "{% url 'gmao_teams:get_doleances_non_attribuees' %}";
+    </script>
+    <script src="{% static 'gmao_teams/js/equipes.js' %}"></script>
+{% endblock extra_js %}

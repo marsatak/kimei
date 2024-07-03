@@ -5,26 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kimei.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accounts/auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accounts/management/commands/sync_employees.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accounts/static/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accounts/static/accounts/0002_alter_employee_options_employee_adresse_employee_cin_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accounts/static/accounts/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accounts/templates/accounts/change_password.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accounts/templates/accounts/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/migrations/0001_create_employees_from_personnel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/templates/gmao/home_ok.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/test.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/bootstrap.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/Passage/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/css/equipes.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old/affecter_technicien.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old/attribuer_doleance.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old/creer_equipe.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old/liste_equipes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old/portefeuille_equipe.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao_teams/views_.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/staticfiles/admin/css/autocomplete.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/staticfiles/admin/css/base.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/staticfiles/admin/css/changelists.css" afterDir="false" />
@@ -10004,25 +9999,17 @@
       <change afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/default.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/jquery-3.5.1.min.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/prettify-min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/management/commands/sync_employees.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/migrations/0001_create_employees_from_personnel.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/0001_create_employees_from_personnel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/temp.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/temp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/create_doleance.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/create_doleance.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_doleance.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_doleance.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention_.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kimei/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/db_routers.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/db_routers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10040,10 +10027,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
-        <option value="JavaScript File" />
         <option value="Python Script" />
         <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -10087,7 +10074,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/Revision/29062024/kimei/static/js&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/gmao/templates/gmao&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
@@ -10108,13 +10095,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
+      <recent name="$PROJECT_DIR$/gmao_teams" />
       <recent name="$PROJECT_DIR$/static/js" />
       <recent name="$PROJECT_DIR$/accounts/templates/accounts" />
       <recent name="$PROJECT_DIR$/accounts/migrations" />
-      <recent name="$PROJECT_DIR$/accounts" />
-      <recent name="$PROJECT_DIR$/gmao" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/Passage" />
       <recent name="$PROJECT_DIR$/accounts/static/accounts" />
       <recent name="$PROJECT_DIR$/accounts/migrations" />
       <recent name="$PROJECT_DIR$/accounts/static" />
@@ -10200,7 +10188,10 @@
       <workItem from="1719774301327" duration="7205000" />
       <workItem from="1719815261497" duration="24549000" />
       <workItem from="1719849928526" duration="13779000" />
-      <workItem from="1719894846600" duration="15002000" />
+      <workItem from="1719894846600" duration="16197000" />
+      <workItem from="1719942255528" duration="11123000" />
+      <workItem from="1719979248368" duration="12303000" />
+      <workItem from="1719997129277" duration="15458000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -10210,11 +10201,30 @@
       <option name="project" value="LOCAL" />
       <updated>1719682911392</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1719923314945</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1719923314945</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

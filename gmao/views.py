@@ -50,6 +50,8 @@ from django.core.exceptions import ValidationError
 from django.db import DatabaseError
 from django.db.models.functions import ExtractYear
 from django.db.models.functions import TruncYear
+from .models import Doleance, Intervention
+from gmao_teams.models import EquipePersonnel, DoleanceEquipe
 
 logger = logging.getLogger(__name__)
 
@@ -98,48 +100,110 @@ def test_db_connection(request):
         return HttpResponse(f"Erreur : {str(e)}")
 
 
-@login_required
-def home(request):
-    form = DoleanceForm()
-    if request.user.role == 'ADMIN':
-        doleances = Doleance.objects.using('kimei_db').all()
-        techniciens = Employee.objects.filter(role='TECH', statut='PRS')
-    else:
-        personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-        interventions = InterventionPersonnel.objects.using('kimei_db').filter(personnel=personnel)
-        doleances = Doleance.objects.using('kimei_db').filter(intervention__in=interventions.values('intervention'))
-        techniciens = None
-
-    context = {
-        'form': form,
-        'doleances': doleances,
-        'techniciens': techniciens,
-    }
-    return render(request, 'gmao/home.html', context)
+# @login_required
+# def home(request):
+#     form = DoleanceForm()
+#     if request.user.role == 'ADMIN':
+#         doleances = Doleance.objects.using('kimei_db').all()
+#         techniciens = Employee.objects.filter(role='TECH', statut='PRS')
+#     else:
+#         personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+#         interventions = InterventionPersonnel.objects.using('kimei_db').filter(personnel=personnel)
+#         doleances = Doleance.objects.using('kimei_db').filter(intervention__in=interventions.values('intervention'))
+#         techniciens = None
+#
+#     context = {
+#         'form': form,
+#         'doleances': doleances,
+#         'techniciens': techniciens,
+#     }
+#     return render(request, 'gmao/home.html', context)
 
 
 # #####################Liste Doléances En Cours######################
+@login_required
+def home(request):
+    form = DoleanceForm()
+    context = {
+        'form': form,
+        'user_role': request.user.role,
+    }
+    print(request.user.role)
+
+    if request.user.role == 'ADMIN':
+        doleances = Doleance.objects.using('kimei_db').all()
+        techniciens = Employee.objects.filter(role='TECH', statut='PRS')
+        context.update({
+            'doleances': doleances,
+            'techniciens': techniciens,
+        })
+    elif request.user.role == 'TECH':
+        personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+        equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
+        if equipe:
+            doleance_ids = DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe.equipe).values_list(
+                'doleance_id', flat=True)
+            doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+            context.update({
+                'doleances': doleances,
+            })
+
+    return render(request, 'gmao/home.html', context)
 
 
+# @api_view(['GET'])
+# def getDoleanceEncours(request):
+#     try:
+#         # current_date = timezone.now()
+#         doleances = (Doleance.objects.all().filter(
+#             date_transmission__month=datetime.now().month,
+#             date_transmission__year=datetime.now().year,
+#             date_transmission__day=datetime.now().day,
+#         )
+#                      .exclude(statut='TER')
+#                      .order_by('-date_transmission'))
+#
+#         doleances_serializer = DoleanceSerializer(doleances, many=True)
+#         return Response(doleances_serializer.data)
+#     except Exception as e:
+#         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# #####################Liste Poste######################
 @api_view(['GET'])
 def getDoleanceEncours(request):
     try:
-        # current_date = timezone.now()
-        doleances = (Doleance.objects.all().filter(
-            date_transmission__month=datetime.now().month,
+        doleances = (Doleance.objects.all()
+                     .filter(
             date_transmission__year=datetime.now().year,
+            date_transmission__month=datetime.now().month,
             date_transmission__day=datetime.now().day,
         )
                      .exclude(statut='TER')
                      .order_by('-date_transmission'))
 
-        doleances_serializer = DoleanceSerializer(doleances, many=True)
-        return Response(doleances_serializer.data)
+        doleances_data = []
+        for doleance in doleances:
+            doleance_dict = DoleanceSerializer(doleance).data
+            buttons = ''
+            if doleance.statut == 'NEW':
+                buttons += f'<button class="btn btn-primary btn-sm prendre-en-charge" data-id="{doleance.id}">Prendre en charge</button> '
+            elif doleance.statut == 'ATT':
+                intervention = Intervention.objects.filter(doleance=doleance, is_done=False).first()
+                if intervention:
+                    buttons += f'<button class="btn btn-success btn-sm commencer-intervention" data-id="{intervention.id}">Commencer</button> '
+            elif doleance.statut == 'INT':
+                intervention = Intervention.objects.filter(doleance=doleance, is_done=False).first()
+                if intervention:
+                    buttons += f'<button class="btn btn-warning btn-sm terminer-intervention" data-id="{intervention.id}">Terminer</button> '
+            doleance_dict['actions'] = buttons
+            doleances_data.append(doleance_dict)
+
+        return Response(doleances_data)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# #####################Liste Poste######################
 @api_view(['GET'])
 def getPoste(request):
     postes = Poste.objects.all()
@@ -230,25 +294,6 @@ def postPointage(request):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# def postPointage(request):
-#     date_heure_arrive = datetime.now()
-#     data = request.data
-#     pointageToday = (Pointage.objects.all()
-#                      .filter(date_heure_arrive__month=datetime.now().month)
-#                      .filter(date_heure_arrive__year=datetime.now().year)
-#                      .filter(date_heure_arrive__day=datetime.now().day)
-#                      .filter(personnel_id=data['personnel_id']))
-#     if pointageToday:
-#         print(pointageToday)
-#     else:
-#         pointage = Pointage.objects.create(
-#             personnel_id=data['personnel_id'],
-#             date_heure_arrive=date_heure_arrive)
-#         serializer = PointageSerializer(pointage, many=False)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(status=status.HTTP_400_BAD_REQUEST)
-
-# #####################Maj Statut Pointage Pour Un Personnel######################
 @api_view(['PUT'])
 def putPointage(request, pk):
     serializer = PointageSerializer(data=request.data)
@@ -371,50 +416,13 @@ def load_elements(request):
     return JsonResponse(elements)
 
 
-# modifier le 2 juillet 2024 pour intégrer le kilométrage
-# def commencer_intervention(request, intervention_id):
-#     try:
-#         print('Début de commencer_intervention')
-#         intervention = get_object_or_404(Intervention, id=intervention_id)
-#         print(f'Intervention trouvée: {intervention}')
-#
-#         if not intervention.top_debut:
-#             intervention.top_debut = timezone.now()
-#             intervention.is_half_done = True
-#             intervention.etat_doleance = 'INT'
-#             intervention.save()
-#             print(f"Intervention mise à jour: {intervention}")
-#
-#         doleance = intervention.doleance
-#         doleance.statut = 'INT'
-#         doleance.save()
-#         print(f"Doléance mise à jour: {doleance}")
-#
-#         intervention_personnels = InterventionPersonnel.objects.filter(intervention=intervention)
-#
-#         for intervention_personnel in intervention_personnels:
-#             technicien = intervention_personnel.personnel
-#             technicien.statut = 'INT'
-#             technicien.save()
-#             print(f"Technicien mis à jour: {technicien}")
-#
-#         return JsonResponse({
-#             'success': True,
-#             'message': 'Intervention déclenchée avec succès',
-#         })
-#     except Exception as e:
-#         print(f"Erreur lors de la mise à jour de l'intervention: {str(e)}")
-#         return JsonResponse({'success': False, 'message': str(e)})
-#
-#         # return JsonResponse({'success': False, 'message': 'Intervention déjà commencée'})
-
-
-#
 @require_http_methods(["GET", "POST"])
 def commencer_intervention(request, intervention_id):
     try:
         intervention = get_object_or_404(Intervention, id=intervention_id)
         kilometrage = request.POST.get('kilometrage')
+        if intervention.etat_doleance != 'ATT':
+            return JsonResponse({'success': False, 'message': 'L\'intervention n\'est pas en attente'})
 
         if not intervention.top_debut:
             intervention.top_debut = timezone.now()
@@ -539,72 +547,6 @@ def detail_intervention(request, intervention_id):
     })
 
 
-# def terminer_travail(request, intervention_id):
-#     try:
-#         intervention = get_object_or_404(Intervention, id=intervention_id)
-#
-#         statut_final = request.POST.get('statut_final', '').upper()
-#
-#         if not statut_final or statut_final not in ['TER', 'ATP', 'ATD']:
-#             return JsonResponse({'success': False, 'message': f'Statut final invalide: {statut_final}'})
-#
-#         intervention.is_done = True
-#         intervention.etat_doleance = statut_final
-#         intervention.description_panne = request.POST.get('description_panne', '').upper()
-#         intervention.resolution = request.POST.get('resolution', '').upper()
-#         intervention.observations = request.POST.get('observations', '').upper()
-#         intervention.pieces_changees = request.POST.get('pieces_changees', '').upper()
-#         intervention.top_terminer = timezone.now()
-#
-#         # Traitement du numéro de fiche
-#         numero_fiche = request.POST.get('numero_fiche', '')
-#         try:
-#             numero_fiche = int(numero_fiche)
-#             if numero_fiche < 0 or numero_fiche > 99999:
-#                 raise ValueError("Le numéro de fiche doit être entre 0 et 99999")
-#
-#             numero_fiche_complet = f"00{numero_fiche:05d}"
-#
-#             if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
-#                 raise ValidationError("Ce numéro de fiche est déjà utilisé")
-#
-#             intervention.numero_fiche = numero_fiche_complet
-#         except ValueError as e:
-#             return JsonResponse({'success': False, 'message': f'Erreur de format pour le numéro de fiche: {str(e)}'})
-#         except ValidationError as e:
-#             return JsonResponse({'success': False, 'message': str(e)})
-#
-#         # Calculer la durée de l'intervention
-#         if intervention.top_debut:
-#             duree = intervention.top_terminer - intervention.top_debut
-#             intervention.duree_intervention = int(duree.total_seconds())
-#         else:
-#             intervention.duree_intervention = 0
-#
-#         intervention.save()
-#
-#         # Mise à jour de la doléance
-#         doleance = intervention.doleance
-#         doleance.statut = statut_final
-#         interventions = Intervention.objects.filter(doleance=doleance)
-#         doleance.date_debut = interventions.aggregate(Min('top_debut'))['top_debut__min']
-#         doleance.date_fin = interventions.aggregate(Max('top_terminer'))['top_terminer__max']
-#         doleance.save()
-#
-#         # Mise à jour des techniciens
-#         intervention = Intervention.objects.get(id=intervention_id)
-#         intervention.doleance.statut = statut_final
-#         intervention.doleance.save()
-#         intervention.personnel.update(statut='PRS')
-#         # InterventionPersonnel.objects.filter(intervention=intervention).update(personnel__statut='PRS')
-#         if form.is_valid():
-#             return JsonResponse({'success': True, 'message': 'Intervention terminée avec succès'})
-#         else:
-#             return JsonResponse({'success': False, 'message': form.errors})
-#     except Exception as e:
-#         return JsonResponse({'success': False, 'message': f'Erreur inattendue: {str(e)}'})
-
-# #####################Terminer une intervention######################
 @csrf_exempt
 @require_POST
 def terminer_travail(request, intervention_id):
@@ -734,27 +676,60 @@ def get_doleances_data(request):
     return JsonResponse({'data': data})
 
 
-@require_POST
+# def attribuer_tache(request):
+#     if request.user.role != 'ADMIN':
+#         return JsonResponse({'success': False, 'message': 'Unauthorized'}, status=403)
+#
+#     doleance_id = request.POST.get('doleance_id')
+#     technicien_ids = request.POST.getlist('technicien_ids[]')
+#
+#     try:
+#         doleance = Doleance.objects.using('kimei_db').get(id=doleance_id)
+#         techniciens = Employee.objects.filter(id__in=technicien_ids)
+#
+#         intervention = Intervention.objects.using('kimei_db').create(doleance=doleance)
+#         for technicien in techniciens:
+#             personnel = Personnel.objects.using('kimei_db').get(matricule=technicien.matricule)
+#             InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=personnel)
+#             technicien.statut = 'ATT'
+#             technicien.save()
+#
+#         return JsonResponse({'success': True})
+#     except Exception as e:
+#         return JsonResponse({'success': False, 'message': str(e)})
+@require_http_methods(["GET", "POST"])
 @login_required
-def attribuer_tache(request):
-    if request.user.role != 'ADMIN':
-        return JsonResponse({'success': False, 'message': 'Unauthorized'}, status=403)
-
-    doleance_id = request.POST.get('doleance_id')
-    technicien_ids = request.POST.getlist('technicien_ids[]')
-
+def prendre_en_charge(request, doleance_id):
+    logger.info(f"Tentative de prise en charge de la doléance {doleance_id}")
     try:
-        doleance = Doleance.objects.using('kimei_db').get(id=doleance_id)
-        techniciens = Employee.objects.filter(id__in=technicien_ids)
+        doleance = get_object_or_404(Doleance, id=doleance_id)
 
-        intervention = Intervention.objects.using('kimei_db').create(doleance=doleance)
-        for technicien in techniciens:
-            personnel = Personnel.objects.using('kimei_db').get(matricule=technicien.matricule)
-            InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=personnel)
-            technicien.statut = 'ATT'
-            technicien.save()
+        if doleance.statut not in ['NEW', 'ATP', 'ATD']:
+            return JsonResponse({'success': False, 'message': 'Cette doléance ne peut pas être prise en charge'})
 
-        return JsonResponse({'success': True})
+        intervention = Intervention.objects.create(
+            doleance=doleance,
+            top_depart=timezone.now(),
+            is_done=False,
+            is_half_done=False,
+            is_going_home=False,
+            etat_doleance='ATT'
+        )
+
+        doleance.statut = 'ATT'
+        doleance.save()
+
+        # Associer le technicien connecté à l'intervention
+        technicien = Personnel.objects.get(matricule=request.user.matricule)
+        InterventionPersonnel.objects.create(intervention=intervention, personnel=technicien)
+        technicien.statut = 'ATT'
+        technicien.save()
+
+        return JsonResponse({
+            'success': True,
+            'message': 'Doléance prise en charge avec succès',
+            'intervention_id': intervention.id
+        })
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
 
@@ -791,3 +766,43 @@ def affecter_techniciens(request, doleance_id):
         return JsonResponse({'success': True, 'message': 'Techniciens affectés avec succès'})
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
+
+
+@login_required
+def get_technicien_portfolio(request):
+    if request.user.role != 'TECH':
+        return JsonResponse({'success': False, 'message': 'Accès non autorisé'})
+
+    personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+    equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
+
+    if not equipe:
+        return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
+
+    # Récupérer d'abord les IDs des doléances
+    doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
+                        .filter(equipe=equipe.equipe)
+                        .values_list('doleance_id', flat=True))
+
+    # Ensuite, utiliser ces IDs pour récupérer les doléances
+    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+
+    print(f"Personnel: {personnel}")
+    print(f"Equipe: {equipe}")
+    print(f"Doleance IDs: {doleance_ids}")
+    print(f"Nombre de doléances: {doleances.count()}")
+
+    doleances_data = [{
+        'id': d.id,
+        'ndi': d.ndi,
+        'station': d.station.libelle_station,
+        'element': d.element,
+        'panne_declarer': d.panne_declarer,
+        'statut': d.statut
+    } for d in doleances]
+
+    return JsonResponse({
+        'success': True,
+        'doleances': doleances_data,
+        'equipe': equipe.equipe.nom,
+    })

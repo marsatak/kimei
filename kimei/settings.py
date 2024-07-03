@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     # local app
     'gmao.apps.GmaoConfig',
     "accounts.apps.AccountsConfig",
+    "gmao_teams.apps.GmaoTeamsConfig",
+
     # third party 
     'rest_framework',
     'corsheaders',
@@ -118,6 +120,13 @@ DATABASES = {
         'PASSWORD': 'Mei*2030',
         'HOST': 'kimei.softether.net',
     },
+    'teams_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'teams',
+        'USER': 'Daniel',
+        'PASSWORD': 'Mei*2030',
+        'HOST': 'kimei.softether.net',
+    },
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -170,6 +179,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "accounts.Employee"
 DATABASE_ROUTERS = ['routers.db_routers.AuthRouter',
                     'routers.db_routers.KimeiRouter',
+                    'routers.db_routers.TeamsRouter',
                     ]
 AUTHENTICATION_BACKENDS = [
     'accounts.auth.PersonnelAuthBackend',
