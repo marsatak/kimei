@@ -2,6 +2,7 @@ import json
 import logging
 from datetime import datetime
 from django.contrib import messages
+from django.urls import reverse
 from django.core.cache import cache
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -757,7 +758,8 @@ def prendre_en_charge(request, doleance_id):
         return JsonResponse({
             'success': True,
             'message': 'Doléance prise en charge avec succès par l\'équipe',
-            'intervention_id': intervention.id
+            'intervention_id': intervention.id,
+            'redirect_url': reverse('gmao:liste_interventions')
         })
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})

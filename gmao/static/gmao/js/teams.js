@@ -79,8 +79,17 @@ $(document).ready(function () {
             headers: {'X-CSRFToken': getCookie('csrftoken')},
             success: function (response) {
                 if (response.success) {
-                    alert('Doléance prise en charge avec succès');
-                    refreshDoleanceTable(); // On garde cet appel
+                    /*                    alert('Doléance prise en charge avec succès');
+                                        refreshDoleanceTable(); // On garde cet appel*/
+                    // Faire disparaître le bouton
+                    $(`.prendre-en-charge[data-id="${doleanceId}"]`).fadeOut();
+
+                    // Afficher un message de succès
+                    alert(response.message);
+
+                    // Rediriger vers la liste des interventions
+                    window.location.href = response.redirect_url;
+
                 } else {
                     alert('Erreur : ' + response.message);
                 }
