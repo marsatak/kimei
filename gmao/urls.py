@@ -41,6 +41,9 @@ urlpatterns = [
     path('api/get-available-years/', views.get_available_years, name='get_available_years'),
     path('get-technicien-portfolio/', views.get_technicien_portfolio, name='get_technicien_portfolio'),
     path('home/prendre-en-charge/<int:doleance_id>/', views.prendre_en_charge, name='prendre_en_charge'),
+    path('home/annuler-prise-en-charge/<int:intervention_id>/', views.annuler_prise_en_charge,
+         name='annuler_prise_en_charge'),
+    
     # path('home/doleanceencours', views.doleanceencours, name='doleanceencours'),
     # Json des doléances / Toutes les doléances terminées
     # path('home/doleanceListTer', views.doleanceListTer, name='doleanceListTer'),

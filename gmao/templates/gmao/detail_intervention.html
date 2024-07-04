@@ -101,6 +101,11 @@
         <button class="btn btn-danger btn-sm annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
     {% endif %}
     <h2>Détails de l'intervention pour la doléance {{ intervention.doleance.ndi }}</h2>
+    {% comment %}{% if not intervention.is_done %}
+        <button class="btn btn-danger btn-sm annuler-prise-en-charge" data-id="{{ intervention.id }}">Annuler la prise
+            en charge
+        </button>
+    {% endif %}{% endcomment %}
     <p>{{ intervention.doleance.panne_declarer }}</p>
 
     <div class="row">
@@ -426,5 +431,31 @@
             }
             return cookieValue;
         }
+    </script>
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            $('.annuler-prise-en-charge').click(function () {
+                const interventionId = $(this).data('id');
+                if (confirm('Êtes-vous sûr de vouloir annuler cette prise en charge ?')) {
+                    $.ajax({
+                        url: '{% url "gmao:annuler_prise_en_charge" intervention.id %}',
+                        type: 'POST',
+                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+                                window.location.href = '{% url "gmao:liste_interventions" %}';  // Redirige vers la liste des interventions
+                            } else {
+                                alert('Erreur : ' + response.message);
+                            }
+                        },
+                        error: function () {
+                            alert('Une erreur est survenue lors de l\'annulation de la prise en charge.');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 {% endblock extra_js %}

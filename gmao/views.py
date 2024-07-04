@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.shortcuts import render, redirect
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.db import transaction
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import csrf_exempt
 from excel_response import ExcelResponse
@@ -152,25 +152,6 @@ def home(request):
     return render(request, 'gmao/home.html', context)
 
 
-# @api_view(['GET'])
-# def getDoleanceEncours(request):
-#     try:
-#         # current_date = timezone.now()
-#         doleances = (Doleance.objects.all().filter(
-#             date_transmission__month=datetime.now().month,
-#             date_transmission__year=datetime.now().year,
-#             date_transmission__day=datetime.now().day,
-#         )
-#                      .exclude(statut='TER')
-#                      .order_by('-date_transmission'))
-#
-#         doleances_serializer = DoleanceSerializer(doleances, many=True)
-#         return Response(doleances_serializer.data)
-#     except Exception as e:
-#         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-# #####################Liste Poste######################
 @api_view(['GET'])
 def getDoleanceEncours(request):
     try:
@@ -445,6 +426,7 @@ def commencer_intervention(request, intervention_id):
         return JsonResponse({
             'success': True,
             'message': 'Intervention déclenchée avec succès',
+            'intervention_id': intervention.id
         })
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
@@ -742,49 +724,45 @@ def get_doleances_data(request):
     return JsonResponse({'data': data})
 
 
-# def attribuer_tache(request):
-#     if request.user.role != 'ADMIN':
-#         return JsonResponse({'success': False, 'message': 'Unauthorized'}, status=403)
-#
-#     doleance_id = request.POST.get('doleance_id')
-#     technicien_ids = request.POST.getlist('technicien_ids[]')
-#
-#     try:
-#         doleance = Doleance.objects.using('kimei_db').get(id=doleance_id)
-#         techniciens = Employee.objects.filter(id__in=technicien_ids)
-#
-#         intervention = Intervention.objects.using('kimei_db').create(doleance=doleance)
-#         for technicien in techniciens:
-#             personnel = Personnel.objects.using('kimei_db').get(matricule=technicien.matricule)
-#             InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=personnel)
-#             technicien.statut = 'ATT'
-#             technicien.save()
-#
-#         return JsonResponse({'success': True})
-#     except Exception as e:
-#         return JsonResponse({'success': False, 'message': str(e)})
-
-
 @login_required
 @require_POST
 def prendre_en_charge(request, doleance_id):
     logger.info(f"Tentative de prise en charge de la doléance {doleance_id}")
     try:
-        doleance = get_object_or_404(Doleance, id=doleance_id)
+        doleance = get_object_or_404(Doleance.objects.using('kimei_db'), id=doleance_id)
+        logger.info(f"Doléance trouvée: {doleance} {doleance.statut}")
 
         if doleance.statut not in ['NEW', 'ATP', 'ATD']:
             return JsonResponse({'success': False, 'message': 'Cette doléance ne peut pas être prise en charge'})
 
-        # Trouver l'équipe du technicien connecté
-        technicien = Personnel.objects.get(matricule=request.user.matricule)
+        technicien = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+        logger.info(f"Technicien trouvé: {technicien}")
+
         equipe_personnel = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
+        logger.info(f"EquipePersonnel trouvé: {equipe_personnel}")
 
         if not equipe_personnel:
             return JsonResponse({'success': False, 'message': 'Ce technicien n\'appartient à aucune équipe'})
 
         equipe = equipe_personnel.equipe
+        logger.info(f"Équipe trouvée: {equipe}")
 
-        intervention = Intervention.objects.create(
+        # Vérifier si la doléance est déjà associée à une équipe
+        # existing_association = DoleanceEquipe.objects.using('teams_db').filter(doleance_id=doleance.id).first()
+        # if existing_association:
+        #     if existing_association.equipe_id != equipe.id:
+        #         # Si la doléance est associée à une autre équipe, la dissocier
+        #         existing_association.delete()
+        #     else:
+        #         # Si la doléance est déjà associée à cette équipe, ne rien faire
+        #         logger.info(f"La doléance {doleance_id} est déjà associée à l'équipe {equipe.id}")
+        #         return JsonResponse({
+        #             'success': True,
+        #             'message': 'Cette doléance est déjà prise en charge par votre équipe',
+        #             'intervention_id': None
+        #         })
+
+        intervention = Intervention.objects.using('kimei_db').create(
             doleance=doleance,
             top_depart=timezone.now(),
             is_done=False,
@@ -792,27 +770,65 @@ def prendre_en_charge(request, doleance_id):
             is_going_home=False,
             etat_doleance='ATT'
         )
+        logger.info(f"Intervention créée: {intervention}")
 
         doleance.statut = 'ATT'
-        doleance.save()
+        doleance.save(using='kimei_db')
 
-        # Associer tous les membres de l'équipe à l'intervention
-        membres_equipe = Personnel.objects.filter(id__in=equipe.get_personnel_ids())
+        membres_equipe = Personnel.objects.using('kimei_db').filter(id__in=equipe.get_personnel_ids())
         for membre in membres_equipe:
-            InterventionPersonnel.objects.create(intervention=intervention, personnel=membre)
+            InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=membre)
             membre.statut = 'ATT'
-            membre.save()
+            membre.save(using='kimei_db')
 
-        # Associer la doléance à l'équipe
-        DoleanceEquipe.objects.create(equipe=equipe, doleance_id=doleance.id)
+        # Créer ou mettre à jour l'association DoleanceEquipe
+        DoleanceEquipe.objects.using('teams_db').update_or_create(
+            equipe=equipe,
+            doleance_id=doleance.id,
+            defaults={'equipe': equipe, 'doleance_id': doleance.id}
+        )
 
         return JsonResponse({
             'success': True,
             'message': 'Doléance prise en charge avec succès par l\'équipe',
-            'intervention_id': intervention.id
+            'intervention_id': intervention.id,
+            'redirect_url': reverse('gmao:detail_intervention', args=[intervention.id])
         })
     except Exception as e:
-        logger.error(f"Erreur lors de la prise en charge: {str(e)}")
+        logger.error(f"Erreur lors de la prise en charge: {str(e)}", exc_info=True)
+        return JsonResponse({'success': False, 'message': str(e)})
+
+
+@login_required
+@require_POST
+def annuler_prise_en_charge(request, intervention_id):
+    try:
+
+        intervention = get_object_or_404(Intervention, id=intervention_id)
+        doleance = intervention.doleance
+        doleance.statut = 'NEW'
+        doleance.save()
+
+        # Réinitialiser l'intervention
+        intervention.delete()
+
+        # Réinitialiser la doléance
+
+        # Réinitialiser le statut des techniciens
+        intervention_personnels = InterventionPersonnel.objects.filter(intervention=intervention)
+        for intervention_personnel in intervention_personnels:
+            technicien = intervention_personnel.personnel
+            technicien.statut = 'PRS'
+            technicien.save()
+
+        # Supprimer l'association de la doléance à l'équipe
+        DoleanceEquipe.objects.filter(doleance=doleance).delete()
+
+        return JsonResponse({
+            'success': True,
+            'message': 'Prise en charge annulée avec succès',
+        })
+    except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
 
 
@@ -850,6 +866,75 @@ def affecter_techniciens(request, doleance_id):
         return JsonResponse({'success': False, 'message': str(e)})
 
 
+# @login_required
+# def get_technicien_portfolio(request):
+#     if request.user.role != 'TECH':
+#         return JsonResponse({'success': False, 'message': 'Accès non autorisé'})
+#
+#     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+#     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
+#
+#     # if not equipe:
+#     #     return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
+#
+#     # Récupérer d'abord les IDs des doléances
+#     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
+#                         .filter(equipe=equipe.equipe)
+#                         .values_list('doleance_id', flat=True))
+#
+#     # Ensuite, utiliser ces IDs pour récupérer les doléances
+#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+#
+#     print(f"Personnel: {personnel}")
+#     print(f"Equipe: {equipe}")
+#     print(f"Doleance IDs: {doleance_ids}")
+#     print(f"Nombre de doléances: {doleances.count()}")
+#
+#     doleances_data = [{
+#         'id': d.id,
+#         'ndi': d.ndi,
+#         'station': d.station.libelle_station,
+#         'element': d.element,
+#         'panne_declarer': d.panne_declarer,
+#         'statut': d.statut
+#     } for d in doleances]
+#
+#     return JsonResponse({
+#         'success': True,
+#         'doleances': doleances_data,
+#         'equipe': equipe.equipe.nom,
+#     })
+# def get_technicien_portfolio(request):
+#     if request.user.role != 'TECH':
+#         return JsonResponse({'success': False, 'message': 'Accès non autorisé'})
+#
+#     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+#     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
+#
+#     if not equipe:
+#         return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
+#
+#     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
+#                         .filter(equipe=equipe.equipe)
+#                         .values_list('doleance_id', flat=True))
+#
+#     # Exclure les doléances terminées
+#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
+#
+#     doleances_data = [{
+#         'id': d.id,
+#         'ndi': d.ndi,
+#         'station': d.station.libelle_station,
+#         'element': d.element,
+#         'panne_declarer': d.panne_declarer,
+#         'statut': d.statut
+#     } for d in doleances]
+#
+#     return JsonResponse({
+#         'success': True,
+#         'doleances': doleances_data,
+#         'equipe': equipe.equipe.nom,
+#     })
 @login_required
 def get_technicien_portfolio(request):
     if request.user.role != 'TECH':
@@ -858,21 +943,19 @@ def get_technicien_portfolio(request):
     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
 
-    # if not equipe:
-    #     return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
+    if not equipe:
+        return JsonResponse({
+            'success': True,
+            'doleances': [],
+            'message': 'Aucune équipe assignée'
+        })
 
-    # Récupérer d'abord les IDs des doléances
     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
                         .filter(equipe=equipe.equipe)
                         .values_list('doleance_id', flat=True))
 
-    # Ensuite, utiliser ces IDs pour récupérer les doléances
-    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
-
-    print(f"Personnel: {personnel}")
-    print(f"Equipe: {equipe}")
-    print(f"Doleance IDs: {doleance_ids}")
-    print(f"Nombre de doléances: {doleances.count()}")
+    # Exclure les doléances terminées
+    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
 
     doleances_data = [{
         'id': d.id,
@@ -886,5 +969,5 @@ def get_technicien_portfolio(request):
     return JsonResponse({
         'success': True,
         'doleances': doleances_data,
-        'equipe': equipe.equipe.nom,
+        'equipe': equipe.equipe.nom if equipe else None,
     })

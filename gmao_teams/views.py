@@ -36,15 +36,46 @@ def liste_equipes(request):
     return JsonResponse({'equipes': list(equipes.values())})
 
 
+# @login_required
+# @user_passes_test(lambda u: u.role == 'ADMIN')
+# def get_equipe_details(request, equipe_id):
+#     equipe = get_object_or_404(Equipe.objects.using('teams_db'), id=equipe_id)
+#     personnel_ids = list(equipe.get_personnel_ids())
+#     doleance_ids = list(equipe.get_doleance_ids())
+#
+#     techniciens = Personnel.objects.using('kimei_db').filter(id__in=personnel_ids)
+#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+#
+#     return JsonResponse({
+#         'nom': equipe.nom,
+#         'description': equipe.description,
+#         'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel')),
+#         'doleances': list(doleances.values('id', 'ndi', 'panne_declarer'))
+#     })
 @login_required
 @user_passes_test(lambda u: u.role == 'ADMIN')
 def get_equipe_details(request, equipe_id):
     equipe = get_object_or_404(Equipe.objects.using('teams_db'), id=equipe_id)
     personnel_ids = list(equipe.get_personnel_ids())
-    doleance_ids = list(equipe.get_doleance_ids())
+
+    # Récupérer toutes les doléances associées à l'équipe
+    doleance_ids = list(
+        DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe).values_list('doleance_id', flat=True))
+
+    # Vérifier le statut de chaque doléance
+    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+    active_doleance_ids = []
+    for doleance in doleances:
+        if doleance.statut != 'TER':  # Si la doléance n'est pas terminée
+            active_doleance_ids.append(doleance.id)
+        else:
+            # Supprimer l'association pour les doléances terminées
+            DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe, doleance_id=doleance.id).delete()
+
+    # Mettre à jour la liste des doléances actives
+    doleances = Doleance.objects.using('kimei_db').filter(id__in=active_doleance_ids)
 
     techniciens = Personnel.objects.using('kimei_db').filter(id__in=personnel_ids)
-    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
 
     return JsonResponse({
         'nom': equipe.nom,
@@ -52,18 +83,6 @@ def get_equipe_details(request, equipe_id):
         'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel')),
         'doleances': list(doleances.values('id', 'ndi', 'panne_declarer'))
     })
-
-
-# @require_http_methods(["GET", "POST"])
-# @user_passes_test(lambda u: u.role == 'ADMIN')
-# def affecter_technicien(request, equipe_id):
-#     if request.method == 'POST':
-#         equipe = get_object_or_404(Equipe, id=equipe_id)
-#         technicien_id = request.POST.get('technicien')
-#         technicien = get_object_or_404(Personnel, id=technicien_id)
-#         EquipePersonnel.objects.create(equipe=equipe, personnel=technicien)
-#         return JsonResponse({'success': True})
-#     return JsonResponse({'success': False}, status=400)
 
 
 logger = logging.getLogger(__name__)
@@ -161,18 +180,6 @@ def get_techniciens_disponibles(request):
                    .exclude(id__in=techniciens_affectes))
 
     return JsonResponse({'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))})
-
-
-# @login_required
-# @user_passes_test(lambda u: u.role == 'ADMIN')
-# def get_doleances_non_attribuees(request):
-#     # Obtenez d'abord tous les IDs des doléances déjà attribuées
-#     doleances_attribuees = list(DoleanceEquipe.objects.using('teams_db').values_list('doleance_id', flat=True))
-#
-#     # Ensuite, sélectionnez les doléances qui ne sont pas dans cette liste
-#     doleances = Doleance.objects.using('kimei_db').filter(statut='NEW').exclude(id__in=doleances_attribuees)
-#
-#     return JsonResponse({'doleances': list(doleances.values('id', 'ndi', 'panne_declarer'))})
 
 
 @login_required
