@@ -22,93 +22,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-# def login_view(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, username=username, password=password)
-#         print(user)
-#         if user is not None:
-#             if user.first_login:
-#                 # Rediriger vers la page de changement de mot de passe
-#                 request.session['user_id'] = user.id
-#                 return redirect('accounts:change_password')
-#             login(request, user)
-#
-#             # Mettre à jour le statut du personnel
-#             try:
-#                 print('Updating personnel status', user)
-#                 personnel = Personnel.objects.get(matricule=username)
-#                 personnel.statut = 'PRS'
-#                 personnel.save()
-#             except Personnel.DoesNotExist:
-#                 messages.warning(request, "Profil personnel non trouvé.")
-#
-#             return redirect('gmao:home')
-#         else:
-#             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
-#     return render(request, 'accounts/login.html')
-# def login_view(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             try:
-#                 personnel = Personnel.objects.get(matricule=username)
-#                 if personnel.statut not in ['ATT', 'INT']:
-#                     personnel.statut = 'PRS'
-#                     personnel.save()
-#             except Personnel.DoesNotExist:
-#                 messages.warning(request, "Profil personnel non trouvé.")
-#             return redirect('gmao:home')
-#         else:
-#             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
-#     return render(request, 'accounts/login.html')
-
-# def login_view(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             try:
-#                 personnel = Personnel.objects.get(matricule=username)
-#                 if personnel.statut not in ['ATT', 'INT']:
-#                     personnel.statut = 'PRS'
-#                     personnel.save()
-#             except Personnel.DoesNotExist:
-#                 messages.warning(request, "Profil personnel non trouvé.")
-#             return redirect('gmao:home')
-#         else:
-#             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
-#     return render(request, 'accounts/login.html')
-
-
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.session_key and user.session_key != request.session.session_key:
-                messages.error(request, "Vous êtes déjà connecté sur un autre appareil.")
-                return render(request, 'accounts/login.html', {'error': 'Already logged in elsewhere'})
-
-            login(request, user)
-            user.session_key = request.session.session_key
-            user.statut = 'PRS'
-            user.save()
-
-            if user.first_login:
-                return redirect('accounts:change_password')
-
-            return redirect('gmao:home')
-        else:
-            return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
-    return render(request, 'accounts/login.html')
+def index(request):
+    return render(request, 'accounts/index.html')
 
 
 def change_password(request):
@@ -143,18 +58,6 @@ def change_password(request):
             messages.error(request, 'Les mots de passe ne correspondent pas.')
 
     return render(request, 'accounts/change_password.html', context)
-
-
-# def logout_view(request):
-#     user = request.user
-#     user.statut = 'ABS'
-#     user.save()
-#     logout(request)
-#     return redirect('login')
-
-
-# Create your views here.
-# MIRE BIENVENUE
 
 
 from django.contrib.auth import login, authenticate
@@ -195,8 +98,17 @@ def login_view(request):
     return render(request, 'accounts/login.html')
 
 
-def index(request):
-    return render(request, 'accounts/index.html')
+def logout_view(request):
+    User = get_user_model()
+    if request.user.is_authenticated:
+        user = User.objects.get(id=request.user.id)
+        user.session_key = None
+        user.statut = 'ABS'
+        user.save()
+    logout(request)
+    # Assurez-vous que la session est complètement effacée
+    request.session.flush()
+    return redirect('accounts:login')
 
 
 @user_passes_test(lambda u: u.is_superuser)
