@@ -655,7 +655,10 @@ def terminer_travail(request, intervention_id):
             personnel.statut = 'PRS'
             personnel.save()
 
-        return JsonResponse({'success': True, 'message': 'Intervention terminée avec succès'})
+        return JsonResponse({
+            'success': True,
+            'message': 'Intervention terminée avec succès',
+        })
     except Exception as e:
         return JsonResponse({'success': False, 'message': f'Erreur inattendue: {str(e)}'})
 

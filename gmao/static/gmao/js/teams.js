@@ -1,5 +1,14 @@
 console.log('teams')
 $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
+        upperCaseInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    });
+
     function initPortfolioTable(data) {
         if ($('#portfolioContainer').length) {
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
