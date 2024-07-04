@@ -72,17 +72,17 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             # Vérifiez si l'utilisateur a une session_key existante
-            if user.session_key:
-                # Si oui, vérifiez si cette session existe toujours
-                from django.contrib.sessions.models import Session
-                try:
-                    Session.objects.get(session_key=user.session_key)
-                    messages.error(request, "Vous êtes déjà connecté sur un autre appareil.")
-                    return render(request, 'registration/login.html',
-                                  {'error': 'Already logged in elsewhere'})
-                except Session.DoesNotExist:
-                    # Si la session n'existe plus, réinitialisez la session_key
-                    user.session_key = None
+            # if user.session_key:
+            # Si oui, vérifiez si cette session existe toujours
+            # from django.contrib.sessions.models import Session
+            # try:
+            #     Session.objects.get(session_key=user.session_key)
+            #     messages.error(request, "Vous êtes déjà connecté sur un autre appareil.")
+            #     return render(request, 'registration/login.html',
+            #                   {'error': 'Already logged in elsewhere'})
+            # except Session.DoesNotExist:
+            #     # Si la session n'existe plus, réinitialisez la session_key
+            #     user.session_key = None
 
             login(request, user)
             # Mise à jour de la session_key après la connexion
@@ -103,7 +103,7 @@ def logout_view(request):
     User = get_user_model()
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
-        user.session_key = None
+        # user.session_key = None
         user.statut = 'ABS'
         user.save()
     logout(request)
