@@ -21,6 +21,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 # def login_view(request):
 #     if request.method == 'POST':
 #         username = request.POST['username']
@@ -84,11 +85,6 @@ logger = logging.getLogger(__name__)
 #         else:
 #             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
 #     return render(request, 'accounts/login.html')
-
-
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
 
 def login_view(request):
