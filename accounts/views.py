@@ -157,14 +157,42 @@ def change_password(request):
 # MIRE BIENVENUE
 
 
-def logout_view(request):
-    if request.user.is_authenticated:
-        user = request.user
-        user.session_key = None
-        user.statut = 'ABS'
-        user.save()
-    logout(request)
-    return redirect('login')
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Vérifiez si l'utilisateur a une session_key existante
+            if user.session_key:
+                # Si oui, vérifiez si cette session existe toujours
+                from django.contrib.sessions.models import Session
+                try:
+                    Session.objects.get(session_key=user.session_key)
+                    messages.error(request, "Vous êtes déjà connecté sur un autre appareil.")
+                    return render(request, 'accounts/login.html', {'error': 'Already logged in elsewhere'})
+                except Session.DoesNotExist:
+                    # Si la session n'existe plus, réinitialisez la session_key
+                    user.session_key = None
+
+            login(request, user)
+            # Mise à jour de la session_key après la connexion
+            user.session_key = request.session.session_key
+            user.statut = 'PRS'
+            user.save()
+
+            if user.first_login:
+                return redirect('accounts:change_password')
+
+            return redirect('gmao:home')
+        else:
+            return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
+    return render(request, 'accounts/login.html')
 
 
 def index(request):
