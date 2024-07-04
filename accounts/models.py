@@ -7,6 +7,7 @@ class Employee(AbstractUser):
         ('ADMIN', 'Administrateur'),
         ('TECH', 'Technicien'),
     )
+    session_key = models.CharField(max_length=40, blank=True, null=True)
     first_login = models.BooleanField(default=True)
     role = models.CharField(max_length=5, choices=ROLE_CHOICES, default='TECH')
     matricule = models.CharField(max_length=10, unique=True)

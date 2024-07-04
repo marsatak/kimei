@@ -21,7 +21,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 # def login_view(request):
 #     if request.method == 'POST':
 #         username = request.POST['username']
@@ -67,13 +66,47 @@ logger = logging.getLogger(__name__)
 #             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
 #     return render(request, 'accounts/login.html')
 
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             try:
+#                 personnel = Personnel.objects.get(matricule=username)
+#                 if personnel.statut not in ['ATT', 'INT']:
+#                     personnel.statut = 'PRS'
+#                     personnel.save()
+#             except Personnel.DoesNotExist:
+#                 messages.warning(request, "Profil personnel non trouvé.")
+#             return redirect('gmao:home')
+#         else:
+#             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
+#     return render(request, 'accounts/login.html')
+
+from django.contrib.sessions.models import Session
+
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            if user.session_key and user.session_key != request.session.session_key:
+                # L'utilisateur est déjà connecté ailleurs
+                messages.error(request, "Vous êtes déjà connecté sur un autre appareil.")
+                return render(request, 'accounts/login.html', {'error': 'Already logged in elsewhere'})
+
             login(request, user)
+            user.session_key = request.session.session_key
+            user.save()
+
             try:
                 personnel = Personnel.objects.get(matricule=username)
                 if personnel.statut not in ['ATT', 'INT']:
@@ -121,7 +154,23 @@ def change_password(request):
     return render(request, 'accounts/change_password.html', context)
 
 
+# def logout_view(request):
+#     user = request.user
+#     user.statut = 'ABS'
+#     user.save()
+#     logout(request)
+#     return redirect('login')
+
+
+# Create your views here.
+# MIRE BIENVENUE
+from django.contrib.auth import logout
+
+
 def logout_view(request):
+    if request.user.is_authenticated:
+        request.user.session_key = None
+        request.user.save()
     user = request.user
     user.statut = 'ABS'
     user.save()
@@ -129,8 +178,6 @@ def logout_view(request):
     return redirect('login')
 
 
-# Create your views here.
-# MIRE BIENVENUE
 def index(request):
     return render(request, 'accounts/index.html')
 
