@@ -451,7 +451,7 @@ def commencer_intervention(request, intervention_id):
 
 @require_GET
 def get_techniciens_disponibles(request):
-    techniciens = Personnel.objects.filter(poste_id=12)
+    techniciens = Personnel.objects.filter(statut='PRS')
     return JsonResponse({
         'success': True,
         'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))
@@ -748,14 +748,15 @@ def prendre_en_charge(request, doleance_id):
         doleance.save()
 
         # Associer le technicien connecté à l'intervention
-        technicien = Personnel.objects.get(matricule=request.user.matricule)
-        InterventionPersonnel.objects.create(intervention=intervention, personnel=technicien)
-        technicien.statut = 'ATT'
-        technicien.save()
+        membres_equipe = Personnel.objects.filter(id__in=equipe.get_personnel_ids())
+        for membre in membres_equipe:
+            InterventionPersonnel.objects.create(intervention=intervention, personnel=membre)
+            membre.statut = 'ATT'
+            membre.save()
 
         return JsonResponse({
             'success': True,
-            'message': 'Doléance prise en charge avec succès',
+            'message': 'Doléance prise en charge avec succès par l\'équipe',
             'intervention_id': intervention.id
         })
     except Exception as e:
