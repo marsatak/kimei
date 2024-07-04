@@ -71,20 +71,42 @@ $(document).ready(function () {
         });
     }
 
-    function updateTechniciensList(techniciens, listId) {
+    /*function updateTechniciensList(techniciens, listId) {
         let html = '';
         techniciens.forEach(function (tech) {
             html += '<li>' + tech.nom_personnel + ' ' + tech.prenom_personnel +
                 ' <button class="btn btn-sm btn-danger retirer-technicien" data-id="' + tech.id + '">Retirer</button></li>';
         });
         $(listId).html(html);
+    }*/
+    function updateTechniciensList(techniciens, listId) {
+        let html = '';
+        techniciens.forEach(function (tech) {
+            html += `
+        <li class="list-group-item">
+            ${tech.nom_personnel} ${tech.prenom_personnel}
+            <button class="btn btn-sm btn-danger retirer-technicien float-right" data-id="${tech.id}">Retirer</button>
+        </li>`;
+        });
+        $(listId).html(html);
     }
 
+    /*    function updateDoleancesList(doleances, listId) {
+            let html = '';
+            doleances.forEach(function (doleance) {
+                html += '<li>' + doleance.ndi + ' - ' + doleance.panne_declarer +
+                    ' <button class="btn btn-sm btn-danger retirer-doleance" data-id="' + doleance.id + '">Retirer</button></li>';
+            });
+            $(listId).html(html);
+        }*/
     function updateDoleancesList(doleances, listId) {
         let html = '';
         doleances.forEach(function (doleance) {
-            html += '<li>' + doleance.ndi + ' - ' + doleance.panne_declarer +
-                ' <button class="btn btn-sm btn-danger retirer-doleance" data-id="' + doleance.id + '">Retirer</button></li>';
+            html += `
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>${doleance.ndi} - ${doleance.panne_declarer}</span>
+                <button class="btn btn-sm btn-danger retirer-doleance" data-id="${doleance.id}">Retirer</button>
+            </li>`;
         });
         $(listId).html(html);
     }
@@ -93,14 +115,17 @@ $(document).ready(function () {
         $.get(GET_TECHNICIENS_DISPONIBLES_URL, function (data) {
             let html = '';
             data.techniciens.forEach(function (tech) {
-                html += '<li>' + tech.nom_personnel + ' ' + tech.prenom_personnel +
-                    ' <button class="btn btn-sm btn-success affecter-technicien" data-id="' + tech.id + '">Affecter</button></li>';
+                html += `
+            <li class="list-group-item">
+                ${tech.nom_personnel} ${tech.prenom_personnel}
+                <button class="btn btn-sm btn-success affecter-technicien float-right" data-id="${tech.id}">Affecter</button>
+            </li>`;
             });
             $('#listeTechniciensDisponibles').html(html);
         });
     }
 
-    function loadDoleancesNonAttribuees() {
+    /*function loadDoleancesNonAttribuees() {
         $.get(GET_DOLEANCES_NON_ATTRIBUEES_URL, function (data) {
             let html = '';
             data.doleances.forEach(function (doleance) {
@@ -109,7 +134,27 @@ $(document).ready(function () {
             });
             $('#listeDoléancesNonAttribuées').html(html);
         });
+    }*/
+
+    function loadDoleancesNonAttribuees() {
+        let searchQuery = $('#searchDoleances').val();
+        $.get(GET_DOLEANCES_NON_ATTRIBUEES_URL + '?search=' + searchQuery, function (data) {
+            let html = '';
+            data.doleances.forEach(function (doleance) {
+                html += `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>${doleance.ndi} - ${doleance.station__libelle_station} - ${doleance.panne_declarer}</span>
+                    <button class="btn btn-sm btn-success attribuer-doleance" data-id="${doleance.id}">Attribuer</button>
+                </li>`;
+            });
+            $('#listeDoléancesNonAttribuées').html(html);
+        });
     }
+
+// Ajouter un gestionnaire d'événements pour la recherche
+    $('#searchDoleances').on('input', function () {
+        loadDoleancesNonAttribuees();
+    });
 
     /*$(document).on('click', '.affecter-technicien', function () {
         let technicienId = $(this).data('id');

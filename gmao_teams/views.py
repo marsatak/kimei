@@ -7,6 +7,7 @@ from accounts.models import Employee
 from django.db.models import Exists, OuterRef
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.db.models import Q
 
 import logging
 
@@ -162,13 +163,42 @@ def get_techniciens_disponibles(request):
     return JsonResponse({'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))})
 
 
+# @login_required
+# @user_passes_test(lambda u: u.role == 'ADMIN')
+# def get_doleances_non_attribuees(request):
+#     # Obtenez d'abord tous les IDs des doléances déjà attribuées
+#     doleances_attribuees = list(DoleanceEquipe.objects.using('teams_db').values_list('doleance_id', flat=True))
+#
+#     # Ensuite, sélectionnez les doléances qui ne sont pas dans cette liste
+#     doleances = Doleance.objects.using('kimei_db').filter(statut='NEW').exclude(id__in=doleances_attribuees)
+#
+#     return JsonResponse({'doleances': list(doleances.values('id', 'ndi', 'panne_declarer'))})
+
+
 @login_required
 @user_passes_test(lambda u: u.role == 'ADMIN')
 def get_doleances_non_attribuees(request):
+    search_query = request.GET.get('search', '')
+
     # Obtenez d'abord tous les IDs des doléances déjà attribuées
     doleances_attribuees = list(DoleanceEquipe.objects.using('teams_db').values_list('doleance_id', flat=True))
 
     # Ensuite, sélectionnez les doléances qui ne sont pas dans cette liste
-    doleances = Doleance.objects.using('kimei_db').filter(statut='NEW').exclude(id__in=doleances_attribuees)
+    doleances = (Doleance.objects.using('kimei_db')
+                 .exclude(statut='TER')
+                 .exclude(id__in=doleances_attribuees))
 
-    return JsonResponse({'doleances': list(doleances.values('id', 'ndi', 'panne_declarer'))})
+    # Appliquer le filtre de recherche
+    if search_query:
+        doleances = doleances.filter(
+            Q(ndi__icontains=search_query) |
+            Q(panne_declarer__icontains=search_query) |
+            Q(station__libelle_station__icontains=search_query)
+        )
+
+    # Trier par date de transmission décroissante
+    doleances = doleances.order_by('-date_transmission')[
+                :1000]  # Limiter à 1000 résultats pour des raisons de performance
+
+    return JsonResponse({'doleances': list(
+        doleances.values('id', 'ndi', 'panne_declarer', 'date_transmission', 'station__libelle_station'))})

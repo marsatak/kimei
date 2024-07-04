@@ -858,8 +858,8 @@ def get_technicien_portfolio(request):
     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
 
-    if not equipe:
-        return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
+    # if not equipe:
+    #     return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
 
     # Récupérer d'abord les IDs des doléances
     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
