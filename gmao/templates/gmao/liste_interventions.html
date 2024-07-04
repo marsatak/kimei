@@ -97,7 +97,17 @@
                             Non commencée
                         {% endif %}
                     </td>
-                    <td>
+                    <td data-label="Techniciens">
+                        <ul class="list-unstyled m-0 p-0">
+                            {% for technicien in intervention.techniciens %}
+                                <li>
+                                    {{ technicien.nom_personnel }}
+                                    {{ technicien.prenom_personnel }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    {% comment %}<td>
                         <ul>
                             {% for technicien in intervention.techniciens %}
                                 <li>
@@ -107,7 +117,7 @@
 
                             {% endfor %}
                         </ul>
-                    </td>
+                    </td>{% endcomment %}
                     <td data-label="Actions">
                         <a href="{% url 'gmao:detail_intervention' intervention.id %}"
                            class="btn btn-sm btn-primary">Éditer</a>
@@ -122,6 +132,7 @@
         </table>
     </div>
 {% endblock content %}
+{% comment %}
 {% block extra_css %}
     <style>
         @media screen and (max-width: 767px) {
@@ -160,6 +171,65 @@
                 padding-right: 10px;
                 white-space: nowrap;
                 font-weight: bold;
+            }
+        }
+    </style>
+{% endblock extra_css %}{% endcomment %}
+{% block extra_css %}
+    <style>
+        @media screen and (max-width: 767px) {
+            .table-responsive table,
+            .table-responsive thead,
+            .table-responsive tbody,
+            .table-responsive th,
+            .table-responsive td,
+            .table-responsive tr {
+                display: block;
+            }
+
+            .table-responsive thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            .table-responsive tr {
+                border: 1px solid #ccc;
+                margin-bottom: 10px;
+            }
+
+            .table-responsive td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+                min-height: 30px; /* Assurez-vous qu'il y a suffisamment d'espace pour le contenu */
+            }
+
+            .table-responsive td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+            }
+
+            /* Nouveau style pour la colonne des techniciens */
+            .table-responsive td[data-label="Techniciens"] {
+                padding-left: 6px; /* Alignez avec les autres labels */
+            }
+
+            .table-responsive td[data-label="Techniciens"]:before {
+                position: static;
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .table-responsive td[data-label="Techniciens"] ul {
+                padding-left: 0;
             }
         }
     </style>
