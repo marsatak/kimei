@@ -97,10 +97,10 @@
                             Non commencée
                         {% endif %}
                     </td>
-                    <td data-label="Techniciens">
-                        {% for ip in intervention.interventionpersonnel_set.all %}
-                            {{ ip.personnel.nom_personnel }}
-                            {{ ip.personnel.prenom_personnel }}{% if not forloop.last %}, {% endif %}
+                    <td>
+                        {% for technicien in intervention.techniciens %}
+                            {{ technicien.nom_personnel }}
+                            {{ technicien.prenom_personnel }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </td>
                     <td data-label="Actions">
