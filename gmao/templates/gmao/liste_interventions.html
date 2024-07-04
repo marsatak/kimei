@@ -98,10 +98,15 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% for technicien in intervention.techniciens %}
-                            {{ technicien.nom_personnel }}
-                            {{ technicien.prenom_personnel }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
+                        <ul>
+                            {% for technicien in intervention.techniciens %}
+                                <li>
+                                    {{ technicien.nom_personnel }}
+                                    {{ technicien.prenom_personnel }}{% if not forloop.last %}, {% endif %}
+                                </li>
+
+                            {% endfor %}
+                        </ul>
                     </td>
                     <td data-label="Actions">
                         <a href="{% url 'gmao:detail_intervention' intervention.id %}"
