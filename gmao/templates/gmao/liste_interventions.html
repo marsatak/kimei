@@ -46,9 +46,9 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% for ip in intervention.interventionpersonnel_set.all %}
-                        {{ ip.personnel.nom_personnel }}
-                        {{ ip.personnel.prenom_personnel }}{% if not forloop.last %}, {% endif %}
+                    {% for technicien in intervention.techniciens %}
+                        {{ technicien.nom_personnel }}
+                        {{ technicien.prenom_personnel }}{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </td>
                 <td>
