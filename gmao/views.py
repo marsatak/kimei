@@ -564,6 +564,11 @@ def annuler_intervention(request, intervention_id):
 #     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
 
 
+from django.db.models import Prefetch
+from django.utils import timezone
+from .models import Intervention, InterventionPersonnel, Personnel
+
+
 @login_required
 def liste_interventions(request):
     current_date = timezone.now().date()
@@ -572,7 +577,8 @@ def liste_interventions(request):
         interventions = Intervention.objects.filter(
             top_depart__date=current_date
         ).prefetch_related(
-            Prefetch('interventionpersonnel_set', queryset=InterventionPersonnel.objects.select_related('personnel'))
+            Prefetch('interventionpersonnel_set',
+                     queryset=InterventionPersonnel.objects.select_related('personnel'))
         ).order_by('-top_depart')
     elif request.user.role == 'TECH':
         try:
