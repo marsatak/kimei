@@ -697,8 +697,8 @@ def get_doleances_data(request):
 #         return JsonResponse({'success': True})
 #     except Exception as e:
 #         return JsonResponse({'success': False, 'message': str(e)})
-@require_http_methods(["GET", "POST"])
 @login_required
+@require_POST
 def prendre_en_charge(request, doleance_id):
     logger.info(f"Tentative de prise en charge de la doléance {doleance_id}")
     try:

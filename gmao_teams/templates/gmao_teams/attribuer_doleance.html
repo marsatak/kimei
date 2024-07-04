@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Créer une équipe{% endblock title %}
+{% block title %}Attribuer des doléances{% endblock title %}
 {% block nav-btn %}
     <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
        id="btn-nav">
@@ -16,7 +16,7 @@
         Liste des doléances
     </a>
     {% if user.role == 'ADMIN' %}
-        <a href="{% url 'equipes:liste_equipes' %}"
+        <a href="{% url 'gmao_teams:liste_equipes' %}"
            class="btn btn-outline-success text-center text-light border-light btn-sm mx-2" id="btn-nav">
             Gestion des équipes
         </a>
@@ -28,19 +28,26 @@
 {% endblock navbar-content %}
 {% block content %}
     <div class="container mt-4">
-        <h2>Créer une nouvelle équipe</h2>
-        <form id="equipeForm">
+        <h2>Attribuer des doléances à l'équipe : {{ equipe.nom }}</h2>
+        <form id="attribuerDoleanceForm">
             {% csrf_token %}
+            <input type="hidden" id="equipeId" value="{{ equipe.id }}">
             <div class="form-group">
-                <label for="nom">Nom de l'équipe</label>
-                <input type="text" class="form-control" id="nom" name="nom" required>
+                <label for="doleance">Sélectionner une doléance</label>
+                <select class="form-control" id="doleance" name="doleance">
+                    {% for doleance in doleances %}
+                        <option value="{{ doleance.id }}">{{ doleance.ndi }} - {{ doleance.panne_declarer }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Créer l'équipe</button>
+            <button type="submit" class="btn btn-primary">Attribuer</button>
         </form>
+        <div class="mt-4">
+            <h3>Doléances attribuées</h3>
+            <ul id="doleancesList">
+                <!-- La liste des doléances attribuées sera chargée dynamiquement ici -->
+            </ul>
+        </div>
     </div>
 {% endblock content %}
 

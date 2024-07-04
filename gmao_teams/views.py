@@ -3,7 +3,12 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from .models import Equipe, EquipePersonnel, DoleanceEquipe
 from gmao.models import Personnel, Doleance
+from accounts.models import Employee
 from django.db.models import Exists, OuterRef
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+import logging
 
 
 @login_required
@@ -48,16 +53,54 @@ def get_equipe_details(request, equipe_id):
     })
 
 
+# @require_http_methods(["GET", "POST"])
+# @user_passes_test(lambda u: u.role == 'ADMIN')
+# def affecter_technicien(request, equipe_id):
+#     if request.method == 'POST':
+#         equipe = get_object_or_404(Equipe, id=equipe_id)
+#         technicien_id = request.POST.get('technicien')
+#         technicien = get_object_or_404(Personnel, id=technicien_id)
+#         EquipePersonnel.objects.create(equipe=equipe, personnel=technicien)
+#         return JsonResponse({'success': True})
+#     return JsonResponse({'success': False}, status=400)
+
+
+logger = logging.getLogger(__name__)
+
+
 @login_required
 @user_passes_test(lambda u: u.role == 'ADMIN')
+@require_http_methods(["POST"])
+@ensure_csrf_cookie
 def affecter_technicien(request, equipe_id):
-    if request.method == 'POST':
+    logger.info(f"Tentative d'affectation de technicien pour l'équipe {equipe_id}")
+    logger.info(f"Méthode de requête: {request.method}")
+    logger.info(f"Données POST: {request.POST}")
+
+    try:
         equipe = get_object_or_404(Equipe, id=equipe_id)
         technicien_id = request.POST.get('technicien')
+
+        if not technicien_id:
+            logger.error("ID du technicien manquant")
+            return JsonResponse({'success': False, 'error': 'ID du technicien manquant'}, status=400)
+
+        logger.info(f"ID du technicien: {technicien_id}")
         technicien = get_object_or_404(Personnel, id=technicien_id)
-        EquipePersonnel.objects.create(equipe=equipe, personnel=technicien)
+
+        # Vérifiez si l'affectation existe déjà
+        if EquipePersonnel.objects.filter(equipe=equipe, personnel_id=technicien.id).exists():
+            logger.warning(f"Le technicien {technicien_id} est déjà affecté à l'équipe {equipe_id}")
+            return JsonResponse({'success': False, 'error': 'Ce technicien est déjà affecté à cette équipe'},
+                                status=400)
+
+        EquipePersonnel.objects.create(equipe=equipe, personnel_id=technicien.id)
+        logger.info(f"Technicien {technicien_id} affecté avec succès à l'équipe {equipe_id}")
         return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+
+    except Exception as e:
+        logger.exception(f"Erreur lors de l'affectation du technicien: {str(e)}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
 @login_required
@@ -66,10 +109,19 @@ def attribuer_doleance(request, equipe_id):
     if request.method == 'POST':
         equipe = get_object_or_404(Equipe, id=equipe_id)
         doleance_id = request.POST.get('doleance')
+
+        # Vérifiez si la doléance existe
         doleance = get_object_or_404(Doleance, id=doleance_id)
-        DoleanceEquipe.objects.create(equipe=equipe, doleance=doleance)
+
+        # Vérifiez si l'attribution existe déjà
+        if DoleanceEquipe.objects.filter(equipe=equipe, doleance_id=doleance_id).exists():
+            return JsonResponse({'success': False, 'error': 'Cette doléance est déjà attribuée à cette équipe'},
+                                status=400)
+
+        # Créez l'attribution
+        DoleanceEquipe.objects.create(equipe=equipe, doleance_id=doleance_id)
         return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+    return JsonResponse({'success': False, 'error': 'Méthode non autorisée'}, status=405)
 
 
 @login_required
@@ -101,10 +153,11 @@ def get_techniciens_disponibles(request):
     techniciens_affectes = list(EquipePersonnel.objects.using('teams_db').values_list('personnel_id', flat=True))
 
     # Ensuite, sélectionnez les techniciens qui ne sont pas dans cette liste
-    techniciens = Personnel.objects.using('kimei_db').filter(
-        poste__type='TECH',
+    techniciens = (Personnel.objects.using('kimei_db').filter(
+        poste_id__in=(12, 13),
         statut='PRS'
-    ).exclude(id__in=techniciens_affectes)
+    )
+                   .exclude(id__in=techniciens_affectes))
 
     return JsonResponse({'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))})
 

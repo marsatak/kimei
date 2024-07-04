@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+            }
+        }
+    });
     let currentEquipeId = null;
 
     loadEquipes();
@@ -7,7 +14,7 @@ $(document).ready(function () {
         $('#creerEquipeModal').modal('show');
     });
 
-    $('#saveEquipe').click(function () {
+    /*$('#saveEquipe').click(function () {
         let formData = $('#creerEquipeForm').serialize();
         $.post(CREER_EQUIPE_URL, formData, function (data) {
             if (data.success) {
@@ -15,7 +22,23 @@ $(document).ready(function () {
                 loadEquipes();
             }
         });
+    });*/
+    $('#saveEquipe').click(function () {
+        let formData = $('#creerEquipeForm').serialize();
+        $.ajax({
+            url: CREER_EQUIPE_URL,
+            type: 'POST',
+            data: formData,
+            headers: {'X-CSRFToken': getCSRFToken()},
+            success: function (data) {
+                if (data.success) {
+                    $('#creerEquipeModal').modal('hide');
+                    loadEquipes();
+                }
+            }
+        });
     });
+
 
     function loadEquipes() {
         $.get(LISTE_EQUIPES_URL, function (data) {
@@ -88,7 +111,7 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.affecter-technicien', function () {
+    /*$(document).on('click', '.affecter-technicien', function () {
         let technicienId = $(this).data('id');
         $.post(AFFECTER_TECHNICIEN_URL.replace('0', currentEquipeId),
             {technicien: technicienId},
@@ -97,6 +120,35 @@ $(document).ready(function () {
                     loadEquipeDetails(currentEquipeId);
                 }
             });
+    });*/
+    $(document).on('click', '.affecter-technicien', function (e) {
+        e.preventDefault();
+        let technicienId = $(this).data('id');
+        console.log("Tentative d'affectation du technicien:", technicienId, "à l'équipe:", currentEquipeId);
+
+        $.ajax({
+            url: AFFECTER_TECHNICIEN_URL.replace('0', currentEquipeId),
+            type: 'POST',
+            data: {technicien: technicienId},
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
+            success: function (data) {
+                console.log("Réponse reçue:", data);
+                if (data.success) {
+                    console.log("Affectation réussie");
+                    loadEquipeDetails(currentEquipeId);
+                } else {
+                    console.error("Erreur d'affectation:", data.error || "Erreur inconnue");
+                    alert("Une erreur est survenue lors de l'affectation du technicien: " + (data.error || "Erreur inconnue"));
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error("Erreur AJAX lors de l'affectation du technicien:", textStatus, errorThrown);
+                console.log("Réponse complète:", jqXHR.responseText);
+                alert("Une erreur est survenue lors de l'affectation du technicien. Veuillez vérifier la console pour plus de détails.");
+            }
+        });
     });
 
     $(document).on('click', '.attribuer-doleance', function () {
@@ -131,4 +183,36 @@ $(document).ready(function () {
                 }
             });
     });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, 10) === ('csrftoken=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(10));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
 });

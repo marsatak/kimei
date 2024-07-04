@@ -14,14 +14,14 @@ def creer_equipe(request):
         description = request.POST.get('description')
         equipe = Equipe.objects.create(nom=nom, description=description)
         return JsonResponse({'success': True, 'id': equipe.id})
-    return render(request, 'gmao_teams_old/creer_equipe.html')
+    return render(request, 'gmao_teams_old/templates/gmao_teams/creer_equipe.html')
 
 
 @login_required
 @user_passes_test(lambda u: u.role == 'ADMIN')
 def liste_equipes(request):
     equipes = Equipe.objects.all()
-    return render(request, 'gmao_teams_old/liste_equipes.html', {'equipes': equipes})
+    return render(request, 'gmao_teams_old/templates/gmao_teams/liste_equipes.html', {'equipes': equipes})
 
 
 @login_required
@@ -42,7 +42,7 @@ def affecter_technicien(request, equipe_id):
     ).exclude(id__in=techniciens_affectes_ids)
     print(f"Nombre total de personnels : {techniciens.count()}")
 
-    return render(request, 'gmao_teams_old/affecter_technicien.html',
+    return render(request, 'gmao_teams_old/templates/gmao_teams/affecter_technicien.html',
                   {'equipe': equipe, 'techniciens': techniciens})
 
 
@@ -68,7 +68,8 @@ def attribuer_doleance(request, equipe_id):
         return JsonResponse({'success': True})
 
     doleances = Doleance.objects.using('kimei_db').filter(statut='NEW')
-    return render(request, 'gmao_teams_old/attribuer_doleance.html', {'equipe': equipe, 'doleances': doleances})
+    return render(request, 'gmao_teams_old/templates/gmao_teams/attribuer_doleance.html',
+                  {'equipe': equipe, 'doleances': doleances})
 
 
 @login_required
@@ -100,7 +101,7 @@ def portefeuille_equipe(request, equipe_id):
 
     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids, statut='NEW')
 
-    return render(request, 'gmao_teams_old/portefeuille_equipe.html', {
+    return render(request, 'gmao_teams_old/templates/gmao_teams/portefeuille_equipe.html', {
         'equipe': equipe,
         'doleances': doleances
     })
