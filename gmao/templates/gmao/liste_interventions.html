@@ -56,6 +56,10 @@
                        class="btn btn-sm btn-primary">Éditer</a>
                 </td>
             </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">Aucune intervention trouvée pour aujourd'hui.</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
