@@ -85,7 +85,6 @@ logger = logging.getLogger(__name__)
 #             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
 #     return render(request, 'accounts/login.html')
 
-from django.contrib.sessions.models import Session
 
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
@@ -99,21 +98,17 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             if user.session_key and user.session_key != request.session.session_key:
-                # L'utilisateur est déjà connecté ailleurs
                 messages.error(request, "Vous êtes déjà connecté sur un autre appareil.")
                 return render(request, 'accounts/login.html', {'error': 'Already logged in elsewhere'})
 
             login(request, user)
             user.session_key = request.session.session_key
+            user.statut = 'PRS'
             user.save()
 
-            try:
-                personnel = Personnel.objects.get(matricule=username)
-                if personnel.statut not in ['ATT', 'INT']:
-                    personnel.statut = 'PRS'
-                    personnel.save()
-            except Personnel.DoesNotExist:
-                messages.warning(request, "Profil personnel non trouvé.")
+            if user.first_login:
+                return redirect('accounts:change_password')
+
             return redirect('gmao:home')
         else:
             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
@@ -164,16 +159,14 @@ def change_password(request):
 
 # Create your views here.
 # MIRE BIENVENUE
-from django.contrib.auth import logout
 
 
 def logout_view(request):
     if request.user.is_authenticated:
-        request.user.session_key = None
-        request.user.save()
-    user = request.user
-    user.statut = 'ABS'
-    user.save()
+        user = request.user
+        user.session_key = None
+        user.statut = 'ABS'
+        user.save()
     logout(request)
     return redirect('login')
 
