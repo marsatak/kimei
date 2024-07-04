@@ -763,6 +763,8 @@ def get_doleances_data(request):
 #         return JsonResponse({'success': True})
 #     except Exception as e:
 #         return JsonResponse({'success': False, 'message': str(e)})
+
+
 @login_required
 @require_POST
 def prendre_en_charge(request, doleance_id):
@@ -772,6 +774,15 @@ def prendre_en_charge(request, doleance_id):
 
         if doleance.statut not in ['NEW', 'ATP', 'ATD']:
             return JsonResponse({'success': False, 'message': 'Cette doléance ne peut pas être prise en charge'})
+
+        # Trouver l'équipe du technicien connecté
+        technicien = Personnel.objects.get(matricule=request.user.matricule)
+        equipe_personnel = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
+
+        if not equipe_personnel:
+            return JsonResponse({'success': False, 'message': 'Ce technicien n\'appartient à aucune équipe'})
+
+        equipe = equipe_personnel.equipe
 
         intervention = Intervention.objects.create(
             doleance=doleance,
@@ -785,20 +796,23 @@ def prendre_en_charge(request, doleance_id):
         doleance.statut = 'ATT'
         doleance.save()
 
-        # Associer le technicien connecté à l'intervention
+        # Associer tous les membres de l'équipe à l'intervention
         membres_equipe = Personnel.objects.filter(id__in=equipe.get_personnel_ids())
         for membre in membres_equipe:
             InterventionPersonnel.objects.create(intervention=intervention, personnel=membre)
             membre.statut = 'ATT'
             membre.save()
 
+        # Associer la doléance à l'équipe
+        DoleanceEquipe.objects.create(equipe=equipe, doleance_id=doleance.id)
+
         return JsonResponse({
             'success': True,
             'message': 'Doléance prise en charge avec succès par l\'équipe',
-            'intervention_id': intervention.id,
-            'redirect_url': reverse('gmao:liste_interventions')
+            'intervention_id': intervention.id
         })
     except Exception as e:
+        logger.error(f"Erreur lors de la prise en charge: {str(e)}")
         return JsonResponse({'success': False, 'message': str(e)})
 
 
