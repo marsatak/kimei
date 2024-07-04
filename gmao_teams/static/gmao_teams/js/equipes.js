@@ -14,15 +14,6 @@ $(document).ready(function () {
         $('#creerEquipeModal').modal('show');
     });
 
-    /*$('#saveEquipe').click(function () {
-        let formData = $('#creerEquipeForm').serialize();
-        $.post(CREER_EQUIPE_URL, formData, function (data) {
-            if (data.success) {
-                $('#creerEquipeModal').modal('hide');
-                loadEquipes();
-            }
-        });
-    });*/
     $('#saveEquipe').click(function () {
         let formData = $('#creerEquipeForm').serialize();
         $.ajax({
@@ -71,14 +62,6 @@ $(document).ready(function () {
         });
     }
 
-    /*function updateTechniciensList(techniciens, listId) {
-        let html = '';
-        techniciens.forEach(function (tech) {
-            html += '<li>' + tech.nom_personnel + ' ' + tech.prenom_personnel +
-                ' <button class="btn btn-sm btn-danger retirer-technicien" data-id="' + tech.id + '">Retirer</button></li>';
-        });
-        $(listId).html(html);
-    }*/
     function updateTechniciensList(techniciens, listId) {
         let html = '';
         techniciens.forEach(function (tech) {
@@ -91,14 +74,6 @@ $(document).ready(function () {
         $(listId).html(html);
     }
 
-    /*    function updateDoleancesList(doleances, listId) {
-            let html = '';
-            doleances.forEach(function (doleance) {
-                html += '<li>' + doleance.ndi + ' - ' + doleance.panne_declarer +
-                    ' <button class="btn btn-sm btn-danger retirer-doleance" data-id="' + doleance.id + '">Retirer</button></li>';
-            });
-            $(listId).html(html);
-        }*/
     function updateDoleancesList(doleances, listId) {
         let html = '';
         doleances.forEach(function (doleance) {
@@ -125,16 +100,6 @@ $(document).ready(function () {
         });
     }
 
-    /*function loadDoleancesNonAttribuees() {
-        $.get(GET_DOLEANCES_NON_ATTRIBUEES_URL, function (data) {
-            let html = '';
-            data.doleances.forEach(function (doleance) {
-                html += '<li>' + doleance.ndi + ' - ' + doleance.panne_declarer +
-                    ' <button class="btn btn-sm btn-success attribuer-doleance" data-id="' + doleance.id + '">Attribuer</button></li>';
-            });
-            $('#listeDoléancesNonAttribuées').html(html);
-        });
-    }*/
 
     function loadDoleancesNonAttribuees() {
         let searchQuery = $('#searchDoleances').val();
@@ -156,16 +121,6 @@ $(document).ready(function () {
         loadDoleancesNonAttribuees();
     });
 
-    /*$(document).on('click', '.affecter-technicien', function () {
-        let technicienId = $(this).data('id');
-        $.post(AFFECTER_TECHNICIEN_URL.replace('0', currentEquipeId),
-            {technicien: technicienId},
-            function (data) {
-                if (data.success) {
-                    loadEquipeDetails(currentEquipeId);
-                }
-            });
-    });*/
     $(document).on('click', '.affecter-technicien', function (e) {
         e.preventDefault();
         let technicienId = $(this).data('id');

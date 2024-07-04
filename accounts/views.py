@@ -7,13 +7,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from django.contrib.auth import update_session_auth_hash
-from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from gmao.models import Personnel  # Assurez-vous d'importer le modèle Personnel
 from .models import Employee
 from django.db import transaction

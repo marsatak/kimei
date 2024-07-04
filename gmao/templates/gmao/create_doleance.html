@@ -18,74 +18,6 @@
     &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
 {% endblock navbar-content %}
 
-{% comment %}
-{% block content %}
-    <div class="container">
-        <h2>Créer une nouvelle doléance</h2>
-        <form method="post" id="doleanceForm">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-primary">Créer</button>
-        </form>
-    </div>
-{% endblock %}
-
-{% block extra_js %}
-    <script>
-        $(document).ready(function () {
-            $('#id_client').change(function () {
-                const clientId = $(this).val();
-                console.log("Client ID selected:", clientId);
-
-                $.ajax({
-                    url: "{% url 'gmao:load_stations' %}",
-                    data: {
-                        'client': clientId
-                    },
-                    success: function (data) {
-                        console.log("Stations received:", data);
-                        const stationSelect = $('#id_station');
-                        stationSelect.empty();
-                        stationSelect.append('<option value="">---------</option>');
-                        $.each(data, function (index, item) {
-                            stationSelect.append(
-                                $('<option></option>').val(item.id).html(item.libelle_station)
-                            );
-                        });
-                    }
-                });
-
-                $.ajax({
-                    url: "{% url 'gmao:load_appelants' %}",
-                    data: {
-                        'client': clientId
-                    },
-                    success: function (data) {
-                        console.log("Appelants received:", data);
-                        var appelantSelect = $('#id_appelant');
-                        appelantSelect.empty();
-                        appelantSelect.append('<option value="">---------</option>');
-                        $.each(data, function (index, item) {
-                            appelantSelect.append(
-                                $('<option></option>').val(item.id).html(item.nom_appelant)
-                            );
-                        });
-                    }
-                });
-            });
-
-            // Ajoutez ces lignes pour déboguer
-            $('form').submit(function () {
-                console.log("Form submitted");
-                console.log("Client:", $('#id_client').val());
-                console.log("Station:", $('#id_station').val());
-                console.log("Appelant:", $('#id_appelant').val());
-            });
-        });
-    </script>
-{% endblock %}{% endcomment %}
-
-
 {% block content %}
     <div class="container">
         <h2>Créer une nouvelle doléance</h2>
@@ -104,11 +36,11 @@
     {{ block.super }}
     <script>
         $(document).ready(function () {
-            var maxLength = 200;  // Définissez la longueur maximale souhaitée
+            const maxLength = 200;  // Définissez la longueur maximale souhaitée
             $('#id_panne_declarer').after('<div id="charNum">0/' + maxLength + ' caractères</div>');
 
             $('#id_panne_declarer').on('input', function () {
-                var textlen = $(this).val().length;
+                const textlen = $(this).val().length;
                 $('#charNum').text(textlen + '/' + maxLength + ' caractères');
 
                 if (textlen > maxLength) {
@@ -185,7 +117,7 @@
                 data: {'client': clientId},
                 success: function (data) {
                     console.log("Appelants received:", data);
-                    var appelantSelect = $('#id_appelant');
+                    const appelantSelect = $('#id_appelant');
                     appelantSelect.empty();
                     appelantSelect.append('<option value="">---------</option>');
                     $.each(data, function (index, item) {
@@ -205,13 +137,13 @@
                 url: "{% url 'gmao:load_elements' %}",
                 data: {'station': stationId},
                 success: function (data) {
-                    var elementSelect = $('#id_element');
+                    const elementSelect = $('#id_element');
                     elementSelect.empty();
                     elementSelect.append('<option value="">Sélectionnez un élément</option>');
 
-                    for (var category in data) {
+                    for (const category in data) {
                         if (data[category].length > 0) {
-                            var optgroup = $('<optgroup>').attr('label', category);
+                            const optgroup = $('<optgroup label="">').attr('label', category);
                             $.each(data[category], function (index, item) {
                                 optgroup.append($('<option></option>')
                                     .val(item[1])
