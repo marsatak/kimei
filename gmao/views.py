@@ -564,11 +564,6 @@ def annuler_intervention(request, intervention_id):
 #     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
 
 
-from django.db.models import Prefetch
-from django.utils import timezone
-from .models import Intervention, InterventionPersonnel, Personnel
-
-
 @login_required
 def liste_interventions(request):
     current_date = timezone.now().date()
@@ -576,24 +571,33 @@ def liste_interventions(request):
     if request.user.role == 'ADMIN':
         interventions = Intervention.objects.filter(
             top_depart__date=current_date
-        ).prefetch_related(
-            Prefetch('interventionpersonnel_set',
-                     queryset=InterventionPersonnel.objects.select_related('personnel'))
         ).order_by('-top_depart')
     elif request.user.role == 'TECH':
         try:
             personnel = Personnel.objects.get(matricule=request.user.matricule)
             interventions = Intervention.objects.filter(
-                interventionpersonnel__personnel=personnel,
+                id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id'),
                 top_depart__date=current_date
-            ).prefetch_related(
-                Prefetch('interventionpersonnel_set',
-                         queryset=InterventionPersonnel.objects.select_related('personnel'))
             ).order_by('-top_depart')
         except Personnel.DoesNotExist:
             interventions = Intervention.objects.none()
     else:
         interventions = Intervention.objects.none()
+
+    # Récupérer les techniciens pour chaque intervention
+    intervention_ids = [i.id for i in interventions]
+    intervention_personnel = InterventionPersonnel.objects.filter(
+        intervention_id__in=intervention_ids
+    ).select_related('personnel')
+
+    # Créer un dictionnaire pour stocker les techniciens par intervention
+    techniciens_par_intervention = {i.id: [] for i in interventions}
+    for ip in intervention_personnel:
+        techniciens_par_intervention[ip.intervention_id].append(ip.personnel)
+
+    # Ajouter les techniciens à chaque intervention
+    for intervention in interventions:
+        intervention.techniciens = techniciens_par_intervention[intervention.id]
 
     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
 
