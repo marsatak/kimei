@@ -60,11 +60,6 @@ def change_password(request):
     return render(request, 'accounts/change_password.html', context)
 
 
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
-from django.contrib import messages
-
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
