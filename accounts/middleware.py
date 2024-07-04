@@ -14,8 +14,10 @@ class SessionValidationMiddleware:
             current_session_key = request.session.session_key
 
             if stored_session_key and stored_session_key != current_session_key:
+                # La session stockée ne correspond pas à la session actuelle
                 logout(request)
-                return redirect('login')
+                request.session.flush()
+                return redirect('accounts:login')
 
         response = self.get_response(request)
         return response

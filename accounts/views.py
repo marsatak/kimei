@@ -78,7 +78,8 @@ def login_view(request):
                 try:
                     Session.objects.get(session_key=user.session_key)
                     messages.error(request, "Vous êtes déjà connecté sur un autre appareil.")
-                    return render(request, 'accounts/login.html', {'error': 'Already logged in elsewhere'})
+                    return render(request, 'registration/login.html',
+                                  {'error': 'Already logged in elsewhere'})
                 except Session.DoesNotExist:
                     # Si la session n'existe plus, réinitialisez la session_key
                     user.session_key = None
@@ -94,8 +95,8 @@ def login_view(request):
 
             return redirect('gmao:home')
         else:
-            return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
-    return render(request, 'accounts/login.html')
+            return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
+    return render(request, 'registration/login.html')
 
 
 def logout_view(request):
