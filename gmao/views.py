@@ -451,7 +451,7 @@ def commencer_intervention(request, intervention_id):
 
 @require_GET
 def get_techniciens_disponibles(request):
-    techniciens = Personnel.objects.filter(statut='PRS')
+    techniciens = Personnel.objects.filter(poste_id=12)
     return JsonResponse({
         'success': True,
         'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))
@@ -526,16 +526,44 @@ def annuler_intervention(request, intervention_id):
 
 
 # #####################Liste des interventions######################
-def liste_interventions(request):
-    interventions = (Intervention.objects.all()
-                     .filter(top_depart__month=datetime.now().month)
-                     .filter(top_depart__year=datetime.now().year)
-                     .filter(top_depart__day=datetime.now().day)
-                     .order_by('-top_depart'))
-    return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
+# def liste_interventions(request):
+#     interventions = (Intervention.objects.all()
+#                      .filter(top_depart__month=datetime.now().month)
+#                      .filter(top_depart__year=datetime.now().year)
+#                      .filter(top_depart__day=datetime.now().day)
+#                      .order_by('-top_depart'))
+#     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
 
 
 # #####################Détail d'une intervention######################
+
+
+@login_required
+def liste_interventions(request):
+    current_date = timezone.now().date()
+
+    if request.user.role == 'ADMIN':
+        # Les administrateurs peuvent voir toutes les interventions
+        interventions = Intervention.objects.filter(
+            top_depart__date=current_date
+        ).order_by('-top_depart')
+    elif request.user.role == 'TECH':
+        # Les techniciens ne voient que leurs propres interventions
+        try:
+            personnel = Personnel.objects.get(matricule=request.user.matricule)
+            interventions = Intervention.objects.filter(
+                interventionpersonnel__personnel=personnel,
+                top_depart__date=current_date
+            ).order_by('-top_depart')
+        except Personnel.DoesNotExist:
+            interventions = Intervention.objects.none()
+    else:
+        # Pour les autres rôles, ne montrer aucune intervention
+        interventions = Intervention.objects.none()
+
+    return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
+
+
 def detail_intervention(request, intervention_id):
     intervention = get_object_or_404(Intervention, id=intervention_id)
     techniciens = (InterventionPersonnel.objects.filter(intervention=intervention)
