@@ -25,6 +25,7 @@
             <th>Début travail</th>
             <th>Fin travail</th>
             <th>Statut</th>
+            <th>Techniciens</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -43,6 +44,12 @@
                     {% else %}
                         Non commencée
                     {% endif %}
+                </td>
+                <td>
+                    {% for ip in intervention.interventionpersonnel_set.all %}
+                        {{ ip.personnel.nom_personnel }}
+                        {{ ip.personnel.prenom_personnel }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
                 </td>
                 <td>
                     <a href="{% url 'gmao:detail_intervention' intervention.id %}"

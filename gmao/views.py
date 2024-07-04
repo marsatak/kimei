@@ -20,7 +20,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from rest_framework.decorators import api_view
 from django.db.models.functions import Substr, StrIndex
-
+from django.db.models import Prefetch
 from django.utils import timezone
 from datetime import timedelta
 from accounts.models import Employee, AbstractUser
@@ -539,27 +539,54 @@ def annuler_intervention(request, intervention_id):
 # #####################Détail d'une intervention######################
 
 
+# def liste_interventions(request):
+#     current_date = timezone.now().date()
+#
+#     if request.user.role == 'ADMIN':
+#         # Les administrateurs peuvent voir toutes les interventions
+#         interventions = Intervention.objects.filter(
+#             top_depart__date=current_date
+#         ).order_by('-top_depart')
+#     elif request.user.role == 'TECH':
+#         # Les techniciens ne voient que leurs propres interventions
+#         try:
+#             personnel = Personnel.objects.get(matricule=request.user.matricule)
+#             interventions = Intervention.objects.filter(
+#                 interventionpersonnel__personnel=personnel,
+#                 top_depart__date=current_date
+#             ).order_by('-top_depart')
+#         except Personnel.DoesNotExist:
+#             interventions = Intervention.objects.none()
+#     else:
+#         # Pour les autres rôles, ne montrer aucune intervention
+#         interventions = Intervention.objects.none()
+#
+#     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
+
+
 @login_required
 def liste_interventions(request):
     current_date = timezone.now().date()
 
     if request.user.role == 'ADMIN':
-        # Les administrateurs peuvent voir toutes les interventions
         interventions = Intervention.objects.filter(
             top_depart__date=current_date
+        ).prefetch_related(
+            Prefetch('interventionpersonnel_set', queryset=InterventionPersonnel.objects.select_related('personnel'))
         ).order_by('-top_depart')
     elif request.user.role == 'TECH':
-        # Les techniciens ne voient que leurs propres interventions
         try:
             personnel = Personnel.objects.get(matricule=request.user.matricule)
             interventions = Intervention.objects.filter(
                 interventionpersonnel__personnel=personnel,
                 top_depart__date=current_date
+            ).prefetch_related(
+                Prefetch('interventionpersonnel_set',
+                         queryset=InterventionPersonnel.objects.select_related('personnel'))
             ).order_by('-top_depart')
         except Personnel.DoesNotExist:
             interventions = Intervention.objects.none()
     else:
-        # Pour les autres rôles, ne montrer aucune intervention
         interventions = Intervention.objects.none()
 
     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
