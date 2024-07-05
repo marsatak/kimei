@@ -228,6 +228,7 @@
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <script>
+
         function updateProgressBar(status) {
             let height, activeSteps;
             switch(status) {
@@ -255,8 +256,8 @@
         }
 
         function updateGauge(duration, maxDuration) {
-            var ctx = document.getElementById('interventionGauge').getContext('2d');
-            var config = {
+            const ctx = document.getElementById('interventionGauge').getContext('2d');
+            const config = {
                 type: 'doughnut',
                 data: {
                     datasets: [{
@@ -285,10 +286,40 @@
             }
             window.myChart = new Chart(ctx, config);
         }
-
         function commencerIntervention(interventionId) {
-            // Le code pour commencer l'intervention reste inchangé
+            console.log("Début de commencerIntervention", interventionId);
+            let kilometrage = prompt("Veuillez entrer le kilométrage de départ:");
+            if (kilometrage === null) return; // L'utilisateur a annulé
+
+            $.ajax({
+                url: '/home/commencer-intervention/' + interventionId + '/',
+                type: 'POST',
+                data: {
+                    kilometrage: kilometrage,
+                    csrfmiddlewaretoken: getCookie('csrftoken')
+                },
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
+                success: function (response) {
+                    if (response.success) {
+                        alert('Intervention commencée avec succès.');
+                        $('#top_debut').text(response.top_debut);
+                        $('.progress-bar').removeClass('bg-info').addClass('bg-warning')
+                            .css('width', '66%')
+                            .attr('aria-valuenow', 66)
+                            .text('En cours');
+                        $('.commencer-intervention').hide();
+                        $('#openInterventionForm').show();
+                    } else {
+                        alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erreur AJAX:", xhr.responseText);
+                    alert('Erreur lors de la communication avec le serveur: ' + error);
+                }
+            });
         }
+
 
         function annulerIntervention(interventionId) {
             if (confirm("Êtes-vous sûr de vouloir annuler cette intervention ?")) {
@@ -313,6 +344,105 @@
                 });
             }
         }
+        document.addEventListener('DOMContentLoaded', function () {
+            const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
+            upperCaseInputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    this.value = this.value.toUpperCase();
+                });
+            });
+
+            var ctx = document.getElementById('interventionGauge').getContext('2d');
+            var status = '{{ intervention.is_done|yesno:"Terminée,En cours" }}';
+            var duree = parseInt('{{ intervention.duree_intervention|default_if_none:0 }}');
+            var maxDuree = 3600; // 1 heure en secondes
+
+            var config = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [duree, maxDuree - duree],
+                        backgroundColor: [
+                            status === 'Terminée' ? 'rgba(75, 192, 192, 0.8)' : 'rgba(255, 206, 86, 0.8)',
+                            'rgba(220, 220, 220, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    circumference: 180,
+                    rotation: -90,
+                    cutout: '80%',
+                    plugins: {
+                        tooltip: {enabled: false},
+                        legend: {display: false}
+                    }
+                }
+            };
+
+            new Chart(ctx, config);
+
+            var modal = document.getElementById("interventionFormModal");
+            var btn = document.getElementById("openInterventionForm");
+            var span = document.getElementsByClassName("close")[0];
+            var form = document.getElementById("interventionForm");
+
+            if (btn) {
+                btn.onclick = function () {
+                    modal.style.display = "block";
+                    document.getElementById('heure_fin').value = new Date().toTimeString().slice(0, 5);
+                }
+            }
+
+            if (span) {
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+            }
+
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            if (form) {
+                form.onsubmit = function (e) {
+                    e.preventDefault();
+                    fetch('{% url "gmao:terminer_travail" intervention.id %}', {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Intervention terminée avec succès');
+                                window.location.reload();
+                            } else {
+                                let errorMessage = 'Erreur lors de la terminaison de l\'intervention: ';
+                                if (typeof data.message === 'object') {
+                                    for (let key in data.message) {
+                                        errorMessage += `\n${key}: ${data.message[key]}`;
+                                    }
+                                } else {
+                                    errorMessage += data.message;
+                                }
+                                alert(errorMessage);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erreur:', error);
+                            alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
+                        });
+                }
+            }
+        });
+
 
         function initializeModal() {
             // Le code pour initialiser le modal reste inchangé
@@ -343,9 +473,21 @@
 
             initializeModal();
         });
-
         function getCookie(name) {
-            // Le code pour obtenir le cookie CSRF reste inchangé
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
+
+
     </script>
 {% endblock %}
