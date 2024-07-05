@@ -101,27 +101,6 @@ def test_db_connection(request):
         return HttpResponse(f"Erreur : {str(e)}")
 
 
-# @login_required
-# def home(request):
-#     form = DoleanceForm()
-#     if request.user.role == 'ADMIN':
-#         doleances = Doleance.objects.using('kimei_db').all()
-#         techniciens = Employee.objects.filter(role='TECH', statut='PRS')
-#     else:
-#         personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-#         interventions = InterventionPersonnel.objects.using('kimei_db').filter(personnel=personnel)
-#         doleances = Doleance.objects.using('kimei_db').filter(intervention__in=interventions.values('intervention'))
-#         techniciens = None
-#
-#     context = {
-#         'form': form,
-#         'doleances': doleances,
-#         'techniciens': techniciens,
-#     }
-#     return render(request, 'gmao/home.html', context)
-
-
-# #####################Liste Doléances En Cours######################
 @login_required
 def home(request):
     form = DoleanceForm()
