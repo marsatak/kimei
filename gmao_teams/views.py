@@ -174,7 +174,7 @@ def get_techniciens_disponibles(request):
 
     # Ensuite, sélectionnez les techniciens qui ne sont pas dans cette liste
     techniciens = (Personnel.objects.using('kimei_db').filter(
-        poste_id__in=(12, 13),
+        poste_id__in=(1, 2, 4, 6, 7, 12, 13, 17, 18),
         statut='PRS'
     )
                    .exclude(id__in=techniciens_affectes))
