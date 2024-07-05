@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention_.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +192,7 @@
       <workItem from="1720026288676" duration="11716000" />
       <workItem from="1720067481240" duration="27593000" />
       <workItem from="1720103432373" duration="16922000" />
-      <workItem from="1720151581285" duration="6762000" />
+      <workItem from="1720151581285" duration="6923000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -483,7 +482,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720161643231</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720161922720</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1720161922720</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
