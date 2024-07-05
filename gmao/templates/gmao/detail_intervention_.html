@@ -270,8 +270,10 @@
                             .text('En cours');
                         // Cacher le bouton "Commencer le travail"
                         $('.commencer-intervention').hide();
-                        // Afficher le bouton "Terminer le travail" si ce n'est pas déjà fait
                         $('#openInterventionForm').show();
+                        
+                        window.location.href = '{% url "gmao:detail_intervention" intervention_id %}';
+                        // Afficher le bouton "Terminer le travail" si ce n'est pas déjà fait
                     } else {
                         alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
                     }
