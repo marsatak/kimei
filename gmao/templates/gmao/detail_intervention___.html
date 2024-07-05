@@ -15,15 +15,16 @@
     <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
     &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
 {% endblock navbar-content %}
-
 {% block extra_css %}
     <style>
         .intervention-card {
             margin-bottom: 20px;
         }
+
         .card-body {
             padding: 20px;
         }
+
         .progress-container {
             height: 200px;
             width: 100%;
@@ -31,6 +32,7 @@
             margin: 20px 0;
             padding-left: 30px;
         }
+
         .progress-bar-vertical {
             width: 4px;
             height: 0;
@@ -39,6 +41,7 @@
             left: -2px;
             bottom: 10px;
         }
+
         .progress-step {
             width: 20px;
             height: 20px;
@@ -50,13 +53,24 @@
             transform: translateX(-50%);
             z-index: 1;
         }
-        .progress-step[data-step="start"] { bottom: 0; }
-        .progress-step[data-step="half"] { bottom: 50%; }
-        .progress-step[data-step="end"] { bottom: 100%; }
+
+        .progress-step[data-step="start"] {
+            bottom: 0;
+        }
+
+        .progress-step[data-step="half"] {
+            bottom: 50%;
+        }
+
+        .progress-step[data-step="end"] {
+            bottom: 100%;
+        }
+
         .progress-step.active {
             background-color: #28a745;
             border-color: #28a745;
         }
+
         .progress-label {
             position: absolute;
             left: 30px;
@@ -64,108 +78,210 @@
             white-space: nowrap;
             padding: 5px 0;
         }
+
         .intervention-info {
             margin-bottom: 10px;
             padding-left: 30px;
         }
+
         .gauge-container {
             width: 100%;
             height: 150px;
             margin: auto;
         }
+
         .button-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
+
         .btn-sm {
             padding: 5px 10px;
             font-size: 0.875rem;
             width: 100%;
         }
+
+        @media (max-width: 767px) {
+            .order-1 {
+                order: 1;
+            }
+            .order-2 {
+                order: 2;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
         .modal-content {
-            width: 95%;
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
             max-width: 500px;
         }
-        @media (max-width: 767px) {
-            .order-1 { order: 1; }
-            .order-2 { order: 2; }
-            .progress-container {
-                height: 150px;
-            }
-            .progress-label {
-                font-size: 0.8rem;
-            }
-            .gauge-container {
-                height: 100px;
-            }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
+    <style>
+        .gauge-container {
+            width: 200px;
+            height: 200px;
+            margin: auto;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .col-md-8 {
+            flex: 0 0 66.666667%;
+            max-width: 66.666667%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover, .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="date"], input[type="time"], textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+
 {% endblock %}
-
 {% block content %}
-    <div class="container-fluid">
-        <h2 class="mb-4">Détails de l'intervention pour la doléance {{ intervention.doleance.ndi }}</h2>
-        <p class="mb-4">{{ intervention.doleance.panne_declarer }}</p>
+    <h2>Détails de l'intervention pour la doléance {{ intervention.doleance.ndi }}</h2>
+    <p>{{ intervention.doleance.panne_declarer }}</p>
 
-        <div class="row">
-            <div class="col-md-4 order-md-1 order-2 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Techniciens affectés :</h3>
-                        <ul id="techniciensList" class="list-unstyled">
-                            {% for tech in techniciens %}
-                                <li>{{ tech.personnel.nom_personnel }} {{ tech.personnel.prenom_personnel }}</li>
-                            {% empty %}
-                                <li>Aucun technicien affecté</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+    <div class="row">
+        <div class="col-md-4 order-md-1 order-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3>Techniciens affectés :</h3>
+                    <ul id="techniciensList" class="list-unstyled">
+                        {% for tech in techniciens %}
+                            <li>{{ tech.personnel.nom_personnel }} {{ tech.personnel.prenom_personnel }}</li>
+                        {% empty %}
+                            <li>Aucun technicien affecté</li>
+                        {% endfor %}
+                    </ul>
                 </div>
-
-                {% if not intervention.is_done %}
-                    {% csrf_token %}
-                    <div class="button-group mt-3">
-                        {% if not intervention.top_debut %}
-                            <button class="btn btn-primary btn-sm commencer-intervention" data-id="{{ intervention.id }}">
-                                Commencer le travail
-                            </button>
-                        {% elif not intervention.top_terminer %}
-                            <button id="openInterventionForm" class="btn btn-success btn-sm">Terminer le travail</button>
-                        {% endif %}
-                        <button class="btn btn-danger btn-sm annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
-                    </div>
-                {% endif %}
             </div>
 
-            <div class="col-md-8 order-md-2 order-1 mb-4">
-                <div class="card intervention-card">
-                    <div class="card-body">
-                        <div class="progress-container">
-                            <div class="progress-bar-vertical bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            <div class="progress-step" data-step="start">
-                                <span class="progress-label">Début de prise en charge : <span id="top_depart">{{ intervention.top_depart }}</span></span>
-                            </div>
-                            <div class="progress-step" data-step="half">
-                                <span class="progress-label">Début du travail : <span id="top_debut">{{ intervention.top_debut|default:"Non commencé" }}</span></span>
-                            </div>
-                            <div class="progress-step" data-step="end">
-                                <span class="progress-label">Fin du travail : <span id="top_terminer">{{ intervention.top_terminer|default:"Non terminé" }}</span></span>
-                            </div>
+            {% if not intervention.is_done %}
+                {% csrf_token %}
+                <div class="button-group">
+                    {% if not intervention.top_debut %}
+                        <button class="btn btn-primary btn-sm commencer-intervention" data-id="{{ intervention.id }}">
+                            Commencer le travail
+                        </button>
+                    {% elif not intervention.top_terminer %}
+                        <button id="openInterventionForm" class="btn btn-success btn-sm">Terminer le travail</button>
+                    {% endif %}
+                    <button class="btn btn-danger btn-sm annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-8 order-md-2 order-1">
+            <div class="card intervention-card">
+                <div class="card-body">
+                    <div class="progress-container">
+                        <div class="progress-bar-vertical bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-step" data-step="start">
+                            <span class="progress-label">Début de prise en charge : <span id="top_depart">{{ intervention.top_depart }}</span></span>
                         </div>
-                        <p class="intervention-info">Durée de l'intervention : <span id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span> secondes</p>
-                        <p class="intervention-info">Statut : <span id="statutIntervention">
-                            {% if intervention.is_done %}
-                                Terminée
-                            {% elif intervention.is_half_done %}
-                                En cours
-                            {% else %}
-                                Non commencée
-                            {% endif %}
-                        </span></p>
-                        <div class="gauge-container">
-                            <canvas id="interventionGauge"></canvas>
+                        <div class="progress-step" data-step="half">
+                            <span class="progress-label">Début du travail : <span id="top_debut">{{ intervention.top_debut|default:"Non commencé" }}</span></span>
                         </div>
+                        <div class="progress-step" data-step="end">
+                            <span class="progress-label">Fin du travail : <span id="top_terminer">{{ intervention.top_terminer|default:"Non terminé" }}</span></span>
+                        </div>
+                    </div>
+                    <p class="intervention-info">Durée de l'intervention : <span id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span> secondes</p>
+                    <p class="intervention-info">Statut : <span id="statutIntervention">
+                        {% if intervention.is_done %}
+                            Terminée
+                        {% elif intervention.is_half_done %}
+                            En cours
+                        {% else %}
+                            Non commencée
+                        {% endif %}
+                    </span></p>
+                    <div class="gauge-container">
+                        <canvas id="interventionGauge"></canvas>
                     </div>
                 </div>
             </div>
@@ -178,12 +294,70 @@
             <span class="close">&times;</span>
             <h3>Fiche d'Intervention</h3>
             <form id="interventionForm">
-                <!-- Le contenu du formulaire reste inchangé -->
+                <input type="hidden" id="intervention-id-input" name="intervention_id" value="{{ intervention.id }}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="numero_fiche">Numéro de fiche :</label>
+                    <input type="text" id="numero_fiche" name="numero_fiche" maxlength="5" pattern="\d{1,5}" required>
+                </div>
+                <div class="form-group">
+                    <label for="ndi">NDI :</label>
+                    <input type="text" id="ndi" name="ndi" value="{{ intervention.doleance.ndi }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date :</label>
+                    <input type="date" id="date" name="date" value="{{ intervention.top_debut|date:'Y-m-d' }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="heure_debut">Heure de début :</label>
+                    <input type="time" id="heure_debut" name="heure_debut"
+                           value="{{ intervention.top_debut|time:'H:i' }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="heure_fin">Heure de fin :</label>
+                    <input type="time" id="heure_fin" name="heure_fin" required>
+                </div>
+                <div class="form-group">
+                    <label for="station">Station :</label>
+                    <input type="text" id="station" name="station"
+                           value="{{ intervention.doleance.station.libelle_station }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="panne_declaree">Panne déclarée :</label>
+                    <textarea id="panne_declaree" name="panne_declaree" rows="3"
+                              readonly>{{ intervention.doleance.panne_declarer }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="description_panne">Description de la panne constatée :</label>
+                    <textarea id="description_panne" name="description_panne" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="resolution">Résolution:</label>
+                    <textarea id="resolution" name="resolution" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="observations">Observations :</label>
+                    <textarea id="observations" name="observations" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="pieces_changees">Pièces changées :</label>
+                    <textarea id="pieces_changees" name="pieces_changees" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="statut-final">Statut final de l'intervention :</label>
+                    <select id="statut-final" name="statut_final" required>
+                        <option value="">Choisissez un statut</option>
+                        <option value="TER">Terminé (TER)</option>
+                        <option value="ATP">Attente Pièces (ATP)</option>
+                        <option value="ATD">Attente Décision (ATD)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Terminer l'intervention</button>
             </form>
+
         </div>
     </div>
 {% endblock %}
-
 {% block extra_js %}
     <script src="{% static 'gmao/js/home.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>

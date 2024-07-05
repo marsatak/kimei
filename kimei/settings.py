@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_crontab',
     'channels',
-    # external app
+    # external
+    'django_flatpickr',
     'bootstrap5',
     'fontawesome_5',
     'fontawesomefree',

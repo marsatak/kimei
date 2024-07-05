@@ -110,7 +110,14 @@ $(document).ready(function () {
                 },
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    {
+                        extend: 'excel',
+                        text: 'Exporter en Excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+
                 ],
                 ordering: false,
                 columnDefs: [
@@ -218,7 +225,7 @@ $(document).ready(function () {
                 language: {
                     // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
                 },
-                dom: 'Bfrtip',
+                //dom: 'Bfrtip',
                 columnDefs: [
                     {
                         targets: [0],

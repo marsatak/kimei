@@ -130,7 +130,14 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    {
+                        extend: 'excel',
+                        text: 'Exporter en Excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                  
                 ],
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'

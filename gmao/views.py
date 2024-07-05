@@ -679,15 +679,79 @@ def toutes_les_doleances(request):
     })
 
 
+# @login_required
+# def get_doleances_data(request):
+#     year = request.GET.get('year')
+#     month = request.GET.get('month')
+#
+#     doleances = Doleance.objects.filter(
+#         date_transmission__year=year,
+#         date_transmission__month=month
+#     ).exclude(statut='NEW').order_by('-date_transmission')
+#
+#     data = [{
+#         'id': d.id,
+#         'ndi': d.ndi,
+#         'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
+#         'statut': d.statut,
+#         'station': d.station.libelle_station,
+#         'element': d.element,
+#         'panne_declarer': d.panne_declarer,
+#         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
+#         'commentaire': d.commentaire,
+#         # Ajoutez d'autres champs si nécessaire
+#     } for d in doleances]
+#
+#     return JsonResponse({'data': data})
+# @login_required
+# def get_doleances_data(request):
+#     year = request.GET.get('year')
+#     month = request.GET.get('month')
+#
+#     print(f"Fetching data for year: {year}, month: {month}")  # Debug print
+#
+#     doleances = Doleance.objects.filter(
+#         date_transmission__year=year,
+#         date_transmission__month=month
+#     ).exclude(statut='NEW').order_by('-date_transmission')
+#
+#     print(f"Number of doleances found: {doleances.count()}")  # Debug print
+#
+#     data = [{
+#         'id': d.id,
+#         'ndi': d.ndi,
+#         'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
+#         'statut': d.statut,
+#         'station': d.station.libelle_station,
+#         'element': d.element,
+#         'panne_declarer': d.panne_declarer,
+#         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
+#         'commentaire': d.commentaire,
+#     } for d in doleances]
+#
+#     return JsonResponse({'data': data})
+
 @login_required
 def get_doleances_data(request):
     year = request.GET.get('year')
     month = request.GET.get('month')
+    start_date = request.GET.get('startDate')
+    end_date = request.GET.get('endDate')
 
-    doleances = Doleance.objects.filter(
-        date_transmission__year=year,
-        date_transmission__month=month
-    ).exclude(statut='NEW').order_by('-date_transmission')
+    doleances_query = Doleance.objects.all()
+
+    if year and year != 'all':
+        doleances_query = doleances_query.filter(date_transmission__year=year)
+
+    if month and month != 'all':
+        doleances_query = doleances_query.filter(date_transmission__month=month)
+
+    if start_date and end_date:
+        doleances_query = doleances_query.filter(
+            date_transmission__range=[start_date, end_date]
+        )
+
+    doleances = doleances_query.exclude(statut='NEW').order_by('-date_transmission')
 
     data = [{
         'id': d.id,
@@ -699,10 +763,46 @@ def get_doleances_data(request):
         'panne_declarer': d.panne_declarer,
         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
         'commentaire': d.commentaire,
-        # Ajoutez d'autres champs si nécessaire
     } for d in doleances]
 
     return JsonResponse({'data': data})
+
+
+# @login_required
+# def get_doleances_data(request):
+#     year = request.GET.get('year')
+#     month = request.GET.get('month')
+#     start_date = request.GET.get('startDate')
+#     end_date = request.GET.get('endDate')
+#
+#     doleances_query = Doleance.objects.all()
+#
+#     if year != 'all':
+#         doleances_query = doleances_query.filter(date_transmission__year=year)
+#
+#     if month != 'all':
+#         doleances_query = doleances_query.filter(date_transmission__month=month)
+#
+#     if start_date and end_date:
+#         doleances_query = doleances_query.filter(
+#             date_transmission__range=[start_date, end_date]
+#         )
+#
+#     doleances = doleances_query.exclude(statut='NEW').order_by('-date_transmission')
+#
+#     data = [{
+#         'id': d.id,
+#         'ndi': d.ndi,
+#         'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
+#         'statut': d.statut,
+#         'station': d.station.libelle_station,
+#         'element': d.element,
+#         'panne_declarer': d.panne_declarer,
+#         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
+#         'commentaire': d.commentaire,
+#     } for d in doleances]
+#
+#     return JsonResponse({'data': data})
 
 
 @login_required

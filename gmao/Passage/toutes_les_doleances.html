@@ -13,8 +13,8 @@
        class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
         Liste des interventions
     </a>
-    <a href="{% url 'gmao:home' %}" class="btn btn-outline-info text-center text-light border-light btn-sm mx-2"
-       id="btn-nav">
+    <a href="{% url 'gmao:home' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
         Accueil
     </a>
 {% endblock nav-btn %}
@@ -23,50 +23,18 @@
     <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
     &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
 {% endblock navbar-content %}
+
 {% block extra_css %}
-    {{ block.super }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/dark.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
-          integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{% static 'gmao/css/home.css' %}">
-    <style>
-        .filter-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .filter-container > * {
-            margin-bottom: 0;
-        }
-
-        .form-select, .form-control {
-            width: auto;
-        }
-
-        @media (max-width: 768px) {
-            .filter-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-container > * {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
 {% endblock %}
+
 {% block content %}
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Toutes les Doléances</h5>
-                    <div class="filter-container">
+                    <div>
                         <label for="yearSelect">Année:</label>
                         <select id="yearSelect" class="form-select form-select-sm">
                             {% for year in years %}
@@ -81,14 +49,6 @@
                                         {% if month.0 == current_month %}selected{% endif %}>{{ month.1 }}</option>
                             {% endfor %}
                         </select>
-                        <button id="showAllYear" class="btn btn-secondary btn-sm">Toute l'année</button>
-                        <input type="text" id="startDate" class="form-control form-control-sm flatpickr-input"
-                               placeholder="Date début">
-                        <input type="text" id="endDate" class="form-control form-control-sm flatpickr-input"
-                               placeholder="Date fin">
-                        {% comment %}<input type="date" id="startDate" class="form-control form-control-sm">
-                        <input type="date" id="endDate" class="form-control form-control-sm">{% endcomment %}
-                        <button id="exportDateRange" class="btn btn-info btn-sm">Exporter plage</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -124,40 +84,13 @@
         </div>
     </div>
 {% endblock content %}
+
 {% block extra_js %}
-    {{ block.super }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
-            integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {#    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>#}
     <script>
         $(document).ready(function () {
             let doleanceTable;
-            const flatpickrConfig = {
-                dateFormat: "Y-m-d",
-                maxDate: "today",
-                theme: "dark"
-            };
-            
 
-            const startDatePicker = flatpickr("#startDate", {
-                ...flatpickrConfig,
-                onChange: function (selectedDates, dateStr, instance) {
-                    endDatePicker.set('minDate', dateStr);
-                }
-            });
-
-            const endDatePicker = flatpickr("#endDate", {
-                ...flatpickrConfig,
-                onChange: function (selectedDates, dateStr, instance) {
-                    startDatePicker.set('maxDate', dateStr);
-                }
-            });
-
-            {% comment %} flatpickr("#startDate", flatpickrConfig);
-             flatpickr("#endDate", flatpickrConfig);{% endcomment %}
-
-            function initializeTable(year, month) {
+            function initializeTable() {
                 if ($.fn.DataTable.isDataTable('#toutesDoléances')) {
                     $('#toutesDoléances').DataTable().destroy();
                 }
@@ -169,10 +102,8 @@
                     ajax: {
                         url: '{% url "gmao:get_doleances_data" %}',
                         data: function (d) {
-                            d.year = year;
-                            d.month = month;
-                            d.startDate = $('#startDate').val();
-                            d.endDate = $('#endDate').val();
+                            d.year = $('#yearSelect').val();
+                            d.month = $('#monthSelect').val();
                         },
                         dataSrc: function (json) {
                             $('#loadingIndicator').hide();
@@ -221,6 +152,7 @@
                                 columns: ':visible'
                             }
                         },
+                       
                     ],
                     ordering: false,
                     columnDefs: [
@@ -285,33 +217,11 @@
                 return html;
             }
 
-            function updateTable() {
-                let year = $('#yearSelect').val();
-                let month = $('#monthSelect').val();
-                let startDate = $('#startDate').val();
-                let endDate = $('#endDate').val();
-                initializeTable(year, month, startDate, endDate);
-            }
+            initializeTable();
 
-            $('#yearSelect, #monthSelect').on('change', updateTable);
-
-            $('#showAllYear').on('click', function () {
-                let year = $('#yearSelect').val();
-                initializeTable(year, 'all', null, null);
+            $('#yearSelect, #monthSelect').on('change', function () {
+                initializeTable();
             });
-
-            $('#exportDateRange').on('click', function () {
-                let startDate = $('#startDate').val();
-                let endDate = $('#endDate').val();
-                if (startDate && endDate) {
-                    // Logique d'export à implémenter
-                    initializeTable(null, null, startDate, endDate)
-                } else {
-                    alert('Veuillez sélectionner une plage de dates valide');
-                }
-            });
-
-            updateTable();  // Initialiser la table au chargement de la page
 
             $('#toutesDoléances').on('click', '.declencher-intervention', function () {
                 const doleanceId = $(this).data('id');
@@ -322,10 +232,6 @@
                 // Implémentez la logique pour déclencher une intervention ici
                 alert('Déclencher intervention pour la doléance ' + doleanceId);
             }
-        });
-        $('#showAllYear').on('click', function () {
-            let year = $('#yearSelect').val();
-            initializeTable(year, 'all');
         });
     </script>
 {% endblock extra_js %}
