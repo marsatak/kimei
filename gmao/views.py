@@ -590,7 +590,7 @@ def detail_intervention(request, intervention_id):
     techniciens = (InterventionPersonnel.objects.filter(intervention=intervention)
                    .all().select_related('personnel'))
     print("Techniciens associés:", [t.personnel.nom_personnel for t in techniciens])  # Ajoutez cette ligne
-    return render(request, 'gmao/detail_intervention.html', {
+    return render(request, 'gmao/detail_intervention_miandry_midi.html', {
         'intervention': intervention,
         'techniciens': techniciens
     })
