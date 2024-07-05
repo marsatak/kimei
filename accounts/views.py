@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
 from django.apps import apps
 from django.db import migrations
+from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -57,6 +58,7 @@ def change_password(request):
     return render(request, 'accounts/change_password.html', context)
 
 
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
