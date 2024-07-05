@@ -2,20 +2,20 @@
 {% load static %}
 
 {% block title %}Détails de l'intervention{% endblock %}
+
 {% block nav-btn %}
     <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
-       id="btn-nav">
-        Logout
-    </a>
+       id="btn-nav">Logout</a>
     <a href="{% url 'gmao:liste_interventions' %}"
-       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
-        Liste des interventions
-    </a>
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des
+        interventions</a>
 {% endblock nav-btn %}
+
 {% block navbar-content %}
     <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
     &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
 {% endblock navbar-content %}
+
 {% block extra_css %}
     <style>
         .gauge-container {
@@ -68,8 +68,7 @@
             font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
+        .close:hover, .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
@@ -84,10 +83,7 @@
             margin-bottom: 5px;
         }
 
-        input[type="text"],
-        input[type="date"],
-        input[type="time"],
-        textarea {
+        input[type="text"], input[type="date"], input[type="time"], textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -101,11 +97,6 @@
         <button class="btn btn-danger btn-sm annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
     {% endif %}
     <h2>Détails de l'intervention pour la doléance {{ intervention.doleance.ndi }}</h2>
-    {% comment %}{% if not intervention.is_done %}
-        <button class="btn btn-danger btn-sm annuler-prise-en-charge" data-id="{{ intervention.id }}">Annuler la prise
-            en charge
-        </button>
-    {% endif %}{% endcomment %}
     <p>{{ intervention.doleance.panne_declarer }}</p>
 
     <div class="row">
@@ -135,7 +126,7 @@
         </div>
         <div class="col-md-8">
             <p>Début de prise en charge : {{ intervention.top_depart }}</p>
-            <p>Début du travail : {{ intervention.top_debut|default:"Non commencé" }}</p>
+            <p>Début du travail : <span id="top_debut">{{ intervention.top_debut|default:"Non commencé" }}</span></p>
             <p>Fin du travail : {{ intervention.top_terminer|default:"Non terminé" }}</p>
             <p>Durée de l'intervention : <span
                     id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span> secondes</p>
@@ -182,9 +173,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="numero_fiche">Numéro de fiche :</label>
-                    <input type="text" id="numero_fiche" name="numero_fiche"
-                           maxlength="5" pattern="\d{1,5}" required
-                    >
+                    <input type="text" id="numero_fiche" name="numero_fiche" maxlength="5" pattern="\d{1,5}" required>
                 </div>
                 <div class="form-group">
                     <label for="ndi">NDI :</label>
@@ -230,22 +219,22 @@
                     <textarea id="pieces_changees" name="pieces_changees" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Statut final de l'intervention :</label>
-                    <label for="statut-final"></label><select id="statut-final" name="statut_final" required>
-                    <option value="">Choisissez un statut</option>
-                    <option value="TER">Terminé (TER)</option>
-                    <option value="ATP">Attente Pièces (ATP)</option>
-                    <option value="ATD">Attente Décision (ATD)</option>
-                </select>
+                    <label for="statut-final">Statut final de l'intervention :</label>
+                    <select id="statut-final" name="statut_final" required>
+                        <option value="">Choisissez un statut</option>
+                        <option value="TER">Terminé (TER)</option>
+                        <option value="ATP">Attente Pièces (ATP)</option>
+                        <option value="ATD">Attente Décision (ATD)</option>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-success">Terminer l'intervention</button>
             </form>
         </div>
     </div>
 {% endblock %}
-
 {% block extra_js %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <script>
         function commencerIntervention(interventionId) {
             console.log("Début de commencerIntervention", interventionId);
@@ -254,7 +243,7 @@
 
             $.ajax({
                 url: '/home/commencer-intervention/' + interventionId + '/',
-                type: 'POST', // Assurez-vous que c'est bien POST
+                type: 'POST',
                 data: {
                     kilometrage: kilometrage,
                     csrfmiddlewaretoken: getCookie('csrftoken')
@@ -268,9 +257,7 @@
                             .css('width', '66%')
                             .attr('aria-valuenow', 66)
                             .text('En cours');
-                        // Cacher le bouton "Commencer le travail"
                         $('.commencer-intervention').hide();
-                        // Afficher le bouton "Terminer le travail" si ce n'est pas déjà fait
                         $('#openInterventionForm').show();
                     } else {
                         alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
@@ -283,7 +270,7 @@
             });
         }
 
-        $(document).on('click', '.commencer-intervention', function () {
+        $(document).on('click', '.commencer-intervention', function (e) {
             e.preventDefault();
             var interventionId = $(this).data('id');
             commencerIntervention(interventionId);
@@ -299,7 +286,7 @@
                 success: function (response) {
                     if (response.success) {
                         alert('Intervention annulée avec succès.');
-                        location.reload(); // Ou mettez à jour l'interface utilisateur
+                        location.reload();
                     } else {
                         alert('Erreur lors de l\'annulation de l\'intervention: ' + response.message);
                     }
@@ -311,16 +298,12 @@
             });
         }
 
-        // Assurez-vous que cet écouteur d'événements est correctement placé
-        $(document).on('click', '.annuler-intervention', function () {
+        $(document).on('click', '.annuler-intervention', function (e) {
             e.preventDefault();
             var interventionId = $(this).data('id');
             annulerIntervention(interventionId);
         });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
-    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
             upperCaseInputs.forEach(input => {
@@ -328,9 +311,7 @@
                     this.value = this.value.toUpperCase();
                 });
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function () {
             var ctx = document.getElementById('interventionGauge').getContext('2d');
             var status = '{{ intervention.is_done|yesno:"Terminée,En cours" }}';
             var duree = parseInt('{{ intervention.duree_intervention|default_if_none:0 }}');
@@ -363,7 +344,6 @@
 
             new Chart(ctx, config);
 
-            // Gestion du modal et du formulaire
             var modal = document.getElementById("interventionFormModal");
             var btn = document.getElementById("openInterventionForm");
             var span = document.getElementsByClassName("close")[0];
@@ -372,7 +352,6 @@
             if (btn) {
                 btn.onclick = function () {
                     modal.style.display = "block";
-                    // Pré-remplir l'heure de fin avec l'heure actuelle
                     document.getElementById('heure_fin').value = new Date().toTimeString().slice(0, 5);
                 }
             }
@@ -405,10 +384,8 @@
                                 alert('Intervention terminée avec succès');
                                 window.location.reload();
                             } else {
-                                {#alert(`Erreur lors de la terminaison de l'intervention: ' + data.message`);#}
                                 let errorMessage = 'Erreur lors de la terminaison de l\'intervention: ';
                                 if (typeof data.message === 'object') {
-                                    // Si le message est un objet (probablement des erreurs de formulaire)
                                     for (let key in data.message) {
                                         errorMessage += `\n${key}: ${data.message[key]}`;
                                     }
@@ -440,31 +417,5 @@
             }
             return cookieValue;
         }
-    </script>
-    {{ block.super }}
-    <script>
-        $(document).ready(function () {
-            $('.annuler-prise-en-charge').click(function () {
-                const interventionId = $(this).data('id');
-                if (confirm('Êtes-vous sûr de vouloir annuler cette prise en charge ?')) {
-                    $.ajax({
-                        url: '{% url "gmao:annuler_prise_en_charge" intervention.id %}',
-                        type: 'POST',
-                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                        success: function (response) {
-                            if (response.success) {
-                                alert(response.message);
-                                window.location.href = '{% url "gmao:liste_interventions" %}';  // Redirige vers la liste des interventions
-                            } else {
-                                alert('Erreur : ' + response.message);
-                            }
-                        },
-                        error: function () {
-                            alert('Une erreur est survenue lors de l\'annulation de la prise en charge.');
-                        }
-                    });
-                }
-            });
-        });
     </script>
 {% endblock extra_js %}

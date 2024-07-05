@@ -426,7 +426,8 @@ def commencer_intervention(request, intervention_id):
         return JsonResponse({
             'success': True,
             'message': 'Intervention déclenchée avec succès',
-            'intervention_id': intervention.id
+            'intervention_id': intervention.id,
+            'top_debut': intervention.top_debut.strftime('%Y-%m-%d %H:%M:%S')
         })
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
