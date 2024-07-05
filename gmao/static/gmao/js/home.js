@@ -499,34 +499,6 @@ $(document).ready(function () {
         });
     });
 
-    /*new Sortable(document.getElementById('personnel').querySelector('tbody'), {
-        group: {
-            name: 'shared',
-            pull: 'clone',
-            put: false
-        },
-        sort: false,
-        multiDrag: true,
-        selectedClass: 'selected',
-        animation: 150
-    });
-    new Sortable(document.getElementById('demandeencours').querySelector('tbody'), {
-        group: {
-            name: 'shared',
-            put: true
-        },
-        sort: false,
-        onAdd: function (evt) {
-            const doleanceId = evt.to.closest('tr').getAttribute('data-id');
-            const technicienIds = evt.items.map(item => item.getAttribute('data-id'));
-
-            // Supprimer les éléments dragués
-            evt.items.forEach(item => item.parentNode.removeChild(item));
-
-            // Appeler la fonction pour affecter les techniciens
-            affecterTechniciens(doleanceId, technicienIds);
-        }
-    });*/
 
     function affecterTechniciens(doleanceId, technicienIds) {
         $.ajax({

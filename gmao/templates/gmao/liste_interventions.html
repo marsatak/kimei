@@ -73,6 +73,7 @@
             <thead>
             <tr>
                 <th>NDI</th>
+                <th>Panne</th>
                 <th>Début prise en charge</th>
                 <th>Début travail</th>
                 <th>Fin travail</th>
@@ -85,6 +86,7 @@
             {% for intervention in interventions %}
                 <tr>
                     <td data-label="NDI">{{ intervention.doleance.ndi }}</td>
+                    <td data-label="Panne">{{ intervention.doleance.panne }}</td>
                     <td data-label="Début prise en charge">{{ intervention.top_depart }}</td>
                     <td data-label="Début travail">{{ intervention.top_debut }}</td>
                     <td data-label="Fin travail">{{ intervention.top_terminer }}</td>
