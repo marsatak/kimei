@@ -28,7 +28,6 @@
                             <table class="table table-striped table-bordered" id="interventionsTable">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>NDI</th>
                                     <th>Panne</th>
                                     <th>Début prise en charge</th>
@@ -37,18 +36,11 @@
                                     <th>Statut</th>
                                     <th>Techniciens</th>
                                     <th>Actions</th>
-                                    <!-- Ajoutez ici les en-têtes pour les champs supplémentaires -->
-                                    <th>Durée intervention</th>
-                                    <th>Kilométrage départ</th>
-                                    <th>Kilométrage retour</th>
-                                    <th>Résolution</th>
-                                    <th>Numéro fiche</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for intervention in interventions %}
                                     <tr>
-                                        <td>{{ intervention.id }}</td>
                                         <td>{{ intervention.doleance.ndi }}</td>
                                         <td>{{ intervention.doleance.panne_declarer }}</td>
                                         <td>{{ intervention.top_depart }}</td>
@@ -74,12 +66,12 @@
                                             <a href="{% url 'gmao:detail_intervention' intervention.id %}"
                                                class="btn btn-sm btn-primary">Éditer</a>
                                         </td>
-                                        <!-- Ajoutez ici les cellules pour les champs supplémentaires -->
-                                        <td>{{ intervention.duree_intervention }}</td>
-                                        <td>{{ intervention.kilometrage_depart_debut }}</td>
-                                        <td>{{ intervention.kilometrage_home }}</td>
-                                        <td>{{ intervention.resolution }}</td>
-                                        <td>{{ intervention.numero_fiche }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="8" class="text-center">Aucune intervention trouvée pour
+                                            aujourd'hui.
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -94,9 +86,6 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
     <style>
         #interventionsTable td {
             white-space: normal;
@@ -110,39 +99,13 @@
 {% endblock extra_css %}
 
 {% block extra_js %}
-    <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#interventionsTable').DataTable({
                 responsive: true,
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                },
-                columnDefs: [
-                    {
-                        targets: [9, 10, 11, 12, 13], // Indices des colonnes à cacher (commençant à 0)
-                        visible: false,
-                        searchable: true
-                    }
-                ],
-                order: [[3, 'desc']] // Trie par date de prise en charge (4ème colonne) par défaut
+                }
             });
         });
     </script>

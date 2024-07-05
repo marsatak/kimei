@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestion des équipes{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gmao_teams/css/equipes.css' %}">
+    <style>
+        .list-group-item {
+            padding-right: 100px; /* Espace pour le bouton */
+            position: relative;
+        }
+
+        .list-group-item .btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .list-group-item span {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+    {#    Techniciens disponibles#}
+    <style>
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-group-item span {
+            flex-grow: 1;
+            margin-right: 10px;
+            word-break: break-word;
+        }
+
+        .list-group-item .btn {
+            flex-shrink: 0;
+        }
+    </style>
+    <style>
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+        }
+
+        .list-group-item span {
+            flex-grow: 1;
+            margin-right: 10px;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .list-group-item .btn {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        #listeTechniciensDisponibles {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+    <style>
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, .125);
+        }
+
+        .list-group-item .btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+    {#    Tecniciens de l'équipe#}
+    <style>
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, .125);
+        }
+
+        .list-group-item .btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .list-group-item span {
+            display: inline-block;
+            max-width: calc(100% - 80px); /* Ajustez cette valeur selon la largeur de vos boutons */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+    <style>
+        .list-group-item {
+            position: relative;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, .125);
+        }
+
+        .list-group-item .btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+    {#    Cadrage de l'affichage générale#}
+    <style>
+        .container-fluid {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        #listeEquipes {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        #detailsEquipe {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        @media (max-width: 767px) {
+            #detailsEquipe {
+                margin-top: 20px;
+            }
+        }
+    </style>
+
+{% endblock extra_css %}
+
+{% block nav-btn %}
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
+       id="btn-nav">Logout</a>
+    <a href="{% url 'gmao:liste_interventions' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des
+        interventions</a>
+    <a href="{% url 'gmao:toutes_les_doleances' %}"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des doléances</a>
+    {% if user.role == 'ADMIN' %}
+        <a href="#"
+           class="btn btn-outline-success text-center text-light border-light btn-sm mx-2" id="btn-nav">Gestion des
+            équipes</a>
+    {% endif %}
+{% endblock nav-btn %}
+
+{% block navbar-content %}
+    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
+    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
+{% endblock navbar-content %}
+
+{% block content %}
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <h1>Gestion des équipes</h1>
+                <button id="creerEquipe" class="btn btn-primary mb-3">Créer une équipe</button>
+                <div id="listeEquipes"></div>
+            </div>
+            <div class="col-md-9">
+                <div id="detailsEquipe" style="display: none;">
+                    <h2 id="equipeNom"></h2>
+                    <p id="equipeDescription"></p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Techniciens de l'équipe</h3>
+                            <ul id="listeTechniciens" class="list-group"></ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Techniciens disponibles</h3>
+                            <ul id="listeTechniciensDisponibles" class="list-group"
+                                style="max-height: 300px; overflow-y: auto;"></ul>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h3>Doléances de l'équipe</h3>
+                            <ul id="listeDoléances" class="list-group"
+                                style="max-height: 300px; overflow-y: auto;"></ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Doléances non attribuées</h3>
+                            <div class="input-group mb-3">
+                                <label for="searchDoleances"></label><input type="text" id="searchDoleances"
+                                                                            class="form-control"
+                                                                            placeholder="Rechercher une doléance...">
+                            </div>
+                            <ul id="listeDoléancesNonAttribuées" class="list-group"
+                                style="max-height: 300px; overflow-y: auto;"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+
+    <script>
+        const LISTE_EQUIPES_URL = "{% url 'gmao_teams:liste_equipes' %}";
+        const CREER_EQUIPE_URL = "{% url 'gmao_teams:creer_equipe' %}";
+        const GET_EQUIPE_DETAILS_URL = "{% url 'gmao_teams:get_equipe_details' 0 %}";
+        const AFFECTER_TECHNICIEN_URL = "{% url 'gmao_teams:affecter_technicien' 0 %}";
+        const ATTRIBUER_DOLEANCE_URL = "{% url 'gmao_teams:attribuer_doleance' 0 %}";
+        const RETIRER_TECHNICIEN_URL = "{% url 'gmao_teams:retirer_technicien' 0 %}";
+        const RETIRER_DOLEANCE_URL = "{% url 'gmao_teams:retirer_doleance' 0 %}";
+        const GET_TECHNICIENS_DISPONIBLES_URL = "{% url 'gmao_teams:get_techniciens_disponibles' %}";
+        const GET_DOLEANCES_NON_ATTRIBUEES_URL = "{% url 'gmao_teams:get_doleances_non_attribuees' %}";
+    </script>
+    <script src="{% static 'gmao_teams/js/equipes.js' %}"></script>
+{% endblock extra_js %}

@@ -134,7 +134,12 @@ def home(request):
 @api_view(['GET'])
 def getDoleanceEncours(request):
     try:
-        doleances = (Doleance.objects.all()).exclude(statut='TER').order_by('-date_transmission')
+        doleances = ((Doleance.objects.all()).exclude(statut='TER').order_by('-date_transmission')
+        .filter(
+            date_transmission__day=datetime.now().day,
+            date_transmission__month=datetime.now().month,
+            date_transmission__year=datetime.now().year
+        ))
 
         doleances_data = []
         for doleance in doleances:
