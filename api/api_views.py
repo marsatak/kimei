@@ -75,6 +75,15 @@ class UserInfoView(APIView):
         })
 
 
+from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.utils import timezone
+from gmao.models import Doleance, Personnel, Intervention
+from gmao.serializers import DoleanceSerializer
+from gmao_teams.models import EquipePersonnel, DoleanceEquipe
+
+
 class TechnicienViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -87,8 +96,10 @@ class TechnicienViewSet(viewsets.ViewSet):
             if not equipe:
                 return Response({'message': 'Aucune équipe assignée'}, status=400)
 
-            doleance_ids = DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe.equipe).values_list(
-                'doleance_id', flat=True)
+            doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
+                                .filter(equipe=equipe.equipe)
+                                .values_list('doleance_id', flat=True))
+
             doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
 
             serializer = DoleanceSerializer(doleances, many=True)
