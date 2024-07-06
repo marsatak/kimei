@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from api.api_views import TechnicienViewSet
+from django.views.decorators.csrf import csrf_exempt
 
 router = DefaultRouter()
 router.register(r'technicien', TechnicienViewSet, basename='technicien')

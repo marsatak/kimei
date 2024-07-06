@@ -5,15 +5,20 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from accounts.models import Employee
 from rest_framework.permissions import IsAuthenticated
-
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from gmao.models import Doleance, Intervention, Personnel
 from gmao.serializers import DoleanceSerializer, InterventionSerializer, PersonnelSerializer
+from django.middleware.csrf import get_token
 
 
 class LoginView(APIView):
+    @staticmethod
+    def get(request):
+        return Response({'csrfToken': get_token(request)})
+
     @staticmethod
     def post(request):
         username = request.data.get('username')
