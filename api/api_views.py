@@ -3,14 +3,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from .models import Employee
+from accounts.models import Employee
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Doleance, Intervention, Personnel
-from .serializers import DoleanceSerializer, InterventionSerializer, PersonnelSerializer
+from gmao.models import Doleance, Intervention, Personnel
+from gmao.serializers import DoleanceSerializer, InterventionSerializer, PersonnelSerializer
 
 
 class LoginView(APIView):
