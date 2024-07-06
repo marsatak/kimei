@@ -8,7 +8,7 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', include('gmao.urls')),
     path('equipes/', include('gmao_teams.urls')),
-    path('api/auth/', include('accounts.urls')),
+    path('api/', include('api.urls')),
 
     path('__reload__/', include('django_browser_reload.urls')),
 
