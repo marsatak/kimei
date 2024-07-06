@@ -71,6 +71,57 @@ class UserInfoView(APIView):
         })
 
 
+# class TechnicienViewSet(viewsets.ViewSet):
+#     permission_classes = [permissions.IsAuthenticated]
+#
+#     @action(detail=False, methods=['GET'])
+#     def portfolio(self, request):
+#         technicien = Personnel.objects.get(matricule=request.user.matricule)
+#         equipe = EquipePersonnel.objects.filter(personnel_id=technicien.id).first()
+#
+#         if not equipe:
+#             return Response({'message': 'Aucune équipe assignée'}, status=400)
+#
+#         doleance_ids = DoleanceEquipe.objects.filter(equipe=equipe.equipe).values_list('doleance_id', flat=True)
+#         doleances = Doleance.objects.filter(id__in=doleance_ids).exclude(statut='TER')
+#
+#         serializer = DoleanceSerializer(doleances, many=True)
+#         return Response({
+#             'doleances': serializer.data,
+#             'equipe': equipe.equipe.nom,
+#         })
+#
+#     @action(detail=True, methods=['POST'])
+#     def prendre_en_charge(self, request, pk=None):
+#         doleance = Doleance.objects.get(pk=pk)
+#         technicien = Personnel.objects.get(matricule=request.user.matricule)
+#
+#         # Logique de prise en charge...
+#
+#         intervention = Intervention.objects.create(
+#             doleance=doleance,
+#             top_depart=timezone.now(),
+#             etat_doleance='ATT'
+#         )
+#
+#         return Response({'success': True, 'intervention_id': intervention.id})
+#
+#     @action(detail=True, methods=['POST'])
+#     def commencer_intervention(self, request, pk=None):
+#         intervention = Intervention.objects.get(pk=pk)
+#         kilometrage = request.data.get('kilometrage')
+#
+#         # Logique pour commencer l'intervention...
+#
+#         return Response({'success': True, 'top_debut': intervention.top_debut})
+#
+#     @action(detail=True, methods=['POST'])
+#     def terminer_intervention(self, request, pk=None):
+#         intervention = Intervention.objects.get(pk=pk)
+#
+#         # Logique pour terminer l'intervention...
+#
+#         return Response({'success': True, 'message': 'Intervention terminée avec succès'})
 class TechnicienViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -90,35 +141,3 @@ class TechnicienViewSet(viewsets.ViewSet):
             'doleances': serializer.data,
             'equipe': equipe.equipe.nom,
         })
-
-    @action(detail=True, methods=['POST'])
-    def prendre_en_charge(self, request, pk=None):
-        doleance = Doleance.objects.get(pk=pk)
-        technicien = Personnel.objects.get(matricule=request.user.matricule)
-
-        # Logique de prise en charge...
-
-        intervention = Intervention.objects.create(
-            doleance=doleance,
-            top_depart=timezone.now(),
-            etat_doleance='ATT'
-        )
-
-        return Response({'success': True, 'intervention_id': intervention.id})
-
-    @action(detail=True, methods=['POST'])
-    def commencer_intervention(self, request, pk=None):
-        intervention = Intervention.objects.get(pk=pk)
-        kilometrage = request.data.get('kilometrage')
-
-        # Logique pour commencer l'intervention...
-
-        return Response({'success': True, 'top_debut': intervention.top_debut})
-
-    @action(detail=True, methods=['POST'])
-    def terminer_intervention(self, request, pk=None):
-        intervention = Intervention.objects.get(pk=pk)
-
-        # Logique pour terminer l'intervention...
-
-        return Response({'success': True, 'message': 'Intervention terminée avec succès'})
