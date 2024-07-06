@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kimei/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,15 +200,7 @@
       <workItem from="1720103432373" duration="16922000" />
       <workItem from="1720151581285" duration="8112000" />
       <workItem from="1720231354077" duration="21000" />
-      <workItem from="1720232848760" duration="12548000" />
-    </task>
-    <task id="LOCAL-00032" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720109346008</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1720109346008</updated>
+      <workItem from="1720232848760" duration="14616000" />
     </task>
     <task id="LOCAL-00033" summary="First commit">
       <option name="closed" value="true" />
@@ -595,7 +586,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720251895908</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720252920688</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1720252920689</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
