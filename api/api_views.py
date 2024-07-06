@@ -12,8 +12,10 @@ from rest_framework.response import Response
 from gmao.models import Doleance, Intervention, Personnel
 from gmao.serializers import DoleanceSerializer, InterventionSerializer, PersonnelSerializer
 from django.middleware.csrf import get_token
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
     @staticmethod
     def get(request):
