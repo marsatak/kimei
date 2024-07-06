@@ -37,7 +37,7 @@ class LoginView(APIView):
                     'role': user.role,
                     'matricule': user.matricule
                 }
-            })
+            }, content_type='application/json')
         return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
