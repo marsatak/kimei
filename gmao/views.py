@@ -881,6 +881,79 @@ def get_doleances_data(request):
 #     return JsonResponse({'data': data})
 
 
+# @login_required
+# @require_POST
+# def prendre_en_charge(request, doleance_id):
+#     logger.info(f"Tentative de prise en charge de la doléance {doleance_id}")
+#     try:
+#         doleance = get_object_or_404(Doleance.objects.using('kimei_db'), id=doleance_id)
+#         logger.info(f"Doléance trouvée: {doleance} {doleance.statut}")
+#
+#         if doleance.statut not in ['NEW', 'ATP', 'ATD']:
+#             return JsonResponse({'success': False, 'message': 'Cette doléance ne peut pas être prise en charge'})
+#
+#         technicien = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+#         logger.info(f"Technicien trouvé: {technicien}")
+#
+#         equipe_personnel = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
+#         logger.info(f"EquipePersonnel trouvé: {equipe_personnel}")
+#
+#         if not equipe_personnel:
+#             return JsonResponse({'success': False, 'message': 'Ce technicien n\'appartient à aucune équipe'})
+#
+#         equipe = equipe_personnel.equipe
+#         logger.info(f"Équipe trouvée: {equipe}")
+#
+#         # Vérifier si la doléance est déjà associée à une équipe
+#         # existing_association = DoleanceEquipe.objects.using('teams_db').filter(doleance_id=doleance.id).first()
+#         # if existing_association:
+#         #     if existing_association.equipe_id != equipe.id:
+#         #         # Si la doléance est associée à une autre équipe, la dissocier
+#         #         existing_association.delete()
+#         #     else:
+#         #         # Si la doléance est déjà associée à cette équipe, ne rien faire
+#         #         logger.info(f"La doléance {doleance_id} est déjà associée à l'équipe {equipe.id}")
+#         #         return JsonResponse({
+#         #             'success': True,
+#         #             'message': 'Cette doléance est déjà prise en charge par votre équipe',
+#         #             'intervention_id': None
+#         #         })
+#
+#         intervention = Intervention.objects.using('kimei_db').create(
+#             doleance=doleance,
+#             top_depart=timezone.now(),
+#             is_done=False,
+#             is_half_done=False,
+#             is_going_home=False,
+#             etat_doleance='ATT'
+#         )
+#         logger.info(f"Intervention créée: {intervention}")
+#
+#         doleance.statut = 'ATT'
+#         doleance.save(using='kimei_db')
+#
+#         membres_equipe = Personnel.objects.using('kimei_db').filter(id__in=equipe.get_personnel_ids())
+#         for membre in membres_equipe:
+#             InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=membre)
+#             membre.statut = 'ATT'
+#             membre.save(using='kimei_db')
+#
+#         # Créer ou mettre à jour l'association DoleanceEquipe
+#         DoleanceEquipe.objects.using('teams_db').update_or_create(
+#             equipe=equipe,
+#             doleance_id=doleance.id,
+#             defaults={'equipe': equipe, 'doleance_id': doleance.id}
+#         )
+#
+#         return JsonResponse({
+#             'success': True,
+#             'message': 'Doléance prise en charge avec succès par l\'équipe',
+#             'intervention_id': intervention.id,
+#             'redirect_url': reverse('gmao:detail_intervention', args=[intervention.id])
+#         })
+#     except Exception as e:
+#         logger.error(f"Erreur lors de la prise en charge: {str(e)}", exc_info=True)
+#         return JsonResponse({'success': False, 'message': str(e)})
 @login_required
 @require_POST
 def prendre_en_charge(request, doleance_id):
@@ -904,26 +977,21 @@ def prendre_en_charge(request, doleance_id):
         equipe = equipe_personnel.equipe
         logger.info(f"Équipe trouvée: {equipe}")
 
-        # Vérifier si la doléance est déjà associée à une équipe
-        # existing_association = DoleanceEquipe.objects.using('teams_db').filter(doleance_id=doleance.id).first()
-        # if existing_association:
-        #     if existing_association.equipe_id != equipe.id:
-        #         # Si la doléance est associée à une autre équipe, la dissocier
-        #         existing_association.delete()
-        #     else:
-        #         # Si la doléance est déjà associée à cette équipe, ne rien faire
-        #         logger.info(f"La doléance {doleance_id} est déjà associée à l'équipe {equipe.id}")
-        #         return JsonResponse({
-        #             'success': True,
-        #             'message': 'Cette doléance est déjà prise en charge par votre équipe',
-        #             'intervention_id': None
-        #         })
+        # Vérifier si une intervention est déjà en cours pour cette équipe
+        intervention_en_cours = Intervention.objects.using('kimei_db').filter(
+            doleance__doleanceequipe__equipe=equipe,
+            is_half_done=True,
+            is_done=False
+        ).exists()
+
+        if intervention_en_cours:
+            return JsonResponse({'success': False, 'message': 'Une intervention est déjà en cours pour cette équipe'})
 
         intervention = Intervention.objects.using('kimei_db').create(
             doleance=doleance,
             top_depart=timezone.now(),
             is_done=False,
-            is_half_done=False,
+            is_half_done=True,
             is_going_home=False,
             etat_doleance='ATT'
         )
@@ -1092,6 +1160,41 @@ def affecter_techniciens(request, doleance_id):
 #         'doleances': doleances_data,
 #         'equipe': equipe.equipe.nom,
 #     })
+# def get_technicien_portfolio(request):
+#     if request.user.role != 'TECH':
+#         return JsonResponse({'success': False, 'message': 'Accès non autorisé'})
+#
+#     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+#     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
+#
+#     if not equipe:
+#         return JsonResponse({
+#             'success': True,
+#             'doleances': [],
+#             'message': 'Aucune équipe assignée'
+#         })
+#
+#     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
+#                         .filter(equipe=equipe.equipe)
+#                         .values_list('doleance_id', flat=True))
+#
+#     # Exclure les doléances terminées
+#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
+#
+#     doleances_data = [{
+#         'id': d.id,
+#         'ndi': d.ndi,
+#         'station': d.station.libelle_station,
+#         'element': d.element,
+#         'panne_declarer': d.panne_declarer,
+#         'statut': d.statut
+#     } for d in doleances]
+#
+#     return JsonResponse({
+#         'success': True,
+#         'doleances': doleances_data,
+#         'equipe': equipe.equipe.nom if equipe else None,
+#     })
 @login_required
 def get_technicien_portfolio(request):
     if request.user.role != 'TECH':
@@ -1114,17 +1217,27 @@ def get_technicien_portfolio(request):
     # Exclure les doléances terminées
     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
 
+    # Vérifier si une intervention est en cours pour cette équipe
+    intervention_en_cours = Intervention.objects.using('kimei_db').filter(
+        doleance__in=doleances,
+        is_half_done=True,
+        is_done=False
+    ).exists()
+
     doleances_data = [{
         'id': d.id,
         'ndi': d.ndi,
         'station': d.station.libelle_station,
         'element': d.element,
         'panne_declarer': d.panne_declarer,
-        'statut': d.statut
+        'statut': d.statut,
+        'intervention_id': Intervention.objects.using('kimei_db').filter(
+            doleance=d).first().id if d.statut == 'ATT' else None
     } for d in doleances]
 
     return JsonResponse({
         'success': True,
         'doleances': doleances_data,
         'equipe': equipe.equipe.nom if equipe else None,
+        'intervention_en_cours': intervention_en_cours
     })

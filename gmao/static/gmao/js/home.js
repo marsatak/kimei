@@ -551,6 +551,71 @@ $(document).ready(function () {
 
 
     // Charger le portefeuille au chargement de la page si l'utilisateur est un technicien
+    function updatePortfolioTable(doleances, interventionEnCours) {
+        const portfolioContainer = $('#portfolioContainer');
+        portfolioContainer.empty();
+
+        if (doleances.length === 0) {
+            portfolioContainer.append('<p>Aucune doléance dans votre portfolio.</p>');
+            return;
+        }
+
+        const table = $('<table class="table table-striped">').appendTo(portfolioContainer);
+        const thead = $('<thead>').appendTo(table);
+        const tbody = $('<tbody>').appendTo(table);
+
+        thead.append(`
+        <tr>
+            <th>NDI</th>
+            <th>Station</th>
+            <th>Élément</th>
+            <th>Panne déclarée</th>
+            <th>Statut</th>
+            <th>Action</th>
+        </tr>
+    `);
+
+        doleances.forEach(doleance => {
+            const tr = $('<tr>').appendTo(tbody);
+            tr.append(`
+            <td>${doleance.ndi}</td>
+            <td>${doleance.station}</td>
+            <td>${doleance.element}</td>
+            <td>${doleance.panne_declarer}</td>
+            <td>${doleance.statut}</td>
+            <td>${getActionButton(doleance, interventionEnCours)}</td>
+        `);
+        });
+    }
+
+    function getActionButton(doleance, interventionEnCours) {
+        if (doleance.statut === 'ATT') {
+            return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm">Détails intervention</a>`;
+        } else if (!interventionEnCours && (doleance.statut === 'NEW' || doleance.statut === 'ATP' || doleance.statut === 'ATD')) {
+            return `<button class="btn btn-success btn-sm prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
+        } else {
+            return '';
+        }
+    }
+
+    function loadTechnicienPortfolio() {
+        $.ajax({
+            url: '/get-technicien-portfolio/',
+            type: 'GET',
+            success: function (response) {
+                if (response.success) {
+                    updatePortfolioTable(response.doleances, response.intervention_en_cours);
+                } else {
+                    alert('Erreur lors du chargement du portefeuille : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur de communication avec le serveur');
+            }
+        });
+    }
+
+// Assurez-vous d'appeler loadTechnicienPortfolio() au chargement de la page et après chaque prise en charge
 
 
 });
