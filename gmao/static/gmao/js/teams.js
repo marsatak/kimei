@@ -1,33 +1,46 @@
 $(document).ready(function () {
     function initPortfolioTable(data) {
-        if ($('#portfolioContainer').length) {
-            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
-                $('#portfolioTable').DataTable().destroy();
-            }
-            let tableHtml = '<table id="portfolioTable" class="table table-striped">';
-            tableHtml += '<thead><tr><th>NDI</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+        const portfolioContainer = $('#portfolioContainer');
+        portfolioContainer.empty();
 
-            data.forEach(function (doleance) {
-                tableHtml += `<tr>
-                    <td>${doleance.ndi}</td>
-                    <td>${doleance.station}</td>
-                    <td>${doleance.element}</td>
-                    <td>${doleance.panne_declarer}</td>
-                    <td>${doleance.statut}</td>
-                    <td>${getActionButton(doleance)}</td>
-                </tr>`;
-            });
-
-            tableHtml += '</tbody></table>';
-            $('#portfolioContainer').html(tableHtml);
-
-            $('#portfolioTable').DataTable({
-                responsive: true,
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                }
-            });
+        if (data.length === 0) {
+            portfolioContainer.append('<p>Aucune doléance dans votre portfolio.</p>');
+            return;
         }
+
+        const table = $('<table id="portfolioTable" class="table table-striped">').appendTo(portfolioContainer);
+        const thead = $('<thead>').appendTo(table);
+        const tbody = $('<tbody>').appendTo(table);
+
+        thead.append(`
+            <tr>
+                <th>NDI</th>
+                <th>Station</th>
+                <th>Élément</th>
+                <th>Panne déclarée</th>
+                <th>Statut</th>
+                <th>Action</th>
+            </tr>
+        `);
+
+        data.forEach(doleance => {
+            const tr = $('<tr>').appendTo(tbody);
+            tr.append(`
+                <td>${doleance.ndi}</td>
+                <td>${doleance.station}</td>
+                <td>${doleance.element}</td>
+                <td>${doleance.panne_declarer}</td>
+                <td>${doleance.statut}</td>
+                <td>${getActionButton(doleance)}</td>
+            `);
+        });
+
+        $('#portfolioTable').DataTable({
+            responsive: true,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+            }
+        });
     }
 
     function getActionButton(doleance) {
@@ -65,7 +78,11 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert(response.message);
-                    loadTechnicienPortfolio();
+                    if (response.redirect_url) {
+                        window.location.href = response.redirect_url;
+                    } else {
+                        loadTechnicienPortfolio();
+                    }
                 } else {
                     alert('Erreur : ' + response.message);
                 }
@@ -76,7 +93,8 @@ $(document).ready(function () {
         });
     }
 
-    $('#portfolioContainer').on('click', '.prendre-en-charge', function () {
+    $(document).on('click', '.prendre-en-charge', function (e) {
+        e.preventDefault();
         const doleanceId = $(this).data('id');
         prendreEnCharge(doleanceId);
     });
