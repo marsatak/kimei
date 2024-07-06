@@ -28,7 +28,7 @@ urlpatterns = [
          name='declencher_intervention'),
     path('home/commencer-intervention/<int:intervention_id>/', views.commencer_intervention,
          name='commencer_intervention'),
-    path('homeintervention/<int:intervention_id>/annuler/', views.annuler_intervention, name='annuler_intervention'),
+    path('home/intervention/<int:intervention_id>/annuler/', views.annuler_intervention, name='annuler_intervention'),
     path('home/liste-interventions/', views.liste_interventions, name='liste_interventions'),
     path('home/intervention/<int:intervention_id>/', views.detail_intervention, name='detail_intervention'),
     # path('home/intervention/<int:intervention_id>/commencer/', views.commencer_travail, name='commencer_travail'),
@@ -43,7 +43,7 @@ urlpatterns = [
     path('home/prendre-en-charge/<int:doleance_id>/', views.prendre_en_charge, name='prendre_en_charge'),
     path('home/annuler-prise-en-charge/<int:intervention_id>/', views.annuler_prise_en_charge,
          name='annuler_prise_en_charge'),
-    
+
     # path('home/doleanceencours', views.doleanceencours, name='doleanceencours'),
     # Json des doléances / Toutes les doléances terminées
     # path('home/doleanceListTer', views.doleanceListTer, name='doleanceListTer'),

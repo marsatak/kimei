@@ -435,7 +435,7 @@ def declencher_intervention(request, doleance_id):
         doleance=doleance,
         top_depart=timezone.now(),
         is_done=False,
-        is_half_done=True,
+        is_half_done=False,
         is_going_home=False,
         etat_doleance='ATT'
     )
@@ -463,65 +463,71 @@ def annuler_intervention(request, intervention_id):
     try:
         intervention = get_object_or_404(Intervention, id=intervention_id)
         doleance = intervention.doleance
-
-        # Réinitialiser l'intervention
-        intervention.delete()
-
-        # Réinitialiser la doléance
-        doleance.statut = 'NEW'
-        doleance.save()
-
-        # Réinitialiser le statut des techniciens
+        ancien_statut = doleance.statut
         intervention_personnels = InterventionPersonnel.objects.filter(intervention=intervention)
         for intervention_personnel in intervention_personnels:
             technicien = intervention_personnel.personnel
             technicien.statut = 'PRS'
             technicien.save()
+        if ancien_statut in ['ATP', 'ATD']:
+            doleance.statut = ancien_statut
+        else:
+            doleance.statut = 'NEW'
+        doleance.save()
+        # Réinitialiser l'intervention
+        intervention.delete()
 
         return JsonResponse({
             'success': True,
             'message': 'Intervention annulée avec succès',
+            'nouveau_statut': doleance.statut
         })
+    except Intervention.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Intervention non trouvée'}, status=404)
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
 
 
-# #####################Liste des interventions######################
-# def liste_interventions(request):
-#     interventions = (Intervention.objects.all()
-#                      .filter(top_depart__month=datetime.now().month)
-#                      .filter(top_depart__year=datetime.now().year)
-#                      .filter(top_depart__day=datetime.now().day)
-#                      .order_by('-top_depart'))
-#     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
-
-
-# #####################Détail d'une intervention######################
-
-
+# @login_required
 # def liste_interventions(request):
 #     current_date = timezone.now().date()
 #
 #     if request.user.role == 'ADMIN':
-#         # Les administrateurs peuvent voir toutes les interventions
 #         interventions = Intervention.objects.filter(
 #             top_depart__date=current_date
 #         ).order_by('-top_depart')
 #     elif request.user.role == 'TECH':
-#         # Les techniciens ne voient que leurs propres interventions
 #         try:
 #             personnel = Personnel.objects.get(matricule=request.user.matricule)
 #             interventions = Intervention.objects.filter(
-#                 interventionpersonnel__personnel=personnel,
+#                 id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id'),
 #                 top_depart__date=current_date
 #             ).order_by('-top_depart')
 #         except Personnel.DoesNotExist:
 #             interventions = Intervention.objects.none()
 #     else:
-#         # Pour les autres rôles, ne montrer aucune intervention
 #         interventions = Intervention.objects.none()
 #
+#     # Récupérer les techniciens pour chaque intervention
+#     intervention_ids = [i.id for i in interventions]
+#     intervention_personnel = InterventionPersonnel.objects.filter(
+#         intervention_id__in=intervention_ids
+#     ).select_related('personnel')
+#
+#     # Créer un dictionnaire pour stocker les techniciens par intervention
+#     techniciens_par_intervention = {i.id: [] for i in interventions}
+#     for ip in intervention_personnel:
+#         techniciens_par_intervention[ip.intervention_id].append(ip.personnel)
+#
+#     # Ajouter les techniciens à chaque intervention
+#     for intervention in interventions:
+#         intervention.techniciens = techniciens_par_intervention[intervention.id]
+#
 #     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Intervention, InterventionPersonnel
+from django.utils import timezone
 
 
 @login_required
@@ -534,12 +540,12 @@ def liste_interventions(request):
         ).order_by('-top_depart')
     elif request.user.role == 'TECH':
         try:
-            personnel = Personnel.objects.get(matricule=request.user.matricule)
+            personnel = request.user.personnel
             interventions = Intervention.objects.filter(
                 id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id'),
                 top_depart__date=current_date
             ).order_by('-top_depart')
-        except Personnel.DoesNotExist:
+        except AttributeError:
             interventions = Intervention.objects.none()
     else:
         interventions = Intervention.objects.none()
@@ -559,7 +565,12 @@ def liste_interventions(request):
     for intervention in interventions:
         intervention.techniciens = techniciens_par_intervention[intervention.id]
 
-    return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
+    context = {
+        'interventions': interventions,
+        'current_date': current_date,
+    }
+
+    return render(request, 'gmao/liste_interventions.html', context)
 
 
 def detail_intervention(request, intervention_id):
@@ -573,6 +584,72 @@ def detail_intervention(request, intervention_id):
     })
 
 
+# @csrf_exempt
+# @require_POST
+# def terminer_travail(request, intervention_id):
+#     try:
+#         intervention = get_object_or_404(Intervention, id=intervention_id)
+#
+#         statut_final = request.POST.get('statut_final', '').upper()
+#
+#         if not statut_final or statut_final not in ['TER', 'ATP', 'ATD']:
+#             return JsonResponse({'success': False, 'message': f'Statut final invalide: {statut_final}'})
+#
+#         intervention.is_done = True
+#         intervention.etat_doleance = statut_final
+#         intervention.description_panne = request.POST.get('description_panne', '').upper()
+#         intervention.resolution = request.POST.get('resolution', '').upper()
+#         intervention.observations = request.POST.get('observations', '').upper()
+#         intervention.pieces_changees = request.POST.get('pieces_changees', '').upper()
+#         intervention.top_terminer = timezone.now()
+#
+#         # Traitement du numéro de fiche
+#         numero_fiche = request.POST.get('numero_fiche', '')
+#         try:
+#             numero_fiche = int(numero_fiche)
+#             if numero_fiche < 0 or numero_fiche > 99999:
+#                 raise ValueError("Le numéro de fiche doit être entre 0 et 99999")
+#
+#             numero_fiche_complet = f"00{numero_fiche:05d}"
+#
+#             if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
+#                 raise ValidationError("Ce numéro de fiche est déjà utilisé")
+#
+#             intervention.numero_fiche = numero_fiche_complet
+#         except ValueError as e:
+#             return JsonResponse({'success': False, 'message': f'Erreur de format pour le numéro de fiche: {str(e)}'})
+#         except ValidationError as e:
+#             return JsonResponse({'success': False, 'message': str(e)})
+#
+#         # Calculer la durée de l'intervention
+#         if intervention.top_debut:
+#             duree = intervention.top_terminer - intervention.top_debut
+#             intervention.duree_intervention = int(duree.total_seconds())
+#         else:
+#             intervention.duree_intervention = 0
+#
+#         intervention.save()
+#
+#         # Mise à jour de la doléance
+#         doleance = intervention.doleance
+#         doleance.statut = statut_final
+#         interventions = Intervention.objects.filter(doleance=doleance)
+#         doleance.date_debut = interventions.aggregate(Min('top_debut'))['top_debut__min']
+#         doleance.date_fin = interventions.aggregate(Max('top_terminer'))['top_terminer__max']
+#         doleance.save()
+#
+#         # Mise à jour des techniciens
+#         for intervention_personnel in InterventionPersonnel.objects.filter(intervention=intervention):
+#             personnel = intervention_personnel.personnel
+#             personnel.statut = 'PRS'
+#             personnel.save()
+#
+#         return JsonResponse({
+#             'success': True,
+#             'message': 'Intervention terminée avec succès',
+#         })
+#     except Exception as e:
+#         return JsonResponse({'success': False, 'message': f'Erreur inattendue: {str(e)}'})
 @csrf_exempt
 @require_POST
 def terminer_travail(request, intervention_id):
@@ -584,6 +661,23 @@ def terminer_travail(request, intervention_id):
         if not statut_final or statut_final not in ['TER', 'ATP', 'ATD']:
             return JsonResponse({'success': False, 'message': f'Statut final invalide: {statut_final}'})
 
+        # Traitement du numéro de fiche
+        numero_fiche = request.POST.get('numero_fiche', '')
+        try:
+            numero_fiche = int(numero_fiche)
+            if numero_fiche < 0 or numero_fiche > 99999:
+                return JsonResponse({'success': False, 'message': 'Le numéro de fiche doit être entre 0 et 99999'})
+
+            numero_fiche_complet = f"00{numero_fiche:05d}"
+
+            if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
+                return JsonResponse({'success': False, 'message': 'Ce numéro de fiche est déjà utilisé'})
+
+            intervention.numero_fiche = numero_fiche_complet
+        except ValueError:
+            return JsonResponse({'success': False, 'message': 'Le numéro de fiche doit être un nombre entier'})
+
+        # Le reste du code pour mettre à jour l'intervention
         intervention.is_done = True
         intervention.etat_doleance = statut_final
         intervention.description_panne = request.POST.get('description_panne', '').upper()
@@ -591,24 +685,6 @@ def terminer_travail(request, intervention_id):
         intervention.observations = request.POST.get('observations', '').upper()
         intervention.pieces_changees = request.POST.get('pieces_changees', '').upper()
         intervention.top_terminer = timezone.now()
-
-        # Traitement du numéro de fiche
-        numero_fiche = request.POST.get('numero_fiche', '')
-        try:
-            numero_fiche = int(numero_fiche)
-            if numero_fiche < 0 or numero_fiche > 99999:
-                raise ValueError("Le numéro de fiche doit être entre 0 et 99999")
-
-            numero_fiche_complet = f"00{numero_fiche:05d}"
-
-            if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
-                raise ValidationError("Ce numéro de fiche est déjà utilisé")
-
-            intervention.numero_fiche = numero_fiche_complet
-        except ValueError as e:
-            return JsonResponse({'success': False, 'message': f'Erreur de format pour le numéro de fiche: {str(e)}'})
-        except ValidationError as e:
-            return JsonResponse({'success': False, 'message': str(e)})
 
         # Calculer la durée de l'intervention
         if intervention.top_debut:

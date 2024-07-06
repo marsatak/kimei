@@ -40,7 +40,7 @@
             max-width: 66.666667%;
         }
 
-        .modal {
+        {% comment %}.modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -59,6 +59,29 @@
             border: 1px solid #888;
             width: 80%;
             max-width: 600px;
+        }{% endcomment %}
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* Réduit de 10% à 5% */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 95%;
+            max-width: 500px;
+            border-radius: 5px;
+            max-height: 90vh; /* Limite la hauteur à 90% de la hauteur de la fenêtre */
+            overflow-y: auto; /* Ajoute une barre de défilement si le contenu dépasse */
         }
 
         .close {
@@ -92,6 +115,12 @@
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
+        }
+
+        @media (min-height: 800px) {
+            .modal-content {
+                margin: 2% auto; /* Réduit encore plus pour les grands écrans */
+            }
         }
     </style>
 {% endblock %}
@@ -270,8 +299,9 @@
                             .text('En cours');
                         // Cacher le bouton "Commencer le travail"
                         $('.commencer-intervention').hide();
+                        window.location.load();
                         $('#openInterventionForm').show();
-                        
+
                         window.location.href = '{% url "gmao:detail_intervention" intervention_id %}';
                         // Afficher le bouton "Terminer le travail" si ce n'est pas déjà fait
                     } else {
@@ -333,12 +363,12 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            var ctx = document.getElementById('interventionGauge').getContext('2d');
-            var status = '{{ intervention.is_done|yesno:"Terminée,En cours" }}';
-            var duree = parseInt('{{ intervention.duree_intervention|default_if_none:0 }}');
-            var maxDuree = 3600; // 1 heure en secondes
+            const ctx = document.getElementById('interventionGauge').getContext('2d');
+            const status = '{{ intervention.is_done|yesno:"Terminée,En cours" }}';
+            const duree = parseInt('{{ intervention.duree_intervention|default_if_none:0 }}');
+            const maxDuree = 3600; // 1 heure en secondes
 
-            var config = {
+            const config = {
                 type: 'doughnut',
                 data: {
                     datasets: [{
@@ -366,10 +396,10 @@
             new Chart(ctx, config);
 
             // Gestion du modal et du formulaire
-            var modal = document.getElementById("interventionFormModal");
-            var btn = document.getElementById("openInterventionForm");
-            var span = document.getElementsByClassName("close")[0];
-            var form = document.getElementById("interventionForm");
+            const modal = document.getElementById("interventionFormModal");
+            const btn = document.getElementById("openInterventionForm");
+            const span = document.getElementsByClassName("close")[0];
+            const form = document.getElementById("interventionForm");
 
             if (btn) {
                 btn.onclick = function () {
@@ -408,16 +438,7 @@
                                 window.location.reload();
                             } else {
                                 {#alert(`Erreur lors de la terminaison de l'intervention: ' + data.message`);#}
-                                let errorMessage = 'Erreur lors de la terminaison de l\'intervention: ';
-                                if (typeof data.message === 'object') {
-                                    // Si le message est un objet (probablement des erreurs de formulaire)
-                                    for (let key in data.message) {
-                                        errorMessage += `\n${key}: ${data.message[key]}`;
-                                    }
-                                } else {
-                                    errorMessage += data.message;
-                                }
-                                alert(errorMessage);
+                                alert('Erreur: ' + data.message)
                             }
                         })
                         .catch(error => {
@@ -468,5 +489,27 @@
                 }
             });
         });
+    </script>
+    <script>
+        function adjustModalPosition() {
+            var modal = document.querySelector('.modal-content');
+            var windowHeight = window.innerHeight;
+            var modalHeight = modal.offsetHeight;
+
+            if (modalHeight > windowHeight * 0.9) {
+                modal.style.height = '90vh';
+                modal.style.overflowY = 'scroll';
+            } else {
+                modal.style.marginTop = Math.max(20, (windowHeight - modalHeight) / 2) + 'px';
+            }
+        }
+
+        // Appeler la fonction lors de l'ouverture du modal
+        document.getElementById('openInterventionForm').addEventListener('click', function () {
+            setTimeout(adjustModalPosition, 0);
+        });
+
+        // Ajuster la position si la fenêtre est redimensionnée
+        window.addEventListener('resize', adjustModalPosition);
     </script>
 {% endblock extra_js %}

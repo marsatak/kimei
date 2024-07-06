@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/Passage/liste_interventions_.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_doleance_tsss.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/detail_doleance_tsss.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/detail_intervention_.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention__.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/detail_intervention__.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention___.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/detail_intervention___.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +50,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -66,35 +77,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Django Server.kimei.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Daphne.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/gmao/templates/gmao&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.kimei.executor": "Run",
+    "Python.Daphne.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/daniel/PycharmProjects/Final/kimei/gmao/templates/gmao",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;365fac49-34f3-4d4d-889a-7c26986376d3&quot;,
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "365fac49-34f3-4d4d-889a-7c26986376d3",
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
@@ -200,15 +211,9 @@
       <workItem from="1720103432373" duration="16922000" />
       <workItem from="1720151581285" duration="8112000" />
       <workItem from="1720231354077" duration="21000" />
-      <workItem from="1720232848760" duration="20754000" />
-    </task>
-    <task id="LOCAL-00044" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720168839306</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1720168839306</updated>
+      <workItem from="1720232848760" duration="35953000" />
+      <workItem from="1720294584629" duration="75000" />
+      <workItem from="1720294723120" duration="3739000" />
     </task>
     <task id="LOCAL-00045" summary="First commit">
       <option name="closed" value="true" />
@@ -594,7 +599,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720274054242</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720274297458</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1720274297459</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

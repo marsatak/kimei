@@ -91,7 +91,7 @@
         }
 
         /* Styles for modal */
-        .modal {
+{% comment %}        .modal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -104,13 +104,37 @@
         }
         .modal-content {
             background-color: #fefefe;
-            margin: 10% auto;
+            margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 95%;
-            max-width: 500px;
+            max-width: 90vh;
             border-radius: 5px;
-        }
+        }{% endcomment %}
+        .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999; /* Augmentez cette valeur pour s'assurer qu'il est au-dessus de tout */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.6); /* Assombrir légèrement le fond */
+    }
+
+        .modal-content {
+        background-color: #fefefe;
+        margin: 2% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 95%;
+        max-width: 800px;
+        border-radius: 5px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* Ajouter une ombre */
+    }
         .close {
             color: #aaa;
             float: right;
@@ -157,12 +181,96 @@
                 width: 90%;
             }
         }
+        @media (min-height: 800px) {
+            .modal-content {
+                margin: 2% auto; /* Réduit encore plus pour les grands écrans */
+            }
+        }
     </style>
+    <style>
+    /* ... autres styles ... */
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 2% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 95%;
+        max-width: 800px;  /* Augmenté pour accommoder deux colonnes */
+        border-radius: 5px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .two-column-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        width: 48%;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group input[type="time"],
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .btn-success {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    }
+</style>
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
         <div class="container-fluid">
         <h5 class="mb-2">Détails de l'intervention pour la doléance {{ intervention.doleance.ndi }}</h5>
+        <h5 class="mb-2">{{ intervention.doleance.station.client }}&nbsp;{{ intervention.doleance.station.libelle_station }}</h5>
         <p class="mb-2 small">{{ intervention.doleance.panne_declarer }}</p>
 
         <div class="row">
@@ -222,7 +330,7 @@
                                 </span></span>
                             </div>
                         </div>
-                        <p class="intervention-info">Durée : <span id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span> sec</p>
+                        <p class="intervention-info">Durée : <span id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span></p>
                         <p class="intervention-info">Statut : <span id="statutIntervention">
                             {% if intervention.is_done %}
                                 Terminée
@@ -243,7 +351,7 @@
     </div>
 
     <!-- Modal pour le formulaire de fin d'intervention -->
-    <div id="interventionFormModal" class="modal">
+    {% comment %}<div id="interventionFormModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Fiche d'Intervention</h3>
@@ -310,8 +418,85 @@
             </form>
 
         </div>
+    </div>{% endcomment %}
+    <div id="interventionFormModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Fiche d'Intervention</h3>
+        <form id="interventionForm" class="two-column-form">
+            <input type="hidden" id="intervention-id-input" name="intervention_id" value="{{ intervention.id }}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="station">Station :</label>
+                    <input type="text" id="station" name="station" value="{{ intervention.doleance.station.libelle_station }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="numero_fiche">Numéro de fiche :</label>
+                    <input type="text" id="numero_fiche" name="numero_fiche" maxlength="5" pattern="\d{1,5}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ndi">NDI :</label>
+                    <input type="text" id="ndi" name="ndi" value="{{ intervention.doleance.ndi }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date :</label>
+                    <input type="date" id="date" name="date" value="{{ intervention.top_debut|date:'Y-m-d' }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="heure_debut">Heure de début :</label>
+                    <input type="time" id="heure_debut" name="heure_debut" value="{{ intervention.top_debut|time:'H:i' }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="heure_fin">Heure de fin :</label>
+                    <input type="time" id="heure_fin" name="heure_fin" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="panne_declaree">Panne déclarée :</label>
+                    <textarea id="panne_declaree" name="panne_declaree" rows="3" readonly>{{ intervention.doleance.panne_declarer }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="description_panne">Description de la panne constatée :</label>
+                    <textarea id="description_panne" name="description_panne" rows="3" required></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="resolution">Résolution:</label>
+                    <textarea id="resolution" name="resolution" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="observations">Observations :</label>
+                    <textarea id="observations" name="observations" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="pieces_changees">Pièces changées :</label>
+                    <textarea id="pieces_changees" name="pieces_changees" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="statut-final">Statut final de l'intervention :</label>
+                    <select id="statut-final" name="statut_final" required>
+                        <option value="">Choisissez un statut</option>
+                        <option value="TER">Terminé (TER)</option>
+                        <option value="ATP">Attente Pièces (ATP)</option>
+                        <option value="ATD">Attente Décision (ATD)</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success full-width">Terminer l'intervention</button>
+        </form>
     </div>
-
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -344,8 +529,60 @@
                 $(`.progress-step[data-step="${step}"]`).addClass('active');
             });
         }
+        function updateGauge(durationInSeconds, maxDuration) {
+    const ctx = document.getElementById('interventionGauge').getContext('2d');
+    const config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [durationInSeconds, maxDuration - durationInSeconds],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(220, 220, 220, 0.8)'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            circumference: 180,
+            rotation: -90,
+            cutout: '80%',
+            plugins: {
+                tooltip: {enabled: false},
+                legend: {display: false}
+            }
+        }
+    };
+    if (window.myChart instanceof Chart) {
+        window.myChart.data.datasets[0].data = [durationInSeconds, maxDuration - durationInSeconds];
+        window.myChart.update();
+    } else {
+        window.myChart = new Chart(ctx, config);
+    }
+}
+        function updateDurationAndGauge() {
+    const startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
+    const maxDuration = 3600; // 1 heure en secondes
 
-        function updateGauge(duration, maxDuration) {
+    function update() {
+        const now = new Date().getTime();
+        const durationInSeconds = Math.floor((now - startTime) / 1000);
+
+        updateDurationDisplay(durationInSeconds);
+        updateGauge(durationInSeconds, maxDuration);
+
+        // Si l'intervention dépasse 1 heure, on continue de mettre à jour
+        if (durationInSeconds < maxDuration) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    update();
+}
+
+        {% comment %}function updateGauge(duration, maxDuration) {
             const ctx = document.getElementById('interventionGauge').getContext('2d');
             const config = {
                 type: 'doughnut',
@@ -375,7 +612,7 @@
                 window.myChart.destroy();
             }
             window.myChart = new Chart(ctx, config);
-        }
+        }{% endcomment %}
         function commencerIntervention(interventionId) {
             console.log("Début de commencerIntervention", interventionId);
             let kilometrage = prompt("Veuillez entrer le kilométrage de départ:");
@@ -417,7 +654,7 @@
         function annulerIntervention(interventionId) {
             if (confirm("Êtes-vous sûr de vouloir annuler cette intervention ?")) {
                 $.ajax({
-                    url: '/home/annuler-intervention/' + interventionId + '/',
+                    url: `/home/intervention/${interventionId}/annuler/`,
                     type: 'POST',
                     data: {
                         csrfmiddlewaretoken: getCookie('csrftoken')
@@ -425,7 +662,8 @@
                     success: function (response) {
                         if (response.success) {
                             alert('Intervention annulée avec succès.');
-                            location.reload();
+                            window.location.href = '/home/';
+
                         } else {
                             alert('Erreur lors de l\'annulation de l\'intervention: ' + response.message);
                         }
@@ -445,42 +683,10 @@
                 });
             });
 
-            var ctx = document.getElementById('interventionGauge').getContext('2d');
-            var status = '{{ intervention.is_done|yesno:"Terminée,En cours" }}';
-            var duree = parseInt('{{ intervention.duree_intervention|default_if_none:0 }}');
-            var maxDuree = 3600; // 1 heure en secondes
-
-            var config = {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [duree, maxDuree - duree],
-                        backgroundColor: [
-                            status === 'Terminée' ? 'rgba(75, 192, 192, 0.8)' : 'rgba(255, 206, 86, 0.8)',
-                            'rgba(220, 220, 220, 0.8)'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    circumference: 180,
-                    rotation: -90,
-                    cutout: '80%',
-                    plugins: {
-                        tooltip: {enabled: false},
-                        legend: {display: false}
-                    }
-                }
-            };
-
-            new Chart(ctx, config);
-
-            var modal = document.getElementById("interventionFormModal");
-            var btn = document.getElementById("openInterventionForm");
-            var span = document.getElementsByClassName("close")[0];
-            var form = document.getElementById("interventionForm");
+            const modal = document.getElementById("interventionFormModal");
+            const btn = document.getElementById("openInterventionForm");
+            const span = document.getElementsByClassName("close")[0];
+            const form = document.getElementById("interventionForm");
 
             if (btn) {
                 btn.onclick = function () {
@@ -517,15 +723,7 @@
                                 alert('Intervention terminée avec succès');
                                 window.location.reload();
                             } else {
-                                let errorMessage = 'Erreur lors de la terminaison de l\'intervention: ';
-                                if (typeof data.message === 'object') {
-                                    for (let key in data.message) {
-                                        errorMessage += `\n${key}: ${data.message[key]}`;
-                                    }
-                                } else {
-                                    errorMessage += data.message;
-                                }
-                                alert(errorMessage);
+                                alert('Erreur: ' + data.message)
                             }
                         })
                         .catch(error => {
@@ -540,8 +738,20 @@
         function initializeModal() {
             // Le code pour initialiser le modal reste inchangé
         }
+        function formatDuration(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${hours.toString().padStart(2, '0')}h:${minutes.toString().padStart(2, '0')}mn`;
+        }
+
+        function updateDurationDisplay(durationInSeconds) {
+            const formattedDuration = formatDuration(durationInSeconds);
+            $('#dureeIntervention').text(formattedDuration);
+        }
 
         $(document).ready(function() {
+
+
             $('.commencer-intervention').click(function(e) {
                 e.preventDefault();
                 commencerIntervention($(this).data('id'));
@@ -555,16 +765,28 @@
             // Initial progress bar and gauge update
             {% if intervention.is_done %}
                 updateProgressBar('end');
-                updateGauge({{ intervention.duree_intervention|default_if_none:3600 }}, 3600);
+                {#updateGauge({{ intervention.duree_intervention|default_if_none:3600 }}, 3600);#}
             {% elif intervention.is_half_done %}
                 updateProgressBar('half');
-                updateGauge({{ intervention.duree_intervention|default_if_none:0 }}, 3600);
-            {% else %}
+                {#updateGauge({{ intervention.duree_intervention|default_if_none:0 }}, 3600);#}
+            {% elif intervention.etat_doleance == 'ATT'%}
                 updateProgressBar('start');
-                updateGauge(0, 3600);
+                {#updateGauge(0, 3600);#}
+                {% else %}
+                updateProgressBar('start');
+                {#updateGauge(0, 3600);#}
             {% endif %}
 
             initializeModal();
+            {% if intervention.is_half_done and not intervention.is_done %}
+        // L'intervention est en cours
+                updateDurationAndGauge();
+            {% else %}
+        // L'intervention est terminée ou pas encore commencée
+                const initialDuration = {{ intervention.duree_intervention|default_if_none:0 }};
+                updateDurationDisplay(initialDuration);
+                updateGauge(initialDuration, 3600);
+            {% endif %}
         });
         function getCookie(name) {
             let cookieValue = null;
