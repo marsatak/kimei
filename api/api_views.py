@@ -16,6 +16,7 @@ from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
+from django.db import connections
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -79,14 +80,17 @@ class TechnicienViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['GET'])
     def portfolio(self, request):
-        technicien = Personnel.objects.get(matricule=request.user.matricule)
-        equipe = EquipePersonnel.objects.filter(personnel_id=technicien.id).first()
+        technicien = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+        equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
 
         if not equipe:
             return Response({'message': 'Aucune équipe assignée'}, status=400)
 
-        doleance_ids = DoleanceEquipe.objects.filter(equipe=equipe.equipe).values_list('doleance_id', flat=True)
-        doleances = Doleance.objects.filter(id__in=doleance_ids).exclude(statut='TER')
+        with connections['teams_db'].cursor() as cursor:
+            cursor.execute("SELECT doleance_id FROM doleance_equipe WHERE equipe_id = %s", [equipe.equipe.id])
+            doleance_ids = [row[0] for row in cursor.fetchall()]
+
+        doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
 
         serializer = DoleanceSerializer(doleances, many=True)
         return Response({
@@ -96,8 +100,8 @@ class TechnicienViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=['POST'])
     def prendre_en_charge(self, request, pk=None):
-        doleance = Doleance.objects.get(pk=pk)
-        intervention = Intervention.objects.create(
+        doleance = Doleance.objects.using('kimei_db').get(pk=pk)
+        intervention = Intervention.objects.using('kimei_db').create(
             doleance=doleance,
             top_depart=timezone.now(),
             etat_doleance='ATT'
@@ -106,18 +110,18 @@ class TechnicienViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=['POST'])
     def commencer_intervention(self, request, pk=None):
-        intervention = Intervention.objects.get(pk=pk)
+        intervention = Intervention.objects.using('kimei_db').get(pk=pk)
         kilometrage = request.data.get('kilometrage')
         intervention.top_debut = timezone.now()
         intervention.kilometrage_depart_debut = kilometrage
         intervention.etat_doleance = 'INT'
-        intervention.save()
+        intervention.save(using='kimei_db')
         return Response({'success': True, 'top_debut': intervention.top_debut})
 
     @action(detail=True, methods=['POST'])
     def terminer_intervention(self, request, pk=None):
-        intervention = Intervention.objects.get(pk=pk)
+        intervention = Intervention.objects.using('kimei_db').get(pk=pk)
         intervention.top_terminer = timezone.now()
         intervention.is_done = True
-        intervention.save()
+        intervention.save(using='kimei_db')
         return Response({'success': True, 'message': 'Intervention terminée avec succès'})
