@@ -80,48 +80,66 @@ class TechnicienViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['GET'])
     def portfolio(self, request):
-        technicien = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-        equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
+        try:
+            technicien = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
+            equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
 
-        if not equipe:
-            return Response({'message': 'Aucune équipe assignée'}, status=400)
+            if not equipe:
+                return Response({'message': 'Aucune équipe assignée'}, status=400)
 
-        with connections['teams_db'].cursor() as cursor:
-            cursor.execute("SELECT doleance_id FROM doleance_equipe WHERE equipe_id = %s", [equipe.equipe.id])
-            doleance_ids = [row[0] for row in cursor.fetchall()]
+            doleance_ids = DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe.equipe).values_list(
+                'doleance_id', flat=True)
+            doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
 
-        doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
-
-        serializer = DoleanceSerializer(doleances, many=True)
-        return Response({
-            'doleances': serializer.data,
-            'equipe': equipe.equipe.nom,
-        })
+            serializer = DoleanceSerializer(doleances, many=True)
+            return Response({
+                'doleances': serializer.data,
+                'equipe': equipe.equipe.nom,
+            })
+        except Personnel.DoesNotExist:
+            return Response({'message': 'Technicien non trouvé'}, status=404)
+        except Exception as e:
+            return Response({'message': str(e)}, status=500)
 
     @action(detail=True, methods=['POST'])
     def prendre_en_charge(self, request, pk=None):
-        doleance = Doleance.objects.using('kimei_db').get(pk=pk)
-        intervention = Intervention.objects.using('kimei_db').create(
-            doleance=doleance,
-            top_depart=timezone.now(),
-            etat_doleance='ATT'
-        )
-        return Response({'success': True, 'intervention_id': intervention.id})
+        try:
+            doleance = Doleance.objects.using('kimei_db').get(pk=pk)
+            intervention = Intervention.objects.using('kimei_db').create(
+                doleance=doleance,
+                top_depart=timezone.now(),
+                etat_doleance='ATT'
+            )
+            return Response({'success': True, 'intervention_id': intervention.id})
+        except Doleance.DoesNotExist:
+            return Response({'message': 'Doléance non trouvée'}, status=404)
+        except Exception as e:
+            return Response({'message': str(e)}, status=500)
 
     @action(detail=True, methods=['POST'])
     def commencer_intervention(self, request, pk=None):
-        intervention = Intervention.objects.using('kimei_db').get(pk=pk)
-        kilometrage = request.data.get('kilometrage')
-        intervention.top_debut = timezone.now()
-        intervention.kilometrage_depart_debut = kilometrage
-        intervention.etat_doleance = 'INT'
-        intervention.save(using='kimei_db')
-        return Response({'success': True, 'top_debut': intervention.top_debut})
+        try:
+            intervention = Intervention.objects.using('kimei_db').get(pk=pk)
+            kilometrage = request.data.get('kilometrage')
+            intervention.top_debut = timezone.now()
+            intervention.kilometrage_depart_debut = kilometrage
+            intervention.etat_doleance = 'INT'
+            intervention.save(using='kimei_db')
+            return Response({'success': True, 'top_debut': intervention.top_debut})
+        except Intervention.DoesNotExist:
+            return Response({'message': 'Intervention non trouvée'}, status=404)
+        except Exception as e:
+            return Response({'message': str(e)}, status=500)
 
     @action(detail=True, methods=['POST'])
     def terminer_intervention(self, request, pk=None):
-        intervention = Intervention.objects.using('kimei_db').get(pk=pk)
-        intervention.top_terminer = timezone.now()
-        intervention.is_done = True
-        intervention.save(using='kimei_db')
-        return Response({'success': True, 'message': 'Intervention terminée avec succès'})
+        try:
+            intervention = Intervention.objects.using('kimei_db').get(pk=pk)
+            intervention.top_terminer = timezone.now()
+            intervention.is_done = True
+            intervention.save(using='kimei_db')
+            return Response({'success': True, 'message': 'Intervention terminée avec succès'})
+        except Intervention.DoesNotExist:
+            return Response({'message': 'Intervention non trouvée'}, status=404)
+        except Exception as e:
+            return Response({'message': str(e)}, status=500)
