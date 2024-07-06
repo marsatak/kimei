@@ -18,6 +18,13 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from django.db import connections
 
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+
+
+def get_csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
@@ -73,15 +80,6 @@ class UserInfoView(APIView):
             'role': user.role,
             'matricule': user.matricule
         })
-
-
-from rest_framework import viewsets, permissions
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from django.utils import timezone
-from gmao.models import Doleance, Personnel, Intervention
-from gmao.serializers import DoleanceSerializer
-from gmao_teams.models import EquipePersonnel, DoleanceEquipe
 
 
 class TechnicienViewSet(viewsets.ViewSet):

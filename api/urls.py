@@ -3,13 +3,14 @@ from api.api_views import LoginView, LogoutView, UserInfoView
 from rest_framework_simplejwt.views import TokenRefreshView
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.api_views import TechnicienViewSet
+from api.api_views import TechnicienViewSet, get_csrf_token
 from django.views.decorators.csrf import csrf_exempt
 
 router = DefaultRouter()
 router.register(r'technicien', TechnicienViewSet, basename='technicien')
 
 urlpatterns = [
+    path('api/get-csrf-token/', get_csrf_token, name='get_csrf_token'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

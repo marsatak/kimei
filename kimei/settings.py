@@ -207,6 +207,10 @@ AUTHENTICATION_BACKENDS = [
     'accounts.auth.PersonnelAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://kimei.softether.net:8000", ]
 CORS_ALLOW_ALL_ORIGINS = True
 LOGGING = {
     'version': 1,
