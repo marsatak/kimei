@@ -1,71 +1,73 @@
+console.log('teams')
 $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
+        upperCaseInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    });
+
     function initPortfolioTable(data) {
-        const portfolioContainer = $('#portfolioContainer');
-        portfolioContainer.empty();
-
-        if (data.length === 0) {
-            portfolioContainer.append('<p>Aucune doléance dans votre portfolio.</p>');
-            return;
-        }
-
-        const table = $('<table id="portfolioTable" class="table table-striped">').appendTo(portfolioContainer);
-        const thead = $('<thead>').appendTo(table);
-        const tbody = $('<tbody>').appendTo(table);
-
-        thead.append(`
-            <tr>
-                <th>NDI</th>
-                <th>Station</th>
-                <th>Élément</th>
-                <th>Panne déclarée</th>
-                <th>Statut</th>
-                <th>Action</th>
-            </tr>
-        `);
-
-        data.forEach(doleance => {
-            const tr = $('<tr>').appendTo(tbody);
-            tr.append(`
-                <td>${doleance.ndi}</td>
-                <td>${doleance.station}</td>
-                <td>${doleance.element}</td>
-                <td>${doleance.panne_declarer}</td>
-                <td>${doleance.statut}</td>
-                <td>${getActionButton(doleance)}</td>
-            `);
-        });
-
-        $('#portfolioTable').DataTable({
-            responsive: true,
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+        if ($('#portfolioContainer').length) {
+            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
+                $('#portfolioTable').DataTable().destroy();
             }
-        });
-    }
+            let tableHtml = '<table id="portfolioTable" class="table table-striped">';
+            tableHtml += '<thead><tr><th>NDI</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+            const activeDoleances = data.filter(doleance => doleance.statut !== 'TER');
 
-    function getActionButton(doleance) {
-        if (doleance.statut === 'ATT' && doleance.intervention_id) {
-            return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm">Détails intervention</a>`;
-        } else if (doleance.statut === 'NEW' || doleance.statut === 'ATP' || doleance.statut === 'ATD') {
-            return `<button class="btn btn-success btn-sm prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
-        } else {
-            return '<span class="text-muted">Aucune action disponible</span>';
+            activeDoleances.forEach(function (doleance) {
+                tableHtml += `<tr>
+                    <td>${doleance.ndi}</td>
+                    <td>${doleance.station}</td>
+                    <td>${doleance.element}</td>
+                    <td>${doleance.panne_declarer}</td>
+                    <td>${doleance.statut}</td>
+                    <td>
+                        ${doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP' ?
+                    `<button class="btn btn-primary btn-sm prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>` :
+                    ''}
+                    </td>
+                </tr>`;
+            });
+
+            tableHtml += '</tbody></table>';
+            $('#portfolioContainer').html(tableHtml);
+
+            portfolioTable = $('#portfolioTable').DataTable({
+                responsive: true,
+                language: {
+                    // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                }
+            });
         }
     }
 
     function loadTechnicienPortfolio() {
+        console.log("Chargement du portefeuille du technicien...");
         $.ajax({
             url: '/get-technicien-portfolio/',
             type: 'GET',
             success: function (response) {
+                console.log("Réponse reçue:", response);
                 if (response.success) {
-                    initPortfolioTable(response.doleances);
+                    if (response.doleances && response.doleances.length > 0) {
+                        console.log("Initialisation du tableau avec", response.doleances.length, "doléances");
+                        initPortfolioTable(response.doleances);
+                    } else {
+                        console.log("Aucune doléance trouvée");
+                        $('#portfolioContainer').html('<p>Aucune doléance attribuée pour le moment.</p>');
+                    }
                 } else {
-                    $('#portfolioContainer').html('<p>' + response.message + '</p>');
+                    console.log("Technicien sans équipe ou autre situation:", response.message);
+                    $('#portfolioContainer').html('<p>Aucune doléance disponible. Veuillez contacter votre administrateur si vous pensez qu\'il s\'agit d\'une erreur.</p>');
                 }
             },
-            error: function () {
-                $('#portfolioContainer').html('<p>Erreur lors du chargement des données.</p>');
+            error: function (xhr, status, error) {
+                console.error("Erreur AJAX:", error);
+                $('#portfolioContainer').html('<p>Une erreur est survenue lors du chargement des données. Veuillez réessayer plus tard.</p>');
             }
         });
     }
@@ -78,11 +80,9 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert(response.message);
-                    if (response.redirect_url) {
-                        window.location.href = response.redirect_url;
-                    } else {
-                        loadTechnicienPortfolio();
-                    }
+                    $(`.prendre-en-charge[data-id="${doleanceId}"]`).fadeOut();
+                    loadTechnicienPortfolio();
+                    window.location.href = response.redirect_url;
                 } else {
                     alert('Erreur : ' + response.message);
                 }
@@ -93,8 +93,8 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.prendre-en-charge', function (e) {
-        e.preventDefault();
+    $('#portfolioContainer').on('click', '.prendre-en-charge', function () {
+        console.log("Bouton 'prendre en charge' cliqué");
         const doleanceId = $(this).data('id');
         prendreEnCharge(doleanceId);
     });
