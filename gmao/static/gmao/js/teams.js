@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         thead.append(`
             <tr>
-                <th>NDIZ</th>
+                <th>NDI</th>
                 <th>Station</th>
                 <th>Élément</th>
                 <th>Panne déclarée</th>
