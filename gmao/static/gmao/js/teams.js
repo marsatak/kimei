@@ -60,32 +60,6 @@ $(document).ready(function () {
     }
 
 
-    /*function loadTechnicienPortfolio() {
-        console.log("Chargement du portefeuille du technicien...");
-        $.ajax({
-            url: '/get-technicien-portfolio/',
-            type: 'GET',
-            success: function (response) {
-                console.log("Réponse reçue:", response);
-                if (response.success) {
-                    if (response.doleances && response.doleances.length > 0) {
-                        console.log("Initialisation du tableau avec", response.doleances.length, "doléances");
-                        initPortfolioTable(response.doleances);
-                    } else {
-                        console.log("Aucune doléance trouvée");
-                        $('#portfolioContainer').html('<p>Aucune doléance attribuée pour le moment.</p>');
-                    }
-                } else {
-                    console.error("Erreur lors du chargement du portefeuille:", response.message);
-                    alert('Erreur lors du chargement du portefeuille : ' + response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Erreur AJAX:", error);
-                alert('Erreur de communication avec le serveur');
-            }
-        });
-    }*/
     function loadTechnicienPortfolio() {
         console.log("Chargement du portefeuille du technicien...");
         $.ajax({
