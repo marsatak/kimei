@@ -72,14 +72,6 @@ class UserInfoView(APIView):
         })
 
 
-from rest_framework import viewsets, permissions
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from gmao.models import Doleance, Personnel
-from gmao.serializers import DoleanceSerializer
-from gmao_teams.models import EquipePersonnel, DoleanceEquipe
-
-
 class TechnicienViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
