@@ -36,7 +36,6 @@ table.dataTable {
     width: 100%;
 }
 
-
 .container-fluid {
     flex: 1;
 }
@@ -150,21 +149,26 @@ table.dataTable {
 
 /* Styles pour les couleurs des lignes */
 .table-warning {
-    background-color: #b02a37 !important;
+    background-color: #fff3cd !important;
 }
 
 .table-success {
-    background-color: #198754 !important;
+    background-color: #d4edda !important;
 }
 
 .table-danger {
-    background-color: #6610f2 !important;
+    background-color: #f8d7da !important;
 }
 
 #demandeencours {
     width: 100% !important;
 }
 
+/* Remove background color for odd and even rows */
+#demandeencours tbody tr,
+#demandeencours tbody tr.odd,
+#demandeencours tbody tr.even,
+table.dataTable tbody tr,
 table.dataTable tbody tr.odd,
 table.dataTable tbody tr.even {
     background-color: transparent !important;
@@ -184,19 +188,6 @@ table.dataTable tbody tr.even {
 #demandeencours td:nth-child(7),
 #demandeencours td:nth-child(9) {
     white-space: normal;
-}
-
-/* Styles pour les couleurs des lignes */
-.table-warning {
-    background-color: #fff3cd !important;
-}
-
-.table-success {
-    background-color: #d4edda !important;
-}
-
-.table-danger {
-    background-color: #f8d7da !important;
 }
 
 .table-container {

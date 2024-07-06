@@ -136,7 +136,7 @@ def getDoleanceEncours(request):
     try:
         doleances = ((Doleance.objects.all()).exclude(statut='TER').order_by('-date_transmission')
         .filter(
-            date_transmission__day=datetime.now().day,
+            date_transmission__day=5,
             date_transmission__month=datetime.now().month,
             date_transmission__year=datetime.now().year
         ))

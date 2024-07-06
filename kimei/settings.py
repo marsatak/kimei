@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,13 +42,16 @@ INSTALLED_APPS = [
     'gmao.apps.GmaoConfig',
     "accounts.apps.AccountsConfig",
     "gmao_teams.apps.GmaoTeamsConfig",
+    "api.apps.ApiConfig",
 
     # third party 
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'django_crontab',
     'channels',
     # external
+
     'django_flatpickr',
     'bootstrap5',
     'fontawesome_5',
@@ -59,7 +63,16 @@ INSTALLED_APPS = [
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
@@ -120,6 +133,8 @@ DATABASES = {
         'USER': 'Daniel',
         'PASSWORD': 'Mei*2030',
         'HOST': 'kimei.softether.net',
+
+        #        'HOST': 'localhost',
     },
     'teams_db': {
         'ENGINE': 'django.db.backends.mysql',
@@ -127,6 +142,7 @@ DATABASES = {
         'USER': 'Daniel',
         'PASSWORD': 'Mei*2030',
         'HOST': 'kimei.softether.net',
+        # 'HOST': 'kimei.softether.net',
     },
 }
 # Password validation
