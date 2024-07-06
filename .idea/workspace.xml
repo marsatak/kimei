@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/Passage/home__.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/Passage/teams__.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +81,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/daniel/PycharmProjects/Final/kimei/gmao/templates/gmao",
+    "last_opened_file_path": "/Users/daniel/PycharmProjects/Final/kimei/gmao/static/gmao/js",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
@@ -98,11 +102,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/static/gmao/js" />
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
       <recent name="$PROJECT_DIR$/gmao_teams/templates/gmao_teams" />
       <recent name="$PROJECT_DIR$/gmao_teams" />
       <recent name="$PROJECT_DIR$/static/js" />
-      <recent name="$PROJECT_DIR$/accounts/templates/accounts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/gmao/Passage" />
@@ -203,23 +207,7 @@
       <workItem from="1720231354077" duration="21000" />
       <workItem from="1720232848760" duration="35953000" />
       <workItem from="1720294584629" duration="75000" />
-      <workItem from="1720294723120" duration="5766000" />
-    </task>
-    <task id="LOCAL-00048" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720173141617</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1720173141617</updated>
-    </task>
-    <task id="LOCAL-00049" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720173445380</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1720173445380</updated>
+      <workItem from="1720294723120" duration="6336000" />
     </task>
     <task id="LOCAL-00050" summary="First commit">
       <option name="closed" value="true" />
@@ -597,7 +585,23 @@
       <option name="project" value="LOCAL" />
       <updated>1720301520037</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720301739996</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1720301739996</updated>
+    </task>
+    <task id="LOCAL-00098" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720301952602</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1720301952602</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
