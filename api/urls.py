@@ -10,9 +10,9 @@ router = DefaultRouter()
 router.register(r'technicien', TechnicienViewSet, basename='technicien')
 
 urlpatterns = [
-    path('api/login/', LoginView.as_view(), name='login'),
-    path('api/logout/', LogoutView.as_view(), name='logout'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user-info/', UserInfoView.as_view(), name='user_info'),
     path('api/', include(router.urls)),
 ]
