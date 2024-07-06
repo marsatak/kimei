@@ -1224,16 +1224,18 @@ def get_technicien_portfolio(request):
         is_done=False
     ).exists()
 
-    doleances_data = [{
-        'id': d.id,
-        'ndi': d.ndi,
-        'station': d.station.libelle_station,
-        'element': d.element,
-        'panne_declarer': d.panne_declarer,
-        'statut': d.statut,
-        'intervention_id': Intervention.objects.using('kimei_db').filter(
-            doleance=d).first().id if d.statut == 'ATT' else None
-    } for d in doleances]
+    doleances_data = []
+    for d in doleances:
+        intervention = Intervention.objects.using('kimei_db').filter(doleance=d).first()
+        doleances_data.append({
+            'id': d.id,
+            'ndi': d.ndi,
+            'station': d.station.libelle_station,
+            'element': d.element,
+            'panne_declarer': d.panne_declarer,
+            'statut': d.statut,
+            'intervention_id': intervention.id if intervention else None
+        })
 
     return JsonResponse({
         'success': True,

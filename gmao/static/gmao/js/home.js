@@ -550,12 +550,12 @@ $(document).ready(function () {
     }*/
 
 
-    // Charger le portefeuille au chargement de la page si l'utilisateur est un technicien
-    function updatePortfolioTable(doleances, interventionEnCours) {
+// Assurez-vous d'appeler loadTechnicienPortfolio() au chargement de la page et après chaque prise en charge
+    function updatePortfolioTable(data) {
         const portfolioContainer = $('#portfolioContainer');
         portfolioContainer.empty();
 
-        if (doleances.length === 0) {
+        if (data.doleances.length === 0) {
             portfolioContainer.append('<p>Aucune doléance dans votre portfolio.</p>');
             return;
         }
@@ -575,7 +575,7 @@ $(document).ready(function () {
         </tr>
     `);
 
-        doleances.forEach(doleance => {
+        data.doleances.forEach(doleance => {
             const tr = $('<tr>').appendTo(tbody);
             tr.append(`
             <td>${doleance.ndi}</td>
@@ -583,18 +583,18 @@ $(document).ready(function () {
             <td>${doleance.element}</td>
             <td>${doleance.panne_declarer}</td>
             <td>${doleance.statut}</td>
-            <td>${getActionButton(doleance, interventionEnCours)}</td>
+            <td>${getActionButton(doleance, data.intervention_en_cours)}</td>
         `);
         });
     }
 
     function getActionButton(doleance, interventionEnCours) {
-        if (doleance.statut === 'ATT') {
+        if (doleance.statut === 'ATT' && doleance.intervention_id) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm">Détails intervention</a>`;
         } else if (!interventionEnCours && (doleance.statut === 'NEW' || doleance.statut === 'ATP' || doleance.statut === 'ATD')) {
             return `<button class="btn btn-success btn-sm prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
         } else {
-            return '';
+            return '<span class="text-muted">Aucune action disponible</span>';
         }
     }
 
@@ -604,7 +604,7 @@ $(document).ready(function () {
             type: 'GET',
             success: function (response) {
                 if (response.success) {
-                    updatePortfolioTable(response.doleances, response.intervention_en_cours);
+                    updatePortfolioTable(response);
                 } else {
                     alert('Erreur lors du chargement du portefeuille : ' + response.message);
                 }
@@ -615,7 +615,38 @@ $(document).ready(function () {
         });
     }
 
-// Assurez-vous d'appeler loadTechnicienPortfolio() au chargement de la page et après chaque prise en charge
+    $(document).ready(function () {
+        if ($('#portfolioContainer').length) {
+            loadTechnicienPortfolio();
+        }
+
+        $(document).on('click', '.prendre-en-charge', function (e) {
+            e.preventDefault();
+            const doleanceId = $(this).data('id');
+            prendreEnCharge(doleanceId);
+        });
+    });
+
+    function prendreEnCharge(doleanceId) {
+        $.ajax({
+            url: `/home/prendre-en-charge/${doleanceId}/`,
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Doléance prise en charge avec succès');
+                    loadTechnicienPortfolio(); // Recharger le portfolio
+                } else {
+                    alert('Erreur : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur lors de la communication avec le serveur');
+            }
+        });
+    }
 
 
 });
