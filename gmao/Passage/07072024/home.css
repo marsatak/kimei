@@ -48,16 +48,6 @@ table.dataTable {
     padding: 0.35em 0.65em;
 }
 
-.date-column {
-    width: 120px;
-    min-width: 120px;
-}
-
-.status-column {
-    width: 80px;
-    min-width: 80px;
-}
-
 .dt-buttons {
     margin-bottom: 1rem;
 }
@@ -82,7 +72,6 @@ table.dataTable {
     text-align: center;
 }
 
-/* Styles pour les lignes détaillées du portfolio */
 #portfolioTable tbody tr.child td.child {
     padding: 0;
 }
@@ -115,13 +104,6 @@ table.dataTable {
     word-break: break-word;
 }
 
-/* Désactiver les couleurs de ligne alternées */
-table.dataTable tbody tr:nth-of-type(odd),
-table.dataTable tbody tr:nth-of-type(even) {
-    background-color: transparent !important;
-}
-
-/* Styles spécifiques pour les petits écrans */
 @media screen and (max-width: 767px) {
     .panne-cell, .action-cell {
         min-width: 100px;
@@ -144,23 +126,5 @@ table.dataTable tbody tr:nth-of-type(even) {
 
     .dt-button {
         margin-bottom: 0.5rem;
-    }
-
-    .date-column, .status-column {
-        width: auto;
-        min-width: auto;
-    }
-}
-
-/* Styles pour assurer que les colonnes de date et de statut restent fixes */
-@media screen and (min-width: 768px) {
-    .date-column {
-        width: 120px !important;
-        max-width: 120px !important;
-    }
-
-    .status-column {
-        width: 80px !important;
-        max-width: 80px !important;
     }
 }
