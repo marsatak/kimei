@@ -1,19 +1,14 @@
 $(document).ready(function () {
     function initPortfolioTable(data) {
         if ($('#portfolioContainer').length) {
-            // Détruire la table existante si elle existe déjà
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
                 $('#portfolioTable').DataTable().destroy();
             }
-
-            // Générer le HTML du tableau
-            let tableHtml = '<div class="table-responsive">';
-            tableHtml += '<table id="portfolioTable" class="table table-striped">';
+            let tableHtml = '<table id="portfolioTable" class="table table-striped">';
             tableHtml += '<thead><tr><th>NDIZ</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
 
             const hasOngoingIntervention = data.some(doleance => doleance.statut === 'ATT' || doleance.statut === 'INT');
 
-            // Générer les lignes du tableau
             data.forEach(function (doleance) {
                 tableHtml += `<tr>
                     <td>${doleance.ndi}</td>
@@ -25,26 +20,14 @@ $(document).ready(function () {
                 </tr>`;
             });
 
-            tableHtml += '</tbody></table></div>';
+            tableHtml += '</tbody></table>';
             $('#portfolioContainer').html(tableHtml);
 
-            // Initialiser DataTables avec les options de responsivité
             $('#portfolioTable').DataTable({
                 responsive: true,
-                autoWidth: false,
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                },
-                columnDefs: [
-                    {responsivePriority: 1, targets: 0}, // NDIZ
-                    {responsivePriority: 2, targets: -1}, // Actions
-                    {responsivePriority: 3, targets: 4}, // Statut
-                    {width: "30%", targets: 3} // Panne (plus large pour le contenu)
-                ],
-                dom: 'Bfrtip', // Pour ajouter des boutons d'export si nécessaire
-                buttons: [
-                    'copy', 'excel', 'pdf'
-                ]
+                }
             });
         }
     }
@@ -76,13 +59,6 @@ $(document).ready(function () {
         });
     }
 
-    // Gestionnaire d'événements pour le bouton "Prendre en charge"
-    $(document).on('click', '.prendre-en-charge', function (e) {
-        e.preventDefault();
-        const doleanceId = $(this).data('id');
-        prendreEnCharge(doleanceId);
-    });
-
     function prendreEnCharge(doleanceId) {
         $.ajax({
             url: `/home/prendre-en-charge/${doleanceId}/`,
@@ -102,6 +78,12 @@ $(document).ready(function () {
         });
     }
 
+    $(document).on('click', '.prendre-en-charge', function (e) {
+        e.preventDefault();
+        const doleanceId = $(this).data('id');
+        prendreEnCharge(doleanceId);
+    });
+
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -117,6 +99,5 @@ $(document).ready(function () {
         return cookieValue;
     }
 
-    // Charger le portfolio au chargement de la page
     loadTechnicienPortfolio();
 });
