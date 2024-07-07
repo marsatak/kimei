@@ -7,7 +7,7 @@ $(document).ready(function () {
 
             let tableHtml = '<div class="table-responsive">';
             tableHtml += '<table id="portfolioTable" class="table table-striped" style="width:100%">';
-            tableHtml += '<thead><tr><th></th><th>NDIZ</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+            tableHtml += '<thead><tr><th></th><th>NDI</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
 
             const hasOngoingIntervention = data.some(doleance => doleance.statut === 'ATT' || doleance.statut === 'INT');
 
