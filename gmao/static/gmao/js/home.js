@@ -9,27 +9,31 @@ $(document).ready(function () {
                     dataSrc: ""
                 },
                 columns: [
-                    {data: "ndi"},
+                    {data: "ndi", width: "10%"},
                     {
-                        data: "date_transmission", render: function (data) {
+                        data: "date_transmission", width: "15%",
+                        render: function (data) {
                             return moment(data).format('DD/MM/YYYY HH:mm');
                         }
                     },
-                    {data: "statut"},
-                    {data: "station.libelle_station"},
-                    {data: 'element'},
-                    {data: 'panne_declarer'},
+                    {data: "statut", width: "5%"},
+                    {data: "station.libelle_station", width: "15%"},
+                    {data: 'element', width: "10%"},
+                    {data: 'panne_declarer', width: "25%"},
                     {
-                        data: 'date_deadline', render: function (data) {
+                        data: 'date_deadline', width: "15%",
+                        render: function (data) {
                             return moment(data).format('DD/MM/YYYY HH:mm');
                         }
                     },
-                    {data: 'commentaire'},
+                    {data: 'commentaire', width: "15%"},
                     {
-                        data: null,
+                        data: null, width: "10%",
                         render: function (data, type, row) {
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
-                                return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">Déclencher intervention</button>';
+                                return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
+                                    '<i class="fas fa-plus">@</i>' +
+                                    '</button>';
                             }
                             return '';
                         }
@@ -172,6 +176,6 @@ $(document).ready(function () {
         if (doleanceTable) doleanceTable.columns.adjust().draw();
         if (personnelTable) personnelTable.columns.adjust().draw();
     });
-    
+
     // Ajoutez ici les autres fonctions et gestionnaires d'événements nécessaires
 });
