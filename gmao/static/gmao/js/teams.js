@@ -1,53 +1,4 @@
 $(document).ready(function () {
-    /*function initPortfolioTable(data) {
-        if ($('#portfolioContainer').length) {
-            // Détruire la table existante si elle existe déjà
-            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
-                $('#portfolioTable').DataTable().destroy();
-            }
-
-            // Générer le HTML du tableau
-            let tableHtml = '<div class="table-responsive">';
-            tableHtml += '<table id="portfolioTable" class="table table-striped">';
-            tableHtml += '<thead><tr><th>NDIZ</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
-
-            const hasOngoingIntervention = data.some(doleance => doleance.statut === 'ATT' || doleance.statut === 'INT');
-
-            // Générer les lignes du tableau
-            data.forEach(function (doleance) {
-                tableHtml += `<tr>
-                    <td>${doleance.ndi}</td>
-                    <td>${doleance.station}</td>
-                    <td>${doleance.element}</td>
-                    <td>${doleance.panne_declarer}</td>
-                    <td>${doleance.statut}</td>
-                    <td>${getActionButton(doleance, hasOngoingIntervention)}</td>
-                </tr>`;
-            });
-
-            tableHtml += '</tbody></table></div>';
-            $('#portfolioContainer').html(tableHtml);
-
-            // Initialiser DataTables avec les options de responsivité
-            $('#portfolioTable').DataTable({
-                responsive: true,
-                autoWidth: false,
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                },
-                columnDefs: [
-                    {responsivePriority: 1, targets: 0}, // NDIZ
-                    {responsivePriority: 2, targets: -1}, // Actions
-                    {responsivePriority: 3, targets: 4}, // Statut
-                    {width: "30%", targets: 3} // Panne (plus large pour le contenu)
-                ],
-                dom: 'Bfrtip', // Pour ajouter des boutons d'export si nécessaire
-                buttons: [
-                    'copy', 'excel', 'pdf'
-                ]
-            });
-        }
-    }*/
     function initPortfolioTable(data) {
         if ($('#portfolioContainer').length) {
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
@@ -55,44 +6,26 @@ $(document).ready(function () {
             }
 
             let tableHtml = '<div class="table-responsive">';
-            tableHtml += '<table id="portfolioTable" class="table table-striped" style="width: 100%">';
-            tableHtml += '<thead><tr><th>NDIZ</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+            tableHtml += '<table id="portfolioTable" class="table table-striped" style="width:100%">';
+            tableHtml += '<thead><tr><th></th><th>NDIZ</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
 
             const hasOngoingIntervention = data.some(doleance => doleance.statut === 'ATT' || doleance.statut === 'INT');
 
             data.forEach(function (doleance) {
                 tableHtml += `<tr>
-                <td></td>
-                <td>${doleance.ndi}</td>
-                <td>${doleance.station}</td>
-                <td>${doleance.element}</td>
-                <td class="panne-cell">${doleance.panne_declarer}</td>
-                <td>${doleance.statut}</td>
-                <td class="action-cell">${getActionButton(doleance, hasOngoingIntervention)}</td>
-            </tr>`;
+                    <td></td>
+                    <td>${doleance.ndi}</td>
+                    <td>${doleance.station}</td>
+                    <td>${doleance.element}</td>
+                    <td class="panne-cell">${doleance.panne_declarer}</td>
+                    <td>${doleance.statut}</td>
+                    <td class="action-cell">${getActionButton(doleance, hasOngoingIntervention)}</td>
+                </tr>`;
             });
 
             tableHtml += '</tbody></table></div>';
             $('#portfolioContainer').html(tableHtml);
 
-            /*$('#portfolioTable').DataTable({
-                responsive: true,
-                autoWidth: false,
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                },
-                columnDefs: [
-                    {responsivePriority: 1, targets: 0}, // NDIZ
-                    {responsivePriority: 2, targets: -1}, // Actions
-                    {responsivePriority: 3, targets: 4}, // Statut
-                    {width: "25%", targets: 3, className: 'panne-cell'}, // Panne
-                    {width: "15%", targets: -1, className: 'action-cell'} // Actions
-                ],
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel', 'pdf'
-                ]
-            });*/
             $('#portfolioTable').DataTable({
                 responsive: {
                     details: {
@@ -125,15 +58,6 @@ $(document).ready(function () {
         }
     }
 
-    /*function getActionButton(doleance, hasOngoingIntervention) {
-        if (doleance.statut === 'ATT' && doleance.intervention_id) {
-            return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm">Détails intervention</a>`;
-        } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !hasOngoingIntervention) {
-            return `<button class="btn btn-success btn-sm prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
-        } else {
-            return '<span class="text-muted">Aucune action disponible</span>';
-        }
-    }*/
     function getActionButton(doleance, hasOngoingIntervention) {
         if (doleance.statut === 'ATT' && doleance.intervention_id) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm w-100">Détails intervention</a>`;
@@ -161,7 +85,6 @@ $(document).ready(function () {
         });
     }
 
-    // Gestionnaire d'événements pour le bouton "Prendre en charge"
     $(document).on('click', '.prendre-en-charge', function (e) {
         e.preventDefault();
         const doleanceId = $(this).data('id');
@@ -176,7 +99,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert(response.message);
-                    loadTechnicienPortfolio();  // Recharger tout le portfolio
+                    loadTechnicienPortfolio();
                 } else {
                     alert('Erreur : ' + response.message);
                 }
@@ -202,6 +125,5 @@ $(document).ready(function () {
         return cookieValue;
     }
 
-    // Charger le portfolio au chargement de la page
     loadTechnicienPortfolio();
 });
