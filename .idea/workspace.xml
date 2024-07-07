@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
+      <change afterPath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/passage.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/passage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,10 +30,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="Python Script" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -106,11 +112,11 @@
       <recent name="$PROJECT_DIR$/gmao_teams" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
       <recent name="$PROJECT_DIR$/gmao/Passage/OLD" />
       <recent name="$PROJECT_DIR$/gmao/Passage" />
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
       <recent name="$PROJECT_DIR$/gmao_teams/Passage" />
-      <recent name="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.kimei">
@@ -205,15 +211,7 @@
       <workItem from="1720232848760" duration="35953000" />
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
-      <workItem from="1720327945821" duration="7245000" />
-    </task>
-    <task id="LOCAL-00075" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720246154701</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1720246154701</updated>
+      <workItem from="1720327945821" duration="9734000" />
     </task>
     <task id="LOCAL-00076" summary="First commit">
       <option name="closed" value="true" />
@@ -599,7 +597,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720336603217</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720336914901</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1720336914901</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

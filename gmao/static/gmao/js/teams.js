@@ -59,7 +59,7 @@ $(document).ready(function () {
     }
 
     function getActionButton(doleance, hasOngoingIntervention) {
-        if (doleance.statut === 'ATT' && doleance.intervention_id) {
+        if ((doleance.statut === 'ATT' || doleance.statut === 'INT') && doleance.intervention_id) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm w-100">Détails intervention</a>`;
         } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !hasOngoingIntervention) {
             return `<button class="btn btn-success btn-sm w-100 prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;

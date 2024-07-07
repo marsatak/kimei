@@ -1,6 +1,17 @@
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
+}
+
+header, footer {
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 .wrapper {
@@ -197,3 +208,4 @@ table.dataTable tbody tr.status-ATD {
 #doleances-section, #personnel-section {
     padding-top: 70px; /* Adjust based on your navbar height */
 }
+

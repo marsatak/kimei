@@ -1,0 +1,157 @@
+/* main.css */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    flex: 1 0 auto;
+    padding-bottom: 40px; /* Ajustez selon la hauteur du footer */
+}
+
+header, footer {
+    width: 100vw;
+    background-color: #343a40;
+    color: white;
+    left: 0;
+    right: 0;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+main {
+    margin-bottom: 40px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+table.dataTable {
+    width: 100% !important;
+}
+
+.badge {
+    font-size: 0.8rem;
+    padding: 0.35em 0.65em;
+}
+
+.date-column {
+    width: 120px;
+    min-width: 120px;
+}
+
+.status-column {
+    width: 80px;
+    min-width: 80px;
+}
+
+.section-container {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.full-height-section {
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+#doleances-section, #personnel-section {
+    padding-top: 70px;
+}
+
+/* Styles pour les différents états de doléance */
+table.dataTable tbody tr.status-NEW {
+    background-color: #d4edda !important;
+}
+
+table.dataTable tbody tr.status-ATT {
+    background-color: #fff3cd !important;
+}
+
+table.dataTable tbody tr.status-INT {
+    background-color: #cce5ff !important;
+}
+
+table.dataTable tbody tr.status-ATP {
+    background-color: #f8d7da !important;
+}
+
+table.dataTable tbody tr.status-ATD {
+    background-color: #e9ecef !important;
+}
+
+/* Styles pour les petits écrans */
+@media screen and (max-width: 767px) {
+    .date-column, .status-column {
+        width: auto;
+        min-width: auto;
+    }
+
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        float: none;
+        text-align: center;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 0.5em;
+    }
+
+    .dt-buttons {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .dt-button {
+        margin-bottom: 0.5rem;
+    }
+}
