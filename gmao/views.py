@@ -200,10 +200,7 @@ def home(request):
 def getDoleanceEncours(request):
     try:
         doleances = (
-            (Doleance.objects.all()).filter(
-                date_transmission__day=5,
-                date_transmission__month=7,
-                date_transmission__year=2024)
+            (Doleance.objects.all())
             .exclude(statut='TER')
             .order_by('date_deadline').filter(
             ))
