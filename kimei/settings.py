@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'gmao.apps.GmaoConfig',
     "accounts.apps.AccountsConfig",
     "gmao_teams.apps.GmaoTeamsConfig",
-    "api.apps.ApiConfig",
+    # "api.apps.ApiConfig",
 
     # third party 
     'rest_framework',
