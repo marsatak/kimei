@@ -18,8 +18,8 @@
           href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
-{#    <link rel="stylesheet" type="text/css" href="{% static 'gmao/css/home.css' %}">#}
-    <link rel="stylesheet" type="text/css" href="{% static 'gmao/css/home.css' %}">
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'gmao/css/home.css' %}">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'gmao/css/main.css' %}">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     {% block extra_css %}{% endblock extra_css %}
@@ -28,20 +28,22 @@
 <body>
 <div class="wrapper">
     <header>
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="padding: 10px 20px;">
-    <div class="col-sm">
-        <a href="{% url 'gmao:home' %}" class="navbar-brand flex-grow-1" style="color: aliceblue; text-align: center;">
-            
-            {% block navbar-content %}
-                <i style="color: #0dcaf0;" class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;Accès vérouillé
-            {% endblock navbar-content %}
-        </a>
-    </div>
-    <div class="ms-auto">
-        {% block nav-btn %}
-        {% endblock nav-btn %}
-    </div>
-</nav>
+            <div class="col-sm">
+                <a href="{% url 'gmao:home' %}" class="navbar-brand flex-grow-1"
+                   style="color: aliceblue; text-align: center;">
+
+                    {% block navbar-content %}
+                        <i style="color: #0dcaf0;" class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;Accès vérouillé
+                    {% endblock navbar-content %}
+                </a>
+            </div>
+            <div class="ms-auto">
+                {% block nav-btn %}
+                {% endblock nav-btn %}
+            </div>
+        </nav>
     </header>
     <div class="container-fluid" style="padding-top: 70px">
         {% block content %}
@@ -84,7 +86,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 
 {% block extra_js %}
