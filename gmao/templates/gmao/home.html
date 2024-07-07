@@ -49,19 +49,7 @@
 {% endblock navbar-content %}
 
 {% block extra_css %}
-    <!-- ... autres styles ... -->
-    <style>
-        .intervention-form {
-            transform: rotate(90deg);
-            transform-origin: left top;
-            width: 150vh;
-            height: 100vw;
-            overflow-x: hidden;
-            position: absolute;
-            top: 100px;
-            left: 100px;
-        }
-    </style>
+    link rel="stylesheet" href="{% static 'gmao/css/main.css' %}"
 {% endblock extra_css %}
 
 {% block content %}
