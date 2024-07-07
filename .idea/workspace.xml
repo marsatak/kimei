@@ -26,8 +26,8 @@
       <list>
         <option value="JavaScript File" />
         <option value="Python Script" />
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -68,43 +68,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Django Server.kimei.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Daphne.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/templates&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;JavaScript.Libraries&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.kimei.executor": "Run",
+    "Python.Daphne.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "Rebasing master",
+    "last_opened_file_path": "/Users/daniel/PycharmProjects/Final/kimei/gmao/Passage/07072024",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;365fac49-34f3-4d4d-889a-7c26986376d3&quot;,
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "365fac49-34f3-4d4d-889a-7c26986376d3",
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
       <recent name="$PROJECT_DIR$/gmao/static/gmao/js" />
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
       <recent name="$PROJECT_DIR$/gmao_teams/templates/gmao_teams" />
+      <recent name="$PROJECT_DIR$/gmao_teams" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
@@ -206,7 +205,23 @@
       <workItem from="1720232848760" duration="35953000" />
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
-      <workItem from="1720327945821" duration="13394000" />
+      <workItem from="1720327945821" duration="9734000" />
+    </task>
+    <task id="LOCAL-00076" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720246346062</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1720246346062</updated>
+    </task>
+    <task id="LOCAL-00077" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720247991302</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1720247991302</updated>
     </task>
     <task id="LOCAL-00078" summary="First commit">
       <option name="closed" value="true" />
@@ -584,23 +599,7 @@
       <option name="project" value="LOCAL" />
       <updated>1720336914901</updated>
     </task>
-    <task id="LOCAL-00125" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720339845679</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1720339845679</updated>
-    </task>
-    <task id="LOCAL-00126" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720342299626</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1720342299626</updated>
-    </task>
-    <option name="localTasksCounter" value="127" />
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
