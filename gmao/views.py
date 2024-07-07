@@ -53,6 +53,10 @@ from django.db.models.functions import ExtractYear
 from django.db.models.functions import TruncYear
 from .models import Doleance, Intervention
 from gmao_teams.models import EquipePersonnel, DoleanceEquipe
+from django.http import JsonResponse
+from django.core.serializers import serialize
+from django.core.serializers.json import DjangoJSONEncoder
+from .models import Piece, UnitePiece, TypePiece
 
 logger = logging.getLogger(__name__)
 
@@ -525,50 +529,6 @@ def liste_interventions(request):
     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
 
 
-# @login_required
-# def liste_interventions(request):
-#     current_date = timezone.now().date()
-#
-#     if request.user.role == 'ADMIN':
-#         interventions = Intervention.objects.filter(
-#             top_depart__date=current_date
-#         ).order_by('-top_depart')
-#     elif request.user.role == 'TECH':
-#         try:
-#             personnel = request.user.personnel
-#             interventions = Intervention.objects.filter(
-#                 id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id'),
-#                 top_depart__date=current_date
-#             ).order_by('-top_depart')
-#             print(personnel)
-#         except AttributeError:
-#             interventions = Intervention.objects.none()
-#     else:
-#         interventions = Intervention.objects.none()
-#
-#     # Récupérer les techniciens pour chaque intervention
-#     intervention_ids = [i.id for i in interventions]
-#     intervention_personnel = InterventionPersonnel.objects.filter(
-#         intervention_id__in=intervention_ids
-#     ).select_related('personnel')
-#
-#     # Créer un dictionnaire pour stocker les techniciens par intervention
-#     techniciens_par_intervention = {i.id: [] for i in interventions}
-#     for ip in intervention_personnel:
-#         techniciens_par_intervention[ip.intervention_id].append(ip.personnel)
-#
-#     # Ajouter les techniciens à chaque intervention
-#     for intervention in interventions:
-#         intervention.techniciens = techniciens_par_intervention[intervention.id]
-#
-#     context = {
-#         'interventions': interventions,
-#         'current_date': current_date,
-#     }
-#
-#     return render(request, 'gmao/liste_interventions.html', context)
-
-
 def detail_intervention(request, intervention_id):
     intervention = get_object_or_404(Intervention, id=intervention_id)
     techniciens = (InterventionPersonnel.objects.filter(intervention=intervention)
@@ -685,58 +645,6 @@ def toutes_les_doleances(request):
     })
 
 
-# @login_required
-# def get_doleances_data(request):
-#     year = request.GET.get('year')
-#     month = request.GET.get('month')
-#
-#     doleances = Doleance.objects.filter(
-#         date_transmission__year=year,
-#         date_transmission__month=month
-#     ).exclude(statut='NEW').order_by('-date_transmission')
-#
-#     data = [{
-#         'id': d.id,
-#         'ndi': d.ndi,
-#         'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
-#         'statut': d.statut,
-#         'station': d.station.libelle_station,
-#         'element': d.element,
-#         'panne_declarer': d.panne_declarer,
-#         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
-#         'commentaire': d.commentaire,
-#         # Ajoutez d'autres champs si nécessaire
-#     } for d in doleances]
-#
-#     return JsonResponse({'data': data})
-# @login_required
-# def get_doleances_data(request):
-#     year = request.GET.get('year')
-#     month = request.GET.get('month')
-#
-#     print(f"Fetching data for year: {year}, month: {month}")  # Debug print
-#
-#     doleances = Doleance.objects.filter(
-#         date_transmission__year=year,
-#         date_transmission__month=month
-#     ).exclude(statut='NEW').order_by('-date_transmission')
-#
-#     print(f"Number of doleances found: {doleances.count()}")  # Debug print
-#
-#     data = [{
-#         'id': d.id,
-#         'ndi': d.ndi,
-#         'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
-#         'statut': d.statut,
-#         'station': d.station.libelle_station,
-#         'element': d.element,
-#         'panne_declarer': d.panne_declarer,
-#         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
-#         'commentaire': d.commentaire,
-#     } for d in doleances]
-#
-#     return JsonResponse({'data': data})
-
 @login_required
 def get_doleances_data(request):
     year = request.GET.get('year')
@@ -772,43 +680,6 @@ def get_doleances_data(request):
     } for d in doleances]
 
     return JsonResponse({'data': data})
-
-
-# @login_required
-# def get_doleances_data(request):
-#     year = request.GET.get('year')
-#     month = request.GET.get('month')
-#     start_date = request.GET.get('startDate')
-#     end_date = request.GET.get('endDate')
-#
-#     doleances_query = Doleance.objects.all()
-#
-#     if year != 'all':
-#         doleances_query = doleances_query.filter(date_transmission__year=year)
-#
-#     if month != 'all':
-#         doleances_query = doleances_query.filter(date_transmission__month=month)
-#
-#     if start_date and end_date:
-#         doleances_query = doleances_query.filter(
-#             date_transmission__range=[start_date, end_date]
-#         )
-#
-#     doleances = doleances_query.exclude(statut='NEW').order_by('-date_transmission')
-#
-#     data = [{
-#         'id': d.id,
-#         'ndi': d.ndi,
-#         'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
-#         'statut': d.statut,
-#         'station': d.station.libelle_station,
-#         'element': d.element,
-#         'panne_declarer': d.panne_declarer,
-#         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
-#         'commentaire': d.commentaire,
-#     } for d in doleances]
-#
-#     return JsonResponse({'data': data})
 
 
 @login_required
@@ -886,76 +757,6 @@ def prendre_en_charge(request, doleance_id):
         return JsonResponse({'success': False, 'message': str(e)})
 
 
-# @login_required
-# @require_POST
-# def prendre_en_charge(request, doleance_id):
-#     logger.info(f"Tentative de prise en charge de la doléance {doleance_id}")
-#     try:
-#         doleance = get_object_or_404(Doleance.objects.using('kimei_db'), id=doleance_id)
-#         logger.info(f"Doléance trouvée: {doleance} {doleance.statut}")
-#
-#         if doleance.statut not in ['NEW', 'ATP', 'ATD']:
-#             return JsonResponse({'success': False, 'message': 'Cette doléance ne peut pas être prise en charge'})
-#
-#         technicien = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-#         logger.info(f"Technicien trouvé: {technicien}")
-#
-#         equipe_personnel = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
-#         logger.info(f"EquipePersonnel trouvé: {equipe_personnel}")
-#
-#         if not equipe_personnel:
-#             return JsonResponse({'success': False, 'message': 'Ce technicien n\'appartient à aucune équipe'})
-#
-#         equipe = equipe_personnel.equipe
-#         logger.info(f"Équipe trouvée: {equipe}")
-#
-#         # Vérifier si une intervention est déjà en cours pour cette équipe
-#         intervention_en_cours = Intervention.objects.using('kimei_db').filter(
-#             doleance__doleanceequipe__equipe=equipe,
-#             is_half_done=True,
-#             is_done=False
-#         ).exists()
-#
-#         if intervention_en_cours:
-#             return JsonResponse({'success': False, 'message': 'Une intervention est déjà en cours pour cette équipe'})
-#
-#         intervention = Intervention.objects.using('kimei_db').create(
-#             doleance=doleance,
-#             top_depart=timezone.now(),
-#             is_done=False,
-#             is_half_done=True,
-#             is_going_home=False,
-#             etat_doleance='ATT'
-#         )
-#         logger.info(f"Intervention créée: {intervention}")
-#
-#         doleance.statut = 'ATT'
-#         doleance.save(using='kimei_db')
-#
-#         membres_equipe = Personnel.objects.using('kimei_db').filter(id__in=equipe.get_personnel_ids())
-#         for membre in membres_equipe:
-#             InterventionPersonnel.objects.using('kimei_db').create(intervention=intervention, personnel=membre)
-#             membre.statut = 'ATT'
-#             membre.save(using='kimei_db')
-#
-#         # Créer ou mettre à jour l'association DoleanceEquipe
-#         DoleanceEquipe.objects.using('teams_db').update_or_create(
-#             equipe=equipe,
-#             doleance_id=doleance.id,
-#             defaults={'equipe': equipe, 'doleance_id': doleance.id}
-#         )
-#
-#         return JsonResponse({
-#             'success': True,
-#             'message': 'Doléance prise en charge avec succès par l\'équipe',
-#             'intervention_id': intervention.id,
-#             'redirect_url': reverse('gmao:detail_intervention', args=[intervention.id])
-#         })
-#     except Exception as e:
-#         logger.error(f"Erreur lors de la prise en charge: {str(e)}", exc_info=True)
-#         return JsonResponse({'success': False, 'message': str(e)})
-
-
 @login_required
 @require_POST
 def annuler_prise_en_charge(request, intervention_id):
@@ -1023,110 +824,6 @@ def affecter_techniciens(request, doleance_id):
         return JsonResponse({'success': False, 'message': str(e)})
 
 
-# @login_required
-# def get_technicien_portfolio(request):
-#     if request.user.role != 'TECH':
-#         return JsonResponse({'success': False, 'message': 'Accès non autorisé'})
-#
-#     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-#     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
-#
-#     # if not equipe:
-#     #     return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
-#
-#     # Récupérer d'abord les IDs des doléances
-#     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
-#                         .filter(equipe=equipe.equipe)
-#                         .values_list('doleance_id', flat=True))
-#
-#     # Ensuite, utiliser ces IDs pour récupérer les doléances
-#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
-#
-#     print(f"Personnel: {personnel}")
-#     print(f"Equipe: {equipe}")
-#     print(f"Doleance IDs: {doleance_ids}")
-#     print(f"Nombre de doléances: {doleances.count()}")
-#
-#     doleances_data = [{
-#         'id': d.id,
-#         'ndi': d.ndi,
-#         'station': d.station.libelle_station,
-#         'element': d.element,
-#         'panne_declarer': d.panne_declarer,
-#         'statut': d.statut
-#     } for d in doleances]
-#
-#     return JsonResponse({
-#         'success': True,
-#         'doleances': doleances_data,
-#         'equipe': equipe.equipe.nom,
-#     })
-# def get_technicien_portfolio(request):
-#     if request.user.role != 'TECH':
-#         return JsonResponse({'success': False, 'message': 'Accès non autorisé'})
-#
-#     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-#     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
-#
-#     if not equipe:
-#         return JsonResponse({'success': False, 'message': 'Aucune équipe assignée'})
-#
-#     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
-#                         .filter(equipe=equipe.equipe)
-#                         .values_list('doleance_id', flat=True))
-#
-#     # Exclure les doléances terminées
-#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
-#
-#     doleances_data = [{
-#         'id': d.id,
-#         'ndi': d.ndi,
-#         'station': d.station.libelle_station,
-#         'element': d.element,
-#         'panne_declarer': d.panne_declarer,
-#         'statut': d.statut
-#     } for d in doleances]
-#
-#     return JsonResponse({
-#         'success': True,
-#         'doleances': doleances_data,
-#         'equipe': equipe.equipe.nom,
-#     })
-# def get_technicien_portfolio(request):
-#     if request.user.role != 'TECH':
-#         return JsonResponse({'success': False, 'message': 'Accès non autorisé'})
-#
-#     personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-#     equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
-#
-#     if not equipe:
-#         return JsonResponse({
-#             'success': True,
-#             'doleances': [],
-#             'message': 'Aucune équipe assignée'
-#         })
-#
-#     doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
-#                         .filter(equipe=equipe.equipe)
-#                         .values_list('doleance_id', flat=True))
-#
-#     # Exclure les doléances terminées
-#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
-#
-#     doleances_data = [{
-#         'id': d.id,
-#         'ndi': d.ndi,
-#         'station': d.station.libelle_station,
-#         'element': d.element,
-#         'panne_declarer': d.panne_declarer,
-#         'statut': d.statut
-#     } for d in doleances]
-#
-#     return JsonResponse({
-#         'success': True,
-#         'doleances': doleances_data,
-#         'equipe': equipe.equipe.nom if equipe else None,
-#     })
 @login_required
 def get_technicien_portfolio(request):
     if request.user.role != 'TECH':
@@ -1175,3 +872,36 @@ def get_technicien_portfolio(request):
         'equipe': equipe.equipe.nom if equipe else None,
         'intervention_en_cours': intervention_en_cours
     })
+
+
+@login_required
+def toutes_les_pieces(request):
+    return render(request, 'gmao/toutes_les_pieces.html')
+
+
+def get_pieces_data(request):
+    pieces = Piece.objects.all()
+
+    # Sérialiser les objets Piece en JSON
+    pieces_json = serialize('json', pieces)
+    pieces_data = json.loads(pieces_json)
+
+    # Transformer les données sérialisées en un format plus simple
+    formatted_data = []
+    for item in pieces_data:
+        piece = item['fields']
+        piece['id'] = item['pk']  # Ajouter l'ID à chaque objet
+
+        # Gérer les relations ForeignKey
+        if piece['unite']:
+            unite = UnitePiece.objects.get(pk=piece['unite'])
+            piece['unite'] = unite.unite if hasattr(unite, 'unite') else str(unite)
+
+        if piece['type']:
+            type_piece = TypePiece.objects.get(pk=piece['type'])
+            piece['type'] = type_piece.libelle_type if hasattr(type_piece, 'libelle_type') else str(type_piece)
+
+        formatted_data.append(piece)
+
+    # Retourner les données au format JSON
+    return JsonResponse({'data': formatted_data}, safe=False)

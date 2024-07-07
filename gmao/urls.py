@@ -43,6 +43,8 @@ urlpatterns = [
     path('home/prendre-en-charge/<int:doleance_id>/', views.prendre_en_charge, name='prendre_en_charge'),
     path('home/annuler-prise-en-charge/<int:intervention_id>/', views.annuler_prise_en_charge,
          name='annuler_prise_en_charge'),
+    path('home/toutes-les-pieces/', views.toutes_les_pieces, name='toutes_les_pieces'),
+    path('home/get-pieces-data/', views.get_pieces_data, name='get_pieces_data'),
 
     # path('home/doleanceencours', views.doleanceencours, name='doleanceencours'),
     # Json des doléances / Toutes les doléances terminées
