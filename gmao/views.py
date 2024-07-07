@@ -134,12 +134,11 @@ def home(request):
 @api_view(['GET'])
 def getDoleanceEncours(request):
     try:
-        doleances = ((Doleance.objects.all()).exclude(statut='TER').order_by('-date_transmission')
-        .filter(
-            date_transmission__day=5,
-            date_transmission__month=datetime.now().month,
-            date_transmission__year=datetime.now().year
-        ))
+        doleances = (
+            (Doleance.objects.all())
+            .exclude(statut='TER')
+            .order_by('-date_transmission').filter(
+            ))
 
         doleances_data = []
         for doleance in doleances:
@@ -524,10 +523,6 @@ def annuler_intervention(request, intervention_id):
 #         intervention.techniciens = techniciens_par_intervention[intervention.id]
 #
 #     return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from .models import Intervention, InterventionPersonnel
-from django.utils import timezone
 
 
 @login_required
