@@ -133,7 +133,7 @@ def logout_view(request):
     logout(request)
     # Assurez-vous que la session est complètement effacée
     request.session.flush()
-    return redirect('accounts:login')
+    return redirect('gmao:home')
 
 
 # A tester le logout
