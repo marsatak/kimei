@@ -99,22 +99,7 @@ $(document).ready(function () {
             $('#detailsEquipe').show();
 
         });
-        let listePieces = $('#listePieces');
-        listePieces.empty();
-        data.doleances.forEach(function (doleance) {
-            doleance.pieces.forEach(function (piece) {
-                let pieceItem = $('<li class="list-group-item">');
-                pieceItem.append($('<span>').text(`${piece.libelle} - Quantité: ${piece.quantite} (Doléance: ${doleance.ndi})`));
-                let retirerBtn = $('<button class="btn btn-sm btn-danger">').text('Retirer');
-                retirerBtn.on('click', function () {
-                    retirerPiece(piece.id, doleance.id);
-                });
-                pieceItem.append(retirerBtn);
-                listePieces.append(pieceItem);
-            });
-        });
 
-        chargerPiecesNonAttribuees();
     }
 
     function updateTechniciensList(techniciens, listId) {
@@ -122,7 +107,7 @@ $(document).ready(function () {
         techniciens.forEach(function (tech) {
             html += `
         <li class="list-group-item">
-            ${tech.nom_personnel} ${tech.prenom_personnel}
+            ${tech.nom} ${tech.prenom}
             <button class="btn btn-sm btn-danger retirer-technicien float-right" data-id="${tech.id}">Retirer</button>
         </li>`;
         });
