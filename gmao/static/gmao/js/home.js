@@ -9,26 +9,26 @@ $(document).ready(function () {
                     dataSrc: ""
                 },
                 columns: [
-                    {data: "ndi", width: "5%%"},
+                    {data: "ndi", width: "7%%"},
                     {
-                        data: "date_transmission", width: "10%",
+                        data: "date_transmission", width: "8%",
                         render: function (data) {
                             return moment(data).format('DD/MM/YYYY HH:mm');
                         }
                     },
-                    {data: "statut", width: "5%"},
-                    {data: "station.libelle_station", width: "15%"},
+                    {data: "statut", width: "3%"},
+                    {data: "station.libelle_station", width: "10%"},
                     {data: 'element', width: "15%"},
-                    {data: 'panne_declarer', width: "30%"},
+                    {data: 'panne_declarer', width: "24%"},
                     {
-                        data: 'date_deadline', width: "10%",
+                        data: 'date_deadline', width: "8%",
                         render: function (data) {
                             return moment(data).format('DD/MM/YYYY HH:mm');
                         }
                     },
                     {data: 'commentaire', width: "15%"},
                     {
-                        data: null, width: "15%",
+                        data: null, width: "10%",
                         render: function (data, type, row) {
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
                                 return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
