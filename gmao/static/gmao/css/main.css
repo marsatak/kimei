@@ -261,16 +261,23 @@ table.dataTable tbody tr.status-ATD {
 /*Portefeuille*/
 #portfolioTable {
     width: 100% !important;
+    table-layout: fixed;
+}
+
+#portfolioTable th,
+#portfolioTable td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 0;
 }
 
 #portfolioTable td.panne-cell {
     max-width: 200px;
-    white-space: normal;
-    word-wrap: break-word;
 }
 
 #portfolioTable td.action-cell {
     white-space: nowrap;
+    width: 120px;
 }
 
 .table-responsive {
@@ -279,13 +286,28 @@ table.dataTable tbody tr.status-ATD {
 }
 
 @media screen and (max-width: 767px) {
-    #portfolioTable td, #portfolioTable th {
-        white-space: normal;
+    #portfolioTable .control {
+        width: 20px;
+    }
+
+    #portfolioTable th:nth-child(2),
+    #portfolioTable td:nth-child(2) {
+        width: 60px;
+    }
+
+    #portfolioTable th:nth-child(6),
+    #portfolioTable td:nth-child(6) {
+        width: 50px;
+    }
+
+    #portfolioTable th:nth-child(7),
+    #portfolioTable td:nth-child(7) {
+        width: 100px;
     }
 }
 
 .card-body {
-    padding: 0;
+    padding: 0.5rem;
 }
 
 .dataTables_wrapper .row {

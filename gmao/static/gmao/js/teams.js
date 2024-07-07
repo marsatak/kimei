@@ -97,8 +97,13 @@ $(document).ready(function () {
                     {responsivePriority: 1, targets: 1}, // NDI
                     {responsivePriority: 2, targets: -1}, // Actions
                     {responsivePriority: 3, targets: 5}, // Statut
-                    {width: "25%", targets: 4, className: 'panne-cell'}, // Panne
-                    {width: "15%", targets: -1, className: 'action-cell'} // Actions
+                    {
+                        targets: [2, 3, 4],
+                        render: function (data, type, row) {
+                            return type === 'display' && data.length > 20 ?
+                                data.substr(0, 20) + '…' : data;
+                        }
+                    }
                 ],
                 order: [[1, 'asc']]
             });
