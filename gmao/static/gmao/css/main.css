@@ -258,4 +258,26 @@ table.dataTable tbody tr.status-ATD {
     margin-bottom: 60px; /* Ajoutez une marge en bas pour éviter le chevauchement avec le footer */
 }
 
+/*Portefeuille*/
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
 
+#portfolioTable {
+    width: 100% !important;
+}
+
+@media screen and (max-width: 767px) {
+    .card-body.overflow-auto {
+        padding: 0.5rem;
+    }
+
+    #portfolioTable td, #portfolioTable th {
+        white-space: nowrap;
+    }
+
+    .action-cell {
+        min-width: 120px;
+    }
+}

@@ -27,12 +27,7 @@ $(document).ready(function () {
             $('#portfolioContainer').html(tableHtml);
 
             $('#portfolioTable').DataTable({
-                responsive: {
-                    details: {
-                        type: 'column',
-                        target: 'tr'
-                    }
-                },
+                responsive: true,
                 autoWidth: false,
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'

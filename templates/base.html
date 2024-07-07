@@ -21,6 +21,8 @@
     {#    <link rel="stylesheet" type="text/css" href="{% static 'gmao/css/home.css' %}">#}
     <link rel="stylesheet" type="text/css" href="{% static 'gmao/css/main.css' %}">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 
     {% block extra_css %}{% endblock extra_css %}
     <title>{% block title %}M E I{% endblock title %}</title>
@@ -48,28 +50,28 @@
     <div class="container-fluid" style="padding-top: 70px">
         {% block content %}
             <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="login-container">
-                    <h2 class="text-center mb-4">Connexion</h2>
-                    <form method="post" class="login-form">
-                        {% csrf_token %}
-                        <div class="form-group mb-3">
-                            <label for="username">Nom d'utilisateur</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="login-container">
+                            <h2 class="text-center mb-4">Connexion</h2>
+                            <form method="post" class="login-form">
+                                {% csrf_token %}
+                                <div class="form-group mb-3">
+                                    <label for="username">Nom d'utilisateur</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="password">Mot de passe</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="password">Mot de passe</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Se connecter</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
         {% endblock content %}
     </div>
     <footer class="bg-dark text-center text-lg-start" id="footer">
@@ -96,6 +98,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script type="text/javascript"
+        src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
 
 {% block extra_js %}
 {% endblock extra_js %}
