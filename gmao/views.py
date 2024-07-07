@@ -590,7 +590,12 @@ def liste_interventions(request):
     for intervention in interventions:
         intervention.techniciens = techniciens_par_intervention[intervention.id]
 
-    return render(request, 'gmao/liste_interventions.html', {'interventions': interventions})
+    context = {
+        'interventions': interventions,
+        'current_date': current_date,
+    }
+
+    return render(request, 'gmao/liste_interventions.html', context)
 
 
 def detail_intervention(request, intervention_id):
