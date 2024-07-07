@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,31 +209,7 @@
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
-      <workItem from="1720372777331" duration="8683000" />
-    </task>
-    <task id="LOCAL-00104" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720303245320</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1720303245320</updated>
-    </task>
-    <task id="LOCAL-00105" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720303715375</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1720303715376</updated>
-    </task>
-    <task id="LOCAL-00106" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720303837507</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1720303837507</updated>
+      <workItem from="1720372777331" duration="9039000" />
     </task>
     <task id="LOCAL-00107" summary="First commit">
       <option name="closed" value="true" />
@@ -602,7 +579,31 @@
       <option name="project" value="LOCAL" />
       <updated>1720381484460</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <task id="LOCAL-00153" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720381747063</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1720381747063</updated>
+    </task>
+    <task id="LOCAL-00154" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720381891367</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1720381891367</updated>
+    </task>
+    <task id="LOCAL-00155" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720381960678</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1720381960678</updated>
+    </task>
+    <option name="localTasksCounter" value="156" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

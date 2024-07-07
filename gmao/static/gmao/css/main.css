@@ -202,31 +202,21 @@ table.dataTable tbody tr.status-ATD {
     width: 100% !important;
 }
 
-#portfolioTable td.panne-cell {
-    max-width: 200px;
+#portfolioTable td, #portfolioTable th {
     white-space: normal;
     word-wrap: break-word;
-}
-
-#portfolioTable td.action-cell {
-    white-space: nowrap;
-}
-
-.table-responsive {
-    border: none;
-    margin-bottom: 0;
-}
-
-@media screen and (max-width: 767px) {
-    #portfolioTable td, #portfolioTable th {
-        white-space: normal;
-    }
 }
 
 .card-body {
     padding: 0.5rem;
 }
 
-.dataTables_wrapper .row {
-    margin: 0;
+@media screen and (max-width: 767px) {
+    #portfolioTable {
+        font-size: 0.9em;
+    }
+
+    #portfolioTable td, #portfolioTable th {
+        padding: 0.3rem;
+    }
 }
