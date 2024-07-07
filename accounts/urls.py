@@ -7,7 +7,8 @@ app_name = 'accounts'
 urlpatterns = [
     # MIRE DE BIENVENUE
     path('', views.index, name='index'),
-    path('accounts/login/', views.login_view, name='login'),
+    path('accounts/login/', views.login_view, name='login-admin'),
+    path('accounts/logout/', views.logout_view, name='logout-admin'),
     path('accounts/login/change-password/', views.change_password, name='change_password'),
 
 ]

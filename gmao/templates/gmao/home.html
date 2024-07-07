@@ -18,7 +18,8 @@
 </a>
 {% endblock nav-btn %}{% endcomment %}
 {% block nav-btn %}
-    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
+    <a href="{% url 'accounts:logout-admin' %}"
+       class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
        id="btn-nav">
         Logout
     </a>
