@@ -540,6 +540,7 @@ def liste_interventions(request):
                 id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id'),
                 top_depart__date=current_date
             ).order_by('-top_depart')
+            print(personnel)
         except AttributeError:
             interventions = Intervention.objects.none()
     else:

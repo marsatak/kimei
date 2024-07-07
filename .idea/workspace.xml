@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/07072024/home_.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,11 +108,11 @@
       <recent name="$PROJECT_DIR$/gmao_teams" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
       <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
       <recent name="$PROJECT_DIR$/gmao/Passage/OLD" />
       <recent name="$PROJECT_DIR$/gmao/Passage" />
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
-      <recent name="$PROJECT_DIR$/gmao_teams/Passage" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.kimei">
@@ -206,14 +208,6 @@
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
-    </task>
-    <task id="LOCAL-00080" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720251895907</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1720251895908</updated>
     </task>
     <task id="LOCAL-00081" summary="First commit">
       <option name="closed" value="true" />
@@ -599,7 +593,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720351324232</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720351610059</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1720351610059</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
