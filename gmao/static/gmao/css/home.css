@@ -179,3 +179,21 @@ table.dataTable tbody tr.status-ATD {
         max-width: 80px !important;
     }
 }
+
+/*Css pour section*/
+.section-container {
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    height: calc(100vh - 56px); /* Adjust based on your navbar height */
+}
+
+.full-height-section {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+/* Add some padding to the top of each section to account for the fixed navbar */
+#doleances-section, #personnel-section {
+    padding-top: 70px; /* Adjust based on your navbar height */
+}
