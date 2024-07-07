@@ -1,5 +1,29 @@
 $(document).ready(function () {
     let doleanceTable, personnelTable, portofolioTable;
+    document.addEventListener('DOMContentLoaded', function () {
+        const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
+        upperCaseInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    });
+
+    function offsetAnchor() {
+        if (location.hash.length !== 0) {
+            window.scrollTo(window.scrollX, window.scrollY - 60);
+        }
+    }
+
+    // Appliquer l'ajustement au chargement de la page
+    $(window).on("hashchange", function () {
+        offsetAnchor();
+    });
+
+    // Déclencher le hashchange initial
+    window.setTimeout(function () {
+        offsetAnchor();
+    }, 1);
 
     function initDoleanceTable() {
         if ($('#demandeencours').length && !$.fn.DataTable.isDataTable('#demandeencours')) {
@@ -64,49 +88,6 @@ $(document).ready(function () {
         }
     }
 
-    /*function initPersonnelTable() {
-        if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
-            personnelTable = $('#personnel').DataTable({
-                ajax: {
-                    url: "/home/getPersonnel/",
-                    dataSrc: ""
-                },
-                columns: [
-                    {data: "nom_personnel"},
-                    {data: "prenom_personnel"},
-                    {
-                        data: "statut",
-                        render: function (data) {
-                            let statusClass = data === 'PRS' ? 'bg-success' :
-                                data === 'ATT' ? 'bg-warning' :
-                                    data === 'INT' ? 'bg-info' : 'bg-danger';
-                            return `<span class="badge ${statusClass}">${data}</span>`;
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            if (row.statut === 'ABS') {
-                                return '<button class="btn btn-success btn-sm mark-arrivee" data-id="' + row.id + '">Marquer arrivée</button>';
-                            } else if (row.statut === 'PRS') {
-                                return '<button class="btn btn-danger btn-sm mark-depart" data-id="' + row.id + '">Marquer départ</button>';
-                            }
-                            return '';
-                        }
-                    }
-                ],
-                responsive: true,
-                autoWidth: false,
-                ordering: false,
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                },
-                columnDefs: [
-                    {targets: [2], className: 'status-column'}
-                ]
-            });
-        }
-    }*/
 
     function initPersonnelTable() {
         if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
@@ -176,6 +157,356 @@ $(document).ready(function () {
         if (doleanceTable) doleanceTable.columns.adjust().draw();
         if (personnelTable) personnelTable.columns.adjust().draw();
     });
+    $(window).resize(function () {
+        $('#demandeencours').DataTable().draw();
+        $('#personnel').DataTable().draw();
+    });
+    $('#doleanceModal').on('show.bs.modal', function () {
+        console.log('Modal is about to open');
+    });
+    $('#personnel').on('click', '.mark-arrivee', function () {
+        const personnelId = $(this).data('id');
+        markArriveeOrDepart(personnelId, true);
+    });
+
+    $('#personnel').on('click', '.mark-depart', function () {
+        const personnelId = $(this).data('id');
+        markArriveeOrDepart(personnelId, false);
+    });
+
+    function markArriveeOrDepart(personnelId, isArrivee) {
+        $.ajax({
+            url: isArrivee ? `/mark-arrivee/${personnelId}/` : `/mark-depart/${personnelId}/`,
+            type: 'POST',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    personnelTable.ajax.reload();
+                } else {
+                    alert('Erreur : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur de communication avec le serveur');
+            }
+        });
+    }
+
+    function declencherIntervention(doleanceId) {
+        $.ajax({
+            url: '/home/get-techniciens-disponibles/',
+            type: 'GET',
+            dataType: 'json',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                if (response.success) {
+                    afficherSelectionTechniciens(response.techniciens, doleanceId);
+                } else {
+                    alert('Erreur lors de la récupération des techniciens disponibles');
+                }
+            },
+            error: function () {
+                alert('Erreur lors de la communication avec le serveur');
+            }
+        });
+    }
+
+
+    function afficherSelectionTechniciens(techniciens, doleanceId) {
+        let dialog = $('<div title="Sélectionner les techniciens">');
+        let form = $('<form>');
+
+        techniciens.forEach(function (tech) {
+            form.append(`
+                    <div>
+                        <input type="checkbox" id="tech-${tech.id}" name="techniciens" value="${tech.id}">
+                        <label for="tech-${tech.id}">${tech.nom_personnel} ${tech.prenom_personnel}</label>
+                    </div>
+                `);
+        });
+
+        dialog.append(form);
+
+        dialog.dialog({
+            modal: true,
+            buttons: {
+                "Confirmer": function () {
+                    let techniciensSelecionnes = form.find('input:checked').map(function () {
+                        return $(this).val();
+                    }).get();
+
+                    if (techniciensSelecionnes.length > 0) {
+                        declencherInterventionAvecTechniciens(doleanceId, techniciensSelecionnes);
+                        $(this).dialog("close");
+                    } else {
+                        alert("Veuillez sélectionner au moins un technicien.");
+                    }
+                },
+                "Annuler": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+
+    function declencherInterventionAvecTechniciens(doleanceId, techniciens) {
+        $.ajax({
+            url: '/home/declencher-intervention/' + doleanceId + '/',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({techniciens: techniciens}),
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': getCSRFToken()
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Intervention déclenchée avec succès pour les techniciens sélectionnés.');
+                    refreshPersonnelTable(); // Rafraîchir la table du personnel
+                    window.location.href = '/home/intervention/' + response.intervention_id + '/';
+                } else {
+                    alert('Erreur lors du déclenchement de l\'intervention: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur AJAX:", xhr.responseText);
+                alert('Erreur lors de la communication avec le serveur: ' + error);
+            }
+        });
+    }
+
+
+    $('#demandeencours').on('click', '.terminer-intervention', function () {
+        const interventionId = $(this).data('id');
+        terminerIntervention(interventionId);
+    });
+
+    $('#demandeencours').on('click', '.nouvelle-intervention', function () {
+        const doleanceId = $(this).data('id');
+        declencherIntervention(doleanceId);
+    });
+    $('#demandeencours').on('click', '.commencer-intervention', function () {
+        const interventionId = $(this).data('id');
+        commencerIntervention(interventionId);
+    });
+
+    function formatInterventions(data, rowData) {
+        if (!data.interventions || data.interventions.length === 0) {
+            return '<p>Aucune intervention pour cette doléance.</p>';
+        }
+
+        var html = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+        html += '<tr><th>Date de début</th><th>Date de fin</th><th>Statut</th><th>Techniciens</th><th>Actions</th></tr>';
+
+        data.interventions.forEach(function (intervention) {
+            html += '<tr>';
+            html += '<td>' + (intervention.top_depart || '-') + '</td>';
+            html += '<td>' + (intervention.top_terminer || '-') + '</td>';
+            html += '<td>' + (intervention.is_done ? 'Terminée' : (intervention.is_half_done ? 'En cours' : 'Non commencée')) + '</td>';
+            html += '<td>' + (intervention.techniciens ? intervention.techniciens.join(', ') : '-') + '</td>';
+            html += '<td>';
+            if (!intervention.top_debut) {
+                html += '<button class="btn btn-success btn-sm commencer-intervention" data-id="' + intervention.id + '">Commencer</button> ';
+            } else if (!intervention.is_done) {
+                html += '<button class="btn btn-primary btn-sm terminer-intervention" data-id="' + intervention.id + '">Terminer</button> ';
+            }
+            html += '</td>';
+            html += '</tr>';
+        });
+
+        html += '</table>';
+        if (rowData.statut === 'NEW' || rowData.statut === 'ATP' || rowData.statut === 'ATD') {
+            html += '<button class="btn btn-success btn-sm nouvelle-intervention" data-id="' + rowData.id + '">Nouvelle intervention</button>';
+        }
+        return html;
+    }
+
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, 10) === ('csrftoken=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(10));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    $('#interventionForm').submit(function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        var interventionId = $('#intervention-id-input').val();
+
+        $.ajax({
+            url: '/home/intervention/' + interventionId + '/terminer/',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                console.log("Réponse reçue:", response);  // Log de la réponse complète
+                if (response.success) {
+                    alert('Intervention terminée avec succès.');
+                    window.location.href = '/home/';
+                } else {
+                    console.error("Erreur côté serveur:", response.message);
+                    alert('Erreur lors de la terminaison de l\'intervention: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur AJAX:", xhr.responseText);
+                alert('Erreur lors de la communication avec le serveur: ' + error);
+            }
+        });
+    });
+
+
+    function affecterTechniciens(doleanceId, technicienIds) {
+        $.ajax({
+            url: '/home/affecter-techniciens/' + doleanceId + '/',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({techniciens: technicienIds}),
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': getCSRFToken()
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Techniciens affectés avec succès.');
+                    refreshTables();
+                } else {
+                    alert('Erreur lors de l\'affectation des techniciens: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur AJAX:", xhr.responseText);
+                alert('Erreur lors de la communication avec le serveur: ' + error);
+            }
+        });
+    }
+
+
+// Assurez-vous d'appeler loadTechnicienPortfolio() au chargement de la page et après chaque prise en charge
+    function updatePortfolioTable(data) {
+        const portfolioContainer = $('#portfolioContainer');
+        portfolioContainer.empty();
+
+        if (data.doleances.length === 0) {
+            portfolioContainer.append('<p>Aucune doléance dans votre portfolio.</p>');
+            return;
+        }
+
+        const table = $('<table class="table table-striped">').appendTo(portfolioContainer);
+        const thead = $('<thead>').appendTo(table);
+        const tbody = $('<tbody>').appendTo(table);
+
+        thead.append(`
+        <tr>
+            <th>NDI</th>
+            <th>Station</th>
+            <th>Élément</th>
+            <th>Panne déclarée</th>
+            <th>Statut</th>
+            <th>Action</th>
+        </tr>
+    `);
+
+        data.doleances.forEach(doleance => {
+            const tr = $('<tr>').appendTo(tbody);
+            tr.append(`
+            <td>${doleance.ndi}</td>
+            <td>${doleance.station}</td>
+            <td>${doleance.element}</td>
+            <td>${doleance.panne_declarer}</td>
+            <td>${doleance.statut}</td>
+            <td>${getActionButton(doleance, data.intervention_en_cours)}</td>
+        `);
+        });
+    }
+
+    function getActionButton(doleance, interventionEnCours) {
+        if (doleance.statut === 'ATT' && doleance.intervention_id) {
+            return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm">Détails intervention</a>`;
+        } else if (!interventionEnCours && (doleance.statut === 'NEW' || doleance.statut === 'ATP' || doleance.statut === 'ATD')) {
+            return `<button class="btn btn-success btn-sm prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
+        } else {
+            return '<span class="text-muted">Aucune action disponible</span>';
+        }
+    }
+
+    function loadTechnicienPortfolio() {
+        $.ajax({
+            url: '/get-technicien-portfolio/',
+            type: 'GET',
+            success: function (response) {
+                if (response.success) {
+                    updatePortfolioTable(response);
+                } else {
+                    alert('Erreur lors du chargement du portefeuille : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur de communication avec le serveur');
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        if ($('#portfolioContainer').length) {
+            loadTechnicienPortfolio();
+        }
+
+        $(document).on('click', '.prendre-en-charge', function (e) {
+            e.preventDefault();
+            const doleanceId = $(this).data('id');
+            prendreEnCharge(doleanceId);
+        });
+    });
+
+    function prendreEnCharge(doleanceId) {
+        $.ajax({
+            url: `/home/prendre-en-charge/${doleanceId}/`,
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Doléance prise en charge avec succès');
+                    loadTechnicienPortfolio(); // Recharger le portfolio
+                } else {
+                    alert('Erreur : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur lors de la communication avec le serveur');
+            }
+        });
+    }
 
     // Ajoutez ici les autres fonctions et gestionnaires d'événements nécessaires
 });
