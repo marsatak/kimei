@@ -37,6 +37,40 @@ header {
     padding: 1rem;
 }
 
+/* Navbar*/
+.navbar {
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    margin-right: 15px;
+}
+
+.ms-auto {
+    margin-left: auto !important;
+}
+
+@media (max-width: 992px) {
+    .navbar-nav {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 10px;
+    }
+
+    .navbar-brand {
+        margin-right: auto;
+    }
+
+    .ms-auto {
+        margin-left: 15px !important;
+    }
+}
+
+/*Fin Navbar*/
+
 footer {
     position: fixed;
     bottom: 0;
