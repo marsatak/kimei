@@ -56,7 +56,7 @@ $(document).ready(function () {
                         render: function (data, type, row) {
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
                                 return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
-                                    '<i class="fas fa-plus">@</i>' +
+                                    'Déclencher Intervention' +
                                     '</button>';
                             }
                             return '';
@@ -87,6 +87,11 @@ $(document).ready(function () {
             });
         }
     }
+
+    $('#demandeencours').on('click', '.declencher-intervention', function () {
+        const doleanceId = $(this).data('id');
+        declencherIntervention(doleanceId);
+    });
 
 
     function initPersonnelTable() {

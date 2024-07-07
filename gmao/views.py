@@ -203,6 +203,9 @@ def getDoleanceEncours(request):
             (Doleance.objects.all())
             .exclude(statut='TER')
             .order_by('-date_deadline').filter(
+                date_transmission__day=5,
+                date_transmission__year=2024,
+                date_transmission__month=7
             ))
 
         doleances_data = []
