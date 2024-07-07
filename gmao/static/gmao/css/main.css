@@ -155,3 +155,23 @@ table.dataTable tbody tr.status-ATD {
         margin-bottom: 0.5rem;
     }
 }
+
+/* Ecran du login*/
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+    margin-top: 20px;
+}
+
+@media (max-width: 576px) {
+    .login-container {
+        margin: 0 15px;
+    }
+}
