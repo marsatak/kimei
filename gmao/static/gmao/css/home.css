@@ -209,6 +209,10 @@ table.dataTable tbody tr.even {
 }
 
 /*Portefeuille*/
+#portfolioTable {
+    width: 100% !important;
+}
+
 #portfolioTable td {
     vertical-align: middle;
 }
@@ -229,4 +233,35 @@ table.dataTable tbody tr.even {
     .panne-cell, .action-cell {
         min-width: 100px;
     }
+}
+
+/* Style pour les lignes détaillées */
+#portfolioTable tbody tr.child td.child {
+    padding: 0;
+}
+
+#portfolioTable tbody tr.child ul {
+    width: 100%;
+}
+
+#portfolioTable tbody tr.child ul li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.5em 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#portfolioTable tbody tr.child ul li:last-child {
+    border-bottom: none;
+}
+
+#portfolioTable tbody tr.child ul li .dtr-title {
+    width: 30%;
+    font-weight: bold;
+}
+
+#portfolioTable tbody tr.child ul li .dtr-data {
+    width: 70%;
+    word-break: break-word;
 }
