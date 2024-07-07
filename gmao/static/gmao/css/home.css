@@ -207,3 +207,26 @@ table.dataTable tbody tr.even {
     display: inline-block;
     margin-bottom: 5px;
 }
+
+/*Portefeuille*/
+#portfolioTable td {
+    vertical-align: middle;
+}
+
+.panne-cell, .action-cell {
+    white-space: normal;
+    word-wrap: break-word;
+    min-width: 150px;
+}
+
+.action-cell .btn {
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+    .panne-cell, .action-cell {
+        min-width: 100px;
+    }
+}

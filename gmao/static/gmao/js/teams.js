@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    function initPortfolioTable(data) {
+    /*function initPortfolioTable(data) {
         if ($('#portfolioContainer').length) {
             // Détruire la table existante si elle existe déjà
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
@@ -47,13 +47,68 @@ $(document).ready(function () {
                 ]
             });
         }
+    }*/
+    function initPortfolioTable(data) {
+        if ($('#portfolioContainer').length) {
+            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
+                $('#portfolioTable').DataTable().destroy();
+            }
+
+            let tableHtml = '<div class="table-responsive">';
+            tableHtml += '<table id="portfolioTable" class="table table-striped">';
+            tableHtml += '<thead><tr><th>NDIZ</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+
+            const hasOngoingIntervention = data.some(doleance => doleance.statut === 'ATT' || doleance.statut === 'INT');
+
+            data.forEach(function (doleance) {
+                tableHtml += `<tr>
+                <td>${doleance.ndi}</td>
+                <td>${doleance.station}</td>
+                <td>${doleance.element}</td>
+                <td class="panne-cell">${doleance.panne_declarer}</td>
+                <td>${doleance.statut}</td>
+                <td class="action-cell">${getActionButton(doleance, hasOngoingIntervention)}</td>
+            </tr>`;
+            });
+
+            tableHtml += '</tbody></table></div>';
+            $('#portfolioContainer').html(tableHtml);
+
+            $('#portfolioTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                },
+                columnDefs: [
+                    {responsivePriority: 1, targets: 0}, // NDIZ
+                    {responsivePriority: 2, targets: -1}, // Actions
+                    {responsivePriority: 3, targets: 4}, // Statut
+                    {width: "25%", targets: 3, className: 'panne-cell'}, // Panne
+                    {width: "15%", targets: -1, className: 'action-cell'} // Actions
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ]
+            });
+        }
     }
 
-    function getActionButton(doleance, hasOngoingIntervention) {
+    /*function getActionButton(doleance, hasOngoingIntervention) {
         if (doleance.statut === 'ATT' && doleance.intervention_id) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm">Détails intervention</a>`;
         } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !hasOngoingIntervention) {
             return `<button class="btn btn-success btn-sm prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
+        } else {
+            return '<span class="text-muted">Aucune action disponible</span>';
+        }
+    }*/
+    function getActionButton(doleance, hasOngoingIntervention) {
+        if (doleance.statut === 'ATT' && doleance.intervention_id) {
+            return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm w-100">Détails intervention</a>`;
+        } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !hasOngoingIntervention) {
+            return `<button class="btn btn-success btn-sm w-100 prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
         } else {
             return '<span class="text-muted">Aucune action disponible</span>';
         }
