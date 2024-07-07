@@ -15,7 +15,7 @@
     <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
     &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
 {% endblock navbar-content %}
-{% block extra_css %}
+{% comment %}{% block extra_css %}
 <style>
     .intervention-card { margin-bottom: 15px; }
     .card-body { padding: 15px; }
@@ -161,7 +161,7 @@
         .modal-content { margin: 2% auto; }
     }
 </style>
-{% endblock %}
+{% endblock %}{% endcomment %}
 {% block content %}
     <div class="container-fluid">
         <div class="container-fluid">
