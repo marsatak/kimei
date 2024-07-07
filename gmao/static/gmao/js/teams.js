@@ -62,6 +62,8 @@ $(document).ready(function () {
             tableHtml += '<table id="portfolioTable" class="table table-striped" style="width:100%">';
             tableHtml += '<thead><tr><th></th><th>NDI</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
 
+            const hasOngoingIntervention = data.some(doleance => doleance.statut === 'ATT' || doleance.statut === 'INT');
+
             data.forEach(function (doleance) {
                 tableHtml += `<tr>
                 <td></td>
@@ -70,7 +72,7 @@ $(document).ready(function () {
                 <td>${doleance.element}</td>
                 <td class="panne-cell">${doleance.panne_declarer}</td>
                 <td>${doleance.statut}</td>
-                <td class="action-cell">${getActionButton(doleance)}</td>
+                <td class="action-cell">${getActionButton(doleance, hasOngoingIntervention)}</td>
             </tr>`;
             });
 
@@ -97,13 +99,8 @@ $(document).ready(function () {
                     {responsivePriority: 1, targets: 1}, // NDI
                     {responsivePriority: 2, targets: -1}, // Actions
                     {responsivePriority: 3, targets: 5}, // Statut
-                    {
-                        targets: [2, 3, 4],
-                        render: function (data, type, row) {
-                            return type === 'display' && data.length > 20 ?
-                                data.substr(0, 20) + '…' : data;
-                        }
-                    }
+                    {width: "25%", targets: 4, className: 'panne-cell'}, // Panne
+                    {width: "15%", targets: -1, className: 'action-cell'} // Actions
                 ],
                 order: [[1, 'asc']]
             });
