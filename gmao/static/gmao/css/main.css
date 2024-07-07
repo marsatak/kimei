@@ -202,38 +202,23 @@ table.dataTable tbody tr.status-ATD {
 
 /* ... (garder les styles existants jusqu'à la section du portfolio) ... */
 
-/* Styles pour le portfolio */
 #portfolioTable {
     width: 100% !important;
-    table-layout: auto;
+    margin-bottom: 0;
 }
 
 #portfolioTable th,
 #portfolioTable td {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 100px; /* Ajustez cette valeur selon vos besoins */
-}
-
-#portfolioTable td.panne-cell {
-    max-width: 200px;
-}
-
-#portfolioTable td.action-cell {
-    white-space: nowrap;
-    width: auto;
-    min-width: 120px;
-}
-
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-    margin-bottom: 0;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .card-body {
-    padding: 0.5rem;
+    padding: 0 !important;
+}
+
+.table-responsive {
+    margin-bottom: 0;
 }
 
 @media screen and (max-width: 767px) {
@@ -241,36 +226,31 @@ table.dataTable tbody tr.status-ATD {
         font-size: 0.9em;
     }
 
-    #portfolioTable td, #portfolioTable th {
-        padding: 0.3rem;
-    }
-
     #portfolioTable th,
     #portfolioTable td {
-        max-width: 80px; /* Réduire la largeur maximale sur les petits écrans */
-    }
-
-    #portfolioTable td.panne-cell {
-        max-width: 150px;
-    }
-
-    #portfolioTable td.action-cell {
-        min-width: 100px;
+        padding: 0.5rem;
     }
 }
 
-/* Ajoutez ces styles pour améliorer l'affichage sur les très petits écrans */
-@media screen and (max-width: 480px) {
-    #portfolioTable th,
-    #portfolioTable td {
-        max-width: 60px;
-    }
-
-    #portfolioTable td.panne-cell {
-        max-width: 100px;
-    }
-
-    #portfolioTable td.action-cell {
-        min-width: 80px;
-    }
+/* Styles pour DataTables Responsive */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+    top: 50%;
+    left: 5px;
+    height: 1em;
+    width: 1em;
+    margin-top: -9px;
+    display: block;
+    position: absolute;
+    color: white;
+    border: 0.15em solid white;
+    border-radius: 1em;
+    box-shadow: 0 0 0.2em #444;
+    box-sizing: content-box;
+    text-align: center;
+    text-indent: 0 !important;
+    font-family: "Courier New", Courier, monospace;
+    line-height: 1em;
+    content: "+";
+    background-color: #0275d8;
 }

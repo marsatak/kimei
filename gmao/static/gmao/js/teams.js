@@ -54,7 +54,12 @@ $(document).ready(function () {
     }*/
     function initPortfolioTable(data) {
         if ($('#portfolioContainer').length) {
-            let tableHtml = '<table id="portfolioTable" class="table table-striped" style="width:100%">';
+            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
+                $('#portfolioTable').DataTable().destroy();
+            }
+
+            let tableHtml = '<div class="table-responsive">';
+            tableHtml += '<table id="portfolioTable" class="table table-striped table-bordered" style="width:100%">';
             tableHtml += '<thead><tr><th>NDI</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
 
             data.forEach(function (doleance) {
@@ -68,7 +73,7 @@ $(document).ready(function () {
             </tr>`;
             });
 
-            tableHtml += '</tbody></table>';
+            tableHtml += '</tbody></table></div>';
             $('#portfolioContainer').html(tableHtml);
 
             $('#portfolioTable').DataTable({
@@ -81,6 +86,7 @@ $(document).ready(function () {
                     {responsivePriority: 1, targets: 0}, // NDI
                     {responsivePriority: 2, targets: -1}, // Actions
                     {responsivePriority: 3, targets: 4}, // Statut
+                    {responsivePriority: 4, targets: 3}, // Panne
                 ],
                 order: [[0, 'asc']]
             });
