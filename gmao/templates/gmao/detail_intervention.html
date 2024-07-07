@@ -15,7 +15,7 @@
     <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
     &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
 {% endblock navbar-content %}
-{% block extra_css %}
+{% comment %}{% block extra_css %}
     <style>
         body {
             padding-top: 56px; /* Adjust based on your navbar height */
@@ -245,7 +245,7 @@
         }
     }
 </style>
-{% endblock %}
+{% endblock %}{% endcomment %}
 {% block content %}
     <div class="container-fluid">
         <div class="container-fluid">
