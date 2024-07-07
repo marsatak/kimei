@@ -259,25 +259,35 @@ table.dataTable tbody tr.status-ATD {
 }
 
 /*Portefeuille*/
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
 #portfolioTable {
     width: 100% !important;
 }
 
+#portfolioTable td.panne-cell {
+    max-width: 200px;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+#portfolioTable td.action-cell {
+    white-space: nowrap;
+}
+
+.table-responsive {
+    border: none;
+    margin-bottom: 0;
+}
+
 @media screen and (max-width: 767px) {
-    .card-body.overflow-auto {
-        padding: 0.5rem;
-    }
-
     #portfolioTable td, #portfolioTable th {
-        white-space: nowrap;
+        white-space: normal;
     }
+}
 
-    .action-cell {
-        min-width: 120px;
-    }
+.card-body {
+    padding: 0;
+}
+
+.dataTables_wrapper .row {
+    margin: 0;
 }
