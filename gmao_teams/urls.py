@@ -14,4 +14,7 @@ urlpatterns = [
     path('<int:equipe_id>/retirer-doleance/', views.retirer_doleance, name='retirer_doleance'),
     path('techniciens-disponibles/', views.get_techniciens_disponibles, name='get_techniciens_disponibles'),
     path('doleances-non-attribuees/', views.get_doleances_non_attribuees, name='get_doleances_non_attribuees'),
+    path('get-pieces-non-attribuees/', views.get_pieces_non_attribuees, name='get_pieces_non_attribuees'),
+    path('attribuer-piece/<int:equipe_id>/', views.attribuer_piece, name='attribuer_piece'),
+    path('retirer-piece/<int:equipe_id>/', views.retirer_piece, name='retirer_piece'),
 ]

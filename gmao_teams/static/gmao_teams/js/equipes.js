@@ -9,7 +9,27 @@ $(document).ready(function () {
     let currentEquipeId = null;
 
     loadEquipes();
-
+    /*$('#saveEquipe').click(function () {
+        let formData = $('#creerEquipeForm').serialize();
+        $.ajax({
+            url: CREER_EQUIPE_URL,
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                if (data.success) {
+                    $('#creerEquipeModal').modal('hide');
+                    loadEquipes();
+                    // Réinitialiser le formulaire
+                    $('#creerEquipeForm')[0].reset();
+                } else {
+                    alert(`Erreur lors de la création de l'équipe : ` + data.error);
+                }
+            },
+            error: function () {
+                alert(`Une erreur est survenue lors de la création de l'équipe`);
+            }
+        });
+    });*/
     $('#creerEquipe').click(function () {
         $('#creerEquipeModal').modal('show');
     });
@@ -27,6 +47,23 @@ $(document).ready(function () {
                     loadEquipes();
                 }
             }
+        });
+    });
+    $('#searchPieces').on('input', function () {
+        let searchTerm = $(this).val();
+        $.get(GET_PIECES_NON_ATTRIBUEES_URL, {search: searchTerm}, function (data) {
+            let listePiecesNonAttribuees = $('#listePiecesNonAttribuées');
+            listePiecesNonAttribuees.empty();
+            data.pieces.forEach(function (piece) {
+                let pieceItem = $('<li class="list-group-item">');
+                pieceItem.append($('<span>').text(`${piece.piece_libelle} - ${piece.piece_reference}`));
+                let attribuerBtn = $('<button class="btn btn-sm btn-success">').text('Attribuer');
+                attribuerBtn.on('click', function () {
+                    attribuerPiece(piece.id);
+                });
+                pieceItem.append(attribuerBtn);
+                listePiecesNonAttribuees.append(pieceItem);
+            });
         });
     });
 
@@ -48,6 +85,7 @@ $(document).ready(function () {
     });
 
     function loadEquipeDetails(equipeId) {
+
         $.get(GET_EQUIPE_DETAILS_URL.replace('0', equipeId), function (data) {
             $('#equipeNom').text(data.nom);
             $('#equipeDescription').text(data.description);
@@ -59,7 +97,24 @@ $(document).ready(function () {
             loadDoleancesNonAttribuees();
 
             $('#detailsEquipe').show();
+
         });
+        let listePieces = $('#listePieces');
+        listePieces.empty();
+        data.doleances.forEach(function (doleance) {
+            doleance.pieces.forEach(function (piece) {
+                let pieceItem = $('<li class="list-group-item">');
+                pieceItem.append($('<span>').text(`${piece.libelle} - Quantité: ${piece.quantite} (Doléance: ${doleance.ndi})`));
+                let retirerBtn = $('<button class="btn btn-sm btn-danger">').text('Retirer');
+                retirerBtn.on('click', function () {
+                    retirerPiece(piece.id, doleance.id);
+                });
+                pieceItem.append(retirerBtn);
+                listePieces.append(pieceItem);
+            });
+        });
+
+        chargerPiecesNonAttribuees();
     }
 
     function updateTechniciensList(techniciens, listId) {
@@ -183,6 +238,62 @@ $(document).ready(function () {
                 }
             });
     });
+
+    function chargerPiecesNonAttribuees() {
+        $.get(GET_PIECES_NON_ATTRIBUEES_URL, function (data) {
+            let listePiecesNonAttribuees = $('#listePiecesNonAttribuées');
+            listePiecesNonAttribuees.empty();
+            data.pieces.forEach(function (piece) {
+                let pieceItem = $('<li class="list-group-item">');
+                pieceItem.append($('<span>').text(`${piece.piece_libelle} - ${piece.piece_reference}`));
+                let attribuerBtn = $('<button class="btn btn-sm btn-success">').text('Attribuer');
+                attribuerBtn.on('click', function () {
+                    attribuerPiece(piece.id);
+                });
+                pieceItem.append(attribuerBtn);
+                listePiecesNonAttribuees.append(pieceItem);
+            });
+        });
+    }
+
+    function attribuerPiece(pieceId) {
+        let doleanceId = prompt("Entrez l'ID de la doléance à laquelle attribuer cette pièce:");
+        let quantite = prompt("Entrez la quantité:");
+        if (doleanceId && quantite) {
+            $.post(ATTRIBUER_PIECE_URL.replace('0', equipeSelectionneeId), {
+                piece_id: pieceId,
+                doleance_id: doleanceId,
+                quantite: quantite,
+                csrfmiddlewaretoken: getCookie('csrftoken')
+            }, function (response) {
+                if (response.success) {
+                    alert('Pièce attribuée avec succès');
+                    chargerDetailsEquipe(equipeSelectionneeId);
+                    chargerPiecesNonAttribuees();
+                } else {
+                    alert('Erreur lors de l\'attribution de la pièce: ' + response.error);
+                }
+            });
+        }
+    }
+
+    function retirerPiece(pieceId, doleanceId) {
+        if (confirm('Êtes-vous sûr de vouloir retirer cette pièce ?')) {
+            $.post(RETIRER_PIECE_URL.replace('0', equipeSelectionneeId), {
+                piece_id: pieceId,
+                doleance_id: doleanceId,
+                csrfmiddlewaretoken: getCookie('csrftoken')
+            }, function (response) {
+                if (response.success) {
+                    alert('Pièce retirée avec succès');
+                    chargerDetailsEquipe(equipeSelectionneeId);
+                    chargerPiecesNonAttribuees();
+                } else {
+                    alert('Erreur lors du retrait de la pièce: ' + response.error);
+                }
+            });
+        }
+    }
 
     function getCookie(name) {
         let cookieValue = null;

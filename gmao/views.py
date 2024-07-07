@@ -57,6 +57,7 @@ from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import Piece, UnitePiece, TypePiece
+from gmao_teams.models import Equipe
 
 logger = logging.getLogger(__name__)
 
@@ -114,13 +115,73 @@ def home(request):
     }
     print(request.user.role)
 
+    # if request.user.role == 'ADMIN':
+    #     doleances = Doleance.objects.using('kimei_db').all()
+    #     techniciens = Employee.objects.filter(role='TECH', statut='PRS')
+    #     context.update({
+    #         'doleances': doleances,
+    #         'techniciens': techniciens,
+    #     })
+    #     equipes = Equipe.objects.using('teams_db').all()
+    #     equipes_data = []
+    #
+    #     for equipe in equipes:
+    #         doleance_ids = DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe).values_list('doleance_id',
+    #                                                                                                   flat=True)
+    #         doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
+    #
+    #         equipes_data.append({
+    #             'equipe': equipe,
+    #             'doleances': doleances
+    #         })
+    #
+    #     context['equipes_data'] = equipes_data
     if request.user.role == 'ADMIN':
-        doleances = Doleance.objects.using('kimei_db').all()
-        techniciens = Employee.objects.filter(role='TECH', statut='PRS')
-        context.update({
-            'doleances': doleances,
-            'techniciens': techniciens,
-        })
+        equipes = Equipe.objects.using('teams_db').all()
+        equipes_data = []
+
+        for equipe in equipes:
+            # Récupérer les IDs des doléances pour cette équipe
+            doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
+                                .filter(equipe=equipe)
+                                .values_list('doleance_id', flat=True))
+
+            # Récupérer les doléances correspondantes
+            doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
+
+            # Récupérer les IDs des techniciens pour cette équipe
+            technicien_ids = list(EquipePersonnel.objects.using('teams_db')
+                                  .filter(equipe=equipe)
+                                  .values_list('personnel_id', flat=True))
+
+            # Récupérer les techniciens correspondants
+            techniciens = Personnel.objects.using('kimei_db').filter(id__in=technicien_ids)
+
+            equipes_data.append({
+                'id': equipe.id,
+                'nom': equipe.nom,
+                'description': equipe.description,
+                'doleances': [
+                    {
+                        'id': d.id,
+                        'ndi': d.ndi,
+                        'panne_declarer': d.panne_declarer,
+                        'statut': d.statut,
+                        'date_transmission': d.date_transmission,
+                        'station': d.station.libelle_station if d.station else None
+                    } for d in doleances
+                ],
+                'techniciens': [
+                    {
+                        'id': t.id,
+                        'nom': t.nom_personnel,
+                        'prenom': t.prenom_personnel,
+                        'statut': t.statut
+                    } for t in techniciens
+                ]
+            })
+
+        context['equipes_data'] = equipes_data
     elif request.user.role == 'TECH':
         personnel = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
         equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
@@ -139,9 +200,12 @@ def home(request):
 def getDoleanceEncours(request):
     try:
         doleances = (
-            (Doleance.objects.all())
+            (Doleance.objects.all()).filter(
+                date_transmission__day=5,
+                date_transmission__month=7,
+                date_transmission__year=2024)
             .exclude(statut='TER')
-            .order_by('-date_transmission').filter(
+            .order_by('date_deadline').filter(
             ))
 
         doleances_data = []

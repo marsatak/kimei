@@ -60,7 +60,7 @@ $(document).ready(function () {
         }
     }
 
-    function initPersonnelTable() {
+    /*function initPersonnelTable() {
         if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
             personnelTable = $('#personnel').DataTable({
                 ajax: {
@@ -102,6 +102,51 @@ $(document).ready(function () {
                 ]
             });
         }
+    }*/
+
+    function initPersonnelTable() {
+        if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
+            personnelTable = $('#personnel').DataTable({
+                ajax: {
+                    url: "/home/getPersonnel/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {data: "nom_personnel"},
+                    {data: "prenom_personnel"},
+                    {
+                        data: "statut",
+                        render: function (data, type, row) {
+                            const statusClasses = {
+                                'PRS': 'bg-success',
+                                'ATT': 'bg-warning',
+                                'INT': 'bg-info',
+                                'ABS': 'bg-danger'
+                            };
+                            return `<span class="badge ${statusClasses[data] || 'bg-secondary'}">${data}</span>`;
+                        },
+                        className: 'status-column'
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (row.statut === 'ABS') {
+                                return '<button class="btn btn-success btn-sm mark-arrivee" data-id="' + row.id + '">Marquer arrivée</button>';
+                            } else if (row.statut === 'PRS') {
+                                return '<button class="btn btn-danger btn-sm mark-depart" data-id="' + row.id + '">Marquer départ</button>';
+                            }
+                            return '';
+                        }
+                    }
+                ],
+                responsive: true,
+                autoWidth: false,
+                ordering: false,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                }
+            });
+        }
     }
 
     if ($('#demandeencours').length && USER_ROLE === 'ADMIN') {
@@ -127,6 +172,6 @@ $(document).ready(function () {
         if (doleanceTable) doleanceTable.columns.adjust().draw();
         if (personnelTable) personnelTable.columns.adjust().draw();
     });
-
+    
     // Ajoutez ici les autres fonctions et gestionnaires d'événements nécessaires
 });

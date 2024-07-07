@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}G M A O{% endblock title %}
+
+{% block nav-btn %}
+    <a href="{% url 'accounts:logout-admin' %}"
+       class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2" id="btn-nav">Logout</a>
+    {% if user.role == 'ADMIN' %}
+        <a href="#doleances-section" class="btn btn-outline-info text-center text-light border-light btn-sm mx-2"
+           id="btn-nav">Doléances</a>
+        <a href="#equipes-section" class="btn btn-outline-info text-center text-light border-light btn-sm mx-2"
+           id="btn-nav">Équipes</a>
+        <a href="#personnel-section" class="btn btn-outline-info text-center text-light border-light btn-sm mx-2"
+           id="btn-nav">Personnel</a>
+        <a href="{% url 'gmao:liste_interventions' %}"
+           class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des
+            interventions</a>
+        <a href="{% url 'gmao:toutes_les_doleances' %}"
+           class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des
+            doléances</a>
+        <a href="{% url 'gmao_teams:gestion_equipes' %}"
+           class="btn btn-outline-success text-center text-light border-light btn-sm mx-2" id="btn-nav">Gestion des
+            équipes</a>
+    {% elif user_role == 'TECH' %}
+        <a href="{% url 'gmao:liste_interventions' %}"
+           class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des
+            interventions</a>
+    {% endif %}
+{% endblock nav-btn %}
+
+{% block navbar-content %}
+    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>&nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;
+    {{ user.last_name }}
+{% endblock navbar-content %}
+
+{% block content %}
+    {% if user.role == 'ADMIN' %}
+        <div class="section-container">
+            <!-- Section Doléances -->
+            <section id="doleances-section" class="full-height-section">
+                <div class="container-fluid">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Doléances en cours</h5>
+                                    <button type="button" class="btn btn-light btn-add" data-bs-toggle="modal"
+                                            data-bs-target="#doleanceModal">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="card-body" style="overflow-x: auto;">
+                                    <table class="table table-bordered" id="demandeencours" style="width:100%">
+                                        <thead class="fw-bold text-center bg-primary text-light text-uppercase">
+                                        <tr>
+                                            <th>NDI</th>
+                                            <th>Date_trans</th>
+                                            <th>Statut</th>
+                                            <th>Station</th>
+                                            <th>Éléments</th>
+                                            <th>Panne</th>
+                                            <th>Deadline</th>
+                                            <th>Commentaires</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Équipes -->
+            <section id="equipes-section" class="full-height-section">
+                <div class="container-fluid mt-4">
+                    <h2 class="mb-4">Équipes et leurs doléances</h2>
+                    <div class="row">
+                        {% for equipe in equipes_data %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100" style="width: 90%;">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="card-title mb-0">{{ equipe.nom }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">{{ equipe.description }}</p>
+                                        <h6 class="mt-3">Techniciens :</h6>
+                                        <ul class="list-group mb-3">
+                                            {% for technicien in equipe.techniciens|slice:":3" %}
+                                                <li class="list-group-item">
+                                                    {{ technicien.prenom }} {{ technicien.nom }}
+                                                    <span class="badge bg-{% if technicien.statut == 'PRS' %}success{% elif technicien.statut == 'ABS' %}danger{% else %}warning{% endif %} float-end">
+                                                        {{ technicien.statut }}
+                                                    </span>
+                                                </li>
+                                            {% endfor %}
+                                            {% if equipe.techniciens|length > 3 %}
+                                                <li class="list-group-item text-muted">
+                                                    Et {{ equipe.techniciens|length|add:"-3" }} autres...
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                        <h6 class="mt-3">Doléances actives :</h6>
+                                        <ul class="list-group">
+                                            {% for doleance in equipe.doleances|slice:":5" %}
+                                                <li class="list-group-item">
+                                                    {{ doleance.ndi }} - {{ doleance.panne_declarer|truncatechars:50 }}
+                                                    <span class="badge bg-{% if doleance.statut == 'NEW' %}primary{% elif doleance.statut == 'ATT' %}warning{% elif doleance.statut == 'INT' %}info{% elif doleance.statut == 'ATP' %}danger{% elif doleance.statut == 'ATD' %}secondary{% endif %} float-end">
+                                                        {{ doleance.statut }}
+                                                    </span>
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item">Aucune doléance active</li>
+                                            {% endfor %}
+                                            {% if equipe.doleances|length > 5 %}
+                                                <li class="list-group-item text-muted">
+                                                    Et {{ equipe.doleances|length|add:"-5" }} autres...
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="{% url 'gmao_teams:get_equipe_details' equipe.id %}"
+                                           class="btn btn-primary btn-sm">Détails de l'équipe</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Personnel -->
+            <section id="personnel-section" class="full-height-section">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">Personnels</h5>
+                                </div>
+                                <div class="card-body" style="overflow-x: auto;">
+                                    <table class="table table-bordered" id="personnel" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Statut</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    {% else %}
+        <!-- Section pour les techniciens -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="technicien-portfolio-content mb-0">Mon portefeuille de doléances</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="portfolioContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Modal pour l'ajout de doléance -->
+    <div class="modal fade" id="doleanceModal" tabindex="-1" role="dialog" aria-labelledby="doleanceModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doleanceModalLabel">Nouvelle doléance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="doleanceForm">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary" id="submitDoleance">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'gmao/css/main.css' %}">
+    {% comment %}<style>
+        .card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            overflow: visible;
+            max-height: none;
+        }
+
+        .list-group-item {
+            position: relative;
+            padding-right: 70px;
+        }
+
+        .badge {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+    </style>{% endcomment %}
+{% endblock extra_css %}
+
+{% block extra_js %}
+    <script src="{% static 'gmao/js/home.js' %}"></script>
+    <script src="{% static 'gmao/js/teams.js' %}"></script>
+    <script>
+        const USER_ROLE = "{{ user_role }}";
+        $(document).ready(function () {
+            $('.full-height-section').css('min-height', $(window).height());
+            $(window).on('resize', function () {
+                $('.full-height-section').css('min-height', $(window).height());
+            });
+            $('a[href^="#"]').on('click', function (event) {
+                var target = $(this.getAttribute('href'));
+                if (target.length) {
+                    event.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+{% endblock extra_js %}
