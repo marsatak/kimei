@@ -41,6 +41,9 @@ $(document).ready(function () {
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
                 },
+                createdRow: function (row, data, dataIndex) {
+                    $(row).addClass('status-' + data.statut)
+                },
                 columnDefs: [
                     {targets: [1, 6], className: 'date-column'},
                     {targets: [2], className: 'status-column'},

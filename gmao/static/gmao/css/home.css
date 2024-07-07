@@ -115,10 +115,25 @@ table.dataTable {
     word-break: break-word;
 }
 
-/* Désactiver les couleurs de ligne alternées */
-table.dataTable tbody tr:nth-of-type(odd),
-table.dataTable tbody tr:nth-of-type(even) {
-    background-color: transparent !important;
+/* Couleurs pour les différents états de doléance */
+table.dataTable tbody tr.status-NEW {
+    background-color: #d4edda !important; /* Vert clair */
+}
+
+table.dataTable tbody tr.status-ATT {
+    background-color: #fff3cd !important; /* Jaune clair */
+}
+
+table.dataTable tbody tr.status-INT {
+    background-color: #cce5ff !important; /* Bleu clair */
+}
+
+table.dataTable tbody tr.status-ATP {
+    background-color: #f8d7da !important; /* Rouge clair */
+}
+
+table.dataTable tbody tr.status-ATD {
+    background-color: #e9ecef !important; /* Gris clair */
 }
 
 /* Styles spécifiques pour les petits écrans */

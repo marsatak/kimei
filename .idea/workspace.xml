@@ -5,29 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/gmao/Passage/07072024/home.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/Passage/07072024/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/Passage/07072024/home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/Passage/07072024/teams.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/0001_create_employees_from_personnel.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/0001_create_employees_from_personnel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/detail_doleance_tsss.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/detail_doleance_tsss.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/detail_intervention_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/detail_intervention_.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/detail_intervention__.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/detail_intervention__.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/detail_intervention___.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/detail_intervention___.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/home__.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/home__.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/liste_interventions_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/liste_interventions_.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/liste_interventions_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/liste_interventions_2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/liste_interventions_s.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/liste_interventions_s.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/modified_at.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/modified_at.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/modified_at.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/modified_at.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/teams__.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/teams__.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/teams___.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/teams___.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/toutes_les_doleances.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/toutes_les_doleances.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,15 +206,7 @@
       <workItem from="1720232848760" duration="35953000" />
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
-      <workItem from="1720327945821" duration="5681000" />
-    </task>
-    <task id="LOCAL-00071" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720244059713</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1720244059713</updated>
+      <workItem from="1720327945821" duration="6428000" />
     </task>
     <task id="LOCAL-00072" summary="First commit">
       <option name="closed" value="true" />
@@ -620,7 +592,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720333433470</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720334628980</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1720334628980</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
