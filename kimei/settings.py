@@ -139,7 +139,7 @@ DATABASES = {
         'PASSWORD': 'Mei*2030',
         'HOST': 'kimei.softether.net',
 
-        #        'HOST': 'localhost',
+        #        'HOST': 'localhostt',
     },
     'teams_db': {
         'ENGINE': 'django.db.backends.mysql',

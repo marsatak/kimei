@@ -636,7 +636,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.success) {
-                    alert('Doléance prise en charge avec succès');
+                    alert('Doléance prise en charge avec succès !!');
                     loadTechnicienPortfolio(); // Recharger le portfolio
                 } else {
                     alert('Erreur : ' + response.message);

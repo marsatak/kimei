@@ -203,6 +203,9 @@ def getDoleanceEncours(request):
             (Doleance.objects.all())
             .exclude(statut='TER')
             .order_by('-date_deadline').filter(
+                date_transmission__day=datetime.now().day,
+                date_transmission__month=7,
+                date_transmission__year=2024
             ))
 
         doleances_data = []
@@ -396,7 +399,7 @@ def load_appelants(request):
     try:
         appelants = Appelant.objects.filter(client_id=client_id).order_by('nom_appelant')
         logger.info(f"Nombre d'appelants trouvés: {appelants.count()}")
-        data = list(appelants.values('id', 'nom_appelant'))
+        data = list(appelants.values('id', 'nom_appelant', 'prenom_appelant'))
         return JsonResponse(data, safe=False)
     except DatabaseError as e:
         logger.error(f"Erreur de base de données lors du chargement des appelants: {str(e)}")
@@ -920,6 +923,17 @@ def get_technicien_portfolio(request):
     ).exists()
 
     doleances_data = []
+    # for d in doleances:
+    #     intervention = Intervention.objects.using('kimei_db').filter(doleance=d).first()
+    #     doleances_data.append({
+    #         'id': d.id,
+    #         'ndi': d.ndi,
+    #         'station': d.station.libelle_station,
+    #         'element': d.element,
+    #         'panne_declarer': d.panne_declarer,
+    #         'statut': d.statut,
+    #         'intervention_id': intervention.id if intervention else None
+    #     })
     for d in doleances:
         intervention = Intervention.objects.using('kimei_db').filter(doleance=d).first()
         doleances_data.append({
@@ -929,14 +943,15 @@ def get_technicien_portfolio(request):
             'element': d.element,
             'panne_declarer': d.panne_declarer,
             'statut': d.statut,
-            'intervention_id': intervention.id if intervention else None
+            'intervention_id': intervention.id if intervention else None,
+            'intervention_en_cours': intervention.is_half_done if intervention else False
         })
 
     return JsonResponse({
         'success': True,
         'doleances': doleances_data,
         'equipe': equipe.equipe.nom if equipe else None,
-        'intervention_en_cours': intervention_en_cours
+        'intervention_en_cours': True
     })
 
 

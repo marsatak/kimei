@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
 
     {% block extra_css %}{% endblock extra_css %}
     <title>{% block title %}M E I {% endblock title %}</title>
@@ -29,8 +31,7 @@
 <body>
 <div class="wrapper">
     <header>
-        {% block nav-btn %}
-        {% endblock nav-btn %}
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid" style="padding: 0">
                 <a class="navbar-brand" href="{% url 'gmao:home' %}">MEI</a>
@@ -80,6 +81,8 @@
                                     <i style="color: #0dcaf0;" class="fa-solid fa-user-lock"></i>
                                     &nbsp;&nbsp;Accès verrouillé
                                  </span>
+                                {% block nav-btn %}
+                                {% endblock nav-btn %}
                             </a>
                         </div>
                     {% endif %}
@@ -115,6 +118,8 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
 <script type="text/javascript"
         src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="{% static 'js/nav.js' %}"></script>

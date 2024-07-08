@@ -201,6 +201,7 @@ table.dataTable tbody tr.status-ATD {
 }
 
 /* Styles du portfolio */
+/*
 #portfolioTable {
     width: 100% !important;
 }
@@ -217,6 +218,69 @@ table.dataTable tbody tr.status-ATD {
 
 .technicien-portfolio-content {
     margin-bottom: 60px;
+}
+*/
+#portfolioTable {
+    width: 100% !important;
+}
+
+#portfolioTable th,
+#portfolioTable td {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+@media screen and (max-width: 767px) {
+    #portfolioTable {
+        font-size: 14px;
+    }
+
+    #portfolioTable .btn {
+        font-size: 12px;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+.table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #ddd;
+}
+
+#portfolioTable {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        border: 0;
+    }
+
+    #portfolioTable td,
+    #portfolioTable th {
+        white-space: nowrap;
+    }
+
+    .action-cell {
+        min-width: auto;
+    }
+}
+
+.dtr-details {
+    width: 100%;
+}
+
+.dtr-details li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.dtr-details li:last-child {
+    border-bottom: none;
 }
 
 /* Styles de l'écran de login */
@@ -328,19 +392,7 @@ body {
         overflow: hidden;
     }
 
-    /*.navbar-collapse {
-        position: fixed;
-        top: 56px; !* Ajustez selon la hauteur de votre navbar *!
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #343a40;
-        padding: 1rem;
-        overflow-y: auto;
-        transition: transform 0.3s ease-in-out;
-        transform: translateX(-100%);
-    }
-*/
+
     .navbar-collapse.show {
         transform: translateX(0);
     }

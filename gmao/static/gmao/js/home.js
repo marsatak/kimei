@@ -500,7 +500,8 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.success) {
-                    alert('Doléance prise en charge avec succès');
+                    alert(response.message)
+                    $('.prendre-en-charge').prop('disable', true)
                     loadTechnicienPortfolio(); // Recharger le portfolio
                 } else {
                     alert('Erreur : ' + response.message);

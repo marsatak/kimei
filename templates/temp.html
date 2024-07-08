@@ -1,63 +1,14 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="fr">
-<head>
-    <!-- ... (garder le contenu du head comme dans le nouveau base.html) ... -->
-    <title>
-        
-    </title>
-</head>
-<body>
-<div class="wrapper">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container-fluid" style="padding: 0">
-                <a class="navbar-brand" href="{% url 'gmao:home' %}">GMAO</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    {% if user.is_authenticated %}
-                        <!-- ... (garder le contenu du menu pour les utilisateurs authentifiés) ... -->
-                        {% if user.role == 'ADMIN' %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'gmao:liste_interventions' %}">Liste des
-                                        interventions</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'gmao:toutes_les_doleances' %}">Liste des
-                                        doléances</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'gmao_teams:gestion_equipes' %}">Gestion des
-                                        équipes</a>
-                                </li>
-                            {% elif user.role == 'TECH' %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'gmao:liste_interventions' %}">Liste des
-                                        interventions</a>
-                                </li>
-                            {% endif %}
-                    {% else %}
-                        <div class="col-sm">
-                            <a class="navbar-brand flex-grow-1" style="color: aliceblue; text-align: center;">
-                                <i style="color: #0dcaf0;" class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;Accès verrouillé
-                            </a>
-                        </div>
-                    {% endif %}
+ {% else %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="technicien-portfolio-content mb-0">Mon portefeuille de doléances</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="portfolioContainer"></div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container-fluid" style="padding-top: 70px">
-        {% block content %}
-        {% endblock content %}
-    </div>
-    <footer class="bg-dark text-center text-lg-start" id="footer">
-        <!-- ... (garder le contenu du footer) ... -->
-    </footer>
-</div>
-<!-- ... (garder les scripts) ... -->
-</body>
-</html>
+        </div>
+    {% endif %}

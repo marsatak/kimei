@@ -5,9 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
+      <change afterPath="$PROJECT_DIR$/gmao/static/gmao/js/backup_teams.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/accounts/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/home__.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/OLD/home__.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/temp.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/temp.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,15 +219,7 @@
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
-      <workItem from="1720372777331" duration="29572000" />
-    </task>
-    <task id="LOCAL-00120" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720334628980</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1720334628980</updated>
+      <workItem from="1720372777331" duration="44106000" />
     </task>
     <task id="LOCAL-00121" summary="First commit">
       <option name="closed" value="true" />
@@ -602,7 +605,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720428473111</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <task id="LOCAL-00169" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720429745996</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1720429745996</updated>
+    </task>
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
