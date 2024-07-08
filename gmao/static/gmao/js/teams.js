@@ -30,7 +30,8 @@ $(document).ready(function () {
             });
         }
     }*/
-    function initPortfolioTable(data) {
+
+    /*function initPortfolioTable(data) {
         if ($('#portfolioTable').length) {
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
                 $('#portfolioTable').DataTable().destroy();
@@ -69,6 +70,64 @@ $(document).ready(function () {
                     {responsivePriority: 3, targets: 4}
                 ],
                 order: [[0, 'asc']]
+            });
+        }
+    }*/
+    function initPortfolioTable(data) {
+        if ($('#portfolioTable').length) {
+            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
+                $('#portfolioTable').DataTable().destroy();
+            }
+
+            $('#portfolioTable').DataTable({
+                data: data,
+                columns: [
+                    {data: 'ndi', width: "10%"},
+                    {data: 'station', width: "15%"},
+                    {data: 'element', width: "15%"},
+                    {data: 'panne_declarer', width: "30%", className: 'panne-cell'},
+                    {data: 'statut', width: "10%"},
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return getActionButton(row);
+                        },
+                        width: "20%",
+                        className: 'action-cell'
+                    }
+                ],
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                },
+                columnDefs: [
+                    {responsivePriority: 1, targets: 0}, // NDI
+                    {responsivePriority: 2, targets: -1}, // Actions
+                    {responsivePriority: 3, targets: 4}, // Statut
+                    {
+                        targets: '_all',
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<div class="text-wrap width-100">' + data + '</div>';
+                            }
+                            return data;
+                        }
+                    }
+                ],
+                order: [[0, 'asc']],
+                drawCallback: function (settings) {
+                    // Ajuster la hauteur des lignes après le rendu
+                    $('#portfolioTable tbody tr').each(function () {
+                        var highestBox = 0;
+                        $(this).find('td').each(function () {
+                            if ($(this).height() > highestBox) {
+                                highestBox = $(this).height();
+                            }
+                        });
+                        $(this).find('td').height(highestBox);
+                    });
+                }
             });
         }
     }

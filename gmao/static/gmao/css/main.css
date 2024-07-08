@@ -321,7 +321,7 @@ body {
     padding-top: 60px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 992px) {
     body {
         padding-top: 56px; /* Ajustez si nécessaire pour les petits écrans */
     }
