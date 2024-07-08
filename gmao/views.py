@@ -935,7 +935,11 @@ def get_technicien_portfolio(request):
     #         'intervention_id': intervention.id if intervention else None
     #     })
     for d in doleances:
-        intervention = Intervention.objects.using('kimei_db').filter(doleance=d).first()
+        intervention = (Intervention.objects.using('kimei_db')
+                        .filter(doleance=d,
+                                is_half_done=True,
+                                is_done=False
+                                ).first())
         doleances_data.append({
             'id': d.id,
             'ndi': d.ndi,
@@ -944,14 +948,14 @@ def get_technicien_portfolio(request):
             'panne_declarer': d.panne_declarer,
             'statut': d.statut,
             'intervention_id': intervention.id if intervention else None,
-            'intervention_en_cours': intervention.is_half_done if intervention else False
+            'intervention_en_cours': bool(intervention)
         })
 
     return JsonResponse({
         'success': True,
         'doleances': doleances_data,
         'equipe': equipe.equipe.nom if equipe else None,
-        'intervention_en_cours': True
+        'intervention_en_cours': intervention_en_cours
     })
 
 

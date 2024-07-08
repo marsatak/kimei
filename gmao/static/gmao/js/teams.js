@@ -38,9 +38,10 @@ $(document).ready(function () {
     }
 
     function getActionButton(doleance, interventionEnCours) {
+        console.log("État de l'intervention pour cette doléance:", doleance.intervention_en_cours);
         if ((doleance.statut === 'ATT' || doleance.statut === 'INT') && doleance.intervention_id) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm btn-block">Détails intervention</a>`;
-        } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !interventionEnCours) {
+        } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !doleance.intervention_en_cours) {
             return `<button class="btn btn-success btn-sm btn-block prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
         } else {
             return '<span class="text-muted">Aucune action disponible</span>';
@@ -48,12 +49,14 @@ $(document).ready(function () {
     }
 
     function loadTechnicienPortfolio() {
+
         $.ajax({
             url: '/get-technicien-portfolio/',
             type: 'GET',
             success: function (response) {
                 if (response.success) {
                     interventionEncours = response.intervention_en_cours;
+                    console.log(interventionEncours)
                     initPortfolioTable(response.doleances, interventionEncours);
                     /*if (response.intervantion_en_cours) {
                         $('.prendre-en-charge').prop('disabled', true);
