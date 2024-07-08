@@ -82,7 +82,12 @@ $(document).ready(function () {
                             }
                             return data;
                         }
-                    }
+                    },
+                    {responsivePriority: 1, targets: 1}, // NDI
+                    {responsivePriority: 2, targets: 3}, // Statut
+                    {responsivePriority: 3, targets: 6}, // Panne déclarée
+                    {responsivePriority: 4, targets: 8}, // Actions
+                    {responsivePriority: 10000, targets: [2, 4, 5, 7]}
                 ]
             });
         }
