@@ -1,7 +1,7 @@
 let interventionEncours = false;
 $(document).ready(function () {
 
-    function initPortfolioTable(data, interventionEnCours) {
+    function initPortfolioTable(data, interventionEnCoursGlobal) {
         if ($('#portfolioTable').length) {
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
                 $('#portfolioTable').DataTable().destroy();
@@ -19,7 +19,7 @@ $(document).ready(function () {
                         data: null,
                         title: 'Actions',
                         render: function (data, type, row) {
-                            return getActionButton(row, interventionEnCours);
+                            return getActionButton(row, interventionEnCoursGlobal);
                         }
                     }
                 ],
@@ -29,37 +29,33 @@ $(document).ready(function () {
                 },
                 order: [[0, 'asc']],
                 drawCallback: function (settings) {
-                    if (interventionEnCours) {
-                        $('.prendre-en-charge').prop('disabled', true);
-                    }
+                    console.log("DrawCallback - Intervention en cours (global):", interventionEnCoursGlobal);
+                    $('.prendre-en-charge').prop('disabled', interventionEnCoursGlobal);
                 }
             });
         }
     }
 
-    function getActionButton(doleance, interventionEnCours) {
+    function getActionButton(doleance, interventionEnCoursGlobal) {
+        console.log("GetActionButton - Doléance:", doleance.id, "Intervention en cours (global):", interventionEnCoursGlobal);
         if ((doleance.statut === 'ATT' || doleance.statut === 'INT') && doleance.intervention_id) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm btn-block">Détails intervention</a>`;
         } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP')) {
-            return `<button class="btn btn-success btn-sm btn-block prendre-en-charge" data-id="${doleance.id}" ${interventionEnCours ? 'disabled' : ''}>Prendre en charge</button>`;
+            return `<button class="btn btn-success btn-sm btn-block prendre-en-charge" data-id="${doleance.id}" ${interventionEnCoursGlobal ? 'disabled' : ''}>Prendre en charge</button>`;
         } else {
             return '<span class="text-muted">Aucune action disponible</span>';
         }
     }
 
     function loadTechnicienPortfolio() {
-
         $.ajax({
             url: '/get-technicien-portfolio/',
             type: 'GET',
             success: function (response) {
                 if (response.success) {
-                    interventionEncours = response.intervention_en_cours;
-                    console.log(interventionEncours)
-                    initPortfolioTable(response.doleances, interventionEncours);
-                    /*if (response.intervantion_en_cours) {
-                        $('.prendre-en-charge').prop('disabled', true);
-                    }*/
+                    interventionEnCours = response.intervention_en_cours;
+                    console.log("Intervention en cours (global):", interventionEnCours);
+                    initPortfolioTable(response.doleances, interventionEnCours);
                 } else {
                     $('#portfolioContainer').html('<p>' + response.message + '</p>');
                 }
@@ -105,16 +101,8 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert(response.message);
-                    interventionEnCours = response.intervention_en_cours;
-                    console.log("Intervention en cours après prise en charge:", interventionEnCours);
-
-                    // Désactiver tous les boutons sauf celui qui vient d'être cliqué
-                    $('.prendre-en-charge').not(`[data-id="${doleanceId}"]`).prop('disabled', true);
-
-                    // Changer le bouton cliqué en lien vers les détails de l'intervention
-                    $(`[data-id="${doleanceId}"]`)
-                        .replaceWith(`<a href="/home/intervention/${response.intervention_id}/" class="btn btn-primary btn-sm btn-block">Détails intervention</a>`);
-
+                    interventionEnCours = true;
+                    console.log("PrendreEnCharge - Nouvelle intervention en cours:", interventionEnCours);
                     loadTechnicienPortfolio();
                 } else {
                     alert('Erreur : ' + response.message);
@@ -125,7 +113,6 @@ $(document).ready(function () {
             }
         });
     }
-
 
     loadTechnicienPortfolio();
 });
