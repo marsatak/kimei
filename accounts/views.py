@@ -127,7 +127,7 @@ def logout_view(request):
     User = get_user_model()
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
-        # user.session_key = None
+        user.session_key = None
         # user.statut = 'ABS'
         user.save()
     logout(request)
