@@ -289,3 +289,9 @@ footer {
         margin: 0 15px;
     }
 }
+
+/*Accordeon menu*/
+.dtr-details {
+    max-width: 100%;
+    overflow-x: auto;
+}
