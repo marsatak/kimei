@@ -23,56 +23,51 @@ body {
     padding-bottom: 60px;
 }
 
-/* Styles pour la barre de navigation */
+/* Styles de la barre de navigation */
 .navbar {
     padding: 0.5rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
 }
 
-.navbar-collapse {
-    max-height: calc(100vh - 56px);
-    overflow-y: auto;
+.navbar-brand {
+    font-size: 1.25rem;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
 }
 
-@media (max-width: 991.98px) {
-    .navbar-collapse {
-        position: fixed;
-        top: 56px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
-        left: 0;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-bottom: 15px;
-        width: 75%;
-        height: 100%;
-        background-color: #343a40;
-    }
+.navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
 
-    .navbar-collapse.collapsing {
-        left: -75%;
-        transition: height 0s ease;
-    }
+.navbar-nav .btn {
+    margin-left: 0.5rem;
+}
 
-    .navbar-collapse.show {
-        left: 0;
-        transition: left 300ms ease-in-out;
-    }
+#current-time {
+    font-size: 0.875rem;
+    margin-right: 1rem;
+}
 
-    .navbar-toggler {
-        margin-right: 15px;
-    }
+/* Ajustement pour le contenu principal */
+body {
+    padding-top: 100px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
+}
 
+/* Media query pour les petits écrans */
+@media (max-width: 992px) {
     .navbar-nav {
-        flex-direction: column !important;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
     .navbar-nav .nav-item {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-    }
-
-    .navbar .user-info,
-    #current-time,
-    .navbar .btn-sm {
-        margin-bottom: 0.5rem;
+        margin-right: 0.5rem;
     }
 }
 
@@ -324,5 +319,29 @@ body {
 @media (max-width: 992px) {
     body {
         padding-top: 56px; /* Ajustez si nécessaire pour les petits écrans */
+    }
+}
+
+/*Accordeon*/
+@media (max-width: 992px) {
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    /*.navbar-collapse {
+        position: fixed;
+        top: 56px; !* Ajustez selon la hauteur de votre navbar *!
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #343a40;
+        padding: 1rem;
+        overflow-y: auto;
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(-100%);
+    }
+*/
+    .navbar-collapse.show {
+        transform: translateX(0);
     }
 }
