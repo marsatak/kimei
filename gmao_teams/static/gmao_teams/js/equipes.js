@@ -1,4 +1,13 @@
 $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
+        upperCaseInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    });
+
     $.ajaxSetup({
         beforeSend: function (xhr, settings) {
             if (!this.crossDomain) {
