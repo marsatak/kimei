@@ -23,35 +23,57 @@ body {
     padding-bottom: 60px;
 }
 
-/* Styles de la barre de navigation */
+/* Styles pour la barre de navigation */
 .navbar {
     padding: 0.5rem 1rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030;
 }
 
-.navbar-brand {
-    font-size: 1.25rem;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
-    margin-right: 1rem;
+.navbar-collapse {
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
 }
 
-.navbar-nav .nav-link {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-}
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: fixed;
+        top: 56px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
+        left: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 15px;
+        width: 75%;
+        height: 100%;
+        background-color: #343a40;
+    }
 
-.navbar-nav .btn {
-    margin-left: 0.5rem;
-}
+    .navbar-collapse.collapsing {
+        left: -75%;
+        transition: height 0s ease;
+    }
 
-#current-time {
-    font-size: 0.875rem;
-    margin-right: 1rem;
+    .navbar-collapse.show {
+        left: 0;
+        transition: left 300ms ease-in-out;
+    }
+
+    .navbar-toggler {
+        margin-right: 15px;
+    }
+
+    .navbar-nav {
+        flex-direction: column !important;
+    }
+
+    .navbar-nav .nav-item {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .navbar .user-info,
+    #current-time,
+    .navbar .btn-sm {
+        margin-bottom: 0.5rem;
+    }
 }
 
 /* Styles du contenu principal */
@@ -290,8 +312,17 @@ footer {
     }
 }
 
-/*Accordeon menu*/
 .dtr-details {
     max-width: 100%;
     overflow-x: auto;
+}
+
+body {
+    padding-top: 60px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
+}
+
+@media (max-width: 991.98px) {
+    body {
+        padding-top: 56px; /* Ajustez si nécessaire pour les petits écrans */
+    }
 }
