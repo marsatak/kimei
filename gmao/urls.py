@@ -36,7 +36,7 @@ urlpatterns = [
 
     path('home/intervention/<int:intervention_id>/terminer/', views.terminer_travail, name='terminer_travail'),
     # path('home/intervention/creer/', views.creer_intervention, name='creer_intervention'),
-    path('toutes-les-doleances/', views.toutes_les_doleances, name='toutes_les_doleances'),
+    path('home/toutes-les-doleances/', views.toutes_les_doleances, name='toutes_les_doleances'),
     path('api/get-doleances-data/', views.get_doleances_data, name='get_doleances_data'),
     path('api/get-available-years/', views.get_available_years, name='get_available_years'),
     path('get-technicien-portfolio/', views.get_technicien_portfolio, name='get_technicien_portfolio'),
