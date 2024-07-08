@@ -4,49 +4,6 @@
 
 {% block title %}G M A O{% endblock title %}
 
-{% comment %}{% block nav-btn %}
-    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
-       id="btn-nav">
-        Logout
-    </a> 1
-    <a href="{% url 'gmao:liste_interventions' %}"
-       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
-        Liste des interventions
-    </a><a href="{% url 'gmao:toutes_les_doleances' %}"
-           class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
-    Liste des doléances
-</a>
-{% endblock nav-btn %}{% endcomment %}
-{% block nav-btn %}
-    <a href="{% url 'accounts:logout-admin' %}"
-       class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
-       id="btn-nav">
-        Logout
-    </a>
-    {% if user.role == 'ADMIN' %}
-        <a href="{% url 'gmao:liste_interventions' %}"
-           class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
-            Liste des interventions
-        </a>
-        <a href="{% url 'gmao:toutes_les_doleances' %}"
-           class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
-            Liste des doléances
-        </a>
-        <a href="{% url 'gmao_teams:gestion_equipes' %}"
-           class="btn btn-outline-success text-center text-light border-light btn-sm mx-2" id="btn-nav">
-            Gestion des équipes
-        </a>
-    {% elif user_role == 'TECH' %}
-        <a href="{% url 'gmao:liste_interventions' %}"
-           class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
-            Liste des interventions
-        </a>
-    {% endif %}
-{% endblock nav-btn %}
-{% block navbar-content %}
-    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
-    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
-{% endblock navbar-content %}
 
 {% block extra_css %}
     <!-- ... autres styles ... -->
@@ -279,7 +236,7 @@
             });
         </script>
     {% endif %}
-
+    {#    Upper #}
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {

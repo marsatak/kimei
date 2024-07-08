@@ -6,14 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/Passage/07072024/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/07072024/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/08072024/home_.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home__.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/08072024/home__.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -215,15 +210,7 @@
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
-      <workItem from="1720372777331" duration="13954000" />
-    </task>
-    <task id="LOCAL-00112" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720329097922</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1720329097923</updated>
+      <workItem from="1720372777331" duration="19515000" />
     </task>
     <task id="LOCAL-00113" summary="First commit">
       <option name="closed" value="true" />
@@ -609,7 +596,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720382961542</updated>
     </task>
-    <option name="localTasksCounter" value="161" />
+    <task id="LOCAL-00161" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720413969457</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1720413969457</updated>
+    </task>
+    <option name="localTasksCounter" value="162" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

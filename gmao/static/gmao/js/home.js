@@ -41,8 +41,8 @@ $(document).ready(function () {
                         }
                     },
                     {data: "statut", width: "3%"},
-                    {data: "station.libelle_station", width: "10%"},
-                    {data: 'element', width: "15%"},
+                    {data: "station.libelle_station", width: "8%"},
+                    {data: 'element', width: "17%"},
                     {data: 'panne_declarer', width: "24%"},
                     {
                         data: 'date_deadline', width: "8%",
@@ -56,7 +56,7 @@ $(document).ready(function () {
                         render: function (data, type, row) {
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
                                 return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
-                                    'Déclencher Intervention' +
+                                    '<i class="fas fa-arrow-alt-circle-up"></i>' +
                                     '</button>';
                             }
                             return '';
@@ -158,11 +158,10 @@ $(document).ready(function () {
         }
     }
 
+
     $(window).resize(function () {
         if (doleanceTable) doleanceTable.columns.adjust().draw();
         if (personnelTable) personnelTable.columns.adjust().draw();
-    });
-    $(window).resize(function () {
         $('#demandeencours').DataTable().draw();
         $('#personnel').DataTable().draw();
     });
