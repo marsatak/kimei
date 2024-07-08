@@ -52,13 +52,14 @@ $(document).ready(function () {
             });
         }
     }*/
-    function initPortfolioTable(data) {
+
+    /*function initPortfolioTable(data) {
         if ($('#portfolioContainer').length) {
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
                 $('#portfolioTable').DataTable().destroy();
             }
 
-            let tableHtml = '<div class="table-responsive">';
+            /!*let tableHtml = '<div class="table-responsive">';
             tableHtml += '<table id="portfolioTable" class="table table-striped table-bordered" style="width:100%">';
             tableHtml += '<thead><tr><th>NDI</th><th>Station</th><th>Élément</th><th>Panne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
 
@@ -74,7 +75,7 @@ $(document).ready(function () {
             });
 
             tableHtml += '</tbody></table></div>';
-            $('#portfolioContainer').html(tableHtml);
+            $('#portfolioContainer').html(tableHtml);*!/
 
             $('#portfolioTable').DataTable({
                 responsive: true,
@@ -88,6 +89,36 @@ $(document).ready(function () {
                     {responsivePriority: 3, targets: 4}, // Statut
                     {responsivePriority: 4, targets: 3}, // Panne
                 ],
+                order: [[0, 'asc']]
+            });
+        }
+    }*/
+    function initPortfolioTable(data) {
+        if ($('#portfolioTable').length) {
+            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
+                $('#portfolioTable').DataTable().destroy();
+            }
+
+            $('#portfolioTable').DataTable({
+                data: data,
+                columns: [
+                    {data: 'ndi'},
+                    {data: 'station'},
+                    {data: 'element'},
+                    {data: 'panne_declarer'},
+                    {data: 'statut'},
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return getActionButton(row);
+                        }
+                    }
+                ],
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                },
                 order: [[0, 'asc']]
             });
         }

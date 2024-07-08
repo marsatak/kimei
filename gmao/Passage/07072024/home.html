@@ -50,18 +50,7 @@
 
 {% block extra_css %}
     <!-- ... autres styles ... -->
-    <style>
-        .intervention-form {
-            transform: rotate(90deg);
-            transform-origin: left top;
-            width: 150vh;
-            height: 100vw;
-            overflow-x: hidden;
-            position: absolute;
-            top: 100px;
-            left: 100px;
-        }
-    </style>
+
 {% endblock extra_css %}
 
 {% block content %}
@@ -197,10 +186,19 @@
                     <div class="card-header bg-info text-white">
                         <h5 class="mb-0">Mon portefeuille de doléances</h5>
                     </div>
-                    <div class="card-body">
-                        <div id="portfolioContainer">
-                        </div>
-
+                    <div class="card-body" style="overflow-x: auto;">
+                        <table class="table table-bordered" id="portfolioTable" style="width:100%">
+                            <thead class="fw-bold text-center bg-info text-light text-uppercase">
+                            <tr>
+                                <th>NDI</th>
+                                <th>Station</th>
+                                <th>Élément</th>
+                                <th>Panne</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>

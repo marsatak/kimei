@@ -8,7 +8,7 @@
     <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
        id="btn-nav">
         Logout
-    </a>
+    </a> 1
     <a href="{% url 'gmao:liste_interventions' %}"
        class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">
         Liste des interventions
@@ -50,18 +50,6 @@
 
 {% block extra_css %}
     <!-- ... autres styles ... -->
-    <style>
-        .intervention-form {
-            transform: rotate(90deg);
-            transform-origin: left top;
-            width: 150vh;
-            height: 100vw;
-            overflow-x: hidden;
-            position: absolute;
-            top: 100px;
-            left: 100px;
-        }
-    </style>
 {% endblock extra_css %}
 
 {% block content %}
@@ -189,7 +177,6 @@
                 </div>
             </section>
         </div>
-
     {% else %}
         <div class="row mb-4">
             <div class="col-12">
@@ -197,10 +184,19 @@
                     <div class="card-header bg-info text-white">
                         <h5 class="mb-0">Mon portefeuille de doléances</h5>
                     </div>
-                    <div class="card-body">
-                        <div id="portfolioContainer">
-                        </div>
-
+                    <div class="card-body" style="overflow-x: auto;">
+                        <table class="table table-bordered" id="portfolioTable" style="width:100%">
+                            <thead class="fw-bold text-center bg-info text-light text-uppercase">
+                            <tr>
+                                <th>NDI</th>
+                                <th>Station</th>
+                                <th>Élément</th>
+                                <th>Panne</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
