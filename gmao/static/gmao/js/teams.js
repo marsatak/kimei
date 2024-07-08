@@ -38,11 +38,10 @@ $(document).ready(function () {
     }
 
     function getActionButton(doleance, interventionEnCours) {
-        console.log("État de l'intervention pour cette doléance:", doleance.intervention_en_cours);
         if ((doleance.statut === 'ATT' || doleance.statut === 'INT') && doleance.intervention_id) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm btn-block">Détails intervention</a>`;
-        } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !doleance.intervention_en_cours) {
-            return `<button class="btn btn-success btn-sm btn-block prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
+        } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP')) {
+            return `<button class="btn btn-success btn-sm btn-block prendre-en-charge" data-id="${doleance.id}" ${interventionEnCours ? 'disabled' : ''}>Prendre en charge</button>`;
         } else {
             return '<span class="text-muted">Aucune action disponible</span>';
         }
@@ -77,7 +76,7 @@ $(document).ready(function () {
         prendreEnCharge(doleanceId);
     });
 
-    function prendreEnCharge(doleanceId) {
+    /*function prendreEnCharge(doleanceId) {
         $.ajax({
             url: `/home/prendre-en-charge/${doleanceId}/`,
             type: 'POST',
@@ -88,6 +87,34 @@ $(document).ready(function () {
                     interventionEncours = response.intervention_en_cours;
                     console.log(interventionEncours)
                     $('.prendre-en-charge').prop('disabled', true);
+                    loadTechnicienPortfolio();
+                } else {
+                    alert('Erreur : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur de communication avec le serveur');
+            }
+        });
+    }*/
+    function prendreEnCharge(doleanceId) {
+        $.ajax({
+            url: `/home/prendre-en-charge/${doleanceId}/`,
+            type: 'POST',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    interventionEnCours = response.intervention_en_cours;
+                    console.log("Intervention en cours après prise en charge:", interventionEnCours);
+
+                    // Désactiver tous les boutons sauf celui qui vient d'être cliqué
+                    $('.prendre-en-charge').not(`[data-id="${doleanceId}"]`).prop('disabled', true);
+
+                    // Changer le bouton cliqué en lien vers les détails de l'intervention
+                    $(`[data-id="${doleanceId}"]`)
+                        .replaceWith(`<a href="/home/intervention/${response.intervention_id}/" class="btn btn-primary btn-sm btn-block">Détails intervention</a>`);
+
                     loadTechnicienPortfolio();
                 } else {
                     alert('Erreur : ' + response.message);
