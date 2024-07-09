@@ -351,7 +351,12 @@
                     success: function (data) {
                         $('#id_appelant').html('<option value="">---------</option>');
                         $.each(data, function (index, item) {
-                            $('#id_appelant').append($('<option></option>').val(item.id).html(item.nom_appelant));
+                            $('#id_appelant').append($('<option></option>')
+                                .val(item.id)
+                                .html(
+                                    item.nom_appelant,
+                                    item.prenom_appelant,
+                                ));
                         });
                     }
                 });

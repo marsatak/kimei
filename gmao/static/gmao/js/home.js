@@ -43,7 +43,12 @@ $(document).ready(function () {
                     {data: "statut", width: "3%"},
                     {data: "station.libelle_station", width: "8%"},
                     {data: 'element', width: "17%"},
-                    {data: 'panne_declarer', width: "24%"},
+                    {
+                        data: 'panne_declarer', width: "24%",
+                        render: function (data, type, row) {
+                            return '<div class="text-wrap width-500">' + data + '</div>';
+                        }
+                    },
                     {
                         data: 'date_deadline', width: "8%",
                         render: function (data) {
@@ -99,12 +104,63 @@ $(document).ready(function () {
     });
 
 
+    /*    function initPersonnelTable() {
+            if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
+                personnelTable = $('#personnel').DataTable({
+                    ajax: {
+                        url: "/home/getPersonnel/",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {data: "nom_personnel"},
+                        {data: "prenom_personnel"},
+                        {
+                            data: "statut",
+                            render: function (data, type, row) {
+                                const statusClasses = {
+                                    'PRS': 'bg-success',
+                                    'ATT': 'bg-warning',
+                                    'INT': 'bg-info',
+                                    'ABS': 'bg-danger'
+                                };
+                                return `<span class="badge ${statusClasses[data] || 'bg-secondary'}">${data}</span>`;
+                            },
+                            className: 'status-column'
+                        },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                if (row.statut === 'ABS') {
+                                    return '<button class="btn btn-success btn-sm mark-arrivee" data-id="' + row.id + '">Marquer arrivée</button>';
+                                } else if (row.statut === 'PRS') {
+                                    return '<button class="btn btn-danger btn-sm mark-depart" data-id="' + row.id + '">Marquer départ</button>';
+                                }
+                                return '';
+                            }
+                        }
+                    ],
+                    responsive: true,
+                    autoWidth: false,
+                    ordering: false,
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                    }
+                });
+            }
+        }*/
     function initPersonnelTable() {
         if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
             personnelTable = $('#personnel').DataTable({
                 ajax: {
                     url: "/home/getPersonnel/",
-                    dataSrc: ""
+                    dataSrc: function (json) {
+                        // Trier les techniciens en premier
+                        return json.sort((a, b) => {
+                            if (a.poste.nom_poste === 'Technicien' && b.poste.nom_poste !== 'Technicien') return -1;
+                            if (a.poste.nom_poste !== 'Technicien' && b.poste.nom_poste === 'Technicien') return 1;
+                            return 0;
+                        });
+                    }
                 },
                 columns: [
                     {data: "nom_personnel"},
@@ -239,6 +295,8 @@ $(document).ready(function () {
 
         dialog.dialog({
             modal: true,
+            width: 400,
+            height: 400,
             buttons: {
                 "Confirmer": function () {
                     let techniciensSelecionnes = form.find('input:checked').map(function () {

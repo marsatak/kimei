@@ -6,6 +6,11 @@ from .models import (
     Appelant, Client,
     Personnel, Piste, AppareilDistribution, Cuve, Boutique, Servicing, Elec, Auvent, Totem
 )
+from gmao.models import (
+    Poste, Personnel, Pointage,
+    Boutique, Compresseur, Cuve, Piste, AppareilDistribution, Servicing, Elec, GroupeElectrogene,
+    Auvent, Totem, Produit, Pistolet, Tgbt, EclairageElectricite)
+from django.db.models import Q
 
 
 # class DoleanceForm(forms.ModelForm):
@@ -99,6 +104,22 @@ from .models import (
 
 class DoleanceForm(forms.ModelForm):
     client = forms.ModelChoiceField(queryset=Client.objects.all(), empty_label="Sélectionnez un client")
+    # date_deadline = forms.DateTimeField(
+    #     required=False,
+    #     widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+    #     help_text="Laissez vide pour utiliser la valeur par défaut (24h)",
+    #     input_formats=['%d/%m/%Y %H:%M']
+    # )
+    date_deadline = forms.DateTimeField(
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={'class': 'flatpickr'},
+            format='%d/%m/%Y %H:%M'),
+        input_formats=['%d/%m/%Y %H:%M']
+    )
+
+    # station_search = forms.CharField(required=False, label="Rechercher une station")
+
     panne_declarer = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}),  # Réduisez le nombre de lignes à 3
         help_text="Décrivez brièvement la panne ."
@@ -140,13 +161,18 @@ class DoleanceForm(forms.ModelForm):
 
     class Meta:
         model = Doleance
-        fields = ['client', 'station', 'appelant', 'type_transmission', 'panne_declarer', 'element', 'type_contrat']
+        fields = [
+            'client', 'station', 'appelant', 'type_transmission',
+            'panne_declarer', 'element', 'type_contrat', 'date_deadline']
 
     def __init__(self, *args, **kwargs):
         super(DoleanceForm, self).__init__(*args, **kwargs)
         self.fields['station'].queryset = Station.objects.none()
         self.fields['appelant'].queryset = Appelant.objects.none()
         self.fields['element'].choices = [('', 'Sélectionnez un élément')]
+        if not self.instance.pk:
+            # Si c'est une nouvelle instance, définir la valeur par défaut
+            self.fields['date_deadline'].initial = timezone.now() + timezone.timedelta(days=1)
 
         if 'client' in self.data:
             try:
@@ -172,37 +198,76 @@ class DoleanceForm(forms.ModelForm):
     @staticmethod
     def get_station_elements(station_id):
         station = Station.objects.get(id=station_id)
-        elements = [('', 'Sélectionnez un élément')]
-
-        pistes = Piste.objects.filter(station=station)
-        elements.extend([("piste_" + str(p.id), f"Piste {p.id}") for p in pistes])
+        elements = {
+            'Appareil de distribution': [],
+            'Pistolets': [],
+            'Cuves': [],
+            'Servicing': [],
+            'Électricité': [],
+            'Autres': [('lot_station', f'Lot_Station {station.libelle_station}')]
+        }
 
         appareils = AppareilDistribution.objects.filter(piste__station=station)
-        elements.extend([("appareil_" + str(a.id), f"Appareil {a.num_serie}") for a in appareils])
+        for appareil in appareils:
+            if appareil.face_principal and appareil.face_secondaire and appareil.num_serie and appareil.type_contrat:
+                element = f"{appareil.face_principal}/{appareil.face_secondaire}-{appareil.num_serie}-{appareil.type_contrat}"
+                elements['Appareil de distribution'].append((f"appareil_{appareil.id}", element))
+
+        pistolets = Pistolet.objects.filter(appareil_distribution__piste__station=station).order_by(
+            'appareil_distribution', 'orientation')
+        for pistolet in pistolets:
+            appareil = pistolet.appareil_distribution
+            orientation = pistolet.orientation[0] if pistolet.orientation else ''
+            if orientation in ['R', 'L']:
+                number = int(appareil.face_principal) if orientation == 'R' else int(appareil.face_secondaire)
+                if appareil.num_serie and pistolet.produit and pistolet.produit.code_produit and pistolet.type_contrat:
+                    element = f"{number}-{appareil.num_serie}{orientation}-{pistolet.produit.code_produit}-{pistolet.type_contrat}"
+                    elements['Pistolets'].append((f"pistolet_{pistolet.id}", element))
 
         cuves = Cuve.objects.filter(piste__station=station)
-        elements.extend([("cuve_" + str(c.id), f"Cuve {c.libelle}") for c in cuves])
-
-        if station.have_boutique:
-            boutique = Boutique.objects.filter(station=station).first()
-            if boutique:
-                elements.append(("boutique_" + str(boutique.id), "Boutique"))
+        for cuve in cuves:
+            element_info = f"Cuve {cuve.libelle} - {cuve.produit.nom_produit} - {cuve.capacite}L - {cuve.type_contrat}"
+            elements['Cuves'].append((f"cuve_{cuve.id}", element_info))
 
         if station.have_servicing:
             servicing = Servicing.objects.filter(station=station).first()
             if servicing:
-                elements.append(("servicing_" + str(servicing.id), "Servicing"))
+                element = f"Servicing de la station {station.libelle_station}"
+                elements['Servicing'].append((f"servicing_{servicing.id}", element))
 
-        elec = Elec.objects.filter(station=station)
-        elements.extend([("elec_" + str(e.id), f"Électricité {e.id}") for e in elec])
+        elec = Elec.objects.filter(station=station).first()
+        if elec:
+            elements['Électricité'].append(("elec_" + str(elec.id), "Électricité (général)"))
+
+            groupes = GroupeElectrogene.objects.filter(electricite=elec)
+            for groupe in groupes:
+                element_info = f"Groupe Électrogène - {groupe.type.libelle_type} - {groupe.type_contrat}"
+                elements['Électricité'].append((f"groupe_electrogene_{groupe.id}", element_info))
+
+            tgbts = Tgbt.objects.filter(electricite=elec)
+            for tgbt in tgbts:
+                element_info = f"TGBT - {tgbt.type.libelle_type} - {tgbt.modele.libelle_modele} - {tgbt.type_contrat}"
+                elements['Électricité'].append((f"tgbt_{tgbt.id}", element_info))
+
+            eclairages = EclairageElectricite.objects.filter(electricite=elec)
+            for eclairage in eclairages:
+                element_info = f"Éclairage - {eclairage.type.libelle_type} - {eclairage.modele.libelle_modele} - {eclairage.type_contrat}"
+                elements['Électricité'].append((f"eclairage_elec_{eclairage.id}", element_info))
 
         auvents = Auvent.objects.filter(piste__station=station)
-        elements.extend([("auvent_" + str(a.id), f"Auvent {a.id}") for a in auvents])
+        elements['Autres'].extend([("auvent_" + str(a.id), f"Auvent {a.id}") for a in auvents])
 
         totems = Totem.objects.filter(piste__station=station)
-        elements.extend([("totem_" + str(t.id), f"Totem {t.id}") for t in totems])
+        elements['Autres'].extend([("totem_" + str(t.id), f"Totem {t.id}") for t in totems])
 
         return elements
+
+    def clean_date_deadline(self):
+        date_deadline = self.cleaned_data.get('date_deadline')
+        if not date_deadline:
+            # Si aucune date n'est fournie, utilisez la valeur par défaut
+            return timezone.now() + timezone.timedelta(days=1)
+        return date_deadline
 
     def save(self, commit=True):
         instance = super().save(commit=False)

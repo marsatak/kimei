@@ -7,6 +7,9 @@
 
 {% block extra_css %}
     <!-- ... autres styles ... -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 {% endblock extra_css %}
 
 {% block content %}
@@ -135,25 +138,31 @@
             </section>
         </div>
     {% else %}
-        {% if user.role == 'TECH' %}
-            <div class="container-fluid mt-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header bg-info text-white">
-                                <h5 class="mb-0">Mon portefeuille de doléances</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="portfolioTable" class="table table-striped table-bordered"
-                                           style="width:100%"></table>
-                                </div>
-                            </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Mon portefeuille de doléances</h5>
+                    </div>
+                    <div class="card-body" style="overflow-x: auto;">
+                        <div class="table-responsive">
+                            <table id="portfolioTable" class="table table-bordered" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>NDI</th>
+                                    <th>Station</th>
+                                    <th>Élément</th>
+                                    <th>Panne</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        {% endif %}
+        </div>
     {% endif %}
 
 
@@ -167,6 +176,12 @@
                     <h5 class="modal-title" id="doleanceModalLabel">Nouvelle doléance</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                {% comment %}<div class="modal-body">
+                    <form method="post" id="doleanceForm">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                    </form>
+                </div>{% endcomment %}
                 <div class="modal-body">
                     <form method="post" id="doleanceForm">
                         {% csrf_token %}
@@ -183,6 +198,7 @@
 {% endblock content %}
 
 {% block extra_js %}
+    {{ block.super }}
     <script src="{% static 'gmao/js/home.js' %}"></script>
     <script src="{% static 'gmao/js/teams.js' %}"></script>
     <script>
@@ -302,10 +318,14 @@
                     success: function (data) {
                         $('#id_appelant').html('<option value="">---------</option>');
                         $.each(data, function (index, item) {
-                            $('#id_appelant')
-                                .append($('<option></option>')
-                                    .val(item.id)
-                                    .html(item.nom_appelant).upper).html(item.prenom_appelant.autocapitalize);
+                            let nomMajuscule = item.nom_appelant.split(' ')[0].toUpperCase();
+                            let prenomCapitalize = item.prenom_appelant.charAt(0).toUpperCase() +
+                                item.prenom_appelant.slice(1).toLowerCase();
+
+                            $('#id_appelant').append($('<option></option>')
+                                .val(item.id)
+                                .html(nomMajuscule + ' ' + prenomCapitalize)
+                            );
                         });
                     }
                 });
@@ -318,13 +338,13 @@
                     dataType: 'json',
                     success: function (data) {
                         console.log("Received elements:", data);  // Pour le débogage
-                        const select = $('#id_element');
+                        var select = $('#id_element');
                         select.empty().prop('disabled', false);
                         select.append('<option value="">Sélectionnez un élément</option>');
 
                         $.each(data, function (category, elements) {
                             if (elements.length > 0) {
-                                const optgroup = $('<optgroup label="' + category + '">');
+                                var optgroup = $('<optgroup label="' + category + '">');
                                 $.each(elements, function (index, element) {
                                     optgroup.append($('<option>').val(element[1]).text(element[1]));
                                 });
@@ -378,5 +398,23 @@
 
         });
     </script>
-
+    {#    Dead Lin Format#}
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#id_date_deadline", {
+                enableTime: true,
+                dateFormat: "d/m/Y H:i",
+                time_24hr: true,
+                minDate: "today",
+                defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+                allowInput: true,
+                locale: "fr",
+                onClose: function (selectedDates, dateStr, instance) {
+                    instance.close();
+                }
+            });
+        });
+    </script>
 {% endblock extra_js %}

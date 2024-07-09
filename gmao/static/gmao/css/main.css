@@ -181,23 +181,34 @@ table.dataTable {
 
 /* Styles pour les différents états de doléance */
 table.dataTable tbody tr.status-NEW {
-    background-color: #d4edda !important;
+    background-color: #63b069 !important; /* Vert plus vif */
+    /*color: white !important;*/
+    /*background-color: #d4edda !important;*/
 }
 
 table.dataTable tbody tr.status-ATT {
-    background-color: #fff3cd !important;
+    background-color: #eab819 !important;
+}
+
+/*Panne Déclarée*/
+.text-wrap {
+    white-space: normal;
+}
+
+.width-200 {
+    width: 200px;
 }
 
 table.dataTable tbody tr.status-INT {
-    background-color: #cce5ff !important;
+    background-color: #f55da7 !important;
 }
 
 table.dataTable tbody tr.status-ATP {
-    background-color: #f8d7da !important;
+    background-color: #daf86b !important;
 }
 
 table.dataTable tbody tr.status-ATD {
-    background-color: #e9ecef !important;
+    background-color: #efa152 !important;
 }
 
 /* Styles du portfolio */
@@ -396,4 +407,12 @@ body {
     .navbar-collapse.show {
         transform: translateX(0);
     }
+}
+
+/*Tableau Personnel*/
+#personnel tr.group td {
+    font-weight: bold;
+    background-color: #f8f9fa;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }

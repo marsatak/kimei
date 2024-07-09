@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
+      <change afterPath="$PROJECT_DIR$/gmao/Passage/main_.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/07072024/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/07072024/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,49 +82,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Django Server.kimei.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Daphne.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/gmao/templates/gmao&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.kimei.executor": "Run",
+    "Python.Daphne.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/daniel/PycharmProjects/Final/kimei/gmao/static/gmao/css",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;365fac49-34f3-4d4d-889a-7c26986376d3&quot;,
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "365fac49-34f3-4d4d-889a-7c26986376d3",
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
       <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
       <recent name="$PROJECT_DIR$/gmao/static/gmao/js" />
       <recent name="$PROJECT_DIR$/gmao_teams/templates/gmao_teams" />
-      <recent name="$PROJECT_DIR$/gmao_teams" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/Passage" />
       <recent name="$PROJECT_DIR$/gmao/Passage/08072024" />
       <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
       <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
       <recent name="$PROJECT_DIR$/gmao/Passage/OLD" />
-      <recent name="$PROJECT_DIR$/gmao/Passage" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.kimei">
@@ -207,7 +220,79 @@
       <workItem from="1720294584629" duration="75000" />
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
-      <workItem from="1720372777331" duration="48740000" />
+      <workItem from="1720372777331" duration="28308000" />
+    </task>
+    <task id="LOCAL-00119" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720333433470</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1720333433470</updated>
+    </task>
+    <task id="LOCAL-00120" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720334628980</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1720334628980</updated>
+    </task>
+    <task id="LOCAL-00121" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720335616394</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1720335616394</updated>
+    </task>
+    <task id="LOCAL-00122" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720335793460</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1720335793461</updated>
+    </task>
+    <task id="LOCAL-00123" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720336603217</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1720336603217</updated>
+    </task>
+    <task id="LOCAL-00124" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720336914901</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1720336914901</updated>
+    </task>
+    <task id="LOCAL-00125" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720348917972</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1720348917972</updated>
+    </task>
+    <task id="LOCAL-00126" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720349113515</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1720349113515</updated>
+    </task>
+    <task id="LOCAL-00127" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1720350084571</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1720350084571</updated>
     </task>
     <task id="LOCAL-00128" summary="First commit">
       <option name="closed" value="true" />
@@ -529,79 +614,7 @@
       <option name="project" value="LOCAL" />
       <updated>1720428148487</updated>
     </task>
-    <task id="LOCAL-00168" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720428473111</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1720428473111</updated>
-    </task>
-    <task id="LOCAL-00169" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720429745996</created>
-      <option name="number" value="00169" />
-      <option name="presentableId" value="LOCAL-00169" />
-      <option name="project" value="LOCAL" />
-      <updated>1720429745996</updated>
-    </task>
-    <task id="LOCAL-00170" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720450591338</created>
-      <option name="number" value="00170" />
-      <option name="presentableId" value="LOCAL-00170" />
-      <option name="project" value="LOCAL" />
-      <updated>1720450591338</updated>
-    </task>
-    <task id="LOCAL-00171" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720450998086</created>
-      <option name="number" value="00171" />
-      <option name="presentableId" value="LOCAL-00171" />
-      <option name="project" value="LOCAL" />
-      <updated>1720450998086</updated>
-    </task>
-    <task id="LOCAL-00172" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720451515526</created>
-      <option name="number" value="00172" />
-      <option name="presentableId" value="LOCAL-00172" />
-      <option name="project" value="LOCAL" />
-      <updated>1720451515526</updated>
-    </task>
-    <task id="LOCAL-00173" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720451762730</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1720451762730</updated>
-    </task>
-    <task id="LOCAL-00174" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720453025985</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1720453025985</updated>
-    </task>
-    <task id="LOCAL-00175" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720453686474</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1720453686474</updated>
-    </task>
-    <task id="LOCAL-00176" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720454436555</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1720454436555</updated>
-    </task>
-    <option name="localTasksCounter" value="177" />
+    <option name="localTasksCounter" value="168" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

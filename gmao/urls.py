@@ -15,6 +15,7 @@ urlpatterns = [
 
     path('home/getDoleanceEncours', views.getDoleanceEncours, name='get-doleance-encours'),
     path('home/create-doleance/', views.create_doleance, name='create_doleance'),
+    path('home/search-stations/', views.search_stations, name='search_stations'),
     path('home/ajax/load-stations/', views.load_stations, name='load_stations'),
     path('home/ajax/load-appelants/', views.load_appelants, name='load_appelants'),
     path('home/load-elements/', views.load_elements, name='load_elements'),

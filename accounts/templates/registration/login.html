@@ -5,7 +5,21 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+    <style>
+        body {
+            background-image: url('/static/img/home_nb.jpg');
+            opacity: 100%;
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            /* overflow: hidden; */
+
+        }
+    </style>
+
 {% endblock extra_css %}
+
 
 {% block content %}
     <div class="login-container">

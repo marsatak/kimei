@@ -203,9 +203,6 @@ def getDoleanceEncours(request):
             (Doleance.objects.all())
             .exclude(statut='TER')
             .order_by('-date_deadline').filter(
-                date_transmission__day=datetime.now().day,
-                date_transmission__month=7,
-                date_transmission__year=2024
             ))
 
         doleances_data = []
@@ -263,12 +260,29 @@ def mark_depart(request, personnel_id):
 
 
 # #####################Liste Personnel######################
+# @api_view(['GET'])
+# def getPersonnel(request):
+#     try:
+#         personnels = Personnel.objects.filter(is_active=True)
+#         personnels_serializer = PersonnelSerializer(personnels, many=True)
+#         return Response(personnels_serializer.data, content_type='application/json; charset=UTF-8')
+#     except Exception as e:
+#         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 @api_view(['GET'])
 def getPersonnel(request):
     try:
-        personnels = Personnel.objects.filter(is_active=True)
-        personnels_serializer = PersonnelSerializer(personnels, many=True)
-        return Response(personnels_serializer.data, content_type='application/json; charset=UTF-8')
+        personnels = Personnel.objects.filter(is_active=True).select_related('poste').order_by('-poste_id')
+        data = [{
+            'id': p.id,
+            'nom_personnel': p.nom_personnel,
+            'prenom_personnel': p.prenom_personnel,
+            'statut': p.statut,
+            'poste': {
+                'id': p.poste.id,
+                'nom_poste': p.poste.nom_poste
+            }
+        } for p in personnels]
+        return Response(data, content_type='application/json; charset=UTF-8')
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -363,6 +377,16 @@ def create_doleance(request):
         form = DoleanceForm(request.POST)
         if form.is_valid():
             doleance = form.save(commit=False)
+            doleance.date_transmission = timezone.now()
+
+            # doleance.date_deadline = form.cleaned_data['date_deadline']
+            # date_deadline = form.cleaned_data.get('date_deadline')
+            date_deadline = form.cleaned_data.get('date_deadline')
+            if not date_deadline:
+                # Convertir la chaîne de date en objet datetime
+                date_deadline = timezone.now() + timezone.timedelta(days=1)
+
+            doleance.date_deadline = date_deadline
             doleance.element = form.cleaned_data['element']
             doleance.panne_declarer = form.cleaned_data['panne_declarer'].upper()
             doleance.statut = "NEW"
@@ -391,8 +415,45 @@ def load_stations(request):
     return JsonResponse(list(stations.values('id', 'libelle_station')), safe=False)
 
 
-# #####################Récupérer la liste appelants ######################
+def search_stations(request):
+    client_id = request.GET.get('client_id')
+    search_term = request.GET.get('term', '')
 
+    stations = Station.objects.filter(client_id=client_id)
+    if search_term:
+        stations = stations.filter(Q(libelle_station__icontains=search_term) | Q(lieu_station__icontains=search_term))
+
+    data = list(stations.values('id', 'libelle_station', 'lieu_station'))
+    print("Station data:", data)
+    return JsonResponse(data, safe=False)
+
+
+# #####################Récupérer la liste appelants ######################
+# def load_appelants(request):
+#     client_id = request.GET.get('client')
+#     logger.info(f"Tentative de chargement des appelants pour le client_id: {client_id}")
+#     try:
+#         appelants = Appelant.objects.filter(client_id=client_id).order_by('nom_appelant')
+#         logger.info(f"Nombre d'appelants trouvés: {appelants.count()}")
+#
+#         data = []
+#         for appelant in appelants:
+#             nom_majuscule = appelant.nom_appelant.upper()
+#             prenom_capitalize = appelant.prenom_appelant.capitalize() if appelant.prenom_appelant else ''
+#             nom_complet = f"{nom_majuscule} {prenom_capitalize}".strip()
+#
+#             data.append({
+#                 'id': appelant.id,
+#                 'nom_appelant': nom_complet
+#             })
+#
+#         return JsonResponse(data, safe=False)
+#     except DatabaseError as e:
+#         logger.error(f"Erreur de base de données lors du chargement des appelants: {str(e)}")
+#         return JsonResponse({'error': 'Erreur de base de données'}, status=500)
+#     except Exception as e:
+#         logger.error(f"Erreur inattendue lors du chargement des appelants: {str(e)}")
+#         return JsonResponse({'error': 'Erreur serveur inattendue'}, status=500)
 def load_appelants(request):
     client_id = request.GET.get('client')
     logger.info(f"Tentative de chargement des appelants pour le client_id: {client_id}")
@@ -414,31 +475,8 @@ def load_elements(request):
     if not station_id:
         return JsonResponse([], safe=False)
 
-    station = Station.objects.get(id=station_id)
-    appareils = AppareilDistribution.objects.filter(piste__station=station)
-    pistolets = Pistolet.objects.filter(appareil_distribution__piste__station=station).order_by('appareil_distribution',
-                                                                                                'orientation')
-
-    elements = {
-        'Appareil de distribution': [],
-        'Pistolets': [],
-        'Autres': [('lot_station', f'LOT STATION {station.libelle_station}')]
-    }
-
-    for appareil in appareils:
-        if appareil.face_principal and appareil.face_secondaire and appareil.num_serie and appareil.type_contrat:
-            element = f"{appareil.face_principal}/{appareil.face_secondaire}-{appareil.num_serie}-{appareil.type_contrat}"
-            elements['Appareil de distribution'].append((f"appareil_{appareil.id}", element))
-
-    for pistolet in pistolets:
-        appareil = pistolet.appareil_distribution
-        orientation = pistolet.orientation[0] if pistolet.orientation else ''
-        if orientation in ['R', 'L']:
-            number = int(appareil.face_principal) if orientation == 'R' else int(appareil.face_secondaire)
-            if appareil.num_serie and pistolet.produit and pistolet.produit.code_produit and pistolet.type_contrat:
-                element = f"{number}-{appareil.num_serie}{orientation}-{pistolet.produit.code_produit}-{pistolet.type_contrat}"
-                elements['Pistolets'].append((f"pistolet_{pistolet.id}", element))
-
+    print(f"Station ID: {station_id}")
+    elements = DoleanceForm.get_station_elements(station_id)
     return JsonResponse(elements)
 
 
@@ -923,23 +961,8 @@ def get_technicien_portfolio(request):
     ).exists()
 
     doleances_data = []
-    # for d in doleances:
-    #     intervention = Intervention.objects.using('kimei_db').filter(doleance=d).first()
-    #     doleances_data.append({
-    #         'id': d.id,
-    #         'ndi': d.ndi,
-    #         'station': d.station.libelle_station,
-    #         'element': d.element,
-    #         'panne_declarer': d.panne_declarer,
-    #         'statut': d.statut,
-    #         'intervention_id': intervention.id if intervention else None
-    #     })
     for d in doleances:
-        intervention = (Intervention.objects.using('kimei_db')
-                        .filter(doleance=d,
-                                is_half_done=True,
-                                is_done=False
-                                ).first())
+        intervention = Intervention.objects.using('kimei_db').filter(doleance=d).first()
         doleances_data.append({
             'id': d.id,
             'ndi': d.ndi,
@@ -947,8 +970,7 @@ def get_technicien_portfolio(request):
             'element': d.element,
             'panne_declarer': d.panne_declarer,
             'statut': d.statut,
-            'intervention_id': intervention.id if intervention else None,
-            'intervention_en_cours': bool(intervention)
+            'intervention_id': intervention.id if intervention else None
         })
 
     return JsonResponse({
