@@ -178,6 +178,90 @@
         .modal-content { margin: 2% auto; }
     }
 </style>
+<style>
+    /* ... autres styles ... */
+
+    .modal-content {
+        width: 95%;
+        max-width: 800px;
+        margin: 2% auto;
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group input[type="time"],
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .two-column-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .form-group {
+        flex: 1 1 300px;
+        margin-right: 15px;
+    }
+
+    .form-group:last-child {
+        margin-right: 0;
+    }
+
+    .full-width {
+        flex-basis: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .form-group {
+            flex-basis: 100%;
+            margin-right: 0;
+        }
+
+        .modal-content {
+            padding: 15px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="time"],
+        .form-group textarea,
+        .form-group select {
+            font-size: 14px;
+            padding: 8px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .modal-content {
+            padding: 10px;
+        }
+    }
+</style>
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
@@ -269,77 +353,81 @@
         <span class="close">&times;</span>
         <h3>Fiche d'Intervention</h3>
         <form id="interventionForm" class="two-column-form">
-            <input type="hidden" id="intervention-id-input" name="intervention_id" value="{{ intervention.id }}">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="station">Station :</label>
-                    <input type="text" id="station" name="station" value="{{ intervention.doleance.station.libelle_station }}" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="numero_fiche">Numéro de fiche :</label>
-                    <input type="text" id="numero_fiche" name="numero_fiche" maxlength="5" pattern="\d{1,5}" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="ndi">NDI :</label>
-                    <input type="text" id="ndi" name="ndi" value="{{ intervention.doleance.ndi }}" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="date">Date :</label>
-                    <input type="date" id="date" name="date" value="{{ intervention.top_debut|date:'Y-m-d' }}" readonly>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="heure_debut">Heure de début :</label>
-                    <input type="time" id="heure_debut" name="heure_debut" value="{{ intervention.top_debut|time:'H:i' }}" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="heure_fin">Heure de fin :</label>
-                    <input type="time" id="heure_fin" name="heure_fin" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="panne_declaree">Panne déclarée :</label>
-                    <textarea id="panne_declaree" name="panne_declaree" rows="3" readonly>{{ intervention.doleance.panne_declarer }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="description_panne">Description de la panne constatée :</label>
-                    <textarea id="description_panne" name="description_panne" rows="3" required></textarea>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="resolution">Résolution:</label>
-                    <textarea id="resolution" name="resolution" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="observations">Observations :</label>
-                    <textarea id="observations" name="observations" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group full-width">
-                    <label for="pieces_changees">Pièces changées :</label>
-                    <textarea id="pieces_changees" name="pieces_changees" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group full-width">
-                    <label for="statut-final">Statut final de l'intervention :</label>
-                    <select id="statut-final" name="statut_final" required>
-                        <option value="">Choisissez un statut</option>
-                        <option value="TER">Terminé (TER)</option>
-                        <option value="ATP">Attente Pièces (ATP)</option>
-                        <option value="ATD">Attente Décision (ATD)</option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-success full-width">Terminer l'intervention</button>
-        </form>
+    <input type="hidden" id="intervention-id-input" name="intervention_id" value="{{ intervention.id }}">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group">
+            <label for="station">Station :</label>
+            <input type="text" id="station" name="station" value="{{ intervention.doleance.station.libelle_station }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="numero_fiche">Numéro de fiche :</label>
+            <input type="text" id="numero_fiche" name="numero_fiche" maxlength="5" pattern="\d{1,5}" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="ndi">NDI :</label>
+            <input type="text" id="ndi" name="ndi" value="{{ intervention.doleance.ndi }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="date">Date :</label>
+            <input type="date" id="date" name="date" value="{{ intervention.top_debut|date:'Y-m-d' }}" readonly>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="heure_debut">Heure de début :</label>
+            <input type="time" id="heure_debut" name="heure_debut" value="{{ intervention.top_debut|time:'H:i' }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="heure_fin">Heure de fin :</label>
+            <input type="time" id="heure_fin" name="heure_fin" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group full-width">
+            <label for="panne_declaree">Panne déclarée :</label>
+            <textarea id="panne_declaree" name="panne_declaree" rows="3" readonly>{{ intervention.doleance.panne_declarer }}</textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group full-width">
+            <label for="description_panne">Description de la panne constatée :</label>
+            <textarea id="description_panne" name="description_panne" rows="3" required></textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group full-width">
+            <label for="resolution">Résolution:</label>
+            <textarea id="resolution" name="resolution" rows="3" required></textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group full-width">
+            <label for="observations">Observations :</label>
+            <textarea id="observations" name="observations" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group full-width">
+            <label for="pieces_changees">Pièces changées :</label>
+            <textarea id="pieces_changees" name="pieces_changees" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group full-width">
+            <label for="statut-final">Statut final de l'intervention :</label>
+            <select id="statut-final" name="statut_final" required>
+                <option value="">Choisissez un statut</option>
+                <option value="TER">Terminé (TER)</option>
+                <option value="ATP">Attente Pièces (ATP)</option>
+                <option value="ATD">Attente Décision (ATD)</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success full-width">Terminer l'intervention</button>
+</form>
     </div>
 </div>
 {% endblock %}
