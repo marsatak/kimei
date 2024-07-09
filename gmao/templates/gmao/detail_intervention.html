@@ -80,6 +80,16 @@
         flex-direction: column;
         gap: 5px;
     }
+    .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+    .button-group .btn {
+    flex: 1;
+    min-width: 120px; /* Ajustez selon vos besoins */
+}
     .btn-sm {
         padding: 5px 10px;
         font-size: 0.875rem;
@@ -133,6 +143,7 @@
     .form-group textarea,
     .form-group select {
         width: 100%;
+        max-width: 150px;
         padding: 8px;
         border: 1px solid #ddd;
         border-radius: 4px;
