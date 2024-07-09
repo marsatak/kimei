@@ -212,7 +212,6 @@ table.dataTable tbody tr.status-ATD {
 }
 
 /* Styles du portfolio */
-/*
 #portfolioTable {
     width: 100% !important;
 }
@@ -223,14 +222,25 @@ table.dataTable tbody tr.status-ATD {
     word-wrap: break-word;
 }
 
-.action-cell {
-    min-width: 120px;
+.text-wrap {
+    white-space: normal !important;
 }
 
-.technicien-portfolio-content {
-    margin-bottom: 60px;
+@media screen and (max-width: 767px) {
+    #portfolioTable {
+        font-size: 14px;
+    }
+
+    #portfolioTable .btn {
+        font-size: 12px;
+        padding: 0.25rem 0.5rem;
+    }
 }
-*/
+
+.table-responsive {
+    overflow-x: visible;
+}
+
 #portfolioTable {
     width: 100% !important;
 }

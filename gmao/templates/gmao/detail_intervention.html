@@ -17,6 +17,12 @@
 {% endblock navbar-content %}
 {% block extra_css %}
 <style>
+    body {
+    padding-top: 50px; /* Ajustez cette valeur selon la hauteur de votre barre de navigation */
+}
+.container-fluid {
+    padding-top: 5px; /* Réduit l'espace entre la barre de navigation et le contenu */
+}
     .intervention-card { margin-bottom: 15px; }
     .card-body { padding: 15px; }
     .progress-container {
@@ -434,7 +440,8 @@
                             .css('width', '66%')
                             .attr('aria-valuenow', 66)
                             .text('En cours');
-                        $('.commencer-intervention').hide();
+                        $('.commencer-intervention').hide()
+                        window.location.reload();
                         $('#openInterventionForm').show();
                     } else {
                         alert('Erreur lors du démarrage de l\'intervention: ' + response.message);

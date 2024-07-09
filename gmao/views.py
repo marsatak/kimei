@@ -593,46 +593,54 @@ def annuler_intervention(request, intervention_id):
         return JsonResponse({'success': False, 'message': str(e)})
 
 
+# @login_required
+# def liste_interventions(request):
+#     current_date = timezone.now().date()
+#
+#     if request.user.role == 'ADMIN':
+#         interventions = Intervention.objects.filter(
+#             top_depart__date=current_date
+#         ).order_by('-top_depart')
+#     elif request.user.role == 'TECH':
+#         try:
+#             personnel = Personnel.objects.get(matricule=request.user.matricule)
+#             interventions = Intervention.objects.filter(
+#                 id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id'),
+#                 top_depart__date=current_date
+#             ).order_by('-top_depart')
+#         except Personnel.DoesNotExist:
+#             interventions = Intervention.objects.none()
+#     else:
+#         interventions = Intervention.objects.none()
+#
+#     # Récupérer les techniciens pour chaque intervention
+#     intervention_ids = [i.id for i in interventions]
+#     intervention_personnel = InterventionPersonnel.objects.filter(
+#         intervention_id__in=intervention_ids
+#     ).select_related('personnel')
+#
+#     # Créer un dictionnaire pour stocker les techniciens par intervention
+#     techniciens_par_intervention = {i.id: [] for i in interventions}
+#     for ip in intervention_personnel:
+#         techniciens_par_intervention[ip.intervention_id].append(ip.personnel)
+#
+#     # Ajouter les techniciens à chaque intervention
+#     for intervention in interventions:
+#         intervention.techniciens = techniciens_par_intervention[intervention.id]
+#
+#     context = {
+#         'interventions': interventions,
+#         'current_date': current_date,
+#     }
+#
+#     return render(request, 'gmao/liste_interventions.html', context)
 @login_required
 def liste_interventions(request):
     current_date = timezone.now().date()
-
-    if request.user.role == 'ADMIN':
-        interventions = Intervention.objects.filter(
-            top_depart__date=current_date
-        ).order_by('-top_depart')
-    elif request.user.role == 'TECH':
-        try:
-            personnel = Personnel.objects.get(matricule=request.user.matricule)
-            interventions = Intervention.objects.filter(
-                id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id'),
-                top_depart__date=current_date
-            ).order_by('-top_depart')
-        except Personnel.DoesNotExist:
-            interventions = Intervention.objects.none()
-    else:
-        interventions = Intervention.objects.none()
-
-    # Récupérer les techniciens pour chaque intervention
-    intervention_ids = [i.id for i in interventions]
-    intervention_personnel = InterventionPersonnel.objects.filter(
-        intervention_id__in=intervention_ids
-    ).select_related('personnel')
-
-    # Créer un dictionnaire pour stocker les techniciens par intervention
-    techniciens_par_intervention = {i.id: [] for i in interventions}
-    for ip in intervention_personnel:
-        techniciens_par_intervention[ip.intervention_id].append(ip.personnel)
-
-    # Ajouter les techniciens à chaque intervention
-    for intervention in interventions:
-        intervention.techniciens = techniciens_par_intervention[intervention.id]
-
     context = {
-        'interventions': interventions,
         'current_date': current_date,
+        'user_role': request.user.role,
     }
-
     return render(request, 'gmao/liste_interventions.html', context)
 
 
@@ -785,6 +793,62 @@ def get_doleances_data(request):
         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
         'commentaire': d.commentaire,
     } for d in doleances]
+
+    return JsonResponse({'data': data})
+
+
+@login_required
+def get_interventions_data(request):
+    start_date = request.GET.get('startDate')
+    end_date = request.GET.get('endDate')
+
+    if start_date and end_date:
+        date_filter = Q(top_depart__date__range=[start_date, end_date]) | \
+                      Q(top_debut__date__range=[start_date, end_date]) | \
+                      Q(top_terminer__date__range=[start_date, end_date])
+    else:
+        today = timezone.now().date()
+        date_filter = Q(top_depart__date=today) | Q(top_debut__date=today) | Q(top_terminer__date=today)
+
+    if request.user.role == 'ADMIN':
+        interventions = Intervention.objects.filter(date_filter)
+    elif request.user.role == 'TECH':
+        try:
+            personnel = Personnel.objects.get(matricule=request.user.matricule)
+            interventions = Intervention.objects.filter(
+                date_filter,
+                id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id')
+            )
+        except Personnel.DoesNotExist:
+            interventions = Intervention.objects.none()
+    else:
+        interventions = Intervention.objects.none()
+
+    interventions = interventions.order_by('-top_depart')
+
+    data = []
+    for intervention in interventions:
+        techniciens = InterventionPersonnel.objects.filter(intervention=intervention).select_related('personnel')
+        techniciens_list = ", ".join(
+            [f"{t.personnel.nom_personnel} {t.personnel.prenom_personnel}" for t in techniciens])
+
+        data.append({
+            'id': intervention.id,
+            'ndi': intervention.doleance.ndi if intervention.doleance else '',
+            'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
+            'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
+            'prise_en_charge': intervention.top_depart.strftime('%d/%m/%Y %H:%M') if intervention.top_depart else '',
+            'debut_travail': intervention.top_debut.strftime('%d/%m/%Y %H:%M') if intervention.top_debut else '',
+            'fin_travail': intervention.top_terminer.strftime('%d/%m/%Y %H:%M') if intervention.top_terminer else '',
+            'statut': 'Terminée' if intervention.is_done else 'En cours' if intervention.is_half_done else 'Non commencée',
+            'techniciens': techniciens_list,
+            'duree': str(intervention.duree_intervention) if intervention.duree_intervention else '',
+            'kilometrage_depart': str(
+                intervention.kilometrage_depart_debut) if intervention.kilometrage_depart_debut else '',
+            'kilometrage_retour': str(intervention.kilometrage_home) if intervention.kilometrage_home else '',
+            'numero_fiche': intervention.numero_fiche if intervention.numero_fiche else '',
+            'resolution': intervention.resolution if intervention.resolution else ''
+        })
 
     return JsonResponse({'data': data})
 
