@@ -218,6 +218,35 @@
         }
     }
 </style>
+<style>
+    /* ... gardez tous vos styles existants ... */
+
+    /* Ajoutez ou modifiez ces styles */
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group input[type="time"],
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="time"],
+        .form-group textarea,
+        .form-group select {
+            padding: 12px;
+            font-size: 18px;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+        }
+    }
+</style>
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
