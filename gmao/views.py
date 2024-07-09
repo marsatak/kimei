@@ -35,6 +35,8 @@ from gmao.serializers import (
     PosteSerializer, PersonnelSerializer, PointageSerializer,
     AppareilDistributionSerializer
 )
+from django.db import IntegrityError
+
 from .models import Intervention, InterventionPersonnel
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
@@ -655,6 +657,72 @@ def detail_intervention(request, intervention_id):
     })
 
 
+# @csrf_exempt
+# @require_POST
+# def terminer_travail(request, intervention_id):
+#     try:
+#         intervention = get_object_or_404(Intervention, id=intervention_id)
+#
+#         statut_final = request.POST.get('statut_final', '').upper()
+#
+#         if not statut_final or statut_final not in ['TER', 'ATP', 'ATD']:
+#             return JsonResponse({'success': False, 'message': f'Statut final invalide: {statut_final}'})
+#
+#         # Traitement du numéro de fiche
+#         numero_fiche = request.POST.get('numero_fiche', '')
+#         try:
+#             numero_fiche = int(numero_fiche)
+#             if numero_fiche < 0 or numero_fiche > 99999:
+#                 return JsonResponse({'success': False, 'message': 'Le numéro de fiche doit être entre 0 et 99999'})
+#
+#             numero_fiche_complet = f"00{numero_fiche:05d}"
+#
+#             if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
+#                 return JsonResponse({'success': False, 'message': 'Ce numéro de fiche est déjà utilisé'})
+#
+#             intervention.numero_fiche = numero_fiche_complet
+#         except ValueError:
+#             return JsonResponse({'success': False, 'message': 'Le numéro de fiche doit être un nombre entier'})
+#
+#         # Le reste du code pour mettre à jour l'intervention
+#         intervention.is_done = True
+#         intervention.etat_doleance = statut_final
+#         intervention.description_panne = request.POST.get('description_panne', '').upper()
+#         intervention.resolution = request.POST.get('resolution', '').upper()
+#         intervention.observations = request.POST.get('observations', '').upper()
+#         intervention.pieces_changees = request.POST.get('pieces_changees', '').upper()
+#         intervention.top_terminer = timezone.now()
+#
+#         # Calculer la durée de l'intervention
+#         if intervention.top_debut:
+#             duree = intervention.top_terminer - intervention.top_debut
+#             intervention.duree_intervention = int(duree.total_seconds())
+#         else:
+#             intervention.duree_intervention = 0
+#
+#         intervention.save()
+#
+#         # Mise à jour de la doléance
+#         doleance = intervention.doleance
+#         doleance.statut = statut_final
+#         interventions = Intervention.objects.filter(doleance=doleance)
+#         doleance.date_debut = interventions.aggregate(Min('top_debut'))['top_debut__min']
+#         doleance.date_fin = interventions.aggregate(Max('top_terminer'))['top_terminer__max']
+#         doleance.save()
+#
+#         # Mise à jour des techniciens
+#         for intervention_personnel in InterventionPersonnel.objects.filter(intervention=intervention):
+#             personnel = intervention_personnel.personnel
+#             personnel.statut = 'PRS'
+#             personnel.save()
+#
+#         return JsonResponse({
+#             'success': True,
+#             'message': 'Intervention terminée avec succès',
+#         })
+#     except Exception as e:
+#         return JsonResponse({'success': False, 'message': f'Erreur inattendue: {str(e)}'})
+
 @csrf_exempt
 @require_POST
 def terminer_travail(request, intervention_id):
@@ -675,8 +743,13 @@ def terminer_travail(request, intervention_id):
 
             numero_fiche_complet = f"00{numero_fiche:05d}"
 
+            # Vérifier si le numéro de fiche existe déjà
             if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
-                return JsonResponse({'success': False, 'message': 'Ce numéro de fiche est déjà utilisé'})
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Ce numéro de fiche est déjà utilisé. Veuillez en choisir un autre.',
+                    'error_type': 'numero_fiche_exists'
+                })
 
             intervention.numero_fiche = numero_fiche_complet
         except ValueError:
@@ -698,7 +771,14 @@ def terminer_travail(request, intervention_id):
         else:
             intervention.duree_intervention = 0
 
-        intervention.save()
+        try:
+            intervention.save()
+        except IntegrityError:
+            return JsonResponse({
+                'success': False,
+                'message': 'Ce numéro de fiche est déjà utilisé. Veuillez en choisir un autre.',
+                'error_type': 'numero_fiche_exists'
+            })
 
         # Mise à jour de la doléance
         doleance = intervention.doleance

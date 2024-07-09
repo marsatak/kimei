@@ -437,7 +437,7 @@
                 }
             }
 
-            if (form) {
+            {% comment %}if (form) {
                 form.onsubmit = function (e) {
                     e.preventDefault();
                     fetch('{% url "gmao:terminer_travail" intervention.id %}', {
@@ -461,7 +461,38 @@
                             alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
                         });
                 }
+            }{% endcomment %}
+            if (form) {
+    form.onsubmit = function (e) {
+        e.preventDefault();
+        fetch('{% url "gmao:terminer_travail" intervention.id %}', {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
             }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Intervention terminée avec succès');
+                window.location.reload();
+            } else {
+                if (data.error_type === 'numero_fiche_exists') {
+                    alert(data.message);
+                    document.getElementById('numero_fiche').value = '';  // Effacer le champ
+                    document.getElementById('numero_fiche').focus();  // Mettre le focus sur le champ
+                } else {
+                    alert('Erreur: ' + data.message);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
+        });
+    }
+}
         });
 
 
