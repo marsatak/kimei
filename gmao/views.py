@@ -1091,8 +1091,9 @@ def get_technicien_portfolio(request):
                         .filter(equipe=equipe.equipe)
                         .values_list('doleance_id', flat=True))
 
-    # Exclure les doléances terminées
-    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
+    # Exclure les doléances terminées et les ATP, ATD du jour courant
+    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+    doleances = filter_active_doleances(doleances)
 
     # Vérifier si une intervention est en cours pour cette équipe
     intervention_en_cours = Intervention.objects.using('kimei_db').filter(
