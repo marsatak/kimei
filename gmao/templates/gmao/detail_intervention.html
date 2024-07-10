@@ -190,7 +190,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="numero_fiche">Numéro de fiche :</label>
-                        <input type="text" class="form-control" id="numero_fiche" name="numero_fiche" maxlength="5" pattern="\d{1,5}" required>
+                        <input type="number" class="form-control" id="numero_fiche" name="numero_fiche" min="0" max="99999" required>
                     </div>
                 </div>
 
@@ -259,6 +259,7 @@
 </div>
 {% endblock %}
 
+{% comment %}
 {% block extra_js %}
     <script src="{% static 'gmao/js/home.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
@@ -437,7 +438,7 @@
                 }
             }
 
-            {% comment %}if (form) {
+            if (form) {
                 form.onsubmit = function (e) {
                     e.preventDefault();
                     fetch('{% url "gmao:terminer_travail" intervention.id %}', {
@@ -461,7 +462,7 @@
                             alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
                         });
                 }
-            }{% endcomment %}
+            }
             if (form) {
     form.onsubmit = function (e) {
         e.preventDefault();
@@ -565,5 +566,286 @@
         }
 
 
+    </script>
+{% endblock %}{% endcomment %}
+{% block extra_js %}
+    <script src="{% static 'gmao/js/home.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script>
+        function updateProgressBar(status) {
+            let height, activeSteps;
+            switch(status) {
+                case 'start':
+                    height = '0%';
+                    activeSteps = ['start'];
+                    break;
+                case 'half':
+                    height = '50%';
+                    activeSteps = ['start', 'half'];
+                    break;
+                case 'end':
+                    height = '100%';
+                    activeSteps = ['start', 'half', 'end'];
+                    break;
+                default:
+                    height = '0%';
+                    activeSteps = [];
+            }
+            $('.progress-bar-vertical').css('height', height);
+            $('.progress-step').removeClass('active');
+            activeSteps.forEach(step => {
+                $(`.progress-step[data-step="${step}"]`).addClass('active');
+            });
+        }
+
+        function updateGauge(durationInSeconds, maxDuration) {
+            const ctx = document.getElementById('interventionGauge').getContext('2d');
+            const config = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [durationInSeconds, maxDuration - durationInSeconds],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(220, 220, 220, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    circumference: 180,
+                    rotation: -90,
+                    cutout: '80%',
+                    plugins: {
+                        tooltip: {enabled: false},
+                        legend: {display: false}
+                    }
+                }
+            };
+            if (window.myChart instanceof Chart) {
+                window.myChart.data.datasets[0].data = [durationInSeconds, maxDuration - durationInSeconds];
+                window.myChart.update();
+            } else {
+                window.myChart = new Chart(ctx, config);
+            }
+        }
+
+        function updateDurationAndGauge() {
+            const startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
+            const maxDuration = 3600; // 1 heure en secondes
+
+            function update() {
+                const now = new Date().getTime();
+                const durationInSeconds = Math.floor((now - startTime) / 1000);
+
+                updateDurationDisplay(durationInSeconds);
+                updateGauge(durationInSeconds, maxDuration);
+
+                if (durationInSeconds < maxDuration) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            update();
+        }
+
+        function commencerIntervention(interventionId) {
+            console.log("Début de commencerIntervention", interventionId);
+            let kilometrage = prompt("Veuillez entrer le kilométrage de départ (chiffres uniquement):");
+            if (kilometrage === null) return; // L'utilisateur a annulé
+
+            kilometrage = kilometrage.replace(/[^0-9]/g, '');  // Supprime tous les caractères non numériques
+            if (kilometrage === '') {
+                alert("Veuillez entrer un kilométrage valide.");
+                return;
+            }
+
+            $.ajax({
+                url: '/home/commencer-intervention/' + interventionId + '/',
+                type: 'POST',
+                data: {
+                    kilometrage: kilometrage,
+                    csrfmiddlewaretoken: getCookie('csrftoken')
+                },
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
+                success: function (response) {
+                    if (response.success) {
+                        $('#top_debut').text(new Date(response.top_debut).toLocaleString(
+                            'fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric',
+                             hour: '2-digit', minute: '2-digit' }));
+                        $('.progress-bar').removeClass('bg-info').addClass('bg-warning')
+                            .css('width', '66%')
+                            .attr('aria-valuenow', 66)
+                            .text('En cours');
+                        $('.commencer-intervention').hide();
+                        window.location.reload();
+                    } else {
+                        alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erreur AJAX:", xhr.responseText);
+                    alert('Erreur lors de la communication avec le serveur: ' + error);
+                }
+            });
+        }
+
+        function annulerIntervention(interventionId) {
+            if (confirm("Êtes-vous sûr de vouloir annuler cette intervention ?")) {
+                $.ajax({
+                    url: `/home/intervention/${interventionId}/annuler/`,
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: getCookie('csrftoken')
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = '/home/';
+                        } else {
+                            alert('Erreur lors de l\'annulation de l\'intervention: ' + response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Erreur AJAX:", xhr.responseText);
+                        alert('Erreur lors de la communication avec le serveur: ' + error);
+                    }
+                });
+            }
+        }
+
+        function enforceNumericInput(input) {
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value.length > 5) {
+                    this.value = this.value.slice(0, 5);
+                }
+            });
+        }
+
+        function formatDuration(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${hours.toString().padStart(2, '0')}h:${minutes.toString().padStart(2, '0')}mn`;
+        }
+
+        function updateDurationDisplay(durationInSeconds) {
+            const formattedDuration = formatDuration(durationInSeconds);
+            $('#dureeIntervention').text(formattedDuration);
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
+            upperCaseInputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    this.value = this.value.toUpperCase();
+                });
+            });
+
+            const modal = document.getElementById("interventionFormModal");
+            const btn = document.getElementById("openInterventionForm");
+            const span = document.getElementsByClassName("close")[0];
+            const form = document.getElementById("interventionForm");
+            const numeroFicheInput = document.getElementById('numero_fiche');
+
+            enforceNumericInput(numeroFicheInput);
+
+            if (btn) {
+                btn.onclick = function () {
+                    modal.style.display = "block";
+                    document.getElementById('heure_fin').value = new Date().toTimeString().slice(0, 5);
+                }
+            }
+
+            if (span) {
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+            }
+
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            if (form) {
+                form.onsubmit = function (e) {
+                    e.preventDefault();
+                    fetch('{% url "gmao:terminer_travail" intervention.id %}', {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = '/home/';  // Redirection vers la page d'accueil
+                        } else {
+                            if (data.error_type === 'numero_fiche_exists') {
+                                alert(data.message);
+                                document.getElementById('numero_fiche').value = '';
+                                document.getElementById('numero_fiche').focus();
+                            } else {
+                                alert('Erreur: ' + data.message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
+                    });
+                }
+            }
+
+            $('.commencer-intervention').click(function(e) {
+                e.preventDefault();
+                commencerIntervention($(this).data('id'));
+            });
+
+            $('.annuler-intervention').click(function(e) {
+                e.preventDefault();
+                annulerIntervention($(this).data('id'));
+            });
+
+            // Initial progress bar and gauge update
+            {% if intervention.is_done %}
+                updateProgressBar('end');
+            {% elif intervention.is_half_done %}
+                updateProgressBar('half');
+            {% elif intervention.etat_doleance == 'ATT' %}
+                updateProgressBar('start');
+            {% else %}
+                updateProgressBar('start');
+            {% endif %}
+
+            {% if intervention.is_half_done and not intervention.is_done %}
+                // L'intervention est en cours
+                updateDurationAndGauge();
+            {% else %}
+                // L'intervention est terminée ou pas encore commencée
+                const initialDuration = {{ intervention.duree_intervention|default_if_none:0 }};
+                updateDurationDisplay(initialDuration);
+                updateGauge(initialDuration, 3600);
+            {% endif %}
+        });
     </script>
 {% endblock %}
