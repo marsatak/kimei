@@ -102,7 +102,6 @@ $(document).ready(function () {
         const doleanceId = $(this).data('id');
         declencherIntervention(doleanceId);
     });
-    setTimeout(refreshPersonnelTable, 60000)
 
     function initPersonnelTable() {
         if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
@@ -168,6 +167,8 @@ $(document).ready(function () {
             doleanceTable.ajax.reload(null, false);
         }
     }
+
+    setTimeout(refreshDoleanceTable, 60000)
 
     function refreshPersonnelTable() {
         if (personnelTable) {
