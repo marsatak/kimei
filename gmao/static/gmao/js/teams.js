@@ -39,7 +39,6 @@ $(document).ready(function () {
                         url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
                     },
                     searching: false,
-                    pagehide: true,
                     ordering: false,
                     pageLength: -1,  // Affiche toutes les entrées
                     lengthChange: false,  // Supprime le sélecteur de nombre d'entrées

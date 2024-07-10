@@ -55,7 +55,7 @@
             <!-- Section Équipes -->
             <section id="equipes-section" class="full-height-section">
                 <div class="container-fluid mt-4">
-                    <h2 class="mb-4">Équipes et leurs doléances</h2>
+                    <h4 class="mb-4">Équipes et leurs doléances</h4>
                     <div class="row">
                         {% for equipe in equipes_data %}
                             <div class="col-md-4 mb-4">
@@ -85,7 +85,8 @@
                                         <ul class="list-group">
                                             {% for doleance in equipe.doleances|slice:":5" %}
                                                 <li class="list-group-item">
-                                                    {{ doleance.ndi }} - {{ doleance.panne_declarer|truncatechars:50 }}
+                                                    {{ doleance.ndi }} - {{ doleance.station|truncatechars:20 }} -
+                                                    {{ doleance.panne_declarer|truncatechars:50 }}
                                                     <span class="badge bg-{% if doleance.statut == 'NEW' %}primary{% elif doleance.statut == 'ATT' %}warning{% elif doleance.statut == 'INT' %}info{% elif doleance.statut == 'ATP' %}danger{% elif doleance.statut == 'ATD' %}secondary{% endif %} float-end">
                                                         {{ doleance.statut }}
                                                     </span>
@@ -289,7 +290,7 @@
                     dataType: 'json',
                     success: function (data) {
                         console.log("Received elements:", data);  // Pour le débogage
-                        var select = $('#id_element');
+                        const select = $('#id_element');
                         select.empty().prop('disabled', false);
                         select.append('<option value="">Sélectionnez un élément</option>');
 
@@ -311,7 +312,7 @@
             }
 
             $('#submitDoleance').click(function () {
-                var formData = new FormData($('#doleanceForm')[0]);
+                const formData = new FormData($('#doleanceForm')[0]);
 
                 $.ajax({
                     url: '{% url "gmao:create_doleance" %}',
