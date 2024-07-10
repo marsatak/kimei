@@ -96,7 +96,7 @@
                     <h5 class="mb-0">Informations générales</h5>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Doléance {{ intervention.doleance.ndi }}</h5>
+                    <h5 class="card-title"><i class="fas fa-folder"></i>{{ intervention.doleance.ndi }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ intervention.doleance.station.client }} - {{ intervention.doleance.station.libelle_station }}</h6>
                     <p class="card-text">{{ intervention.doleance.panne_declarer }}</p>
                     {% if not intervention.is_done %}
