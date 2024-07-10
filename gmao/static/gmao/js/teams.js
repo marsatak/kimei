@@ -123,6 +123,7 @@ $(document).ready(function () {
     });
 
     loadTechnicienPortfolio();
+    setInterval(loadTechnicienPortfolio, 60000);
 });
 
 function getCookie(name) {
