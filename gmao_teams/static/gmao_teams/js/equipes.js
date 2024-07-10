@@ -125,14 +125,39 @@ $(document).ready(function () {
 
     function updateDoleancesList(doleances, listId) {
         let html = '';
-        doleances.forEach(function (doleance) {
+        /*doleances.forEach(function (doleance) {
             html += `
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span>${doleance.ndi} - ${doleance.panne_declarer}</span>
                 <button class="btn btn-sm btn-danger retirer-doleance" data-id="${doleance.id}">Retirer</button>
             </li>`;
+        });*/
+        doleances.forEach(function (doleance) {
+            html += `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>${doleance.ndi} - ${doleance.panne_declarer}</span>
+            <span class="badge badge-${getBadgeClass(doleance.statut)}">${doleance.statut}</span>
+            <button class="btn btn-sm btn-danger retirer-doleance" data-id="${doleance.id}">Retirer</button>
+        </li>`;
         });
         $(listId).html(html);
+    }
+
+    function getBadgeClass(statut) {
+        switch (statut) {
+            case 'NEW':
+                return 'primary';
+            case 'ATT':
+                return 'warning';
+            case 'INT':
+                return 'info';
+            case 'ATP':
+                return 'secondary';
+            case 'ATD':
+                return 'dark';
+            default:
+                return 'light';
+        }
     }
 
     function loadTechniciensDisponibles() {
@@ -154,13 +179,26 @@ $(document).ready(function () {
         let searchQuery = $('#searchDoleances').val();
         $.get(GET_DOLEANCES_NON_ATTRIBUEES_URL + '?search=' + searchQuery, function (data) {
             let html = '';
-            data.doleances.forEach(function (doleance) {
+            /*data.doleances.forEach(function (doleance) {
                 html += `
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>${doleance.ndi} - ${doleance.station__libelle_station} - ${doleance.panne_declarer}</span>
-                    <button class="btn btn-sm btn-success attribuer-doleance" data-id="${doleance.id}">Attribuer</button>
+                    <button class="btn btn-sm btn-success attribuer-doleance" data-id="${doleance.id}">
+                    <i class="fas fa-arrow-circle-left"></i>
+                    </button>
                 </li>`;
+            });*/
+            data.doleances.forEach(function (doleance) {
+                const boutonTexte = (doleance.statut === 'ATP' || doleance.statut === 'ATD') ? 'Réintégrer' : 'Affecter';
+                html += `
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>${doleance.ndi} - ${doleance.station__libelle_station} - ${doleance.panne_declarer}</span>
+                <button class="btn btn-sm btn-success attribuer-doleance" data-id="${doleance.id}">
+                    ${boutonTexte}
+                </button>
+            </li>`;
             });
+
             $('#listeDoléancesNonAttribuées').html(html);
         });
     }
@@ -207,6 +245,7 @@ $(document).ready(function () {
             function (data) {
                 if (data.success) {
                     loadEquipeDetails(currentEquipeId);
+                    loadDoleancesNonAttribuees();
                 }
             });
     });
@@ -222,7 +261,7 @@ $(document).ready(function () {
             });
     });
 
-    $(document).on('click', '.retirer-doleance', function () {
+    /*$(document).on('click', '.retirer-doleance', function () {
         let doleanceId = $(this).data('id');
         $.post(RETIRER_DOLEANCE_URL.replace('0', currentEquipeId),
             {doleance: doleanceId},
@@ -231,6 +270,25 @@ $(document).ready(function () {
                     loadEquipeDetails(currentEquipeId);
                 }
             });
+    });*/
+    $(document).on('click', '.retirer-doleance', function () {
+        let doleanceId = $(this).data('id');
+        $.ajax({
+            url: RETIRER_DOLEANCE_URL.replace('0', currentEquipeId),
+            type: 'POST',
+            data: {doleance: doleanceId},
+            success: function (data) {
+                if (data.success) {
+                    loadEquipeDetails(currentEquipeId);
+                    loadDoleancesNonAttribuees();
+                } else {
+                    alert('Erreur : ' + data.error);
+                }
+            },
+            error: function () {
+                alert('Une erreur est survenue lors du retrait de la doléance');
+            }
+        });
     });
 
     function chargerPiecesNonAttribuees() {

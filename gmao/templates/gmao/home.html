@@ -7,8 +7,9 @@
 
 {% block extra_css %}
     <!-- ... autres styles ... -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {{ block.super }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/dark.min.css">
 
 {% endblock extra_css %}
 
@@ -176,12 +177,6 @@
                     <h5 class="modal-title" id="doleanceModalLabel">Nouvelle doléance</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                {% comment %}<div class="modal-body">
-                    <form method="post" id="doleanceForm">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                    </form>
-                </div>{% endcomment %}
                 <div class="modal-body">
                     <form method="post" id="doleanceForm">
                         {% csrf_token %}
@@ -198,56 +193,12 @@
 {% endblock content %}
 
 {% block extra_js %}
-    {{ block.super }}
+
     <script src="{% static 'gmao/js/home.js' %}"></script>
     <script src="{% static 'gmao/js/teams.js' %}"></script>
     <script>
         const USER_ROLE = "{{ user_role }}";
     </script>
-    {% if user.role == 'ADMIN' %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-        <script>
-            new Sortable(document.getElementById('technicien-list'), {
-                group: {
-                    name: 'shared',
-                    pull: 'clone',
-                    put: false
-                },
-                sort: false
-            });
-
-            new Sortable(document.getElementById('doleance-list'), {
-                group: {
-                    name: 'shared',
-                    pull: false
-                },
-                onAdd: function (evt) {
-                    var technicienId = evt.item.getAttribute('data-id');
-                    var doleanceId = evt.to.getAttribute('data-id');
-
-                    $.ajax({
-                        url: '#',
-                        method: 'POST',
-                        data: {
-                            doleance_id: doleanceId,
-                            technicien_ids: [technicienId]
-                        },
-                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                        success: function (response) {
-                            if (response.success) {
-                                alert('Tâche attribuée avec succès');
-                                location.reload();
-                            } else {
-                                alert('Erreur: ' + response.message);
-                            }
-                        }
-                    });
-
-                    evt.to.removeChild(evt.item);
-                }
-            });
-        </script>
-    {% endif %}
     {#    Upper #}
     <script>
 
@@ -399,11 +350,15 @@
         });
     </script>
     {#    Dead Lin Format#}
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    {{ block.super }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/fr.js"></script>#}
+    {#    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>#}
     <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            flatpickr("#id_date_deadline", {
+            flatpickr(".flatpickr", {
                 enableTime: true,
                 dateFormat: "d/m/Y H:i",
                 time_24hr: true,

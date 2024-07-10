@@ -115,6 +115,7 @@ $(document).ready(function () {
         }
     }
 
+
     $(document).on('click', '.prendre-en-charge', function (e) {
         e.preventDefault();
         const doleanceId = $(this).data('id');

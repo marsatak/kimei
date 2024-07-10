@@ -72,7 +72,7 @@ $(document).ready(function () {
                 autoWidth: false,
                 ordering: false,
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                    // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
                 },
                 createdRow: function (row, data, dataIndex) {
                     $(row).addClass('status-' + data.statut)
@@ -104,50 +104,6 @@ $(document).ready(function () {
     });
 
 
-    /*    function initPersonnelTable() {
-            if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
-                personnelTable = $('#personnel').DataTable({
-                    ajax: {
-                        url: "/home/getPersonnel/",
-                        dataSrc: ""
-                    },
-                    columns: [
-                        {data: "nom_personnel"},
-                        {data: "prenom_personnel"},
-                        {
-                            data: "statut",
-                            render: function (data, type, row) {
-                                const statusClasses = {
-                                    'PRS': 'bg-success',
-                                    'ATT': 'bg-warning',
-                                    'INT': 'bg-info',
-                                    'ABS': 'bg-danger'
-                                };
-                                return `<span class="badge ${statusClasses[data] || 'bg-secondary'}">${data}</span>`;
-                            },
-                            className: 'status-column'
-                        },
-                        {
-                            data: null,
-                            render: function (data, type, row) {
-                                if (row.statut === 'ABS') {
-                                    return '<button class="btn btn-success btn-sm mark-arrivee" data-id="' + row.id + '">Marquer arrivée</button>';
-                                } else if (row.statut === 'PRS') {
-                                    return '<button class="btn btn-danger btn-sm mark-depart" data-id="' + row.id + '">Marquer départ</button>';
-                                }
-                                return '';
-                            }
-                        }
-                    ],
-                    responsive: true,
-                    autoWidth: false,
-                    ordering: false,
-                    language: {
-                        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                    }
-                });
-            }
-        }*/
     function initPersonnelTable() {
         if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
             personnelTable = $('#personnel').DataTable({
@@ -194,7 +150,7 @@ $(document).ready(function () {
                 autoWidth: false,
                 ordering: false,
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                    // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
                 }
             });
         }
@@ -226,9 +182,9 @@ $(document).ready(function () {
         $('#demandeencours').DataTable().draw();
         $('#personnel').DataTable().draw();
     });
-    $('#doleanceModal').on('show.bs.modal', function () {
+    /*$('#doleanceModal').on('show.bs.modal', function () {
         console.log('Modal is about to open');
-    });
+    });*/
     $('#personnel').on('click', '.mark-arrivee', function () {
         const personnelId = $(this).data('id');
         markArriveeOrDepart(personnelId, true);

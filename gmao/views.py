@@ -60,6 +60,7 @@ from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import Piece, UnitePiece, TypePiece
 from gmao_teams.models import Equipe
+from .utils import filter_active_doleances
 
 logger = logging.getLogger(__name__)
 
@@ -149,7 +150,8 @@ def home(request):
                                 .values_list('doleance_id', flat=True))
 
             # Récupérer les doléances correspondantes
-            doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(statut='TER')
+            doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+            doleances = filter_active_doleances(doleances)
 
             # Récupérer les IDs des techniciens pour cette équipe
             technicien_ids = list(EquipePersonnel.objects.using('teams_db')
@@ -1015,7 +1017,10 @@ def annuler_prise_en_charge(request, intervention_id):
 
         intervention = get_object_or_404(Intervention, id=intervention_id)
         doleance = intervention.doleance
-        doleance.statut = 'NEW'
+        if ancien_statut in ['ATP', 'ATD']:
+            doleance.statut = ancien_statut
+        else:
+            doleance.statut = 'NEW'
         doleance.save()
 
         # Réinitialiser l'intervention

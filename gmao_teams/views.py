@@ -10,6 +10,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db.models import Q
 from gmao.models import Piece
 from django.utils import timezone
+from gmao.utils import filter_active_doleances
 
 import logging
 
@@ -132,11 +133,9 @@ def get_equipe_details(request, equipe_id):
         DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe).values_list('doleance_id', flat=True))
 
     # Filtrer les doléances
-    today = timezone.now().date()
-    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids).exclude(
-        Q(statut='TER') |
-        (Q(statut__in=['ATP', 'ATD']) & Q(intervention__top_terminer__date=today))
-    )
+    # today = timezone.now().date()
+    doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+    doleances = filter_active_doleances(doleances)
 
     # Préparer les données des techniciens
     techniciens_data = [
@@ -227,15 +226,21 @@ def attribuer_doleance(request, equipe_id):
 
         # Vérifiez si la doléance existe
         doleance = get_object_or_404(Doleance, id=doleance_id)
+        doleance_equipe, created = DoleanceEquipe.objects.get_or_create(equipe=equipe, doleance_id=doleance_id)
+
+        if created:
+            message = 'Doléance attribuée avec succès'
+        else:
+            message = 'Doléance réintégrée avec succès'
 
         # Vérifiez si l'attribution existe déjà
-        if DoleanceEquipe.objects.filter(equipe=equipe, doleance_id=doleance_id).exists():
-            return JsonResponse({'success': False, 'error': 'Cette doléance est déjà attribuée à cette équipe'},
-                                status=400)
+        # if DoleanceEquipe.objects.filter(equipe=equipe, doleance_id=doleance_id).exists():
+        #     return JsonResponse({'success': False, 'error': 'Cette doléance est déjà attribuée à cette équipe'},
+        #                         status=400)
 
         # Créez l'attribution
-        DoleanceEquipe.objects.create(equipe=equipe, doleance_id=doleance_id)
-        return JsonResponse({'success': True})
+        # DoleanceEquipe.objects.create(equipe=equipe, doleance_id=doleance_id)
+        return JsonResponse({'success': True, 'message': message})
     return JsonResponse({'success': False, 'error': 'Méthode non autorisée'}, status=405)
 
 
@@ -284,11 +289,14 @@ def get_doleances_non_attribuees(request):
 
     # Obtenez d'abord tous les IDs des doléances déjà attribuées
     doleances_attribuees = list(DoleanceEquipe.objects.using('teams_db').values_list('doleance_id', flat=True))
-
+    today = timezone.now().date()
     # Ensuite, sélectionnez les doléances qui ne sont pas dans cette liste
     doleances = (Doleance.objects.using('kimei_db')
-                 .exclude(statut='TER')
-                 .exclude(id__in=doleances_attribuees))
+                 .filter(
+        Q(id__in=doleances_attribuees, statut__in=['ATP', 'ATD'], intervention__top_terminer__date=today) |
+        ~Q(id__in=doleances_attribuees)
+    )
+                 .exclude(statut='TER'))
 
     # Appliquer le filtre de recherche
     if search_query:
