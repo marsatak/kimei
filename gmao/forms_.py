@@ -8,6 +8,17 @@ from crispy_forms.layout import Layout, Field
 
 class DoleanceForm(forms.ModelForm):
     client = forms.ModelChoiceField(queryset=Client.objects.all(), empty_label="Sélectionnez un client")
+    date_deadline = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={
+                'class': 'flatpickr',
+                'format': '%d-%m-%Y %H:%M',
+            },
+            input
+        ),
+        required=False,
+        help_text="Date limite de l'intervention."
+    )
 
     panne_declarer = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}),

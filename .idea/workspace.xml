@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
-      <change afterPath="$PROJECT_DIR$/gmao/forms_.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/rafraichissement not reload.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/forms_.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/forms_.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,14 +209,6 @@
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
       <workItem from="1720372777331" duration="28308000" />
-    </task>
-    <task id="LOCAL-00128" summary="First commit">
-      <option name="closed" value="true" />
-      <created>1720351324232</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1720351324232</updated>
     </task>
     <task id="LOCAL-00129" summary="First commit">
       <option name="closed" value="true" />
@@ -611,7 +594,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720559440228</updated>
     </task>
-    <option name="localTasksCounter" value="177" />
+    <task id="LOCAL-00177" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720612291192</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1720612291192</updated>
+    </task>
+    <option name="localTasksCounter" value="178" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

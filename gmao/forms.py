@@ -15,6 +15,13 @@ from django.db.models import Q
 
 class DoleanceForm(forms.ModelForm):
     client = forms.ModelChoiceField(queryset=Client.objects.all(), empty_label="Sélectionnez un client")
+    date_deadline = forms.DateTimeField(
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={'class': 'flatpickr'},
+            format='%d/%m/%Y %H:%M'),
+        input_formats=['%d/%m/%Y %H:%M']
+    )
 
     panne_declarer = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}),  # Réduisez le nombre de lignes à 3
