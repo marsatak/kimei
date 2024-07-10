@@ -572,6 +572,16 @@
     <script src="{% static 'gmao/js/home.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <script>
+        function showNotification(message, type = 'info') {
+            Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: type === 'error' ? "#ff6b6b" : "#51cf66",
+            }).showToast();
+        }
         function updateProgressBar(status) {
             let height, activeSteps;
             switch(status) {
@@ -658,7 +668,7 @@
 
             kilometrage = kilometrage.replace(/[^0-9]/g, '');  // Supprime tous les caractères non numériques
             if (kilometrage === '') {
-                alert("Veuillez entrer un kilométrage valide.");
+                showNotification("Veuillez entrer un kilométrage valide.", 'error');
                 return;
             }
 
@@ -682,12 +692,12 @@
                         $('.commencer-intervention').hide();
                         window.location.reload();
                     } else {
-                        alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
+                        showNotification('Erreur lors du démarrage de l\'intervention: ' + response.message, 'error');
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("Erreur AJAX:", xhr.responseText);
-                    alert('Erreur lors de la communication avec le serveur: ' + error);
+                    showNotification('Erreur lors de la communication avec le serveur: ' + error, 'error');
                 }
             });
         }
@@ -704,12 +714,12 @@
                         if (response.success) {
                             window.location.href = '/home/';
                         } else {
-                            alert('Erreur lors de l\'annulation de l\'intervention: ' + response.message);
+                            showNotification('Erreur lors de l\'annulation de l\'intervention: ' + response.message, 'error');
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error("Erreur AJAX:", xhr.responseText);
-                        alert('Erreur lors de la communication avec le serveur: ' + error);
+                        showNotification('Erreur lors de la communication avec le serveur: ' + error, 'error');
                     }
                 });
             }
@@ -801,17 +811,17 @@
                             window.location.href = '/home/';  // Redirection vers la page d'accueil
                         } else {
                             if (data.error_type === 'numero_fiche_exists') {
-                                alert(data.message);
+                                showNotification(data.message, 'error');
                                 document.getElementById('numero_fiche').value = '';
                                 document.getElementById('numero_fiche').focus();
                             } else {
-                                alert('Erreur: ' + data.message);
+                                showNotification('Erreur: ' + data.message, 'error');
                             }
                         }
                     })
                     .catch(error => {
                         console.error('Erreur:', error);
-                        alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
+                        showNotification(`Une erreur est survenue lors de la terminaison de l'intervention`, 'error');
                     });
                 }
             }
