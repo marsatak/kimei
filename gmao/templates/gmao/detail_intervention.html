@@ -99,6 +99,19 @@
                     <h5 class="card-title">Doléance {{ intervention.doleance.ndi }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ intervention.doleance.station.client }} - {{ intervention.doleance.station.libelle_station }}</h6>
                     <p class="card-text">{{ intervention.doleance.panne_declarer }}</p>
+                    {% if not intervention.is_done %}
+                     {% csrf_token %}
+                        <div class="button-group">
+                        {% if not intervention.top_debut %}
+                            <button class="btn btn-primary commencer-intervention" data-id="{{ intervention.id }}">
+                                Commencer le travail
+                            </button>
+                        {% elif not intervention.top_terminer %}
+                            <button id="openInterventionForm" class="btn btn-success">Terminer le travail</button>
+                        {% endif %}
+                        <button class="btn btn-danger annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
