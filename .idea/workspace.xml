@@ -7,7 +7,6 @@
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,23 +208,7 @@
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
       <workItem from="1720372777331" duration="28308000" />
-      <workItem from="1720615175016" duration="10466000" />
-    </task>
-    <task id="LOCAL-00150" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720381117255</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1720381117255</updated>
-    </task>
-    <task id="LOCAL-00151" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720381211038</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1720381211038</updated>
+      <workItem from="1720615175016" duration="10854000" />
     </task>
     <task id="LOCAL-00152" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -603,7 +586,23 @@
       <option name="project" value="LOCAL" />
       <updated>1720638228229</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720638829697</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1720638829697</updated>
+    </task>
+    <task id="LOCAL-00200" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720639031313</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1720639031313</updated>
+    </task>
+    <option name="localTasksCounter" value="201" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
