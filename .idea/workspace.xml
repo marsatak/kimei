@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,15 +207,7 @@
       <workItem from="1720294723120" duration="8812000" />
       <workItem from="1720327945821" duration="9734000" />
       <workItem from="1720372777331" duration="28308000" />
-      <workItem from="1720615175016" duration="6024000" />
-    </task>
-    <task id="LOCAL-00137" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720373382521</created>
-      <option name="number" value="00137" />
-      <option name="presentableId" value="LOCAL-00137" />
-      <option name="project" value="LOCAL" />
-      <updated>1720373382521</updated>
+      <workItem from="1720615175016" duration="6378000" />
     </task>
     <task id="LOCAL-00138" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -601,7 +593,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720634126100</updated>
     </task>
-    <option name="localTasksCounter" value="186" />
+    <task id="LOCAL-00186" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720634218948</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1720634218948</updated>
+    </task>
+    <option name="localTasksCounter" value="187" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
