@@ -102,6 +102,29 @@
                 </div>
             </div>
         </div>
+        <!-- Carte des actions -->
+        {% if not intervention.is_done %}
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    <div class="button-group">
+                        {% if not intervention.top_debut %}
+                            <button class="btn btn-primary commencer-intervention" data-id="{{ intervention.id }}">
+                                Commencer le travail
+                            </button>
+                        {% elif not intervention.top_terminer %}
+                            <button id="openInterventionForm" class="btn btn-success">Terminer le travail</button>
+                        {% endif %}
+                        <button class="btn btn-danger annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
         <!-- Carte des techniciens affectés -->
         <div class="col-md-6 mb-4">
@@ -167,7 +190,7 @@
         </div>
 
         <!-- Carte de la jauge -->
-        <div class="col-md-6 mb-4">
+        {% comment %}<div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-header bg-warning text-dark">
                     <h5 class="mb-0">Jauge de progression</h5>
@@ -178,31 +201,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>{% endcomment %}
 
-        <!-- Carte des actions -->
-        {% if not intervention.is_done %}
-        <div class="col-md-12 mb-4">
-            <div class="card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Actions</h5>
-                </div>
-                <div class="card-body">
-                    {% csrf_token %}
-                    <div class="button-group">
-                        {% if not intervention.top_debut %}
-                            <button class="btn btn-primary commencer-intervention" data-id="{{ intervention.id }}">
-                                Commencer le travail
-                            </button>
-                        {% elif not intervention.top_terminer %}
-                            <button id="openInterventionForm" class="btn btn-success">Terminer le travail</button>
-                        {% endif %}
-                        <button class="btn btn-danger annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
+
+
     </div>
 </div>
 
