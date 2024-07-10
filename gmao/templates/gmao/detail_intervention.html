@@ -116,7 +116,7 @@
             </div>
         </div>
         <!-- Carte des actions -->
-        {% if not intervention.is_done %}
+        {% comment %}{% if not intervention.is_done %}
         <div class="col-md-12 mb-4">
             <div class="card">
                 <div class="card-header bg-secondary text-white">
@@ -137,7 +137,7 @@
                 </div>
             </div>
         </div>
-        {% endif %}
+        {% endif %}{% endcomment %}
 
         <!-- Carte des techniciens affectés -->
         <div class="col-md-6 mb-4">
