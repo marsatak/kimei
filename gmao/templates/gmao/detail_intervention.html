@@ -87,88 +87,124 @@
 </style>
 {% endblock %}
 {% block content %}
-    <div class="container-fluid">
-        <div class="container-fluid">
-        <h5 class="mb-2">Détails de l'intervention pour la doléance {{ intervention.doleance.ndi }}</h5>
-        <h5 class="mb-2">{{ intervention.doleance.station.client }}&nbsp;{{ intervention.doleance.station.libelle_station }}</h5>
-        <p class="mb-2 small">{{ intervention.doleance.panne_declarer }}</p>
-
-        <div class="row">
-            <div class="col-md-4 order-md-1 order-2 mb-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5>Techniciens affectés :</h5>
-                        <ul id="techniciensList" class="list-unstyled small mb-0">
-                            {% for tech in techniciens %}
-                                <li>{{ tech.personnel.nom_personnel }} {{ tech.personnel.prenom_personnel }}</li>
-                            {% empty %}
-                                <li>Aucun technicien affecté</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Carte d'informations générales -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Informations générales</h5>
                 </div>
-
-                {% if not intervention.is_done %}
-                    {% csrf_token %}
-                    <div class="button-group mt-2">
-                        {% if not intervention.top_debut %}
-                            <button class="btn btn-primary btn-sm commencer-intervention" data-id="{{ intervention.id }}">
-                                Commencer le travail
-                            </button>
-                        {% elif not intervention.top_terminer %}
-                            <button id="openInterventionForm" class="btn btn-success btn-sm">Terminer le travail</button>
-                        {% endif %}
-                        <button class="btn btn-danger btn-sm annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
-                    </div>
-                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">Doléance {{ intervention.doleance.ndi }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ intervention.doleance.station.client }} - {{ intervention.doleance.station.libelle_station }}</h6>
+                    <p class="card-text">{{ intervention.doleance.panne_declarer }}</p>
+                </div>
             </div>
+        </div>
 
-            <div class="col-md-8 order-md-2 order-1 mb-2">
-                <div class="card intervention-card">
-                    <div class="card-body">
-                        <div class="progress-container">
-                            <div class="progress-bar-vertical bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            <div class="progress-step" data-step="start">
-                                <span class="progress-label">Début : <span id="top_depart">{{ intervention.top_depart|date:"d/m/Y H:i" }}</span></span>
-                            </div>
-                            <div class="progress-step" data-step="half">
-                                <span class="progress-label">Travail : <span id="top_debut">
-                                {% if intervention.top_debut %}
-                                {{ intervention.top_debut|date:"d/m/Y H:i" }}
-                                {% else %}
-                                Non commencé
-                                {% endif %}
-                                </span></span>
-                            </div>
-                            <div class="progress-step" data-step="end">
-                                <span class="progress-label">Fin : <span id="top_terminer">
-                                {% if intervention.top_terminer %}
-                                {{ intervention.top_terminer|date:"d/m/Y H:i" }}
-                                {% else %}
-                                Non terminé
-                                {% endif %}
-                                </span></span>
-                            </div>
+        <!-- Carte des techniciens affectés -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Techniciens affectés</h5>
+                </div>
+                <div class="card-body">
+                    <ul id="techniciensList" class="list-group">
+                        {% for tech in techniciens %}
+                            <li class="list-group-item">{{ tech.personnel.nom_personnel }} {{ tech.personnel.prenom_personnel }}</li>
+                        {% empty %}
+                            <li class="list-group-item">Aucun technicien affecté</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte de progression de l'intervention -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Progression de l'intervention</h5>
+                </div>
+                <div class="card-body">
+                    <div class="progress-container">
+                        <div class="progress-bar-vertical bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-step" data-step="start">
+                            <span class="progress-label">Début : <span id="top_depart">{{ intervention.top_depart|date:"d/m/Y H:i" }}</span></span>
                         </div>
-                        <p class="intervention-info">Durée : <span id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span></p>
-                        <p class="intervention-info">Statut : <span id="statutIntervention">
-                            {% if intervention.is_done %}
-                                Terminée
-                            {% elif intervention.is_half_done %}
-                                En cours
+                        <div class="progress-step" data-step="half">
+                            <span class="progress-label">Travail : <span id="top_debut">
+                            {% if intervention.top_debut %}
+                            {{ intervention.top_debut|date:"d/m/Y H:i" }}
                             {% else %}
-                                Non commencée
+                            Non commencé
                             {% endif %}
-                        </span></p>
-                        <div class="gauge-container">
-                            <canvas id="interventionGauge"></canvas>
+                            </span></span>
                         </div>
+                        <div class="progress-step" data-step="end">
+                            <span class="progress-label">Fin : <span id="top_terminer">
+                            {% if intervention.top_terminer %}
+                            {{ intervention.top_terminer|date:"d/m/Y H:i" }}
+                            {% else %}
+                            Non terminé
+                            {% endif %}
+                            </span></span>
+                        </div>
+                    </div>
+                    <p class="mt-3">Durée : <span id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span></p>
+                    <p>Statut : <span id="statutIntervention">
+                        {% if intervention.is_done %}
+                            Terminée
+                        {% elif intervention.is_half_done %}
+                            En cours
+                        {% else %}
+                            Non commencée
+                        {% endif %}
+                    </span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte de la jauge -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">Jauge de progression</h5>
+                </div>
+                <div class="card-body">
+                    <div class="gauge-container">
+                        <canvas id="interventionGauge"></canvas>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Carte des actions -->
+        {% if not intervention.is_done %}
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    <div class="button-group">
+                        {% if not intervention.top_debut %}
+                            <button class="btn btn-primary commencer-intervention" data-id="{{ intervention.id }}">
+                                Commencer le travail
+                            </button>
+                        {% elif not intervention.top_terminer %}
+                            <button id="openInterventionForm" class="btn btn-success">Terminer le travail</button>
+                        {% endif %}
+                        <button class="btn btn-danger annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
-    </div>
+</div>
 
     <!-- Modal pour le formulaire de fin d'intervention -->
     <div id="interventionFormModal" class="modal">
@@ -259,315 +295,8 @@
 </div>
 {% endblock %}
 
-{% comment %}
-{% block extra_js %}
-    <script src="{% static 'gmao/js/home.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
-    <script>
-
-        function updateProgressBar(status) {
-            let height, activeSteps;
-            switch(status) {
-                case 'start':
-                    height = '0%';
-                    activeSteps = ['start'];
-                    break;
-                case 'half':
-                    height = '50%';
-                    activeSteps = ['start', 'half'];
-                    break;
-                case 'end':
-                    height = '100%';
-                    activeSteps = ['start', 'half', 'end'];
-                    break;
-                default:
-                    height = '0%';
-                    activeSteps = [];
-            }
-            $('.progress-bar-vertical').css('height', height);
-            $('.progress-step').removeClass('active');
-            activeSteps.forEach(step => {
-                $(`.progress-step[data-step="${step}"]`).addClass('active');
-            });
-        }
-        function updateGauge(durationInSeconds, maxDuration) {
-    const ctx = document.getElementById('interventionGauge').getContext('2d');
-    const config = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [durationInSeconds, maxDuration - durationInSeconds],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(220, 220, 220, 0.8)'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            circumference: 180,
-            rotation: -90,
-            cutout: '80%',
-            plugins: {
-                tooltip: {enabled: false},
-                legend: {display: false}
-            }
-        }
-    };
-    if (window.myChart instanceof Chart) {
-        window.myChart.data.datasets[0].data = [durationInSeconds, maxDuration - durationInSeconds];
-        window.myChart.update();
-    } else {
-        window.myChart = new Chart(ctx, config);
-    }
-}
-        function updateDurationAndGauge() {
-    const startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
-    const maxDuration = 3600; // 1 heure en secondes
-
-    function update() {
-        const now = new Date().getTime();
-        const durationInSeconds = Math.floor((now - startTime) / 1000);
-
-        updateDurationDisplay(durationInSeconds);
-        updateGauge(durationInSeconds, maxDuration);
-
-        // Si l'intervention dépasse 1 heure, on continue de mettre à jour
-        if (durationInSeconds < maxDuration) {
-            requestAnimationFrame(update);
-        }
-    }
-
-    update();
-}
-
-        function commencerIntervention(interventionId) {
-            console.log("Début de commencerIntervention", interventionId);
-            let kilometrage = prompt("Veuillez entrer le kilométrage de départ:");
-            if (kilometrage === null) return; // L'utilisateur a annulé
-
-            $.ajax({
-                url: '/home/commencer-intervention/' + interventionId + '/',
-                type: 'POST',
-                data: {
-                    kilometrage: kilometrage,
-                    csrfmiddlewaretoken: getCookie('csrftoken')
-                },
-                headers: {'X-CSRFToken': getCookie('csrftoken')},
-                success: function (response) {
-                    if (response.success) {
-                        alert('Intervention commencée avec succès.');
-                        $('#top_debut').text(new Date(response.top_debut).toLocaleString(
-                            'fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric',
-                             hour: '2-digit', minute: '2-digit' }));
-                        $('#top_debut').text(response.top_debut);
-                        $('.progress-bar').removeClass('bg-info').addClass('bg-warning')
-                            .css('width', '66%')
-                            .attr('aria-valuenow', 66)
-                            .text('En cours');
-                        $('.commencer-intervention').hide()
-                        window.location.reload();
-                        $('#openInterventionForm').show();
-                    } else {
-                        alert('Erreur lors du démarrage de l\'intervention: ' + response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Erreur AJAX:", xhr.responseText);
-                    alert('Erreur lors de la communication avec le serveur: ' + error);
-                }
-            });
-        }
 
 
-        function annulerIntervention(interventionId) {
-            if (confirm("Êtes-vous sûr de vouloir annuler cette intervention ?")) {
-                $.ajax({
-                    url: `/home/intervention/${interventionId}/annuler/`,
-                    type: 'POST',
-                    data: {
-                        csrfmiddlewaretoken: getCookie('csrftoken')
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            alert('Intervention annulée avec succès.');
-                            window.location.href = '/home/';
-
-                        } else {
-                            alert('Erreur lors de l\'annulation de l\'intervention: ' + response.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Erreur AJAX:", xhr.responseText);
-                        alert('Erreur lors de la communication avec le serveur: ' + error);
-                    }
-                });
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
-            upperCaseInputs.forEach(input => {
-                input.addEventListener('input', function () {
-                    this.value = this.value.toUpperCase();
-                });
-            });
-
-            const modal = document.getElementById("interventionFormModal");
-            const btn = document.getElementById("openInterventionForm");
-            const span = document.getElementsByClassName("close")[0];
-            const form = document.getElementById("interventionForm");
-
-            if (btn) {
-                btn.onclick = function () {
-                    modal.style.display = "block";
-                    document.getElementById('heure_fin').value = new Date().toTimeString().slice(0, 5);
-                }
-            }
-
-            if (span) {
-                span.onclick = function () {
-                    modal.style.display = "none";
-                }
-            }
-
-            window.onclick = function (event) {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            }
-
-            if (form) {
-                form.onsubmit = function (e) {
-                    e.preventDefault();
-                    fetch('{% url "gmao:terminer_travail" intervention.id %}', {
-                        method: 'POST',
-                        body: new FormData(form),
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert('Intervention terminée avec succès');
-                                window.location.reload();
-                            } else {
-                                alert('Erreur: ' + data.message)
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Erreur:', error);
-                            alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
-                        });
-                }
-            }
-            if (form) {
-    form.onsubmit = function (e) {
-        e.preventDefault();
-        fetch('{% url "gmao:terminer_travail" intervention.id %}', {
-            method: 'POST',
-            body: new FormData(form),
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Intervention terminée avec succès');
-                window.location.reload();
-            } else {
-                if (data.error_type === 'numero_fiche_exists') {
-                    alert(data.message);
-                    document.getElementById('numero_fiche').value = '';  // Effacer le champ
-                    document.getElementById('numero_fiche').focus();  // Mettre le focus sur le champ
-                } else {
-                    alert('Erreur: ' + data.message);
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-            alert(`Une erreur est survenue lors de la terminaison de l'intervention`);
-        });
-    }
-}
-        });
-
-
-        function initializeModal() {
-            // Le code pour initialiser le modal reste inchangé
-        }
-        function formatDuration(seconds) {
-            const hours = Math.floor(seconds / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-            return `${hours.toString().padStart(2, '0')}h:${minutes.toString().padStart(2, '0')}mn`;
-        }
-
-        function updateDurationDisplay(durationInSeconds) {
-            const formattedDuration = formatDuration(durationInSeconds);
-            $('#dureeIntervention').text(formattedDuration);
-        }
-
-        $(document).ready(function() {
-
-
-            $('.commencer-intervention').click(function(e) {
-                e.preventDefault();
-                commencerIntervention($(this).data('id'));
-            });
-
-            $('.annuler-intervention').click(function(e) {
-                e.preventDefault();
-                annulerIntervention($(this).data('id'));
-            });
-
-            // Initial progress bar and gauge update
-            {% if intervention.is_done %}
-                updateProgressBar('end');
-                {#updateGauge({{ intervention.duree_intervention|default_if_none:3600 }}, 3600);#}
-            {% elif intervention.is_half_done %}
-                updateProgressBar('half');
-                {#updateGauge({{ intervention.duree_intervention|default_if_none:0 }}, 3600);#}
-            {% elif intervention.etat_doleance == 'ATT'%}
-                updateProgressBar('start');
-                {#updateGauge(0, 3600);#}
-                {% else %}
-                updateProgressBar('start');
-                {#updateGauge(0, 3600);#}
-            {% endif %}
-
-            initializeModal();
-            {% if intervention.is_half_done and not intervention.is_done %}
-        // L'intervention est en cours
-                updateDurationAndGauge();
-            {% else %}
-        // L'intervention est terminée ou pas encore commencée
-                const initialDuration = {{ intervention.duree_intervention|default_if_none:0 }};
-                updateDurationDisplay(initialDuration);
-                updateGauge(initialDuration, 3600);
-            {% endif %}
-        });
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-
-    </script>
-{% endblock %}{% endcomment %}
 {% block extra_js %}
     <script src="{% static 'gmao/js/home.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
