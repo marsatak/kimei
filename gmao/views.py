@@ -724,7 +724,6 @@ def detail_intervention(request, intervention_id):
 #         })
 #     except Exception as e:
 #         return JsonResponse({'success': False, 'message': f'Erreur inattendue: {str(e)}'})
-
 @csrf_exempt
 @require_POST
 def terminer_travail(request, intervention_id):
@@ -746,7 +745,7 @@ def terminer_travail(request, intervention_id):
             numero_fiche_complet = f"00{numero_fiche:05d}"
 
             # Vérifier si le numéro de fiche existe déjà
-            if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exists():
+            if Intervention.objects.filter(numero_fiche=numero_fiche_complet).exclude(id=intervention_id).exists():
                 return JsonResponse({
                     'success': False,
                     'message': 'Ce numéro de fiche est déjà utilisé. Veuillez en choisir un autre.',
@@ -773,14 +772,7 @@ def terminer_travail(request, intervention_id):
         else:
             intervention.duree_intervention = 0
 
-        try:
-            intervention.save()
-        except IntegrityError:
-            return JsonResponse({
-                'success': False,
-                'message': 'Ce numéro de fiche est déjà utilisé. Veuillez en choisir un autre.',
-                'error_type': 'numero_fiche_exists'
-            })
+        intervention.save()
 
         # Mise à jour de la doléance
         doleance = intervention.doleance
