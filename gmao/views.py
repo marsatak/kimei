@@ -371,7 +371,7 @@ def resetPointage(request):
     for personnel in personnels:
         personnel.statut = "ABS"
         personnel.save()
-    return redirect('logout')
+    return redirect('accounts:logout-admin')
 
 
 @csrf_exempt
