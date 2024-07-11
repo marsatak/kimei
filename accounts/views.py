@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import cache_control
 
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
@@ -59,6 +60,7 @@ def change_password(request):
 
 
 @csrf_exempt
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -127,7 +129,7 @@ def logout_view(request):
     User = get_user_model()
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
-        user.session_key = None
+        # user.session_key = None
         # user.statut = 'ABS'
         user.save()
     logout(request)
