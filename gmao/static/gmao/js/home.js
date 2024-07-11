@@ -169,13 +169,14 @@ $(document).ready(function () {
         }
     }
 
-    setTimeout(refreshDoleanceTable, 60000)
-
     function refreshPersonnelTable() {
         if (personnelTable) {
             personnelTable.ajax.reload(null, false);
         }
     }
+
+    setTimeout(refreshDoleanceTable, 15000)
+    setTimeout(refreshPersonnelTable, 60000)
 
 
     $(window).resize(function () {
@@ -381,8 +382,8 @@ $(document).ready(function () {
     $('#interventionForm').submit(function (e) {
         e.preventDefault();
 
-        var formData = new FormData(this);
-        var interventionId = $('#intervention-id-input').val();
+        const formData = new FormData(this);
+        const interventionId = $('#intervention-id-input').val();
 
         $.ajax({
             url: '/home/intervention/' + interventionId + '/terminer/',
