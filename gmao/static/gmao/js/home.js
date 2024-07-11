@@ -56,11 +56,26 @@ $(document).ready(function () {
                         }
                     },
                     {data: 'commentaire', width: "15%"},
-                    {
+                    /*{
                         data: null, width: "10%",
                         render: function (data, type, row) {
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
                                 return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
+                                    '<i class="fas fa-arrow-alt-circle-up"></i>' +
+                                    '</button>';
+                            }
+                            return '';
+                        }
+                    },*/
+                    {
+                        data: null, width: "10%",
+                        render: function (data, type, row) {
+                            if (row.statut === 'NEW') {
+                                return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
+                                    '<i class="fas fa-arrow-alt-circle-up"></i>' +
+                                    '</button>';
+                            } else if (row.statut === 'ATD' || row.statut === 'ATP') {
+                                return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '" disabled>' +
                                     '<i class="fas fa-arrow-alt-circle-up"></i>' +
                                     '</button>';
                             }
