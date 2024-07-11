@@ -181,7 +181,7 @@ table.dataTable {
 
 /* Styles pour les différents états de doléance */
 table.dataTable tbody tr.status-NEW {
-    background-color: #63b069 !important; /* Vert plus vif */
+    background-color: #A0F0A3 !important; /* Vert plus vif */
     /*color: white !important;*/
     /*background-color: #d4edda !important;*/
 }
@@ -200,15 +200,15 @@ table.dataTable tbody tr.status-ATT {
 }
 
 table.dataTable tbody tr.status-INT {
-    background-color: #f55da7 !important;
+    background-color: #EE8B1F !important;
 }
 
 table.dataTable tbody tr.status-ATP {
-    background-color: #daf86b !important;
+    background-color: #C2D7FD !important;
 }
 
 table.dataTable tbody tr.status-ATD {
-    background-color: #efa152 !important;
+    background-color: #EDBDFE !important;
 }
 
 /* Styles du portfolio */
