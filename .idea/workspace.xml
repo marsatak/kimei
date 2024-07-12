@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
+      <change afterPath="$PROJECT_DIR$/accounts/templates/registration/login__.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/Passage/12072024/liste_interventions_ok_without_export.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/registration/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/12072024/liste_interventions_.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +92,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/gmao&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/gmao/templates/gmao&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
@@ -101,18 +113,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/gmao" />
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
+      <recent name="$PROJECT_DIR$/accounts/templates/registration" />
+      <recent name="$PROJECT_DIR$/gmao" />
       <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
       <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
-      <recent name="$PROJECT_DIR$/gmao/static/gmao/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/Passage/12072024" />
       <recent name="$PROJECT_DIR$/gmao/Passage" />
       <recent name="$PROJECT_DIR$/gmao/Passage/08072024" />
       <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
       <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
-      <recent name="$PROJECT_DIR$/gmao/Passage/OLD" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.kimei">
@@ -213,6 +225,12 @@
       <workItem from="1720670535086" duration="6000" />
       <workItem from="1720670639643" duration="2862000" />
       <workItem from="1720682045046" duration="4342000" />
+      <workItem from="1720717221418" duration="3465000" />
+      <workItem from="1720761589922" duration="180000" />
+      <workItem from="1720761900846" duration="569000" />
+      <workItem from="1720775988528" duration="19000" />
+      <workItem from="1720778695331" duration="12679000" />
+      <workItem from="1720802370101" duration="7057000" />
     </task>
     <task id="LOCAL-00162" summary="Version Alpha">
       <option name="closed" value="true" />

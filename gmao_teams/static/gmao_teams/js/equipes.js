@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     document.addEventListener('DOMContentLoaded', function () {
         const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
         upperCaseInputs.forEach(input => {
@@ -7,6 +8,13 @@ $(document).ready(function () {
             });
         });
     });
+
+    function toggleSpinner(spinnerId, show) {
+        const spinner = document.getElementById(spinnerId);
+        if (spinner) {
+            spinner.style.display = show ? 'inline-block' : 'none';
+        }
+    }
 
     $.ajaxSetup({
         beforeSend: function (xhr, settings) {
@@ -85,6 +93,9 @@ $(document).ready(function () {
             });
             html += '</ul>';
             $('#listeEquipes').html(html);
+            if (currentEquipeId) {
+                loadEquipeDetails(currentEquipeId);
+            }
         });
     }
 
@@ -110,6 +121,16 @@ $(document).ready(function () {
         });
 
     }
+
+    function refreshEquipeDetails() {
+        if (currentEquipeId) {
+            loadEquipeDetails(currentEquipeId);
+        } else {
+            loadEquipes();
+        }
+    }
+
+    setInterval(refreshEquipeDetails, 60000);
 
     function updateTechniciensList(techniciens, listId) {
         let html = '';
@@ -210,9 +231,10 @@ $(document).ready(function () {
 
     $(document).on('click', '.affecter-technicien', function (e) {
         e.preventDefault();
+
         let technicienId = $(this).data('id');
         console.log("Tentative d'affectation du technicien:", technicienId, "à l'équipe:", currentEquipeId);
-
+        toggleSpinner('technicienEquipeSpinner', true);
         $.ajax({
             url: AFFECTER_TECHNICIEN_URL.replace('0', currentEquipeId),
             type: 'POST',
@@ -236,6 +258,7 @@ $(document).ready(function () {
                 alert("Une erreur est survenue lors de l'affectation du technicien. Veuillez vérifier la console pour plus de détails.");
             }
         });
+        toggleSpinner('technicienEquipeSpinner', false);
     });
 
     $(document).on('click', '.attribuer-doleance', function () {
@@ -252,6 +275,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.retirer-technicien', function () {
         let technicienId = $(this).data('id');
+        toggleSpinner('technicienDispoSpinner', true);
         $.post(RETIRER_TECHNICIEN_URL.replace('0', currentEquipeId),
             {technicien: technicienId},
             function (data) {
@@ -259,6 +283,8 @@ $(document).ready(function () {
                     loadEquipeDetails(currentEquipeId);
                 }
             });
+        toggleSpinner('technicienDispoSpinner', false);
+
     });
 
     /*$(document).on('click', '.retirer-doleance', function () {

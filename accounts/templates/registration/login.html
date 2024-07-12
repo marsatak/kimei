@@ -1,48 +1,45 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Connexion - MEI{% endblock title %}
-
-{% block extra_css %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEI | Log in</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
-    <style>
-        body {
-            background-image: url('/static/img/home_nb.jpg');
-            opacity: 100%;
-            background-position: center 0;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-            /* overflow: hidden; */
+</head>
+<body>
+<div class="login-container">
+    <div class="login-box">
+        <div class="logo">
+            <img src="{% static 'accounts/img/logo_mei.png' %}" alt="Mei Logo">
+        </div>
 
-        }
-    </style>
+        <h2>Connexion</h2>
 
-{% endblock extra_css %}
+        <form method="POST" action="{% url 'accounts:login-admin' %}">
+            {% csrf_token %}
 
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
 
-{% block content %}
-    <div class="login-container">
-        <div class="login-box">
-            <div class="logo">
-                <img src="{% static 'accounts/img/logo_mei.png' %}" alt="Mei Logo">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" required>
             </div>
-            <h2>Connexion</h2>
-            <form method="post" class="login-form">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Nom d'utilisateur</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit">Se connecter</button>
-            </form>
-            <div class="login-footer">
-                <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
             </div>
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <div class="login-footer">
+            <a href="#" class="forgot-password">Mot de passe oublié ?</a>
         </div>
     </div>
-{% endblock content %}
+</div>
+</body>
+</html>

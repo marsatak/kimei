@@ -313,7 +313,7 @@
 
             $('#submitDoleance').click(function () {
                 const formData = new FormData($('#doleanceForm')[0]);
-
+                $(this).prop('disabled', true);
                 $.ajax({
                     url: '{% url "gmao:create_doleance" %}',
                     type: 'POST',
@@ -344,9 +344,14 @@
                     },
                     error: function () {
                         alert('Une erreur est survenue lors de la création de la doléance.');
+                    },
+                    complete: function () {
+                        // Réactiver le bouton après la soumission
+                        $('#submitDoleance').prop('disabled', false);
                     }
                 });
-            });
+            })
+            ;
 
         });
     </script>

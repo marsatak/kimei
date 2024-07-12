@@ -908,13 +908,15 @@ def get_interventions_data(request):
 
         data.append({
             'id': intervention.id,
+            'appelant': intervention.doleance.appelant.nom_appelant if intervention.doleance.appelant else '',
             'ndi': intervention.doleance.ndi if intervention.doleance else '',
             'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
             'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
             'prise_en_charge': intervention.top_depart.strftime('%d/%m/%Y %H:%M') if intervention.top_depart else '',
             'debut_travail': intervention.top_debut.strftime('%d/%m/%Y %H:%M') if intervention.top_debut else '',
             'fin_travail': intervention.top_terminer.strftime('%d/%m/%Y %H:%M') if intervention.top_terminer else '',
-            'statut': 'Terminée' if intervention.is_done else 'En cours' if intervention.is_half_done else 'Non commencée',
+            # 'statut': 'Terminée' if intervention.is_done else 'En cours' if intervention.is_half_done else 'Non commencée',
+            'statut': intervention.doleance.statut,
             'techniciens': techniciens_list,
             'duree': str(intervention.duree_intervention) if intervention.duree_intervention else '',
             'kilometrage_depart': str(

@@ -186,7 +186,9 @@
                                         data-statut="{% if intervention.is_done %}Terminée{% elif intervention.is_half_done %}En cours{% else %}Non commencée{% endif %}"
                                         data-techniciens="
 
+
                                                 {% for technicien in intervention.techniciens %}{{ technicien.nom_personnel }}
+
 
                                                     {{ technicien.prenom_personnel }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                                         data-actions="<a href='{% url 'gmao:detail_intervention' intervention.id %}' class='btn btn-sm btn-primary'>Éditer</a>"
@@ -370,7 +372,7 @@
         }
 
         $(document).ready(function () {
-            var table = $('#interventionsTable').DataTable({
+            const table = $('#interventionsTable').DataTable({
                 "responsive": true,
                 "columns": [
                     {
@@ -395,7 +397,7 @@
                 "buttons": [
                     {
                         extend: 'excel',
-                        text: 'Exporter en Excel',
+                        text: 'Exporter Excel',
                         exportOptions: {
                             columns: ':visible:not(:first-child)'
                         }
@@ -408,8 +410,8 @@
 
             // Gestionnaire d'événements pour le bouton d'extension/réduction
             $('#interventionsTable tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).closest('tr');
-                var row = table.row(tr);
+                const tr = $(this).closest('tr');
+                const row = table.row(tr);
 
                 if (row.child.isShown()) {
                     // Cette ligne est déjà ouverte - fermons-la

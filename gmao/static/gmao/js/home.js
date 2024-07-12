@@ -56,26 +56,11 @@ $(document).ready(function () {
                         }
                     },
                     {data: 'commentaire', width: "15%"},
-                    /*{
+                    {
                         data: null, width: "10%",
                         render: function (data, type, row) {
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
                                 return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
-                                    '<i class="fas fa-arrow-alt-circle-up"></i>' +
-                                    '</button>';
-                            }
-                            return '';
-                        }
-                    },*/
-                    {
-                        data: null, width: "10%",
-                        render: function (data, type, row) {
-                            if (row.statut === 'NEW') {
-                                return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
-                                    '<i class="fas fa-arrow-alt-circle-up"></i>' +
-                                    '</button>';
-                            } else if (row.statut === 'ATD' || row.statut === 'ATP') {
-                                return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '" disabled>' +
                                     '<i class="fas fa-arrow-alt-circle-up"></i>' +
                                     '</button>';
                             }
@@ -174,24 +159,35 @@ $(document).ready(function () {
     if ($('#demandeencours').length && USER_ROLE === 'ADMIN') {
         initDoleanceTable();
         initPersonnelTable();
+        setInterval(refreshDoleanceTable, 60000);
+        setInterval(refreshPersonnelTable, 60000);
     } else if ($('#portfolioContainer').length) {
         loadTechnicienPortfolio();
     }
 
-    function refreshDoleanceTable() {
+    /*function refreshDoleanceTable() {
         if (doleanceTable) {
             doleanceTable.ajax.reload(null, false);
         }
+    }*/
+    function refreshDoleanceTable() {
+        console.log("Refreshing doleanceTable");
+        if (doleanceTable) {
+            doleanceTable.ajax.reload(null, false);
+        } else {
+            console.log("doleanceTable is not defined try initialize...");
+            initDoleanceTable()
+        }
     }
+
 
     function refreshPersonnelTable() {
         if (personnelTable) {
             personnelTable.ajax.reload(null, false);
+        } else {
+            initPersonnelTable()
         }
     }
-
-    setTimeout(refreshDoleanceTable, 15000)
-    setTimeout(refreshPersonnelTable, 60000)
 
 
     $(window).resize(function () {
@@ -399,7 +395,7 @@ $(document).ready(function () {
 
         const formData = new FormData(this);
         const interventionId = $('#intervention-id-input').val();
-
+        $(this).prop('disabled', true);
         $.ajax({
             url: '/home/intervention/' + interventionId + '/terminer/',
             type: 'POST',
@@ -420,6 +416,10 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 console.error("Erreur AJAX:", xhr.responseText);
                 alert('Erreur lors de la communication avec le serveur: ' + error);
+            },
+            complete: function () {
+                // Réactiver le bouton après la soumission
+                $('#submitDoleance').prop('disabled', false);
             }
         });
     });

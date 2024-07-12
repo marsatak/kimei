@@ -12,6 +12,8 @@
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/dark.min.css">
     <style>
@@ -67,7 +69,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Liste des interventions</h4>
+                        <h4 class="mb-0">Liste des interventions {{ current_date }}</h4>
                         <div class="filter-container">
                             <label for="startDate"></label><input type="text" id="startDate"
                                                                   class="form-control form-control-sm flatpickr-input"
@@ -92,9 +94,10 @@
                                 <th>NDI</th>
                                 <th>Station</th>
                                 <th>Panne</th>
+                                <th>Résolution</th>
                                 <th>FI</th>
-                                <th>Début travail</th>
-                                <th>Fin travail</th>
+                                <th>Début</th>
+                                <th>Fin</th>
                                 <th>Statut</th>
                                 <th>Techniciens</th>
                                 <th>Actions</th>
@@ -111,6 +114,9 @@
 {% block extra_js %}
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
     <script>
         $(document).ready(function () {
             // Configuration de base pour Flatpickr
@@ -144,7 +150,14 @@
 
                 table = $('#interventionsTable').DataTable({
                     ajax: {
+                        initComplete: function () {
+                            $('#loadingIndicator').show();
+                        },
                         url: '{% url "gmao:get_interventions_data" %}',
+                        dataSrc: function (json) {
+                            window.fullInterventionsData = json.data;
+                            return json.data;
+                        },
                         data: function (d) {
                             d.startDate = $('#startDate').val();
                             d.endDate = $('#endDate').val();
@@ -154,6 +167,7 @@
                         {data: 'ndi'},
                         {data: 'station'},
                         {data: 'panne'},
+                        {data: 'resolution'},
                         {data: 'numero_fiche'},
                         {data: 'debut_travail'},
                         {data: 'fin_travail'},
@@ -174,26 +188,104 @@
                             }
                         }
                     ],
+                    createdRow: function (row, data, dataIndex) {
+                        $(row).addClass('status-' + data.statut);
+                    },
                     language: {
                         url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
                     },
                     responsive: true,
-                    processing: true,
-                    serverSide: false,
+                    ordering: false,
+                    {#processing: true,#}
                     dom: 'Bfrtip',
                     buttons: [
                         {
-                            extend: 'excel',
                             text: 'Exporter en Excel',
-                            exportOptions: {
-                                columns: ':visible'
-                            }
+                            action: function (e, dt, node, config) {
+                                exportToExcel(dt);
+                            },
                         },
-                    ]
+                    ],
+                    initComplete: function () {
+                        $('#loadingIndicator').hide();
+                    }
                 });
             }
 
             initializeDataTable();
+
+            function exportToExcel(dt) {
+                const data = dt.data().toArray();
+                const formattedData = data.map(function (row) {
+                    return {
+                        'Appelant': row.appelant,
+                        'Numéro d\'intervention': row.ndi,
+                        'Station': row.station,
+                        'Description de la panne': row.panne,
+                        'Résolution': row.resolution,
+                        'Fiche d\'intervention': row.numero_fiche,
+                        'Début des travaux': formatDate(row.debut_travail),
+                        'Fin des travaux': formatDate(row.fin_travail),
+                        'Statut actuel': row.statut,
+                        'Techniciens assignés': formatTechniciens(row.techniciens),
+                        'Durée totale (heures)': calculateDuration(row.debut_travail, row.fin_travail)
+                    };
+
+                });
+
+
+                // Le reste du code pour créer et télécharger le fichier Excel...
+                // Utilisation de formattedData pour créer la feuille Excel
+                var ws = XLSX.utils.json_to_sheet(formattedData);
+
+                // Création du classeur Excel
+                var wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Interventions");
+
+                // Génération du fichier Excel
+                var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+
+                // Fonction pour convertir les données en ArrayBuffer
+                function s2ab(s) {
+                    var buf = new ArrayBuffer(s.length);
+                    var view = new Uint8Array(buf);
+                    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+                }
+
+                // Déclenchement du téléchargement
+                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), "liste_interventions.xlsx");
+            }
+
+// Fonctions auxiliaires pour le formatage
+            function formatDate(dateString) {
+                // Convertir la date en format lisible
+                return new Date(dateString).toLocaleString('fr-FR');
+            }
+
+            {% comment %}function formatTechniciens(techniciens) {
+                // Formater la liste des techniciens (par exemple, les joindre avec des virgules)
+                return Array.isArray(techniciens) ? techniciens.join(', ') : techniciens;
+            }{% endcomment %}
+
+            function formatTechniciens(techniciens) {
+                if (!Array.isArray(techniciens)) {
+                    return techniciens;
+                }
+
+                return techniciens.map(tech => {
+                    // Assurez-vous que chaque technicien est une chaîne de caractères
+                    return typeof tech === 'string' ? tech : `${tech.nom} ${tech.prenom}`;
+                }).join('.<br>• ');
+            }
+
+            function calculateDuration(start, end) {
+                // Calculer la durée entre début et fin des travaux
+                const startDate = new Date(start);
+                const endDate = new Date(end);
+                const durationMs = endDate - startDate;
+                return (durationMs / (1000 * 60 * 60)).toFixed(2); // Convertir en heures avec 2 décimales
+            }
 
             $('#filterDate').on('click', function () {
                 if ($('#startDate').val() && $('#endDate').val()) {
@@ -210,6 +302,7 @@
                 endDatePicker.setDate(null);
                 initializeDataTable();
             });
+
         });
     </script>
 {% endblock extra_js %}
