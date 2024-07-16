@@ -159,7 +159,6 @@ $(document).ready(function () {
                                 return data;
                             }
                         },
-
                         {
                             data: null,
                             title: 'Actions',
@@ -182,10 +181,13 @@ $(document).ready(function () {
                     order: [[0, 'asc']],
                     drawCallback: function (settings) {
                         console.log("DrawCallback - Intervention en cours (global):", interventionEnCoursGlobal);
-                        $('.prendre-en-charge').prop('disable', interventionEnCoursGlobal);
+                        $('.prendre-en-charge').prop('disabled', interventionEnCoursGlobal);
                     },
                     createdRow: function (row, data, dataIndex) {
                         $(row).addClass('status-' + data.statut);
+                        $('td', row).each(function (index, td) {
+                            $(td).attr('data-label', $(td).closest('table').find('th').eq(index).text());
+                        });
                     },
                     columnDefs: [
                         {
@@ -209,7 +211,7 @@ $(document).ready(function () {
             }
 
             try {
-                $('#portfolioTable').DataTable({
+                var table = $('#portfolioTable').DataTable({
                     data: data,
                     columns: [
                         {data: 'ndi', title: 'NDI', width: "10%"},
@@ -264,6 +266,13 @@ $(document).ready(function () {
                         }
                     ]
                 });
+
+                // Open all rows by default
+                table.rows().every(function () {
+                    this.child.show();
+                    $(this.node()).addClass('parent');
+                });
+
             } catch (error) {
                 console.error("Erreur lors de l'initialisation de la table:", error);
             }
