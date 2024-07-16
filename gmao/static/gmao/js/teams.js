@@ -316,7 +316,8 @@ $(document).ready(function () {
                 if (response.success) {
                     alert(response.message);
                     interventionEnCours = true;
-                    //loadTechnicienPortfolio();
+                    loadTechnicienPortfolio();
+                    window.location.href = '/home/intervention/' + response.intervention_id + '/';
                 } else {
                     console.error("Erreur lors de la prise en charge:", response.message);
                     alert('Erreur : ' + response.message);
