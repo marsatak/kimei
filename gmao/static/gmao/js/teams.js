@@ -132,7 +132,8 @@ $(document).ready(function () {
             console.error("L'élément #portfolioTable n'existe pas dans le DOM");
         }
     }*/
-    function initPortfolioTable(data, interventionEnCoursGlobal) {
+
+    /*function initPortfolioTable(data, interventionEnCoursGlobal) {
         console.log("Initialisation de la table avec les données:", data);
         if ($('#portfolioTable').length) {
             if ($.fn.DataTable.isDataTable('#portfolioTable')) {
@@ -199,7 +200,78 @@ $(document).ready(function () {
         } else {
             console.error("L'élément #portfolioTable n'existe pas dans le DOM");
         }
+    }*/
+    function initPortfolioTable(data, interventionEnCoursGlobal) {
+        console.log("Initialisation de la table avec les données:", data);
+        if ($('#portfolioTable').length) {
+            if ($.fn.DataTable.isDataTable('#portfolioTable')) {
+                $('#portfolioTable').DataTable().destroy();
+            }
+
+            try {
+                $('#portfolioTable').DataTable({
+                    data: data,
+                    columns: [
+                        {data: 'ndi', title: 'NDI', width: "10%"},
+                        {data: 'station', title: 'Station', width: "15%"},
+                        {data: 'statut', title: 'Statut', width: "10%"},
+                        {data: 'element', title: 'Élément', width: "15%"},
+                        {
+                            data: 'panne_declarer',
+                            title: 'Panne',
+                            width: "30%",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+                                    return '<div class="text-wrap width-200">' + data + '</div>';
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            data: null,
+                            title: 'Actions',
+                            width: "20%",
+                            render: function (data, type, row) {
+                                return getActionButton(row, interventionEnCoursGlobal);
+                            }
+                        }
+                    ],
+                    responsive: true,
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                    },
+                    searching: false,
+                    info: false,
+                    paginate: false,
+                    ordering: false,
+                    pageLength: -1,
+                    lengthChange: false,
+                    order: [[0, 'asc']],
+                    drawCallback: function (settings) {
+                        console.log("DrawCallback - Intervention en cours (global):", interventionEnCoursGlobal);
+                        $('.prendre-en-charge').prop('disabled', interventionEnCoursGlobal);
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                        $(row).addClass('status-' + data.statut);
+                        $('td', row).each(function (index, td) {
+                            $(td).attr('data-label', $(td).closest('table').find('th').eq(index).text());
+                        });
+                    },
+                    columnDefs: [
+                        {
+                            targets: '_all',
+                            className: 'text-wrap'
+                        }
+                    ]
+                });
+            } catch (error) {
+                console.error("Erreur lors de l'initialisation de la table:", error);
+            }
+        } else {
+            console.error("L'élément #portfolioTable n'existe pas dans le DOM");
+        }
     }
+
 
     function loadTechnicienPortfolio() {
         console.log("Chargement du portfolio du technicien...");

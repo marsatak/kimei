@@ -212,99 +212,60 @@ table.dataTable tbody tr.status-ATD {
 }
 
 /* Styles du portfolio */
-#portfolioTable {
-    width: 100% !important;
-}
+/* main.css */
 
-#portfolioTable th,
-#portfolioTable td {
-    white-space: normal;
-    word-wrap: break-word;
-}
-
-.text-wrap {
-    white-space: normal !important;
-}
-
-@media screen and (max-width: 767px) {
-    #portfolioTable {
-        font-size: 14px;
-    }
-
-    #portfolioTable .btn {
-        font-size: 12px;
-        padding: 0.25rem 0.5rem;
-    }
-}
-
-.table-responsive {
-    overflow-x: visible;
-}
-
-#portfolioTable {
-    width: 100% !important;
-}
-
-#portfolioTable th,
-#portfolioTable td {
-    white-space: normal;
-    word-wrap: break-word;
-}
-
-@media screen and (max-width: 767px) {
-    #portfolioTable {
-        font-size: 14px;
-    }
-
-    #portfolioTable .btn {
-        font-size: 12px;
-        padding: 0.25rem 0.5rem;
-    }
-}
-
-.table-responsive {
+/* Style de base pour le tableau */
+.portfolio-table {
     width: 100%;
-    margin-bottom: 15px;
-    overflow-y: hidden;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.portfolio-table th, .portfolio-table td {
     border: 1px solid #ddd;
+    padding: 8px;
 }
 
-#portfolioTable {
-    margin-bottom: 0;
+.portfolio-table tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-@media screen and (max-width: 767px) {
-    .table-responsive {
-        border: 0;
+.portfolio-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Styles responsives */
+@media screen and (max-width: 768px) {
+    .portfolio-table, .portfolio-table thead, .portfolio-table tbody, .portfolio-table th, .portfolio-table td, .portfolio-table tr {
+        display: block;
     }
 
-    #portfolioTable td,
-    #portfolioTable th {
-        white-space: nowrap;
+    .portfolio-table tr {
+        margin-bottom: 15px;
     }
 
-    .action-cell {
-        min-width: auto;
+    .portfolio-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .portfolio-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
     }
 }
 
-.dtr-details {
-    width: 100%;
-}
-
-.dtr-details li {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.dtr-details li:last-child {
-    border-bottom: none;
-}
-
-
+/* Fin portfolio*/
 /* Styles de l'écran de login */
 .login-container {
     max-width: 400px;
@@ -353,39 +314,6 @@ footer {
     }
 }
 
-@media screen and (max-width: 767px) {
-    .date-column, .status-column {
-        width: auto;
-        min-width: auto;
-    }
-
-    .dataTables_wrapper .dataTables_info,
-    .dataTables_wrapper .dataTables_paginate {
-        float: none;
-        text-align: center;
-    }
-
-    .dataTables_wrapper .dataTables_paginate {
-        margin-top: 0.5em;
-    }
-
-    .dt-buttons {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-
-    .dt-button {
-        margin-bottom: 0.5rem;
-    }
-
-    .card-body.overflow-auto {
-        padding: 0.5rem;
-    }
-
-    #portfolioTable td, #portfolioTable th {
-        white-space: nowrap;
-    }
-}
 
 .bg-new {
     background-color: #A0F0A3 !important;
@@ -412,56 +340,13 @@ footer {
     color: black !important;
 }
 
-#portfolioTable {
-    width: 100% !important;
-    table-layout: fixed;
-}
 
-#portfolioTable th,
-#portfolioTable td {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.text-wrap {
-    white-space: normal !important;
-}
-
-.width-200 {
-    min-width: 200px;
-}
-
-@media screen and (max-width: 767px) {
-    #portfolioTable {
-        font-size: 14px;
-    }
-
-    #portfolioTable .btn {
-        font-size: 12px;
-        padding: 0.25rem 0.5rem;
-    }
-
-    #portfolioTable td,
-    #portfolioTable th {
-        padding: 0.3rem;
-    }
-
-    .width-200 {
-        min-width: 150px;
-    }
-}
-
-/*FIN PORTFOLIO*/
 @media (max-width: 576px) {
     .login-container {
         margin: 0 15px;
     }
 }
 
-.dtr-details {
-    max-width: 100%;
-    overflow-x: auto;
-}
 
 body {
     padding-top: 60px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
