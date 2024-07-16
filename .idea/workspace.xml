@@ -5,19 +5,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
-      <change afterPath="$PROJECT_DIR$/accounts/templates/registration/login__.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gmao/Passage/12072024/liste_interventions_ok_without_export.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/middleware.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/static/gmao/js/intervention.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/static/gmao/js/tempo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/templatetags/my_filters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/static/accounts/css/login.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login_.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login__.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api_views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api_views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/07072024/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/07072024/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/07072024/home.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/07072024/home_.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/07072024/teams.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/08072024/base_old.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/08072024/home_.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/08072024/home__.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/12072024/liste_interventions_.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/12072024/liste_interventions_ok_without_export.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/0001_create_employees_from_personnel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/detail_doleance_tsss.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/detail_intervention_.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/detail_intervention__.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/detail_intervention___.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/home__.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/liste_interventions_.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/liste_interventions_2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/liste_interventions_s.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/modified_at.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/modified_at.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/teams__.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/teams___.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/OLD/toutes_les_doleances.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/main_.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/Passage/passage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/forms_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/home.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/backup_teams.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/pour_enlever_les_pages.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions_.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/Passage/12072024/liste_interventions_.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/Passage/creer_equipe_s.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/Passage/gestion_equipes_s.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
@@ -39,8 +81,8 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="Python Script" />
         <option value="JavaScript File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -92,7 +134,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/gmao/templates/gmao&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/PycharmProjects/Final/kimei/gmao/templatetags&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
@@ -113,18 +155,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gmao/templatetags" />
       <recent name="$PROJECT_DIR$/gmao/templates/gmao" />
       <recent name="$PROJECT_DIR$/accounts/templates/registration" />
       <recent name="$PROJECT_DIR$/gmao" />
       <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
-      <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/accounts" />
+      <recent name="$PROJECT_DIR$/gmao" />
       <recent name="$PROJECT_DIR$/gmao/Passage/12072024" />
       <recent name="$PROJECT_DIR$/gmao/Passage" />
       <recent name="$PROJECT_DIR$/gmao/Passage/08072024" />
-      <recent name="$PROJECT_DIR$/gmao/static/gmao/css" />
-      <recent name="$PROJECT_DIR$/gmao/Passage/07072024" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.kimei">
@@ -230,15 +272,18 @@
       <workItem from="1720761900846" duration="569000" />
       <workItem from="1720775988528" duration="19000" />
       <workItem from="1720778695331" duration="12679000" />
-      <workItem from="1720802370101" duration="7057000" />
-    </task>
-    <task id="LOCAL-00162" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720419852227</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1720419852227</updated>
+      <workItem from="1720802370101" duration="7130000" />
+      <workItem from="1720841643498" duration="37679000" />
+      <workItem from="1720883356346" duration="10000" />
+      <workItem from="1720883435446" duration="66000" />
+      <workItem from="1720883584803" duration="6252000" />
+      <workItem from="1720933242722" duration="43025000" />
+      <workItem from="1721025875028" duration="10366000" />
+      <workItem from="1721044430063" duration="23000" />
+      <workItem from="1721044692951" duration="9172000" />
+      <workItem from="1721061781231" duration="13320000" />
+      <workItem from="1721100796959" duration="713000" />
+      <workItem from="1721105512383" duration="4948000" />
     </task>
     <task id="LOCAL-00163" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -624,7 +669,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720685519357</updated>
     </task>
-    <option name="localTasksCounter" value="211" />
+    <task id="LOCAL-00211" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1720813346788</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1720813346788</updated>
+    </task>
+    <option name="localTasksCounter" value="212" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

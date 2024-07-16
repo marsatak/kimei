@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    let doleanceTable, personnelTable, portofolioTable;
+    // INITIALISATION DES VARIABLES
+    let doleanceTable, personnelTable;
+    // VEROUILLAGE MAJUSCULE ET AUTRES
+
     document.addEventListener('DOMContentLoaded', function () {
         const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
         upperCaseInputs.forEach(input => {
@@ -24,7 +27,15 @@ $(document).ready(function () {
     window.setTimeout(function () {
         offsetAnchor();
     }, 1);
+    $(window).resize(function () {
+        if (doleanceTable) doleanceTable.columns.adjust().draw();
+        if (personnelTable) personnelTable.columns.adjust().draw();
+        $('#demandeencours').DataTable().draw();
+        $('#personnel').DataTable().draw();
+    });
+    // FIN FONCTIONS DE MISE EN PAGE
 
+    // AFFICHAGE DOLÉANCES EN COURS ET STATUTS
     function initDoleanceTable() {
         if ($('#demandeencours').length && !$.fn.DataTable.isDataTable('#demandeencours')) {
             doleanceTable = $('#demandeencours').DataTable({
@@ -59,12 +70,16 @@ $(document).ready(function () {
                     {
                         data: null, width: "10%",
                         render: function (data, type, row) {
+                            let actions = '';
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
-                                return '<button class="btn btn-primary btn-sm declencher-intervention" data-id="' + row.id + '">' +
+                                actions += '<button class="btn btn-primary btn-sm declencher-intervention mr-1" data-id="' + row.id + '">' +
                                     '<i class="fas fa-arrow-alt-circle-up"></i>' +
                                     '</button>';
                             }
-                            return '';
+                            actions += '<button class="btn btn-warning btn-sm update-doleance mr-1 mx-1" data-id="' + row.id + '">' +
+                                '<i class="fas fa-edit"></i>' +
+                                '</button>';
+                            return actions;
                         }
                     },
                 ],
@@ -98,135 +113,87 @@ $(document).ready(function () {
         }
     }
 
+    // FIN AFFICHAGE DOLÉANCES EN COURS ET STATUTS
+    // AFFICHAGE EQUIPES ET LEURS DOLEANCES
+    function loadEquipesData() {
+        $.ajax({
+            url: '/home/get-equipes-data/',
+            type: 'GET',
+            success: function (data) {
+                updateEquipesSection(data);
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur lors du chargement des données des équipes:", error);
+            }
+        });
+    }
 
+    function updateEquipesSection(equipes_data) {
+        let html = '';
+        equipes_data.forEach(function (equipe) {
+            html += `
+            <div class="col-md-4 mb-4">
+                <div class="card h-100" style="width: 90%;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">${equipe.nom}</h5>
+                    </div>
+                    <div class="card-body">
+                        ${equipe.description}
+                        <h6 class="mt-3">Techniciens :</h6>
+                        <ul>
+                            ${equipe.techniciens.slice(0, 3).map(tech => `
+                                <li>${tech.prenom} ${tech.nom} 
+                                    <span class="badge bg-${tech.statut === 'PRS' ? 'success' : tech.statut === 'ABS' ? 'danger' : 'warning'} float-end">
+                                        ${tech.statut}
+                                    </span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        ${equipe.techniciens.length > 3 ? `<p>Et ${equipe.techniciens.length - 3} autres...</p>` : ''}
+                        <h6 class="mt-3">Doléances actives :</h6>
+                        <ul>
+                            ${equipe.doleances.slice(0, 5).map(dol => `
+                                <li>${dol.ndi} - ${dol.station.substring(0, 20)} - ${dol.panne_declarer.substring(0, 50)}
+                                    <span class="badge bg-${getBadgeClass(dol.statut)} float-end">${dol.statut}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        ${equipe.doleances.length > 5 ? `<p>Et ${equipe.doleances.length - 5} autres...</p>` : ''}
+                    </div>
+                    <div class="card-footer">
+                        <a href="/gmao_teams/get_equipe_details/${equipe.id}/" class="btn btn-primary btn-sm">Détails de l'équipe</a>
+                    </div>
+                </div>
+            </div>
+        `;
+        });
+        $('#equipes-section .row').html(html);
+    }
+
+    function getBadgeClass(statut) {
+        const statusClasses = {
+            'NEW': 'primary',
+            'ATT': 'warning',
+            'INT': 'info',
+            'ATP': 'danger',
+            'ATD': 'secondary'
+        };
+        return statusClasses[statut] || 'light';
+    }
+
+    if ($('#equipes-section').length) {
+        loadEquipesData();
+        setInterval(loadEquipesData, 60000);  // Rafraîchir toutes les 60 secondes
+    }
+
+    // FIN AFFICHAGE EQUIPES ET LEURS DOLEANCES
+
+
+    // ATTRIBUTION DOLEANCES POUR TECHNICIENS
     $('#demandeencours').on('click', '.declencher-intervention', function () {
         const doleanceId = $(this).data('id');
         declencherIntervention(doleanceId);
     });
-
-    function initPersonnelTable() {
-        if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
-            personnelTable = $('#personnel').DataTable({
-                ajax: {
-                    url: "/home/getPersonnel/",
-                    dataSrc: function (json) {
-                        // Trier les techniciens en premier
-                        return json.sort((a, b) => {
-                            if (a.poste.nom_poste === 'Technicien' && b.poste.nom_poste !== 'Technicien') return -1;
-                            if (a.poste.nom_poste !== 'Technicien' && b.poste.nom_poste === 'Technicien') return 1;
-                            return 0;
-                        });
-                    }
-                },
-                columns: [
-                    {data: "nom_personnel"},
-                    {data: "prenom_personnel"},
-                    {
-                        data: "statut",
-                        render: function (data, type, row) {
-                            const statusClasses = {
-                                'PRS': 'bg-success',
-                                'ATT': 'bg-warning',
-                                'INT': 'bg-info',
-                                'ABS': 'bg-danger'
-                            };
-                            return `<span class="badge ${statusClasses[data] || 'bg-secondary'}">${data}</span>`;
-                        },
-                        className: 'status-column'
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            if (row.statut === 'ABS') {
-                                return '<button class="btn btn-success btn-sm mark-arrivee" data-id="' + row.id + '">Marquer arrivée</button>';
-                            } else if (row.statut === 'PRS') {
-                                return '<button class="btn btn-danger btn-sm mark-depart" data-id="' + row.id + '">Marquer départ</button>';
-                            }
-                            return '';
-                        }
-                    }
-                ],
-                responsive: true,
-                autoWidth: false,
-                ordering: false,
-                language: {
-                    // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-                }
-            });
-        }
-    }
-
-    if ($('#demandeencours').length && USER_ROLE === 'ADMIN') {
-        initDoleanceTable();
-        initPersonnelTable();
-        setInterval(refreshDoleanceTable, 60000);
-        setInterval(refreshPersonnelTable, 60000);
-    } else if ($('#portfolioContainer').length) {
-        loadTechnicienPortfolio();
-    }
-
-    /*function refreshDoleanceTable() {
-        if (doleanceTable) {
-            doleanceTable.ajax.reload(null, false);
-        }
-    }*/
-    function refreshDoleanceTable() {
-        console.log("Refreshing doleanceTable");
-        if (doleanceTable) {
-            doleanceTable.ajax.reload(null, false);
-        } else {
-            console.log("doleanceTable is not defined try initialize...");
-            initDoleanceTable()
-        }
-    }
-
-
-    function refreshPersonnelTable() {
-        if (personnelTable) {
-            personnelTable.ajax.reload(null, false);
-        } else {
-            initPersonnelTable()
-        }
-    }
-
-
-    $(window).resize(function () {
-        if (doleanceTable) doleanceTable.columns.adjust().draw();
-        if (personnelTable) personnelTable.columns.adjust().draw();
-        $('#demandeencours').DataTable().draw();
-        $('#personnel').DataTable().draw();
-    });
-    /*$('#doleanceModal').on('show.bs.modal', function () {
-        console.log('Modal is about to open');
-    });*/
-    $('#personnel').on('click', '.mark-arrivee', function () {
-        const personnelId = $(this).data('id');
-        markArriveeOrDepart(personnelId, true);
-    });
-
-    $('#personnel').on('click', '.mark-depart', function () {
-        const personnelId = $(this).data('id');
-        markArriveeOrDepart(personnelId, false);
-    });
-
-    function markArriveeOrDepart(personnelId, isArrivee) {
-        $.ajax({
-            url: isArrivee ? `/mark-arrivee/${personnelId}/` : `/mark-depart/${personnelId}/`,
-            type: 'POST',
-            headers: {'X-CSRFToken': getCookie('csrftoken')},
-            success: function (response) {
-                if (response.success) {
-                    alert(response.message);
-                    personnelTable.ajax.reload();
-                } else {
-                    alert('Erreur : ' + response.message);
-                }
-            },
-            error: function () {
-                alert('Erreur de communication avec le serveur');
-            }
-        });
-    }
 
     function declencherIntervention(doleanceId) {
         $.ajax({
@@ -246,7 +213,6 @@ $(document).ready(function () {
             }
         });
     }
-
 
     function afficherSelectionTechniciens(techniciens, doleanceId) {
         let dialog = $('<div title="Sélectionner les techniciens">');
@@ -313,12 +279,127 @@ $(document).ready(function () {
         });
     }
 
+    // FIN ATTRIBUTION DOLEANCES POUR TECHNICIENS
 
+    // AFFICHAGE EMPLOYEES ET STATUTS
+    function initPersonnelTable() {
+        if ($('#personnel').length && !$.fn.DataTable.isDataTable('#personnel')) {
+            personnelTable = $('#personnel').DataTable({
+                ajax: {
+                    url: "/home/getPersonnel/",
+                    dataSrc: function (json) {
+                        // Trier les techniciens en premier
+                        return json.sort((a, b) => {
+                            if (a.poste.nom_poste === 'Technicien' && b.poste.nom_poste !== 'Technicien') return -1;
+                            if (a.poste.nom_poste !== 'Technicien' && b.poste.nom_poste === 'Technicien') return 1;
+                            return 0;
+                        });
+                    }
+                },
+                columns: [
+                    {data: "nom_personnel"},
+                    {data: "prenom_personnel"},
+                    {
+                        data: "statut",
+                        render: function (data, type, row) {
+                            const statusClasses = {
+                                'PRS': 'bg-success',
+                                'ATT': 'bg-warning',
+                                'INT': 'bg-info',
+                                'ABS': 'bg-danger'
+                            };
+                            return `<span class="badge ${statusClasses[data] || 'bg-secondary'}">${data}</span>`;
+                        },
+                        className: 'status-column'
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (row.statut === 'ABS') {
+                                return '<button class="btn btn-success btn-sm mark-arrivee" data-id="' + row.id + '">Marquer arrivée</button>';
+                            } else if (row.statut === 'PRS') {
+                                return '<button class="btn btn-danger btn-sm mark-depart" data-id="' + row.id + '">Marquer départ</button>';
+                            }
+                            return '';
+                        }
+                    }
+                ],
+                responsive: true,
+                autoWidth: false,
+                ordering: false,
+                language: {
+                    // url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                }
+            });
+        }
+    }
+
+    // MISE A JOUR DES DONNEES DES EQUIPES ET DOLÉANCES
+
+    if ($('#demandeencours').length && USER_ROLE === 'ADMIN') {
+        initDoleanceTable();
+        initPersonnelTable();
+        setInterval(refreshDoleanceTable, 60000);
+        setInterval(refreshPersonnelTable, 60000);
+    } else if ($('#portfolioContainer').length) {
+        loadTechnicienPortfolio();
+    }
+
+    //  REFRESH SUR LES DOLEANCES
+    function refreshDoleanceTable() {
+        console.log("Refreshing doleanceTable");
+        if (doleanceTable) {
+            doleanceTable.ajax.reload(null, false);
+        } else {
+            console.log("doleanceTable is not defined try initialize...");
+            initDoleanceTable()
+        }
+    }
+
+    // ACTIONS SUR LES EMPLOYEES
+    function refreshPersonnelTable() {
+        if (personnelTable) {
+            personnelTable.ajax.reload(null, false);
+        } else {
+            initPersonnelTable()
+        }
+    }
+
+    $('#personnel').on('click', '.mark-arrivee', function () {
+        const personnelId = $(this).data('id');
+        markArriveeOrDepart(personnelId, true);
+    });
+    $('#personnel').on('click', '.mark-depart', function () {
+        const personnelId = $(this).data('id');
+        markArriveeOrDepart(personnelId, false);
+    });
+
+    function markArriveeOrDepart(personnelId, isArrivee) {
+        $.ajax({
+            url: isArrivee ? `/mark-arrivee/${personnelId}/` : `/mark-depart/${personnelId}/`,
+            type: 'POST',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    personnelTable.ajax.reload();
+                } else {
+                    alert('Erreur : ' + response.message);
+                }
+            },
+            error: function () {
+                alert('Erreur de communication avec le serveur');
+            }
+        });
+    }
+
+    // FIN DES ACTIONS SUR LES EMPLOYEES
+
+    // ACTION POUR LES TECHNICIENS ET LES DOLEANCES
     $('#demandeencours').on('click', '.terminer-intervention', function () {
         const interventionId = $(this).data('id');
         terminerIntervention(interventionId);
     });
-
     $('#demandeencours').on('click', '.nouvelle-intervention', function () {
         const doleanceId = $(this).data('id');
         declencherIntervention(doleanceId);
@@ -328,12 +409,14 @@ $(document).ready(function () {
         commencerIntervention(interventionId);
     });
 
+    // FIN ACTION POUR LES TECHNICIENS ET LES DOLEANCES
+
     function formatInterventions(data, rowData) {
         if (!data.interventions || data.interventions.length === 0) {
             return '<p>Aucune intervention pour cette doléance.</p>';
         }
 
-        var html = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+        let html = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
         html += '<tr><th>Date de début</th><th>Date de fin</th><th>Statut</th><th>Techniciens</th><th>Actions</th></tr>';
 
         data.interventions.forEach(function (intervention) {
@@ -360,37 +443,8 @@ $(document).ready(function () {
     }
 
 
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    function getCSRFToken() {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = jQuery.trim(cookies[i]);
-                if (cookie.substring(0, 10) === ('csrftoken=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(10));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    $('#interventionForm').submit(function (e) {
+    // SAISIE DE LA FICHE D'INTERVENTION
+    /*$('#interventionForm').submit(function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
@@ -422,33 +476,70 @@ $(document).ready(function () {
                 $('#submitDoleance').prop('disabled', false);
             }
         });
-    });
-
-
-    function affecterTechniciens(doleanceId, technicienIds) {
-        $.ajax({
-            url: '/home/affecter-techniciens/' + doleanceId + '/',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify({techniciens: technicienIds}),
-            contentType: 'application/json',
-            headers: {
-                'X-CSRFToken': getCSRFToken()
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('Techniciens affectés avec succès.');
-                    refreshTables();
-                } else {
-                    alert('Erreur lors de l\'affectation des techniciens: ' + response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Erreur AJAX:", xhr.responseText);
-                alert('Erreur lors de la communication avec le serveur: ' + error);
-            }
-        });
-    }
+    });*/
+    // FIN SAISIE DE LA FICHE D'INTERVENTION
 
 
 });
+
+// COOKIES ET CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function getCSRFToken() {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, 10) === ('csrftoken=')) {
+                cookieValue = decodeURIComponent(cookie.substring(10));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// FIN COOKIES ET CSRF
+
+
+// AFFICHAGE INTERVENTION EN COURS (STAND BY)
+function affecterTechniciens(doleanceId, technicienIds) {
+    $.ajax({
+        url: '/home/affecter-techniciens/' + doleanceId + '/',
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify({techniciens: technicienIds}),
+        contentType: 'application/json',
+        headers: {
+            'X-CSRFToken': getCSRFToken()
+        },
+        success: function (response) {
+            if (response.success) {
+                alert('Techniciens affectés avec succès.');
+                refreshTables();
+            } else {
+                alert('Erreur lors de l\'affectation des techniciens: ' + response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Erreur AJAX:", xhr.responseText);
+            alert('Erreur lors de la communication avec le serveur: ' + error);
+        }
+    });
+}
+
+// FIN AFFICHAGE INTERVENTION EN COURS (STAND BY)

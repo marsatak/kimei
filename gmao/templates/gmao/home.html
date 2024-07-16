@@ -8,8 +8,7 @@
 {% block extra_css %}
     <!-- ... autres styles ... -->
     {{ block.super }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/dark.min.css">
+
 
 {% endblock extra_css %}
 
@@ -24,7 +23,8 @@
                             <div class="card">
                                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                                     <h5 class="mb-0">Doléances en cours</h5>
-                                    <button type="button" class="btn btn-light btn-add" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-light btn-add" id="newDoleanceBtn"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#doleanceModal">
                                         <i class="fas fa-plus"></i>
                                     </button>
@@ -170,24 +170,26 @@
 
 
     <!-- Modal pour l'ajout de doléance -->
-    <div class="modal fade" id="doleanceModal" tabindex="-1" role="dialog" aria-labelledby="doleanceModalLabel"
-         aria-hidden="true">
+    <div id="doleanceModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="doleanceModalLabel">Nouvelle doléance</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="doleanceModalLabel">Doléance</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <form method="post" id="doleanceForm">
+                <form id="doleanceForm" method="post">
+                    <div class="modal-body">
                         {% csrf_token %}
-                        {{ form|crispy }}
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" id="submitDoleance">Enregistrer</button>
-                </div>
+                        <input type="hidden" id="id_doleance_id" name="doleance_id">
+                        {{ form|crispy }} <!-- Warning  -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary" id="submitDoleance">Enregistrer</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -201,6 +203,8 @@
         const USER_ROLE = "{{ user_role }}";
     </script>
     {#    Upper #}
+
+    <!-- Boutton declencher -intervention -->
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -239,8 +243,16 @@
         $(document).ready(function () {
             $('#id_client').change(function () {
                 const clientId = $(this).val();
-                updateStationsAndAppelants(clientId);
-                $('#id_element').html('<option value="">Sélectionnez d\'abord une station</option>').prop('disabled', true);
+                if (clientId) {
+                    updateStationsAndAppelants(clientId);
+                    $('#id_element').html('<option value="">Sélectionnez d\'abord une station</option>').prop('disabled', true);
+
+                } else {
+                    $('#id_station').html('<option value="">Sélectionnez d\'abord un client</option>').prop('disabled', false);
+                    $('#id_appelant').html('<option value="">Sélectionnez d\'abord un client</option>').prop('disabled', false);
+                    $('#id_element').html('<option value="">Sélectionnez d\'abord un client</option>').prop('disabled', false);
+
+                }
             });
 
             $('#id_station').change(function () {
@@ -296,7 +308,7 @@
 
                         $.each(data, function (category, elements) {
                             if (elements.length > 0) {
-                                var optgroup = $('<optgroup label="' + category + '">');
+                                const optgroup = $('<optgroup label="' + category + '">');
                                 $.each(elements, function (index, element) {
                                     optgroup.append($('<option>').val(element[1]).text(element[1]));
                                 });
@@ -311,51 +323,233 @@
                 });
             }
 
-            $('#submitDoleance').click(function () {
-                const formData = new FormData($('#doleanceForm')[0]);
-                $(this).prop('disabled', true);
-                $.ajax({
-                    url: '{% url "gmao:create_doleance" %}',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    headers: {'X-CSRFToken': getCookie('csrftoken')},
-                    success: function (response) {
-                        if (response.success) {
-                            $('#doleanceModal').modal('hide');
-                            //refreshDoleanceTable();
-                            alert('Doléance créée avec succès !');
-                            window.location.reload();
-                        } else {
-                            console.error('Erreur côté serveur:', response);
-                            var errorMessage = 'Erreur : ';
-                            if (typeof response.errors === 'object') {
-                                for (var key in response.errors) {
-                                    errorMessage += key + ': ' + response.errors[key].join(', ') + '\n';
-                                }
-                            } else if (response.message) {
-                                errorMessage += response.message;
-                            } else {
-                                errorMessage += 'Une erreur inconnue est survenue.';
-                            }
-                            alert(errorMessage);
-                        }
-                    },
-                    error: function () {
-                        alert('Une erreur est survenue lors de la création de la doléance.');
-                    },
-                    complete: function () {
-                        // Réactiver le bouton après la soumission
-                        $('#submitDoleance').prop('disabled', false);
-                    }
-                });
-            })
-            ;
 
         });
     </script>
-    {#    Dead Lin Format#}
+
+    <!-- Réinitialisation Formulaire -->
+    <script>
+
+        function newDoleance() {
+            console.log('New Doléance')
+            // Réinitialiser le formulaire
+            $('#doleanceForm')[0].reset();
+
+            // Vider l'ID de la doléance
+            $('#id_doleance_id').val('');
+
+            // Réinitialiser le titre du modal
+            $('#doleanceModalLabel').text('Nouvelle doléance');
+
+            // Réinitialiser les champs dépendants
+            $('#id_station').html('<option value="">Sélectionnez une station</option>');
+            $('#id_appelant').html('<option value="">Sélectionnez un appelant</option>');
+            $('#id_element').html('<option value="">Sélectionnez un élément</option>');
+
+            // Réinitialiser le client (si applicable)
+            $('#id_client').val('').trigger('change');
+
+            // Réinitialiser les autres champs si nécessaire
+            $('#id_type_transmission').val('');
+            $('#id_panne_declarer').val('');
+            $('#id_type_contrat').val('');
+            $('#id_date_deadline').val('');
+            $('#id_commentaire').val('');
+
+            // Réinitialiser flatpickr si utilisé
+            if ($('#id_date_deadline').data('flatpickr')) {
+                $('#id_date_deadline').flatpickr().clear();
+            }
+
+            // Afficher le modal
+            $('#doleanceModal').modal('show');
+        }
+
+        $('#newDoleanceBtn').click(function () {
+            newDoleance();
+        });
+        // Remplacer la fonction de soumission du formulaire par celle-ci
+
+        $('#submitDoleance').click(function (e) {
+            e.preventDefault();
+            const form = $('#doleanceModal form');
+            const formData = new FormData(form[0]);
+            const doleanceId = $('#id_doleance_id').val();
+            const url = doleanceId ? '/home/update-doleance/' + doleanceId + '/' : '/home/create-doleance/';
+            if (!form[0].checkValidity()) {
+                form[0].reportValidity();
+                return;
+            }
+            $(this).prop('disabled', true);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
+
+                success: function (response) {
+                    if (response.success) {
+                        $('#doleanceModal').modal('hide');
+                        if (doleanceId) {
+                            alert('Doléance mise à jour avec succès');
+                        } else {
+                            alert('Doléance créée avec succès');
+                        }
+                        refreshDoleanceTable();
+                        window.location.reload();
+                    } else {
+                        alert('Erreur : ' + response.message);
+                    }
+                },
+                error: function () {
+                    alert('Erreur lors de la communication avec le serveur');
+                },
+                complete: function () {
+                    // Réactiver le bouton après la soumission
+                    $('#submitDoleance').prop('disabled', false);
+                }
+            });
+        });
+
+    </script>
+
+    <!-- TRAITEMENT DE LA MISE À JOUR -->
+    <script>
+
+        $('#demandeencours').on('click', '.update-doleance', function () {
+            const doleanceId = $(this).data('id');
+            updateDoleance(doleanceId);
+        });
+
+        // Fonction pour remplir le formulaire lors de la mise à jour
+        function updateDoleance(doleanceId) {
+            $.ajax({
+                url: '/home/get-doleance/' + doleanceId + '/',
+                type: 'GET',
+                success: function (response) {
+                    console.log("Données reçues du serveur:", response);  // Ajoutez cette ligne
+                    if (response.success) {
+                        fillDoleanceForm(response.doleance);
+                        $('#doleanceModal').modal('show');
+                    } else {
+                        console.error("Erreur lors de la récupération des données:", response.message);  // Ajoutez cette ligne
+                        alert('Erreur lors de la récupération des données de la doléance');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erreur AJAX:", error);  // Ajoutez cette ligne
+                    alert('Erreur lors de la communication avec le serveur');
+                }
+            });
+            $('#doleanceModalLabel').text('Mise à jour de la doléance');
+        }
+
+        function loadStations(clientId) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: '/home/ajax/load-stations/',
+                    data: {'client': clientId},
+                    success: function (data) {
+                        console.log("Données des stations reçues:", data);
+                        let options = '<option value="">Sélectionnez une station</option>';
+                        data.forEach(function (station) {
+                            options += `<option value="${station.id}">${station.libelle_station}</option>`;
+                        });
+                        $('#id_station').html(options);
+                        resolve();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Erreur lors du chargement des stations:", error);
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+        function loadAppelants(clientId) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: '/home/ajax/load-appelants/',
+                    data: {'client': clientId},
+                    success: function (data) {
+                        console.log("Données des appelants reçues:", data);
+                        let options = '<option value="">Sélectionnez un appelant</option>';
+                        data.forEach(function (appelant) {
+                            options += `<option value="${appelant.id}">${appelant.nom_appelant} ${appelant.prenom_appelant}</option>`;
+                        });
+                        $('#id_appelant').html(options);
+                        resolve();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Erreur lors du chargement des appelants:", error);
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+        function fillDoleanceForm(doleance) {
+            console.log("Remplissage du formulaire avec les données:", doleance);
+            $('#id_doleance_id').val(doleance.id);
+            $('#id_client').val(doleance.client).trigger('change');
+
+            Promise.all([
+                loadStations(doleance.client),
+                loadAppelants(doleance.client)
+            ]).then(function () {
+                $('#id_station').val(doleance.station);
+                $('#id_appelant').val(doleance.appelant);
+                return loadElements(doleance.station);
+            }).then(function () {
+                console.log("Élément à sélectionner:", doleance.element);
+                console.log("Options disponibles pour l'élément:", $('#id_element option').map(function () {
+                    return {value: $(this).val(), text: $(this).text()};
+                }).get());
+
+                $('#id_element').val(doleance.element);
+
+                console.log("Station sélectionnée:", $('#id_station').val());
+                console.log("Appelant sélectionné:", $('#id_appelant').val());
+                console.log("Élément sélectionné:", $('#id_element').val());
+
+                $('#id_type_transmission').val(doleance.type_transmission);
+                $('#id_panne_declarer').val(doleance.panne_declarer);
+                $('#id_type_contrat').val(doleance.type_contrat);
+                $('#id_date_deadline').val(doleance.date_deadline);
+                $('#id_commentaire').val(doleance.commentaires);
+            }).catch(function (error) {
+                console.error("Erreur lors du chargement des données dépendantes:", error);
+            });
+        }
+
+        function loadElements(stationId) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: '/home/load-elements/',
+                    data: {'station': stationId},
+                    success: function (data) {
+                        console.log("Données des éléments reçues:", data);
+                        let options = '<option value="">Sélectionnez un élément</option>';
+                        for (const category in data) {
+                            data[category].forEach(function (element) {
+                                options += `<option value="${element[1]}">${element[1]}</option>`;
+                            });
+                        }
+                        $('#id_element').html(options);
+                        $('#id_element').prop('disabled', false);
+                        resolve();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Erreur lors du chargement des éléments:", error);
+                        reject(error);
+                    }
+                });
+            });
+        }
+    </script>
+    {#    DeadLine Format PROPRE AU MODAL DES DOLEANCES  #}
     {{ block.super }}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
@@ -363,7 +557,7 @@
     {#    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>#}
     <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        function initFlatpickr() {
             flatpickr(".flatpickr", {
                 enableTime: true,
                 dateFormat: "d/m/Y H:i",
@@ -376,6 +570,23 @@
                     instance.close();
                 }
             });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initFlatpickr();
+        });
+
+        // Réinitialiser flatpickr chaque fois que le modal est ouvert
+        $('#doleanceModal').on('shown.bs.modal', function () {
+            initFlatpickr();
+        });
+
+        // Détruire l'instance flatpickr lorsque le modal est fermé
+        $('#doleanceModal').on('hidden.bs.modal', function () {
+            const flatpickrInstance = document.querySelector(".flatpickr")._flatpickr;
+            if (flatpickrInstance) {
+                flatpickrInstance.destroy();
+            }
         });
     </script>
 {% endblock extra_js %}

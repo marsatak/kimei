@@ -13,12 +13,17 @@ from gmao.models import (
 from django.db.models import Q
 
 
+# PARAMETRAGE FORMULAIRE DE SAISIE ET DE MAJ DES DOLEANCES
 class DoleanceForm(forms.ModelForm):
     client = forms.ModelChoiceField(queryset=Client.objects.all(), empty_label="Sélectionnez un client")
     date_deadline = forms.DateTimeField(
         required=False,
         widget=forms.DateTimeInput(
-            attrs={'class': 'flatpickr'},
+            attrs={
+                'class': 'flatpickr',
+                # 'type': 'datetime-local',
+            },
+
             format='%d/%m/%Y %H:%M'),
         input_formats=['%d/%m/%Y %H:%M']
     )
@@ -27,6 +32,11 @@ class DoleanceForm(forms.ModelForm):
         widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}),  # Réduisez le nombre de lignes à 3
         help_text="Décrivez brièvement la panne ."
     )
+    commentaire = forms.CharField(required=False,
+                                  widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}),
+                                  # Réduisez le nombre de lignes à 3
+                                  help_text="Rajouter un commentaire ."
+                                  )
     TYPE_CONTRAT_CHOICES = [
         ('', 'Sélectionnez un type de contrat'),
         ('S', 'Sous Contrat'),
@@ -66,7 +76,12 @@ class DoleanceForm(forms.ModelForm):
         model = Doleance
         fields = [
             'client', 'station', 'appelant', 'type_transmission',
-            'panne_declarer', 'element', 'type_contrat', 'date_deadline']
+            'panne_declarer', 'element', 'type_contrat', 'date_deadline', 'commentaire']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Ajoutez ici toute logique de validation supplémentaire si nécessaire
+        return cleaned_data
 
     def __init__(self, *args, **kwargs):
         super(DoleanceForm, self).__init__(*args, **kwargs)
@@ -107,7 +122,7 @@ class DoleanceForm(forms.ModelForm):
             'Cuves': [],
             'Servicing': [],
             'Électricité': [],
-            'Autres': [('lot_station', f'Lot_Station {station.libelle_station}')]
+            'Autres': [('lot_station', f'Lot-Station-{station.libelle_station}')]
         }
 
         appareils = AppareilDistribution.objects.filter(piste__station=station)
@@ -135,16 +150,16 @@ class DoleanceForm(forms.ModelForm):
         if station.have_servicing:
             servicing = Servicing.objects.filter(station=station).first()
             if servicing:
-                element = f"Servicing de la station {station.libelle_station}"
+                element = f"Servicing-{station.libelle_station}"
                 elements['Servicing'].append((f"servicing_{servicing.id}", element))
 
         elec = Elec.objects.filter(station=station).first()
         if elec:
-            elements['Électricité'].append(("elec_" + str(elec.id), "Électricité (général)"))
+            elements['Électricité'].append(("elec_" + str(elec.id), "Électricité générale"))
 
             groupes = GroupeElectrogene.objects.filter(electricite=elec)
             for groupe in groupes:
-                element_info = f"Groupe Électrogène - {groupe.type.libelle_type} - {groupe.type_contrat}"
+                element_info = f"GE - {groupe.type.libelle_type} - {groupe.type_contrat}"
                 elements['Électricité'].append((f"groupe_electrogene_{groupe.id}", element_info))
 
             tgbts = Tgbt.objects.filter(electricite=elec)
@@ -166,42 +181,51 @@ class DoleanceForm(forms.ModelForm):
         return elements
 
     def clean_date_deadline(self):
-        date_deadline = self.cleaned_data.get('date_deadline')
-        if not date_deadline:
-            # Si aucune date n'est fournie, utilisez la valeur par défaut
-            return timezone.now() + timezone.timedelta(days=1)
-        return date_deadline
+        date = self.cleaned_data.get('date_deadline')
+        if date:
+            if timezone.is_naive(date):
+                return timezone.make_aware(date)
+            return date
+        return None
 
     def save(self, commit=True):
         instance = super().save(commit=False)
+        if not instance.pk:
+            instance.date_transmission = timezone.now()
+            instance.date_deadline = instance.date_transmission + timezone.timedelta(days=1)
+            instance.statut = 'NEW'
 
-        instance.date_transmission = timezone.now()
-        instance.date_deadline = instance.date_transmission + timezone.timedelta(days=1)
-        instance.statut = 'NEW'
+            station = instance.station
+            client = station.client
+            year = timezone.now().strftime('%y')
 
-        station = instance.station
-        client = station.client
-        year = timezone.now().strftime('%y')
+            last_ndi = Doleance.objects.filter(
+                station__client=client,
+                ndi__contains=f"/{client.nom_client}/{year}"
+            ).aggregate(Max('ndi'))['ndi__max']
 
-        last_ndi = Doleance.objects.filter(
-            station__client=client,
-            ndi__contains=f"/{client.nom_client}/{year}"
-        ).aggregate(Max('ndi'))['ndi__max']
+            if last_ndi:
+                last_num = int(last_ndi.split('/')[0])
+                new_num = last_num + 1
+            else:
+                new_num = 1
 
-        if last_ndi:
-            last_num = int(last_ndi.split('/')[0])
-            new_num = last_num + 1
+            instance.ndi = f"{new_num:04d}/{client.nom_client}/{year}{instance.type_contrat}"
         else:
-            new_num = 1
-
-        instance.ndi = f"{new_num:04d}/{client.nom_client}/{year}{instance.type_contrat}"
-
+            existing_instance = Doleance.objects.get(pk=instance.pk)
+            instance.ndi = existing_instance.ndi
+            instance.date_transmission = existing_instance.date_transmission
+            instance.statut = existing_instance.statut
+            
         if commit:
             instance.save()
 
         return instance
 
 
+# FIN PARAMETRAGE FORMULAIRE DE SAISIE ET DE MAJ DES DOLEANCES
+
+# PARAMETRAGE FORMULAIRE DE SAISIE ET DE MAJ DES INTERVENTIONS
 class InterventionForm(forms.ModelForm):
     personnels = forms.ModelMultipleChoiceField(
         queryset=Personnel.objects.filter(is_active=True),
@@ -220,3 +244,4 @@ class InterventionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['doleance'].queryset = Doleance.objects.filter(statut='ENC')
+# FIN PARAMETRAGE FORMULAIRE DE SAISIE ET DE MAJ DES INTERVENTIONS

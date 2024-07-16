@@ -123,6 +123,7 @@ $(document).ready(function () {
     }
 
     function refreshEquipeDetails() {
+        console.log('Refreshing equipe details...')
         if (currentEquipeId) {
             loadEquipeDetails(currentEquipeId);
         } else {
@@ -144,15 +145,15 @@ $(document).ready(function () {
         $(listId).html(html);
     }
 
-    function updateDoleancesList(doleances, listId) {
+    /*function updateDoleancesList(doleances, listId) {
         let html = '';
-        /*doleances.forEach(function (doleance) {
+        /!*doleances.forEach(function (doleance) {
             html += `
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span>${doleance.ndi} - ${doleance.panne_declarer}</span>
                 <button class="btn btn-sm btn-danger retirer-doleance" data-id="${doleance.id}">Retirer</button>
             </li>`;
-        });*/
+        });*!/
         doleances.forEach(function (doleance) {
             html += `
         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -161,8 +162,42 @@ $(document).ready(function () {
             <button class="btn btn-sm btn-danger retirer-doleance" data-id="${doleance.id}">Retirer</button>
         </li>`;
         });
+        console.log('currentEquipeId', currentEquipeId)
+        $('.declencher-intervention').hide()
+        $(listId).html(html);
+    }*/
+    function updateDoleancesList(doleances, listId) {
+        let html = '';
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);  // Définir l'heure à minuit pour comparer seulement les dates
+
+        doleances.forEach(function (doleance) {
+            let inclureDoleance = true;
+
+            if (doleance.top_terminer) {
+                // Convertir top_terminer en objet Date
+                const topTerminer = new Date(doleance.top_terminer);
+                topTerminer.setHours(0, 0, 0, 0);  // Définir l'heure à minuit pour comparer seulement les dates
+
+                // Exclure si c'est ATD ou ATP et top_terminer est aujourd'hui
+                if ((doleance.statut === 'ATD' || doleance.statut === 'ATP') && topTerminer.getTime() === today.getTime()) {
+                    inclureDoleance = false;
+                }
+            }
+
+            if (inclureDoleance) {
+                html += `
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>${doleance.ndi} - ${doleance.panne_declarer}</span>
+                <span class="badge badge-${getBadgeClass(doleance.statut)}">${doleance.statut}</span>
+                <button class="btn btn-sm btn-danger retirer-doleance" data-id="${doleance.id}">Retirer</button>
+            </li>`;
+            }
+        });
+
         $(listId).html(html);
     }
+
 
     function getBadgeClass(statut) {
         switch (statut) {

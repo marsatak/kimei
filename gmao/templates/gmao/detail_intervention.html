@@ -1,515 +1,393 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load my_filters %}
 
 {% block title %}Détails de l'intervention{% endblock %}
 
+{% block nav-title %}
+    <a href="{% url 'gmao:liste_interventions' %}" class="nav-link text-light">Liste des interventions</a>
+    <a href="{% url 'gmao:detail_intervention' intervention.id %}" class="nav-link text-light">Détails de
+        l'intervention</a>
+{% endblock nav-title %}
 {% block nav-btn %}
-    <a href="{% url 'logout' %}" class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2"
-       id="btn-nav">Logout</a>
-    <a href="{% url 'gmao:liste_interventions' %}"
-       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2" id="btn-nav">Liste des
-        interventions</a>
+    <a href="{% url 'logout' %}" id="btn-nav"
+       class="btn btn-outline-danger text-center text-light border-light btn-sm mx-2">Logout</a>
+    <a href="{% url 'gmao:liste_interventions' %}" id="btn-nav"
+       class="btn btn-outline-info text-center text-light border-light btn-sm mx-2">Liste des interventions</a>
 {% endblock nav-btn %}
 
 {% block navbar-content %}
-    <i style="color: hsl(137, 90%, 50%);" class="fa-solid fa-user-alt"></i>
-    &nbsp;&nbsp;&nbsp;{{ user.first_name }}&nbsp;{{ user.last_name }}
+    {{ user.first_name }} {{ user.last_name }}
 {% endblock navbar-content %}
+
 {% block extra_css %}
-<style>
-    .modal-dialog {
-        max-width: 95%;
-        margin: 1.75rem auto;
-    }
-    .modal-content {
-        padding: 20px;
-    }
-    .form-group {
-        margin-bottom: 1rem;
-    }
-    .form-control {
-        font-size: 16px;  /* Taille de police plus grande pour une meilleure lisibilité */
-    }
-    textarea.form-control {
-        min-height: 100px;  /* Hauteur minimale pour les zones de texte */
-    }
-    .btn-submit {
-        width: 100%;
-        padding: 10px;
-        font-size: 18px;
-    }
-
-    /* Media query pour les tablettes */
-    @media (min-width: 768px) and (max-width: 1024px) {
-        .modal-dialog {
-            max-width: 90%;
-        }
-        .modal-content {
-            padding: 30px;
-        }
-        .form-control {
-            font-size: 18px;
-            padding: 12px;
-        }
-        textarea.form-control {
-            min-height: 120px;
-        }
-    }
-</style>
-<style>
-    /* ... gardez tous vos styles existants ... */
-
-    /* Ajoutez ou modifiez ces styles */
-    .form-group input[type="text"],
-    .form-group input[type="date"],
-    .form-group input[type="time"],
-    .form-group textarea,
-    .form-group select {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-    }
-
-    @media (min-width: 768px) and (max-width: 1024px) {
-        .form-group input[type="text"],
-        .form-group input[type="date"],
-        .form-group input[type="time"],
-        .form-group textarea,
-        .form-group select {
-            padding: 12px;
-            font-size: 18px;
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/dark.min.css">
+    <style>
+        .progress-container {
+            position: relative;
+            padding: 0;
+            margin: 30px 0;
         }
 
-        textarea.form-control {
-            min-height: 120px;
+        .progress-bar {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: #e0e0e0;
         }
-    }
-</style>
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #28a745;
+            transition: width 0.3s ease;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-indicator {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+            margin: 0 auto 5px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-step.active .step-indicator {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .step-indicator i {
+            display: none;
+            color: #fff;
+        }
+
+        .progress-step.active .step-indicator i {
+            display: inline-block;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            display: block;
+            color: #999;
+        }
+
+        .progress-step.active .step-label {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .timestamp {
+            font-size: 0.75rem;
+            display: block;
+            margin-top: 5px;
+            color: #666;
+        }
+    </style>
 {% endblock %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <!-- Carte d'informations générales -->
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Informations générales</h5>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-folder">
-                        </i>&nbsp;{{ intervention.doleance.ndi }}&nbsp;
-                        <bold>{{ intervention.doleance.statut }}</bold>
-                        </h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                    {{ intervention.doleance.station.client }}
-                    - {{ intervention.doleance.station.libelle_station }}
-                    </h6>
-                    <p class="card-text">{{ intervention.doleance.panne_declarer }}</p>
-                    {% if not intervention.is_done %}
-                     {% csrf_token %}
-                        <div class="button-group">
-                        {% if not intervention.top_debut %}
-                            <button class="btn btn-primary commencer-intervention" data-id="{{ intervention.id }}">
-                                Commencer le travail
-                            </button>
-                        {% elif not intervention.top_terminer %}
-                            <button id="openInterventionForm" class="btn btn-success">Terminer le travail</button>
-                        {% endif %}
-                        <button class="btn btn-danger annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
+    <div class="container-fluid">
+        <div class="row">
+            {#            Informations générales#}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Informations générales</h5>
                     </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ intervention.doleance.ndi }} - {{ intervention.doleance.statut }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ intervention.doleance.station.client }}
+                            - {{ intervention.doleance.station.libelle_station }}</h6>
+                        <p>{{ intervention.doleance.panne_declarer }}</p>
+                        {% if not intervention.is_done %}
+                            {% csrf_token %}
+                            <div class="button-group">
+                                {% if not intervention.top_debut %}
+                                    <button class="btn btn-primary" id="commencer-travail"
+                                            data-intervention-id="{{ intervention.id }}">Commencer le travail
+                                    </button>
+                                {% elif not intervention.top_terminer %}
+                                    <button class="btn btn-success" id="terminer-travail"
+                                            data-intervention-id="{{ intervention.id }}">Terminer le travail
+                                    </button>
+                                {% endif %}
+                                <button class="btn btn-danger" id="annuler-intervention"
+                                        data-intervention-id="{{ intervention.id }}">Annuler
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {#            Techniciens affectés#}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Techniciens affectés</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for tech in techniciens %}
+                                <li>{{ tech.personnel.nom_personnel }} {{ tech.personnel.prenom_personnel }}</li>
+                            {% empty %}
+                                <li>Aucun technicien affecté</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {#            Progression de l'intervention#}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Progression de l'intervention</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress-container">
+                            <div class="progress-bar"></div>
+                            <div class="progress-steps">
+                                <div class="progress-step" data-step="1">
+                                    <div class="step-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <span class="step-label">Début</span>
+                                    <span id="top_depart"
+                                          class="timestamp">{{ intervention.top_depart|date:"d/m/Y H:i" }}</span>
+                                </div>
+                                <div class="progress-step" data-step="2">
+                                    <div class="step-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <span class="step-label">Travail</span>
+                                    <span id="top_debut"
+                                          class="timestamp">{{ intervention.top_debut|date:"d/m/Y H:i"|default:"Non commencé" }}</span>
+                                </div>
+                                <div class="progress-step" data-step="3">
+                                    <div class="step-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <span class="step-label">Fin</span>
+                                    <span id="top_terminer"
+                                          class="timestamp">{{ intervention.top_terminer|date:"d/m/Y H:i"|default:"Non terminé" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p>Durée : <span
+                                    id="dureeIntervention">{{ intervention.duree_intervention|seconds_to_hm|default:'N/A' }}</span>
+                            </p>
+                            <p>Statut : <span id="statutIntervention">
+                    {% if intervention.is_done %}
+                        Terminée
+                    {% elif intervention.is_half_done %}
+                        En cours
+                    {% else %}
+                        Non commencée
                     {% endif %}
-                </div>
-            </div>
-        </div>
-        <!-- Carte des actions -->
-        {% comment %}{% if not intervention.is_done %}
-        <div class="col-md-12 mb-4">
-            <div class="card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Actions</h5>
-                </div>
-                <div class="card-body">
-                    {% csrf_token %}
-                    <div class="button-group">
-                        {% if not intervention.top_debut %}
-                            <button class="btn btn-primary commencer-intervention" data-id="{{ intervention.id }}">
-                                Commencer le travail
-                            </button>
-                        {% elif not intervention.top_terminer %}
-                            <button id="openInterventionForm" class="btn btn-success">Terminer le travail</button>
-                        {% endif %}
-                        <button class="btn btn-danger annuler-intervention" data-id="{{ intervention.id }}">Annuler</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}{% endcomment %}
-
-        <!-- Carte des techniciens affectés -->
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">Techniciens affectés</h5>
-                </div>
-                <div class="card-body">
-                    <ul id="techniciensList" class="list-group">
-                        {% for tech in techniciens %}
-                            <li class="list-group-item">{{ tech.personnel.nom_personnel }} {{ tech.personnel.prenom_personnel }}</li>
-                        {% empty %}
-                            <li class="list-group-item">Aucun technicien affecté</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Carte de progression de l'intervention -->
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Progression de l'intervention</h5>
-                </div>
-                <div class="card-body">
-                    <div class="progress-container">
-                        <div class="progress-bar-vertical bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                        <div class="progress-step" data-step="start">
-                            <span class="progress-label">Début : <span id="top_depart">{{ intervention.top_depart|date:"d/m/Y H:i" }}</span></span>
-                        </div>
-                        <div class="progress-step" data-step="half">
-                            <span class="progress-label">Travail : <span id="top_debut">
-                            {% if intervention.top_debut %}
-                            {{ intervention.top_debut|date:"d/m/Y H:i" }}
-                            {% else %}
-                            Non commencé
-                            {% endif %}
-                            </span></span>
-                        </div>
-                        <div class="progress-step" data-step="end">
-                            <span class="progress-label">Fin : <span id="top_terminer">
-                            {% if intervention.top_terminer %}
-                            {{ intervention.top_terminer|date:"d/m/Y H:i" }}
-                            {% else %}
-                            Non terminé
-                            {% endif %}
-                            </span></span>
+                </span></p>
                         </div>
                     </div>
-                    <p class="mt-3">Durée : <span id="dureeIntervention">{{ intervention.duree_intervention|default:"0" }}</span></p>
-                    <p>Statut : <span id="statutIntervention">
-                        {% if intervention.is_done %}
-                            Terminée
-                        {% elif intervention.is_half_done %}
-                            En cours
-                        {% else %}
-                            Non commencée
-                        {% endif %}
-                    </span></p>
                 </div>
             </div>
-        </div>
-
-        <!-- Carte de la jauge -->
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0">Jauge de progression</h5>
-                </div>
-                <div class="card-body">
-                    <div class="gauge-container">
-                        <canvas id="interventionGauge"></canvas>
+            {#            Jauge de progression#}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">Jauge de progression</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="gauge-container" class="gauge-container"></div>
+                        <p id="gauge-label" class="text-center mt-2"></p>
                     </div>
                 </div>
             </div>
-        </div>
 
-
-
-    </div>
-</div>
-
-    <!-- Modal pour le formulaire de fin d'intervention -->
-    <div id="interventionFormModal" class="modal">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Fiche d'Intervention</h5>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form id="interventionForm">
-                <input type="hidden" id="intervention-id-input" name="intervention_id" value="{{ intervention.id }}">
-                {% csrf_token %}
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="station">Station :</label>
-                        <input type="text" class="form-control" id="station" name="station" value="{{ intervention.doleance.station.libelle_station }}" readonly>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="numero_fiche">Numéro de fiche :</label>
-                        <input type="number" class="form-control" id="numero_fiche" name="numero_fiche" min="0" max="99999" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="ndi">NDI :</label>
-                        <input type="text" class="form-control" id="ndi" name="ndi" value="{{ intervention.doleance.ndi }}" readonly>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="date">Date :</label>
-                        <input type="date" class="form-control" id="date" name="date" value="{{ intervention.top_debut|date:'Y-m-d' }}" readonly>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="heure_debut">Heure de début :</label>
-                        <input type="time" class="form-control" id="heure_debut" name="heure_debut" value="{{ intervention.top_debut|time:'H:i' }}" readonly>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="heure_fin">Heure de fin :</label>
-                        <input type="time" class="form-control" id="heure_fin" name="heure_fin" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="panne_declaree">Panne déclarée :</label>
-                    <textarea class="form-control" id="panne_declaree" name="panne_declaree" rows="3" readonly>{{ intervention.doleance.panne_declarer }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="description_panne">Description de la panne constatée :</label>
-                    <textarea class="form-control" id="description_panne" name="description_panne" rows="3" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="resolution">Résolution :</label>
-                    <textarea class="form-control" id="resolution" name="resolution" rows="3" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="observations">Observations :</label>
-                    <textarea class="form-control" id="observations" name="observations" rows="3"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="pieces_changees">Pièces changées :</label>
-                    <textarea class="form-control" id="pieces_changees" name="pieces_changees" rows="3"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="statut-final">Statut final de l'intervention :</label>
-                    <select class="form-control" id="statut-final" name="statut_final" required>
-                        <option value="">Choisissez un statut</option>
-                        <option value="TER">Terminé (TER)</option>
-                        <option value="ATP">Attente Pièces (ATP)</option>
-                        <option value="ATD">Attente Décision (ATD)</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-success btn-submit">Terminer l'intervention</button>
-            </form>
         </div>
     </div>
-</div>
-</div>
+
+    <div class="modal" id="interventionFormModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Fiche d'Intervention</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="interventionForm">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="station">Station :</label>
+                                <input type="text" class="form-control" id="station" name="station"
+                                       value="{{ intervention.doleance.station.libelle_station }}" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="numero_fiche">Numéro de fiche :</label>
+                                <input type="text" class="form-control" id="numero_fiche"
+                                       name="numero_fiche" pattern="\d{5}" maxlength="5" inputmode="numeric" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="ndi">NDI :</label>
+                                <input type="text" class="form-control" id="ndi" name="ndi"
+                                       value="{{ intervention.doleance.ndi }}" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="date">Date :</label>
+                                <input type="text" class="form-control" id="date" name="date"
+                                       value="{{ intervention.top_debut|date:'d/m/Y' }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="heure_debut">Heure de début :</label>
+                                <input type="text" class="form-control" id="heure_debut" name="heure_debut"
+                                       value="{{ intervention.top_debut|time:'H:i' }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="heure_fin">Heure de fin :</label>
+                            <input type="text" class="form-control flatpickr-datetime" id="heure_fin" name="heure_fin">
+                        </div>
+                        <div class="form-group">
+                            <label for="panne_declaree">Panne déclarée :</label>
+                            <textarea class="form-control" id="panne_declaree" name="panne_declaree" rows="3"
+                                      readonly>{{ intervention.doleance.panne_declarer }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="description_panne">Description de la panne constatée :</label>
+                            <textarea class="form-control" id="description_panne" name="description_panne" rows="3"
+                                      required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="element">Élément :</label>
+                            <select class="form-control" id="element" name="element">
+                                <option value="{{ intervention.doleance.element }}">{{ intervention.doleance.element }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="resolution">Résolution :</label>
+                            <textarea class="form-control" id="resolution" name="resolution" rows="3"
+                                      required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="observations">Observations :</label>
+                            <textarea class="form-control" id="observations" name="observations" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="pieces_changees">Pièces changées :</label>
+                            <textarea class="form-control" id="pieces_changees" name="pieces_changees"
+                                      rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="statut_final">Statut final de l'intervention :</label>
+                            <select class="form-control" id="statut_final" name="statut_final" required>
+                                <option value="">Choisissez un statut</option>
+                                <option value="TER">Terminé (TER)</option>
+                                <option value="ATP">Attente Pièces (ATP)</option>
+                                <option value="ATD">Attente Devis (ATD)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4">Terminer l'intervention</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
-
-
 {% block extra_js %}
-    <script src="{% static 'gmao/js/home.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.3.2/justgage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+
     <script>
-        function showNotification(message, type = 'info') {
-            Toastify({
-                text: message,
-                duration: 3000,
-                close: true,
-                gravity: "top",
-                position: "right",
-                backgroundColor: type === 'error' ? "#ff6b6b" : "#51cf66",
-            }).showToast();
-        }
-        function updateProgressBar(status) {
-            let height, activeSteps;
-            switch(status) {
-                case 'start':
-                    height = '0%';
-                    activeSteps = ['start'];
-                    break;
-                case 'half':
-                    height = '50%';
-                    activeSteps = ['start', 'half'];
-                    break;
-                case 'end':
-                    height = '100%';
-                    activeSteps = ['start', 'half', 'end'];
-                    break;
-                default:
-                    height = '0%';
-                    activeSteps = [];
-            }
-            $('.progress-bar-vertical').css('height', height);
-            $('.progress-step').removeClass('active');
-            activeSteps.forEach(step => {
-                $(`.progress-step[data-step="${step}"]`).addClass('active');
-            });
-        }
-
-        function updateGauge(durationInSeconds, maxDuration) {
-            const ctx = document.getElementById('interventionGauge').getContext('2d');
-            const config = {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [durationInSeconds, maxDuration - durationInSeconds],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(220, 220, 220, 0.8)'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    circumference: 180,
-                    rotation: -90,
-                    cutout: '80%',
-                    plugins: {
-                        tooltip: {enabled: false},
-                        legend: {display: false}
-                    }
-                }
-            };
-            if (window.myChart instanceof Chart) {
-                window.myChart.data.datasets[0].data = [durationInSeconds, maxDuration - durationInSeconds];
-                window.myChart.update();
-            } else {
-                window.myChart = new Chart(ctx, config);
-            }
-        }
-
-        function updateDurationAndGauge() {
+        document.addEventListener('DOMContentLoaded', function () {
             const startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
-            const maxDuration = 3600; // 1 heure en secondes
+            const isHalfDone = {{ intervention.is_half_done|yesno:"true,false" }};
+            const isDone = {{ intervention.is_done|yesno:"true,false" }};
+            const dureeElement = document.getElementById('dureeIntervention');
+            const maxDuration = 8 * 60 * 60 * 1000; // 8 heures en millisecondes
 
-            function update() {
-                const now = new Date().getTime();
-                const durationInSeconds = Math.floor((now - startTime) / 1000);
-
-                updateDurationDisplay(durationInSeconds);
-                updateGauge(durationInSeconds, maxDuration);
-
-                if (durationInSeconds < maxDuration) {
-                    requestAnimationFrame(update);
-                }
-            }
-
-            update();
-        }
-
-        function commencerIntervention(interventionId) {
-            console.log("Début de commencerIntervention", interventionId);
-            let kilometrage = prompt("Veuillez entrer le kilométrage de départ (chiffres uniquement):");
-            if (kilometrage === null) return; // L'utilisateur a annulé
-
-            kilometrage = kilometrage.replace(/[^0-9]/g, '');  // Supprime tous les caractères non numériques
-            if (kilometrage === '') {
-                showNotification("Veuillez entrer un kilométrage valide.", 'error');
-                return;
-            }
-
-            $.ajax({
-                url: '/home/commencer-intervention/' + interventionId + '/',
-                type: 'POST',
-                data: {
-                    kilometrage: kilometrage,
-                    csrfmiddlewaretoken: getCookie('csrftoken')
+            const gauge = new JustGage({
+                id: "gauge-container",
+                value: 0,
+                min: 0,
+                max: 100,
+                title: "Progression",
+                label: "%",
+                decimals: 1,
+                pointer: true,
+                pointerOptions: {
+                    toplength: -15,
+                    bottomlength: 10,
+                    bottomwidth: 12,
+                    color: '#8e8e93',
+                    stroke: '#ffffff',
+                    stroke_width: 3,
+                    stroke_linecap: 'round'
                 },
-                headers: {'X-CSRFToken': getCookie('csrftoken')},
-                success: function (response) {
-                    if (response.success) {
-                        $('#top_debut').text(new Date(response.top_debut).toLocaleString(
-                            'fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric',
-                             hour: '2-digit', minute: '2-digit' }));
-                        $('.progress-bar').removeClass('bg-info').addClass('bg-warning')
-                            .css('width', '66%')
-                            .attr('aria-valuenow', 66)
-                            .text('En cours');
-                        $('.commencer-intervention').hide();
-                        window.location.reload();
-                    } else {
-                        showNotification('Erreur lors du démarrage de l\'intervention: ' + response.message, 'error');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Erreur AJAX:", xhr.responseText);
-                    showNotification('Erreur lors de la communication avec le serveur: ' + error, 'error');
-                }
+                gaugeWidthScale: 0.6,
+                counter: true
             });
-        }
 
-        function annulerIntervention(interventionId) {
-            if (confirm("Êtes-vous sûr de vouloir annuler cette intervention ?")) {
-                $.ajax({
-                    url: `/home/intervention/${interventionId}/annuler/`,
-                    type: 'POST',
-                    data: {
-                        csrfmiddlewaretoken: getCookie('csrftoken')
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            window.location.href = '/home/';
-                        } else {
-                            showNotification('Erreur lors de l\'annulation de l\'intervention: ' + response.message, 'error');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Erreur AJAX:", xhr.responseText);
-                        showNotification('Erreur lors de la communication avec le serveur: ' + error, 'error');
-                    }
-                });
-            }
-        }
+            function updateDurationAndGauge() {
+                if (isHalfDone && !isDone) {
+                    const now = new Date().getTime();
+                    const duration = now - startTime;
+                    const hours = Math.floor(duration / (1000 * 60 * 60));
+                    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((duration % (1000 * 60)) / 1000);
 
-        function enforceNumericInput(input) {
-            input.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                if (this.value.length > 5) {
-                    this.value = this.value.slice(0, 5);
-                }
-            });
-        }
+                    dureeElement.textContent =
+                        (hours < 10 ? "0" + hours : hours) + ":" +
+                        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+                        (seconds < 10 ? "0" + seconds : seconds);
 
-        function formatDuration(seconds) {
-            const hours = Math.floor(seconds / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-            return `${hours.toString().padStart(2, '0')}h:${minutes.toString().padStart(2, '0')}mn`;
-        }
+                    const progressPercentage = Math.min((duration / maxDuration) * 100, 100);
+                    gauge.refresh(progressPercentage);
 
-        function updateDurationDisplay(durationInSeconds) {
-            const formattedDuration = formatDuration(durationInSeconds);
-            $('#dureeIntervention').text(formattedDuration);
-        }
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
+                    document.getElementById('gauge-label').textContent =
+                        hours + "h " + minutes + "m " + seconds + "s / 8h";
                 }
             }
-            return cookieValue;
-        }
 
+            if (isHalfDone && !isDone) {
+                setInterval(updateDurationAndGauge, 1000);
+            } else if (isDone) {
+                const finalDuration = {{ intervention.duree_intervention }};
+                const progressPercentage = Math.min((finalDuration * 1000 / maxDuration) * 100, 100);
+                gauge.refresh(progressPercentage);
+                document.getElementById('gauge-label').textContent =
+                    "{{ intervention.duree_intervention|seconds_to_hm }} / 8h";
+            }
+        });
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
             upperCaseInputs.forEach(input => {
@@ -517,95 +395,93 @@
                     this.value = this.value.toUpperCase();
                 });
             });
+        });
+        const interventionData = {
+            top_debut: "{{ intervention.top_debut|date:'d/m/Y H:i'|default:'' }}",
+            duree_intervention: {{ intervention.duree_intervention|default:0 }},
+            duree_prevue: {{ intervention.duree_prevue|default:100 }},
+            station_id: {{ intervention.doleance.station.id }},
+        };
+        console.log('Intervention Data', interventionData);
+    </script>
+    {#    Jauge#}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
+            const isHalfDone = {{ intervention.is_half_done|yesno:"true,false" }};
+            const isDone = {{ intervention.is_done|yesno:"true,false" }};
+            const dureeElement = document.getElementById('dureeIntervention');
 
-            const modal = document.getElementById("interventionFormModal");
-            const btn = document.getElementById("openInterventionForm");
-            const span = document.getElementsByClassName("close")[0];
-            const form = document.getElementById("interventionForm");
-            const numeroFicheInput = document.getElementById('numero_fiche');
+            function updateDuration() {
+                if (isHalfDone && !isDone) {
+                    const now = new Date().getTime();
+                    const duration = now - startTime;
+                    const hours = Math.floor(duration / (1000 * 60 * 60));
+                    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((duration % (1000 * 60)) / 1000);
 
-            enforceNumericInput(numeroFicheInput);
-
-            if (btn) {
-                btn.onclick = function () {
-                    modal.style.display = "block";
-                    document.getElementById('heure_fin').value = new Date().toTimeString().slice(0, 5);
+                    dureeElement.textContent =
+                        (hours < 10 ? "0" + hours : hours) + ":" +
+                        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+                        (seconds < 10 ? "0" + seconds : seconds);
                 }
             }
 
-            if (span) {
-                span.onclick = function () {
-                    modal.style.display = "none";
-                }
+            if (isHalfDone && !isDone) {
+                setInterval(updateDuration, 1000);
             }
-
-            window.onclick = function (event) {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            }
-
-            if (form) {
-                form.onsubmit = function (e) {
-                    e.preventDefault();
-                    fetch('{% url "gmao:terminer_travail" intervention.id %}', {
-                        method: 'POST',
-                        body: new FormData(form),
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            window.location.href = '/home/';  // Redirection vers la page d'accueil
-                        } else {
-                            if (data.error_type === 'numero_fiche_exists') {
-                                showNotification(data.message, 'error');
-                                document.getElementById('numero_fiche').value = '';
-                                document.getElementById('numero_fiche').focus();
-                            } else {
-                                showNotification('Erreur: ' + data.message, 'error');
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erreur:', error);
-                        showNotification(`Une erreur est survenue lors de la terminaison de l'intervention`, 'error');
-                    });
-                }
-            }
-
-            $('.commencer-intervention').click(function(e) {
-                e.preventDefault();
-                commencerIntervention($(this).data('id'));
-            });
-
-            $('.annuler-intervention').click(function(e) {
-                e.preventDefault();
-                annulerIntervention($(this).data('id'));
-            });
-
-            // Initial progress bar and gauge update
-            {% if intervention.is_done %}
-                updateProgressBar('end');
-            {% elif intervention.is_half_done %}
-                updateProgressBar('half');
-            {% elif intervention.etat_doleance == 'ATT' %}
-                updateProgressBar('start');
-            {% else %}
-                updateProgressBar('start');
-            {% endif %}
-
-            {% if intervention.is_half_done and not intervention.is_done %}
-                // L'intervention est en cours
-                updateDurationAndGauge();
-            {% else %}
-                // L'intervention est terminée ou pas encore commencée
-                const initialDuration = {{ intervention.duree_intervention|default_if_none:0 }};
-                updateDurationDisplay(initialDuration);
-                updateGauge(initialDuration, 3600);
-            {% endif %}
         });
     </script>
+    {#    ProgressBar#}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
+            var isHalfDone = {{ intervention.is_half_done|yesno:"true,false" }};
+            var isDone = {{ intervention.is_done|yesno:"true,false" }};
+            var dureeElement = document.getElementById('dureeIntervention');
+            var maxDuration = 8 * 60 * 60 * 1000; // 8 heures en millisecondes
+
+            function updateProgressAndDuration() {
+                var progressBar = document.querySelector('.progress-bar');
+                var steps = document.querySelectorAll('.progress-step');
+                var currentStep = 0;
+
+                if (isDone) {
+                    currentStep = 2;
+                } else if (isHalfDone) {
+                    currentStep = 1;
+                }
+
+                progressBar.style.setProperty('--progress-width', ((currentStep + 1) / steps.length) * 100 + '%');
+
+                steps.forEach((step, index) => {
+                    if (index <= currentStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+
+                if (isHalfDone && !isDone) {
+                    var now = new Date().getTime();
+                    var duration = now - startTime;
+                    var hours = Math.floor(duration / (1000 * 60 * 60));
+                    var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((duration % (1000 * 60)) / 1000);
+
+                    dureeElement.textContent =
+                        (hours < 10 ? "0" + hours : hours) + ":" +
+                        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+                        (seconds < 10 ? "0" + seconds : seconds);
+                }
+            }
+
+            updateProgressAndDuration();
+
+            if (isHalfDone && !isDone) {
+                setInterval(updateProgressAndDuration, 1000);
+            }
+        });
+    </script>
+    <script src="{% static 'gmao/js/intervention.js' %}"></script>
 {% endblock %}

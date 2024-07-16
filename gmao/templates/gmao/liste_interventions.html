@@ -117,11 +117,11 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
-    <script>
+    {% comment %}<script>
         $(document).ready(function () {
             // Configuration de base pour Flatpickr
             const flatpickrConfig = {
-                dateFormat: "Y-m-d",
+                dateFormat: "d/m/Y",
                 maxDate: "today"
             };
 
@@ -219,16 +219,25 @@
                 const formattedData = data.map(function (row) {
                     return {
                         'Appelant': row.appelant,
-                        'Numéro d\'intervention': row.ndi,
-                        'Station': row.station,
-                        'Description de la panne': row.panne,
-                        'Résolution': row.resolution,
-                        'Fiche d\'intervention': row.numero_fiche,
-                        'Début des travaux': formatDate(row.debut_travail),
-                        'Fin des travaux': formatDate(row.fin_travail),
-                        'Statut actuel': row.statut,
-                        'Techniciens assignés': formatTechniciens(row.techniciens),
-                        'Durée totale (heures)': calculateDuration(row.debut_travail, row.fin_travail)
+                        'Transmission': row.transmission,
+                        'BT': row.bt,
+                        'NDI': row.ndi,
+                        'SITE': row.station,
+                        'APPAREIL': row.element,
+                        'ELEMENT': row.element,
+                        'PANNE DECLAREE/DEMANDE': row.panne,
+                        'SITUATION': row.statut,
+                        'RESOLUTION': row.resolution,
+                        'DATE DE TRANSMISSION': row.date_transmission,
+                        'DATE LIMITE': formatDate(row.date_deadline),
+                        'DATE DEBUT': formatDate(row.debut_travail),
+                        'DATE FIN': formatDate(row.fin_travail),
+                        'N FI': row.numero_fiche,
+                        'NOMBRE DE TECH': formatTechniciens(row.techniciens).count,
+                        'KILOMETRAGE': row.kilometrage_depart,
+                        'OBSERVATION': row.observation,
+                        'INTERVENANT': formatTechniciens(row.techniciens),
+                        'DUREE TOTALE': row.duree_de_travail
                     };
 
                 });
@@ -236,20 +245,29 @@
 
                 // Le reste du code pour créer et télécharger le fichier Excel...
                 // Utilisation de formattedData pour créer la feuille Excel
-                var ws = XLSX.utils.json_to_sheet(formattedData);
+                const ws = XLSX.utils.json_to_sheet(formattedData);
+
+                const dateColumns = ['K', 'L', 'M', 'N']; // Colonnes pour DATE DE TRANSMISSION, DATE LIMITE, DATE DEBUT, DATE FIN
+                dateColumns.forEach(col => {
+                    for (let i = 2; i <= formattedData.length + 1; i++) {
+                        if (!ws[col + i]) continue;
+                        ws[col + i].t = 'd';
+                        ws[col + i].z = 'dd/mm/yyyy hh:mm';
+                    }
+                });
 
                 // Création du classeur Excel
-                var wb = XLSX.utils.book_new();
+                const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, "Interventions");
 
                 // Génération du fichier Excel
-                var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+                const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
 
                 // Fonction pour convertir les données en ArrayBuffer
                 function s2ab(s) {
-                    var buf = new ArrayBuffer(s.length);
-                    var view = new Uint8Array(buf);
-                    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                    const buf = new ArrayBuffer(s.length);
+                    const view = new Uint8Array(buf);
+                    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
                     return buf;
                 }
 
@@ -257,16 +275,33 @@
                 saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), "liste_interventions.xlsx");
             }
 
+
 // Fonctions auxiliaires pour le formatage
             function formatDate(dateString) {
-                // Convertir la date en format lisible
-                return new Date(dateString).toLocaleString('fr-FR');
+                if (!dateString) return '';
+                // Vérifie si la chaîne est déjà au format 'dd/mm/yyyy HH:MM'
+                if (/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}$/.test(dateString)) {
+                    return dateString;
+                }
+                // Si ce n'est pas le cas, essayez de parser la date
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    return ''; // Retourne une chaîne vide si la date est invalide
+                }
+                // Formater la date en 'dd/mm/yyyy HH:MM'
+                return date.toLocaleString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).replace(',', '');
             }
 
-            {% comment %}function formatTechniciens(techniciens) {
+            function formatTechniciens(techniciens) {
                 // Formater la liste des techniciens (par exemple, les joindre avec des virgules)
                 return Array.isArray(techniciens) ? techniciens.join(', ') : techniciens;
-            }{% endcomment %}
+            }
 
             function formatTechniciens(techniciens) {
                 if (!Array.isArray(techniciens)) {
@@ -275,7 +310,8 @@
 
                 return techniciens.map(tech => {
                     // Assurez-vous que chaque technicien est une chaîne de caractères
-                    return typeof tech === 'string' ? tech : `${tech.nom} ${tech.prenom}`;
+                    return typeof tech === 'string' ? tech : `${tech.prenom}`;
+                    {#return typeof tech === 'string' ? tech : `${tech.nom} ${tech.prenom}`;#}
                 }).join('.<br>• ');
             }
 
@@ -303,6 +339,169 @@
                 initializeDataTable();
             });
 
+        });
+    </script>{% endcomment %}
+    <script>
+        $(document).ready(function () {
+            // Configuration de base pour Flatpickr
+            const flatpickrConfig = {
+                dateFormat: "d/m/Y",
+                maxDate: "today"
+            };
+
+            // Initialisation de Flatpickr pour la date de début
+            const startDatePicker = flatpickr("#startDate", {
+                ...flatpickrConfig,
+                onChange: function (selectedDates, dateStr, instance) {
+                    endDatePicker.set('minDate', dateStr);
+                }
+            });
+
+            // Initialisation de Flatpickr pour la date de fin
+            const endDatePicker = flatpickr("#endDate", {
+                ...flatpickrConfig,
+                onChange: function (selectedDates, dateStr, instance) {
+                    startDatePicker.set('maxDate', dateStr);
+                }
+            });
+
+            let table;
+
+            function initializeDataTable() {
+                if ($.fn.DataTable.isDataTable('#interventionsTable')) {
+                    table.destroy();
+                }
+
+                table = $('#interventionsTable').DataTable({
+                    ajax: {
+                        url: '{% url "gmao:get_interventions_data" %}',
+                        dataSrc: function (json) {
+                            window.fullInterventionsData = json.data;
+                            return json.data;
+                        },
+                        data: function (d) {
+                            d.startDate = $('#startDate').val();
+                            d.endDate = $('#endDate').val();
+                        }
+                    },
+                    columns: [
+                        {data: 'ndi'},
+                        {data: 'station'},
+                        {data: 'panne'},
+                        {data: 'resolution'},
+                        {data: 'numero_fiche'},
+                        {data: 'debut_travail'},
+                        {data: 'fin_travail'},
+                        {data: 'statut'},
+                        {
+                            data: 'techniciens',
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+                                    return data.split(', ').join('<br>');
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return '<a href="/home/intervention/' + row.id + '/" class="btn btn-sm btn-primary">Éditer</a>';
+                            }
+                        }
+                    ],
+                    createdRow: function (row, data, dataIndex) {
+                        $(row).addClass('status-' + data.statut);
+                    },
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                    },
+                    responsive: true,
+                    ordering: false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            text: 'Exporter en Excel',
+                            action: function (e, dt, node, config) {
+                                exportToExcel(dt);
+                            },
+                        },
+                    ],
+                    initComplete: function () {
+                        $('#loadingIndicator').hide();
+                    }
+                });
+            }
+
+            initializeDataTable();
+
+            function exportToExcel(dt) {
+                const data = dt.data().toArray();
+                const formattedData = data.map(function (row) {
+                    return {
+                        'Appelant': row.appelant || '',
+                        'Transmission': row.transmission || '',
+                        'BT': row.bt || '',
+                        'NDI': row.ndi || '',
+                        'SITE': row.station || '',
+                        'APPAREIL': row.element || '',
+                        'ELEMENT': row.element || '',
+                        'PANNE DECLAREE/DEMANDE': row.panne || '',
+                        'SITUATION': row.statut || '',
+                        'RESOLUTION': row.resolution || '',
+                        'DATE DE TRANSMISSION': row.date_transmission || '',
+                        'DATE LIMITE': row.date_deadline || '',
+                        'DATE DEBUT': row.debut_travail || '',
+                        'DATE FIN': row.fin_travail || '',
+                        'N FI': row.numero_fiche || '',
+                        'NOMBRE DE TECH': row.techniciens ? row.techniciens.split(',').length : 0,
+                        'KILOMETRAGE': row.kilometrage_depart || '',
+                        'OBSERVATION': row.commentaires || '',
+                        'INTERVENANT': row.techniciens || '',
+                        'DUREE TOTALE': row.duree_de_travail || ''
+                    };
+                });
+
+                const ws = XLSX.utils.json_to_sheet(formattedData);
+
+                // Définir le type de cellule pour toutes les colonnes
+                for (let i = 0; i < formattedData.length; i++) {
+                    for (let j in formattedData[i]) {
+                        const cellRef = XLSX.utils.encode_cell({r: i + 1, c: XLSX.utils.decode_col(j)});
+                        if (!ws[cellRef]) continue;
+                        ws[cellRef].t = 's'; // Définir toutes les cellules comme type 'string'
+                    }
+                }
+
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Interventions");
+
+                const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+
+                function s2ab(s) {
+                    const buf = new ArrayBuffer(s.length);
+                    const view = new Uint8Array(buf);
+                    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+                }
+
+                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), "liste_interventions.xlsx");
+            }
+
+            $('#filterDate').on('click', function () {
+                if ($('#startDate').val() && $('#endDate').val()) {
+                    initializeDataTable();
+                } else {
+                    alert('Veuillez sélectionner une date de début et une date de fin.');
+                }
+            });
+
+            $('#resetDate').on('click', function () {
+                $('#startDate').val('');
+                $('#endDate').val('');
+                startDatePicker.setDate(null);
+                endDatePicker.setDate(null);
+                initializeDataTable();
+            });
         });
     </script>
 {% endblock extra_js %}

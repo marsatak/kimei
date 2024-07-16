@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "gmao_teams.apps.GmaoTeamsConfig",
     "api.apps.ApiConfig",
+    "gmao.templatetags",
 
     # third party 
     'rest_framework',
@@ -73,7 +74,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,9 +85,13 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
+    'gmao.middleware.SessionExpirationMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
@@ -168,13 +173,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'Indian/Antananarivo'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -191,6 +196,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 LOGIN_REDIRECT_URL = 'gmao:home'
 LOGOUT_REDIRECT_URL = 'accounts:index'
+# Paramètres de session
+SESSION_COOKIE_AGE = 86400  # Durée de vie du cookie de session en secondes (1 jour)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # La session expire à la fermeture du navigateur
+SESSION_SAVE_EVERY_REQUEST = True  # Sauvegarde la session à chaque requête
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

@@ -116,7 +116,7 @@ class TechnicienViewSet(viewsets.ViewSet):
             doleance = Doleance.objects.using('kimei_db').get(pk=pk)
             intervention = Intervention.objects.using('kimei_db').create(
                 doleance=doleance,
-                top_depart=timezone.now(),
+                top_depart=timezone.localtime(timezone.now()).date(),
                 etat_doleance='ATT'
             )
             return Response({'success': True, 'intervention_id': intervention.id})
@@ -130,7 +130,7 @@ class TechnicienViewSet(viewsets.ViewSet):
         try:
             intervention = Intervention.objects.using('kimei_db').get(pk=pk)
             kilometrage = request.data.get('kilometrage')
-            intervention.top_debut = timezone.now()
+            intervention.top_debut = timezone.localtime(timezone.now()).date()
             intervention.kilometrage_depart_debut = kilometrage
             intervention.etat_doleance = 'INT'
             intervention.save(using='kimei_db')
@@ -144,7 +144,7 @@ class TechnicienViewSet(viewsets.ViewSet):
     def terminer_intervention(self, request, pk=None):
         try:
             intervention = Intervention.objects.using('kimei_db').get(pk=pk)
-            intervention.top_terminer = timezone.now()
+            intervention.top_terminer = timezone.localtime(timezone.now()).date()
             intervention.is_done = True
             intervention.save(using='kimei_db')
             return Response({'success': True, 'message': 'Intervention terminée avec succès'})

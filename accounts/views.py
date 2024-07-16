@@ -2,6 +2,10 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
 from django.apps import apps
 from django.db import migrations
+from django.contrib import messages
+from django.db import transaction
+from django.utils import timezone
+
 from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import authenticate, login, logout
@@ -9,22 +13,19 @@ from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_control
 
 from django.contrib.auth import update_session_auth_hash
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
-from gmao.models import Personnel  # Assurez-vous d'importer le modèle Personnel
-from .models import Employee
-from django.db import transaction
 import logging
 
+from gmao.models import Personnel  # Assurez-vous d'importer le modèle Personnel
+from .models import Employee
+
+# DÉBOGGAGE
 logger = logging.getLogger(__name__)
 
 
-def index(request):
-    return render(request, 'accounts/index.html')
-
-
+# ###################### DÉBUT TRAITEMEMENT CHANGEMENT DE MOT DE PASSE #############################
 def change_password(request):
     user_id = request.session.get('user_id')
     if not user_id:
@@ -59,6 +60,10 @@ def change_password(request):
     return render(request, 'accounts/change_password.html', context)
 
 
+# ###################### FIN TRAITEMEMENT CHANGEMENT DE MOT DE PASSE #############################
+
+
+# ###################### DÉBUT TRAITEMEMENT DE L'AUTHENTIFICATION #############################
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
@@ -68,7 +73,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-
+            request.session['last_activity'] = timezone.now().isoformat()
             # Mise à jour du statut de l'utilisateur
             user.statut = 'PRS'
             user.save()
@@ -91,6 +96,9 @@ def login_view(request):
     return render(request, 'registration/login.html')
 
 
+# ###################### FIN TRAITEMEMENT DE L'AUTHENTIFICATION #############################
+
+# ###################### TRAITEMEMENT AUTHENT AVEC SESSION KEY MONOLOGIN #############################
 # def login_view(request):
 #     if request.method == 'POST':
 #         username = request.POST['username']
@@ -123,8 +131,9 @@ def login_view(request):
 #         else:
 #             return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
 #     return render(request, 'registration/login.html')
+# ###################### FIN TRAITEMEMENT AUTHENT AVEC SESSION KEY MONOLOGIN #############################
 
-
+# ###################### DÉBUT TRAITEMEMENT FIN DE SESSION #############################
 def logout_view(request):
     User = get_user_model()
     if request.user.is_authenticated:
@@ -132,36 +141,18 @@ def logout_view(request):
         # user.session_key = None
         # user.statut = 'ABS'
         user.save()
-    logout(request)
     # Assurez-vous que la session est complètement effacée
     request.session.flush()
     return redirect('gmao:home')
 
 
-# A tester le logout
+# ###################### FIN TRAITEMEMENT FIN DE SESSION #############################
 
 
-# def logout_view(request):
-#     if request.user.is_authenticated:
-#         # Mise à jour du statut de l'utilisateur
-#         request.user.statut = 'ABS'
-#         request.user.save()
-#
-#         # Mise à jour du statut du personnel correspondant
-#         try:
-#             personnel = Personnel.objects.get(matricule=request.user.matricule)
-#             personnel.statut = 'ABS'
-#             personnel.save()
-#         except Personnel.DoesNotExist:
-#             # Log this error or handle it as appropriate for your application
-#             pass
-#
-#     logout(request)
-#     request.session.flush()
-#     return redirect('accounts:login')
-
+# ###################### MIGRATION PERSONNELS VERS EMPOYEES #############################
 @user_passes_test(lambda u: u.is_superuser)
 def run_employee_migration(request):
     from .migrations.xxxx_create_employees_from_personnel import create_employees_from_personnel
     create_employees_from_personnel(apps, migrations.recorder.MigrationRecorder)
     return HttpResponse("Migration completed")
+# ###################### FIN MIGRATION PERSONNELS VERS EMPOYEES #############################

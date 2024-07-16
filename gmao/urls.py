@@ -14,7 +14,10 @@ urlpatterns = [
     # path('home/getClient/<int:id>/', views.getStation, name='get-station'),
 
     path('home/getDoleanceEncours', views.getDoleanceEncours, name='get-doleance-encours'),
+    path('home/get-equipes-data/', views.get_equipes_data, name='get_equipes_data'),
     path('home/create-doleance/', views.create_doleance, name='create_doleance'),
+    path('home/get-doleance/<int:doleance_id>/', views.get_doleance, name='get_doleance'),
+    path('home/update-doleance/<int:doleance_id>/', views.update_doleance, name='update_doleance'),
     path('home/search-stations/', views.search_stations, name='search_stations'),
     path('home/ajax/load-stations/', views.load_stations, name='load_stations'),
     path('home/ajax/load-appelants/', views.load_appelants, name='load_appelants'),
@@ -30,9 +33,8 @@ urlpatterns = [
     path('home/commencer-intervention/<int:intervention_id>/', views.commencer_intervention,
          name='commencer_intervention'),
     path('home/intervention/<int:intervention_id>/annuler/', views.annuler_intervention, name='annuler_intervention'),
-    path('home/liste-interventions/', views.liste_interventions, name='liste_interventions'),
+    # path('home/liste-interventions/', views.liste_interventions, name='liste_interventions'),
     path('home/intervention/<int:intervention_id>/', views.detail_intervention, name='detail_intervention'),
-    # path('home/intervention/<int:intervention_id>/commencer/', views.commencer_travail, name='commencer_travail'),
     path('home/interventions/', views.liste_interventions, name='liste_interventions'),
 
     path('home/intervention/<int:intervention_id>/terminer/', views.terminer_travail, name='terminer_travail'),

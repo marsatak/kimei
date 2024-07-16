@@ -387,6 +387,71 @@ footer {
     }
 }
 
+.bg-new {
+    background-color: #A0F0A3 !important;
+    color: black !important;
+}
+
+.bg-att {
+    background-color: #c1bc69 !important;
+    color: black !important;
+}
+
+.bg-int {
+    background-color: #EE8B1F !important;
+    color: black !important;
+}
+
+.bg-atp {
+    background-color: #C2D7FD !important;
+    color: black !important;
+}
+
+.bg-atd {
+    background-color: #EDBDFE !important;
+    color: black !important;
+}
+
+#portfolioTable {
+    width: 100% !important;
+    table-layout: fixed;
+}
+
+#portfolioTable th,
+#portfolioTable td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.text-wrap {
+    white-space: normal !important;
+}
+
+.width-200 {
+    min-width: 200px;
+}
+
+@media screen and (max-width: 767px) {
+    #portfolioTable {
+        font-size: 14px;
+    }
+
+    #portfolioTable .btn {
+        font-size: 12px;
+        padding: 0.25rem 0.5rem;
+    }
+
+    #portfolioTable td,
+    #portfolioTable th {
+        padding: 0.3rem;
+    }
+
+    .width-200 {
+        min-width: 150px;
+    }
+}
+
+/*FIN PORTFOLIO*/
 @media (max-width: 576px) {
     .login-container {
         margin: 0 15px;
