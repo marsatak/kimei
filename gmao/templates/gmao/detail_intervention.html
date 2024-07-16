@@ -388,14 +388,15 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        {#    Verouillage Maj#}
+        {% comment %}document.addEventListener('DOMContentLoaded', function () {
             const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
             upperCaseInputs.forEach(input => {
                 input.addEventListener('input', function () {
                     this.value = this.value.toUpperCase();
                 });
             });
-        });
+        });{% endcomment %}
         const interventionData = {
             top_debut: "{{ intervention.top_debut|date:'d/m/Y H:i'|default:'' }}",
             duree_intervention: {{ intervention.duree_intervention|default:0 }},
@@ -435,16 +436,16 @@
     {#    ProgressBar#}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
-            var isHalfDone = {{ intervention.is_half_done|yesno:"true,false" }};
-            var isDone = {{ intervention.is_done|yesno:"true,false" }};
-            var dureeElement = document.getElementById('dureeIntervention');
-            var maxDuration = 8 * 60 * 60 * 1000; // 8 heures en millisecondes
+            const startTime = new Date("{{ intervention.top_debut|date:'Y-m-d H:i:s' }}").getTime();
+            const isHalfDone = {{ intervention.is_half_done|yesno:"true,false" }};
+            const isDone = {{ intervention.is_done|yesno:"true,false" }};
+            const dureeElement = document.getElementById('dureeIntervention');
+            const maxDuration = 8 * 60 * 60 * 1000; // 8 heures en millisecondes
 
             function updateProgressAndDuration() {
-                var progressBar = document.querySelector('.progress-bar');
-                var steps = document.querySelectorAll('.progress-step');
-                var currentStep = 0;
+                const progressBar = document.querySelector('.progress-bar');
+                const steps = document.querySelectorAll('.progress-step');
+                let currentStep = 0;
 
                 if (isDone) {
                     currentStep = 2;
@@ -463,11 +464,11 @@
                 });
 
                 if (isHalfDone && !isDone) {
-                    var now = new Date().getTime();
-                    var duration = now - startTime;
-                    var hours = Math.floor(duration / (1000 * 60 * 60));
-                    var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((duration % (1000 * 60)) / 1000);
+                    const now = new Date().getTime();
+                    const duration = now - startTime;
+                    const hours = Math.floor(duration / (1000 * 60 * 60));
+                    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((duration % (1000 * 60)) / 1000);
 
                     dureeElement.textContent =
                         (hours < 10 ? "0" + hours : hours) + ":" +
