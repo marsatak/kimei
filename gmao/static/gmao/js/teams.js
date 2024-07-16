@@ -211,7 +211,7 @@ $(document).ready(function () {
             }
 
             try {
-                var table = $('#portfolioTable').DataTable({
+                const table = $('#portfolioTable').DataTable({
                     data: data,
                     columns: [
                         {data: 'ndi', title: 'NDI', width: "10%"},
@@ -316,7 +316,7 @@ $(document).ready(function () {
                 if (response.success) {
                     alert(response.message);
                     interventionEnCours = true;
-                    loadTechnicienPortfolio();
+                    //loadTechnicienPortfolio();
                 } else {
                     console.error("Erreur lors de la prise en charge:", response.message);
                     alert('Erreur : ' + response.message);

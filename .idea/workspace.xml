@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -229,14 +228,6 @@
       <workItem from="1721061781231" duration="13320000" />
       <workItem from="1721100796959" duration="713000" />
       <workItem from="1721105512383" duration="4948000" />
-    </task>
-    <task id="LOCAL-00164" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720421367490</created>
-      <option name="number" value="00164" />
-      <option name="presentableId" value="LOCAL-00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1720421367490</updated>
     </task>
     <task id="LOCAL-00165" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -622,7 +613,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721134777505</updated>
     </task>
-    <option name="localTasksCounter" value="213" />
+    <task id="LOCAL-00213" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1721135328379</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1721135328379</updated>
+    </task>
+    <option name="localTasksCounter" value="214" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
