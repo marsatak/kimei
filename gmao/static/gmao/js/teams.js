@@ -331,14 +331,13 @@ $(document).ready(function () {
     }
 
     function getActionButton(doleance, interventionEnCours) {
-        if ((doleance.statut === 'ATT' || doleance.statut === 'INT') && doleance.intervention_id) {
+        // if ((doleance.statut === 'ATT' || doleance.statut === 'INT') && doleance.intervention_id) {
+        if (interventionEnCours) {
             return `<a href="/home/intervention/${doleance.intervention_id}/" class="btn btn-primary btn-sm btn-block">Détails intervention</a>`;
         } else if ((doleance.statut === 'NEW' || doleance.statut === 'ATD' || doleance.statut === 'ATP') && !interventionEnCours) {
-            return '<span class="text-muted">Aucune action disponible</span>';
-
-        } else {
             return `<button class="btn btn-success btn-sm btn-block prendre-en-charge" data-id="${doleance.id}">Prendre en charge</button>`;
-            
+        } else {
+            return '<span class="text-muted">Aucune action disponible</span>';
         }
     }
 
