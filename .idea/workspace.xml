@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/teams.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/static/gmao/js/alert_modal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gmao/static/gmao/js/modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/intervention.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/intervention.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/detail_intervention.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old/portefeuille_equipe.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams_old/portefeuille_equipe.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +30,8 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -228,14 +233,7 @@
       <workItem from="1721061781231" duration="13320000" />
       <workItem from="1721100796959" duration="713000" />
       <workItem from="1721105512383" duration="4948000" />
-    </task>
-    <task id="LOCAL-00173" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720557741275</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1720557741275</updated>
+      <workItem from="1721148662578" duration="4760000" />
     </task>
     <task id="LOCAL-00174" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -621,7 +619,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721142440905</updated>
     </task>
-    <option name="localTasksCounter" value="222" />
+    <task id="LOCAL-00222" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1721142524130</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1721142524130</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

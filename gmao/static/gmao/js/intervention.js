@@ -1,69 +1,8 @@
+import {showDynamicModal} from './modal.js';
+
 $(document).ready(function () {
-    //let gauge;
 
-
-    /*function initGauge() {
-        if (typeof interventionData === 'undefined') {
-            console.error('interventionData is not defined');
-            return;
-        }
-        gauge = new JustGage({
-            id: "gauge-container",
-            value: interventionData.duree_intervention,
-            min: 0,
-            max: interventionData.duree_prevue,
-            title: "Temps passé",
-            label: "secondes",
-            gaugeWidthScale: 0.6,
-            counter: true
-        });
-    }*/
-
-    function updateProgressBar(state) {
-        var progressBar = document.querySelector('.progress-bar-fill');
-        console.log("Updating progress bar to state:", state, "Element found:", progressBar);
-        if (!progressBar) {
-            console.error("Progress bar element not found.");
-            return;
-        }
-        switch (state) {
-            case 'debut':
-                progressBar.style.height = '0%';
-                break;
-            case 'travail':
-                progressBar.style.height = '50%';
-                break;
-            case 'fin':
-                progressBar.style.height = '100%';
-                break;
-            default:
-                progressBar.style.height = '0%';
-        }
-    }
-
-    const etatIntervention = 'travail'; // Exemple : 'debut', 'travail', 'fin'
-    updateProgressBar(etatIntervention);
-
-    /*function updateGauge() {
-        if (!gauge || typeof interventionData === 'undefined') {
-            return;
-        }
-        var currentTime = new Date();
-        var startTime = interventionData.top_debut && interventionData.top_debut !== 'null' ? new Date(interventionData.top_debut) : currentTime;
-        var duration = Math.floor((currentTime - startTime) / 60000); // durée en minutes
-        gauge.refresh(Math.min(duration, interventionData.duree_prevue));
-    }*/
-
-    if (typeof interventionData !== 'undefined') {
-        //initGauge();
-        //console.log(etatIntervention)
-        //updateProgressBar(etatIntervention);
-        //setInterval(updateGauge, 60000);
-    } else {
-        console.error('interventionData is not defined');
-    }
-
-    function commencerIntervention(interventionId) {
+    /*function commencerIntervention(interventionId) {
         console.log("Début de commencerIntervention", interventionId);
         let kilometrage = prompt("Veuillez entrer le kilométrage de départ (chiffres uniquement):");
         if (kilometrage === null) return; // L'utilisateur a annulé
@@ -102,6 +41,54 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 console.error("Erreur AJAX:", xhr.responseText);
                 showNotification('Erreur lors de la communication avec le serveur: ' + error, 'error');
+            }
+        });
+    }*/
+    function commencerIntervention(interventionId) {
+        console.log("Début de commencerIntervention", interventionId);
+
+        showDynamicModal({
+            title: "Saisie du kilométrage",
+            inputType: "number",
+            inputId: "kilometrageInput",
+            placeholder: "Entrez le kilométrage de départ",
+            confirmButtonText: "Confirmer",
+            onConfirm: function (kilometrage) {
+                if (kilometrage === '') {
+                    showNotification("Veuillez entrer un kilométrage valide.", 'error');
+                    return;
+                }
+
+                $.ajax({
+                    url: '/home/commencer-intervention/' + interventionId + '/',
+                    type: 'POST',
+                    data: {
+                        kilometrage: kilometrage,
+                        csrfmiddlewaretoken: getCookie('csrftoken')
+                    },
+                    headers: {'X-CSRFToken': getCookie('csrftoken')},
+                    success: function (response) {
+                        if (response.success) {
+                            $('#top_debut').text(new Date(response.top_debut).toLocaleString(
+                                'fr-FR', {
+                                    day: '2-digit', month: '2-digit', year: 'numeric',
+                                    hour: '2-digit', minute: '2-digit'
+                                }));
+                            $('.progress-bar').removeClass('bg-info').addClass('bg-warning')
+                                .css('width', '66%')
+                                .attr('aria-valuenow', 66)
+                                .text('En cours');
+                            $('.commencer-intervention').hide();
+                            window.location.reload();
+                        } else {
+                            showNotification('Erreur lors du démarrage de l\'intervention: ' + response.message, 'error');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Erreur AJAX:", xhr.responseText);
+                        showNotification('Erreur lors de la communication avec le serveur: ' + error, 'error');
+                    }
+                });
             }
         });
     }
@@ -244,7 +231,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert('Intervention terminée avec succès.');
-                    window.location.reload();
+                    window.location.href = '/home/';
                 } else {
                     alert('Erreur lors de la terminaison de l\'intervention: ' + response.message);
                 }

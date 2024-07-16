@@ -388,7 +388,7 @@
         });
     </script>
     <script>
-        {#    Verouillage Maj#}
+        {#    VEROUILLAGE MAJ#}
         {% comment %}document.addEventListener('DOMContentLoaded', function () {
             const upperCaseInputs = document.querySelectorAll('input[type="text"], textarea');
             upperCaseInputs.forEach(input => {
@@ -484,5 +484,6 @@
             }
         });
     </script>
-    <script src="{% static 'gmao/js/intervention.js' %}"></script>
+    <script type="module" src="{% static 'gmao/js/modal.js' %}"></script>
+    <script type="module" src="{% static 'gmao/js/intervention.js' %}"></script>
 {% endblock %}
