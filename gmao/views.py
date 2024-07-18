@@ -1042,7 +1042,8 @@ def get_interventions_data(request):
             interventions = Intervention.objects.none()
 
         interventions = interventions.select_related('doleance', 'doleance__station')
-
+        if not interventions.exists():
+            return JsonResponse({'data': []})
         logger.info(f"Nombre d'interventions après filtrage : {interventions.count()}")
 
         data = []
@@ -1087,7 +1088,7 @@ def get_interventions_data(request):
             }
             data.append(intervention_data)
 
-        logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
+            logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
         logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
         return JsonResponse({'data': data})

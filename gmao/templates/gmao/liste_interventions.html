@@ -413,7 +413,9 @@
                         $(row).addClass('status-' + data.statut);
                     },
                     language: {
-                        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+                        {#url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'#}
+                        //url: "https://cdn.jsdelivr.net/npm/datatables.net-plugins@1.10.24/i18n/French.json"
+
                     },
                     responsive: true,
                     ordering: false,
