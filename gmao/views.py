@@ -750,6 +750,7 @@ def liste_interventions(request):
     context = {
         'current_date': current_date,
         'user_role': request.user.role,
+        'is_admin': request.user.role == 'ADMIN'
     }
     return render(request, 'gmao/liste_interventions.html', context)
 
@@ -960,6 +961,96 @@ def get_doleances_data(request):
 
 
 # #####################Début Test de récupération de la liste des interventions######################
+@login_required
+def get_interventions_data(request):
+    logger.info("Début de get_interventions_data")
+    try:
+        today = timezone.localtime(timezone.now()).date()
+        start_datetime = timezone.make_aware(datetime.combine(today, time.min))
+        end_datetime = timezone.make_aware(datetime.combine(today, time.max))
+
+        if request.user.role == 'ADMIN':
+            start_date = request.GET.get('startDate')
+            end_date = request.GET.get('endDate')
+
+            if start_date and end_date:
+                logger.info(f"Filtrage par date : du {start_date} au {end_date}")
+                start_datetime = timezone.make_aware(
+                    datetime.combine(datetime.strptime(start_date, '%d/%m/%Y'), time.min))
+                end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%d/%m/%Y'), time.max))
+
+        logger.info(f"Filtrage pour la période : du {start_datetime} au {end_datetime}")
+
+        date_filter = (Q(top_depart__range=(start_datetime, end_datetime)) |
+                       Q(top_debut__range=(start_datetime, end_datetime)) |
+                       Q(top_terminer__range=(start_datetime, end_datetime)))
+
+        if request.user.role == 'ADMIN':
+            interventions = Intervention.objects.filter(date_filter)
+        elif request.user.role == 'TECH':
+            interventions = Intervention.objects.filter(
+                date_filter,
+                interventionpersonnel__personnel__matricule=request.user.matricule
+            ).distinct()
+        else:
+            interventions = Intervention.objects.none()
+
+        interventions = interventions.select_related('doleance', 'doleance__station')
+        if not interventions.exists():
+            return JsonResponse({'data': []})
+        logger.info(f"Nombre d'interventions après filtrage : {interventions.count()}")
+
+        data = []
+        for intervention in interventions:
+            logger.info(
+                f"Dates brutes - ID: {intervention.id}, top_depart: {intervention.top_depart}, top_debut: {intervention.top_debut}, top_terminer: {intervention.top_terminer}")
+
+            # Récupérer les techniciens pour chaque intervention
+            techniciens = InterventionPersonnel.objects.filter(intervention=intervention).select_related('personnel')
+            techniciens_list = ", ".join(
+                [f"{t.personnel.nom_personnel} {t.personnel.prenom_personnel}" for t in techniciens])
+
+            intervention_data = {
+                'id': intervention.id,
+                'appelant': intervention.doleance.appelant.nom_appelant if intervention.doleance.appelant else '',
+                'transmission': intervention.doleance.type_transmission,
+                'bt': intervention.doleance.bt if intervention.doleance else '',
+                'ndi': intervention.doleance.ndi if intervention.doleance else '',
+                'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
+                'element': intervention.doleance.element if intervention.doleance else '',
+                'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
+                'statut': intervention.doleance.statut if intervention.doleance else '',
+                'resolution': intervention.resolution if intervention.resolution else '',
+                'date_transmission': intervention.doleance.date_transmission.strftime('%d/%m/%Y %H:%M')
+                if intervention.doleance.date_transmission else '',
+                'date_deadline': intervention.doleance.date_deadline.strftime('%d/%m/%Y %H:%M')
+                if intervention.doleance.date_deadline else '',
+                'prise_en_charge': timezone.localtime(intervention.top_depart).strftime(
+                    '%d/%m/%Y %H:%M') if intervention.top_depart else '',
+                'debut_travail': timezone.localtime(intervention.top_debut).strftime(
+                    '%d/%m/%Y %H:%M') if intervention.top_debut else '',
+                'fin_travail': timezone.localtime(intervention.top_terminer).strftime(
+                    '%d/%m/%Y %H:%M') if intervention.top_terminer else '',
+                'numero_fiche': intervention.numero_fiche if intervention.numero_fiche else '',
+                'techniciens': techniciens_list,
+                'duree_de_travail': str(intervention.duree_intervention) if intervention.duree_intervention else '',
+                'kilometrage_depart': str(
+                    intervention.kilometrage_depart_debut) if intervention.kilometrage_depart_debut else '',
+                'commentaires': intervention.doleance.commentaire if intervention.doleance else '',
+                'kilometrage_retour': str(intervention.kilometrage_home) if intervention.kilometrage_home else '',
+            }
+            data.append(intervention_data)
+
+            logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
+        logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
+        logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
+        return JsonResponse({'data': data}, safe=False)
+
+    except Exception as e:
+        logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
+        return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
+
+
 # @login_required
 # def get_interventions_data(request):
 #     start_date = request.GET.get('startDate')
@@ -1038,98 +1129,97 @@ def get_doleances_data(request):
 # #####################Fin Test de récupération de la liste des interventions######################
 
 # #####################Début Affichage de la liste des interventions######################
-@login_required
-def get_interventions_data(request):
-    logger.info("Début de get_interventions_data")
-    start_date = request.GET.get('startDate')
-    end_date = request.GET.get('endDate')
-
-    try:
-        if start_date and end_date:
-            logger.info(f"Filtrage par date : du {start_date} au {end_date}")
-            start_datetime = timezone.make_aware(datetime.combine(datetime.strptime(start_date, '%d/%m/%Y'), time.min))
-            end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%d/%m/%Y'), time.max))
-        else:
-            today = timezone.localtime(timezone.now()).date()
-            logger.info(f"Filtrage pour aujourd'hui : {today}")
-            start_datetime = timezone.make_aware(datetime.combine(today, time.min))
-            end_datetime = timezone.make_aware(datetime.combine(today, time.max))
-
-        date_filter = (Q(top_depart__range=(start_datetime, end_datetime)) |
-                       Q(top_debut__range=(start_datetime, end_datetime)) |
-                       Q(top_terminer__range=(start_datetime, end_datetime)))
-
-        # Vérification du nombre d'interventions avant l'application du filtre
-        total_interventions = Intervention.objects.count()
-        logger.info(f"Nombre total d'interventions : {total_interventions}")
-
-        # Application du filtre en fonction du rôle de l'utilisateur
-        if request.user.role == 'ADMIN':
-            interventions = Intervention.objects.filter(date_filter)
-        elif request.user.role == 'TECH':
-            personnel = request.user.personnel
-            interventions = Intervention.objects.filter(
-                date_filter,
-                id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id')
-            )
-        else:
-            interventions = Intervention.objects.none()
-
-        interventions = interventions.select_related('doleance', 'doleance__station')
-        if not interventions.exists():
-            return JsonResponse({'data': []})
-        logger.info(f"Nombre d'interventions après filtrage : {interventions.count()}")
-
-        data = []
-        for intervention in interventions:
-            logger.info(
-                f"Dates brutes - ID: {intervention.id}, top_depart: {intervention.top_depart}, top_debut: {intervention.top_debut}, top_terminer: {intervention.top_terminer}")
-
-            # Récupérer les techniciens pour chaque intervention
-            techniciens = InterventionPersonnel.objects.filter(intervention=intervention).select_related('personnel')
-            techniciens_list = ", ".join(
-                [f"{t.personnel.nom_personnel} {t.personnel.prenom_personnel}" for t in techniciens])
-
-            intervention_data = {
-                'id': intervention.id,
-                'appelant': intervention.doleance.appelant.nom_appelant if intervention.doleance.appelant else '',
-                'transmission': intervention.doleance.type_transmission,
-                'bt': intervention.doleance.bt if intervention.doleance else '',
-                'ndi': intervention.doleance.ndi if intervention.doleance else '',
-                'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
-                'element': intervention.doleance.element if intervention.doleance else '',
-                'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
-                'statut': intervention.doleance.statut if intervention.doleance else '',
-                'resolution': intervention.resolution if intervention.resolution else '',
-                'date_transmission': intervention.doleance.date_transmission.strftime('%d/%m/%Y %H:%M')
-                if intervention.doleance.date_transmission else '',
-                'date_deadline': intervention.doleance.date_deadline.strftime('%d/%m/%Y %H:%M')
-                if intervention.doleance.date_deadline else '',
-                'prise_en_charge': timezone.localtime(intervention.top_depart).strftime(
-                    '%d/%m/%Y %H:%M') if intervention.top_depart else '',
-                'debut_travail': timezone.localtime(intervention.top_debut).strftime(
-                    '%d/%m/%Y %H:%M') if intervention.top_debut else '',
-                'fin_travail': timezone.localtime(intervention.top_terminer).strftime(
-                    '%d/%m/%Y %H:%M') if intervention.top_terminer else '',
-                'numero_fiche': intervention.numero_fiche if intervention.numero_fiche else '',
-
-                'techniciens': techniciens_list,
-                'duree_de_travail': str(intervention.duree_intervention) if intervention.duree_intervention else '',
-                'kilometrage_depart': str(
-                    intervention.kilometrage_depart_debut) if intervention.kilometrage_depart_debut else '',
-                'commentaires': intervention.doleance.commentaire if intervention.doleance else '',
-                'kilometrage_retour': str(intervention.kilometrage_home) if intervention.kilometrage_home else '',
-            }
-            data.append(intervention_data)
-
-            logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
-        logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
-        logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
-        return JsonResponse({'data': data}, safe=False)
-
-    except Exception as e:
-        logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
-        return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
+# @login_required
+# def get_interventions_data(request):
+#     logger.info("Début de get_interventions_data")
+#     start_date = request.GET.get('startDate')
+#     end_date = request.GET.get('endDate')
+#
+#     try:
+#         if start_date and end_date:
+#             logger.info(f"Filtrage par date : du {start_date} au {end_date}")
+#             start_datetime = timezone.make_aware(datetime.combine(datetime.strptime(start_date, '%d/%m/%Y'), time.min))
+#             end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%d/%m/%Y'), time.max))
+#         else:
+#             today = timezone.localtime(timezone.now()).date()
+#             logger.info(f"Filtrage pour aujourd'hui : {today}")
+#             start_datetime = timezone.make_aware(datetime.combine(today, time.min))
+#             end_datetime = timezone.make_aware(datetime.combine(today, time.max))
+#
+#         date_filter = (Q(top_depart__range=(start_datetime, end_datetime)) |
+#                        Q(top_debut__range=(start_datetime, end_datetime)) |
+#                        Q(top_terminer__range=(start_datetime, end_datetime)))
+#
+#         # Vérification du nombre d'interventions avant l'application du filtre
+#         total_interventions = Intervention.objects.count()
+#         logger.info(f"Nombre total d'interventions : {total_interventions}")
+#
+#         # Application du filtre en fonction du rôle de l'utilisateur
+#         if request.user.role == 'ADMIN':
+#             interventions = Intervention.objects.filter(date_filter)
+#         elif request.user.role == 'TECH':
+#             interventions = Intervention.objects.filter(
+#                 date_filter,
+#                 interventionpersonnel__personnel__matricule=request.user.matricule
+#             ).distinct()
+#         else:
+#             interventions = Intervention.objects.none()
+#
+#         interventions = interventions.select_related('doleance', 'doleance__station')
+#         if not interventions.exists():
+#             return JsonResponse({'data': []})
+#         logger.info(f"Nombre d'interventions après filtrage : {interventions.count()}")
+#
+#         data = []
+#         for intervention in interventions:
+#             logger.info(
+#                 f"Dates brutes - ID: {intervention.id}, top_depart: {intervention.top_depart}, top_debut: {intervention.top_debut}, top_terminer: {intervention.top_terminer}")
+#
+#             # Récupérer les techniciens pour chaque intervention
+#             techniciens = InterventionPersonnel.objects.filter(intervention=intervention).select_related('personnel')
+#             techniciens_list = ", ".join(
+#                 [f"{t.personnel.nom_personnel} {t.personnel.prenom_personnel}" for t in techniciens])
+#
+#             intervention_data = {
+#                 'id': intervention.id,
+#                 'appelant': intervention.doleance.appelant.nom_appelant if intervention.doleance.appelant else '',
+#                 'transmission': intervention.doleance.type_transmission,
+#                 'bt': intervention.doleance.bt if intervention.doleance else '',
+#                 'ndi': intervention.doleance.ndi if intervention.doleance else '',
+#                 'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
+#                 'element': intervention.doleance.element if intervention.doleance else '',
+#                 'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
+#                 'statut': intervention.doleance.statut if intervention.doleance else '',
+#                 'resolution': intervention.resolution if intervention.resolution else '',
+#                 'date_transmission': intervention.doleance.date_transmission.strftime('%d/%m/%Y %H:%M')
+#                 if intervention.doleance.date_transmission else '',
+#                 'date_deadline': intervention.doleance.date_deadline.strftime('%d/%m/%Y %H:%M')
+#                 if intervention.doleance.date_deadline else '',
+#                 'prise_en_charge': timezone.localtime(intervention.top_depart).strftime(
+#                     '%d/%m/%Y %H:%M') if intervention.top_depart else '',
+#                 'debut_travail': timezone.localtime(intervention.top_debut).strftime(
+#                     '%d/%m/%Y %H:%M') if intervention.top_debut else '',
+#                 'fin_travail': timezone.localtime(intervention.top_terminer).strftime(
+#                     '%d/%m/%Y %H:%M') if intervention.top_terminer else '',
+#                 'numero_fiche': intervention.numero_fiche if intervention.numero_fiche else '',
+#
+#                 'techniciens': techniciens_list,
+#                 'duree_de_travail': str(intervention.duree_intervention) if intervention.duree_intervention else '',
+#                 'kilometrage_depart': str(
+#                     intervention.kilometrage_depart_debut) if intervention.kilometrage_depart_debut else '',
+#                 'commentaires': intervention.doleance.commentaire if intervention.doleance else '',
+#                 'kilometrage_retour': str(intervention.kilometrage_home) if intervention.kilometrage_home else '',
+#             }
+#             data.append(intervention_data)
+#
+#             logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
+#         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
+#         logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
+#         return JsonResponse({'data': data}, safe=False)
+#
+#     except Exception as e:
+#         logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
+#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
 
 
 # #####################Fin Affichage de la liste des interventions######################

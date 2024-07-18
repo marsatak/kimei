@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
-      <change afterPath="$PROJECT_DIR$/static/js/French.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,8 +169,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Daphne" />
       <item itemvalue="Django Server.kimei" />
+      <item itemvalue="Python.Daphne" />
     </list>
   </component>
   <component name="SharedIndexes">

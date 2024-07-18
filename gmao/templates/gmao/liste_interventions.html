@@ -70,16 +70,19 @@
                 <div class="card">
                     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">Liste des interventions {{ current_date }}</h4>
-                        <div class="filter-container">
-                            <label for="startDate"></label><input type="text" id="startDate"
-                                                                  class="form-control form-control-sm flatpickr-input"
-                                                                  placeholder="Date début">
-                            <label for="endDate"></label><input type="text" id="endDate"
-                                                                class="form-control form-control-sm flatpickr-input"
-                                                                placeholder="Date fin">
-                            <button id="filterDate" class="btn btn-info btn-sm">Filtrer</button>
-                            <button id="resetDate" class="btn btn-secondary btn-sm">Réinitialiser</button>
-                        </div>
+                        {% if is_admin %}
+                            <div class="filter-container">
+                                <label for="startDate"></label><input type="text" id="startDate"
+                                                                      class="form-control form-control-sm flatpickr-input"
+                                                                      placeholder="Date début">
+                                <label for="endDate"></label><input type="text" id="endDate"
+                                                                    class="form-control form-control-sm flatpickr-input"
+                                                                    placeholder="Date fin">
+                                <button id="filterDate" class="btn btn-info btn-sm">Filtrer</button>
+                                <button id="resetDate" class="btn btn-secondary btn-sm">Réinitialiser</button>
+                            </div>
+
+                        {% endif %}
                     </div>
                     <div class="card-body">
                         <div id="loadingIndicator" style="display: none; text-align: center; padding: 20px;">
@@ -222,7 +225,19 @@
 
             function exportToExcel(dt) {
                 const data = dt.data().toArray();
+
                 const formattedData = data.map(function (row) {
+                    console.log('Row data:', row);  // Afficher les données de la ligne pour le débogage
+
+                    const dureeTravailMinutes = parseFloat(row.duree_de_travail);
+                    const dureeTotaleHeures = isNaN(dureeTravailMinutes) ? 0 : (dureeTravailMinutes / 3600).toFixed(2);
+                    console.log('Durée totale en heures:', dureeTotaleHeures);  // Afficher la durée totale en heures pour le débogage
+
+                    const nombreTechniciens = row.techniciens ? row.techniciens.split(',').length : 0;
+                    console.log('Nombre de techniciens:', nombreTechniciens);  // Afficher le nombre de techniciens pour le débogage
+
+                    const heuresEffectives = (dureeTotaleHeures * nombreTechniciens).toFixed(2);
+                    console.log('Heures effectives:', heuresEffectives);  //
                     return {
                         'Appelant': row.appelant || '',
                         'Transmission': row.transmission || '',
@@ -239,13 +254,34 @@
                         'DATE DEBUT': row.debut_travail || '',
                         'DATE FIN': row.fin_travail || '',
                         'N FI': row.numero_fiche || '',
-                        'NOMBRE DE TECH': row.techniciens ? row.techniciens.split(',').length : 0,
+                        'NOMBRE DE TECH': nombreTechniciens,
                         'KILOMETRAGE': row.kilometrage_depart || '',
                         'OBSERVATION': row.commentaires || '',
                         'INTERVENANT': row.techniciens || '',
-                        'DUREE TOTALE': row.duree_de_travail || ''
+                        'DUREE TOTALE': dureeTotaleHeures,
+                        'HEURES EFFECTIVES': heuresEffectives,
                     };
                 });
+                console.log('Formatted data:', formattedData);
+
+                const ws = XLSX.utils.json_to_sheet(formattedData);
+
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Interventions");
+
+                const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+
+                function s2ab(s) {
+                    const buf = new ArrayBuffer(s.length);
+                    const view = new Uint8Array(buf);
+                    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+                }
+
+                console.log('Writing file...');
+                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), "liste_interventions.xlsx");
+                console.log('File written successfully.');
+                {% comment %}console.log('Formatted data:', formattedData);
 
                 const ws = XLSX.utils.json_to_sheet(formattedData);
 
@@ -270,7 +306,7 @@
                     return buf;
                 }
 
-                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), "liste_interventions.xlsx");
+                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), "liste_interventions.xlsx");{% endcomment %}
             }
 
             $('#filterDate').on('click', function () {
