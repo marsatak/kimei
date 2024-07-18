@@ -1013,8 +1013,8 @@ def get_interventions_data(request):
     try:
         if start_date and end_date:
             logger.info(f"Filtrage par date : du {start_date} au {end_date}")
-            start_datetime = timezone.make_aware(datetime.combine(datetime.strptime(start_date, '%Y-%m-%d'), time.min))
-            end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%Y-%m-%d'), time.max))
+            start_datetime = timezone.make_aware(datetime.combine(datetime.strptime(start_date, '%d/%m/%Y'), time.min))
+            end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%d/%m/%Y'), time.max))
         else:
             today = timezone.localtime(timezone.now()).date()
             logger.info(f"Filtrage pour aujourd'hui : {today}")
@@ -1091,7 +1091,7 @@ def get_interventions_data(request):
             logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
         logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
-        return JsonResponse({'data': data})
+        return JsonResponse({'data': data}, safe=False)
 
     except Exception as e:
         logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
