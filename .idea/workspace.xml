@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha">
+      <change afterPath="$PROJECT_DIR$/static/js/French.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -168,8 +170,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Django Server.kimei" />
       <item itemvalue="Python.Daphne" />
+      <item itemvalue="Django Server.kimei" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -232,15 +234,10 @@
       <workItem from="1721105512383" duration="4948000" />
       <workItem from="1721148662578" duration="5081000" />
       <workItem from="1721244294297" duration="490000" />
-      <workItem from="1721275022554" duration="5093000" />
-    </task>
-    <task id="LOCAL-00176" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720559440228</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1720559440228</updated>
+      <workItem from="1721275022554" duration="5819000" />
+      <workItem from="1721292879161" duration="4272000" />
+      <workItem from="1721311241638" duration="5000" />
+      <workItem from="1721312246909" duration="95000" />
     </task>
     <task id="LOCAL-00177" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -626,7 +623,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721279054914</updated>
     </task>
-    <option name="localTasksCounter" value="225" />
+    <task id="LOCAL-00225" summary="Version Alpha">
+      <option name="closed" value="true" />
+      <created>1721282937220</created>
+      <option name="number" value="00225" />
+      <option name="presentableId" value="LOCAL-00225" />
+      <option name="project" value="LOCAL" />
+      <updated>1721282937220</updated>
+    </task>
+    <option name="localTasksCounter" value="226" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

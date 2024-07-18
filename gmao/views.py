@@ -1,5 +1,6 @@
 import json
 import logging
+
 from datetime import datetime
 from django.contrib import messages
 from django.urls import reverse
@@ -16,7 +17,8 @@ from django.db import transaction
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import csrf_exempt
 from excel_response import ExcelResponse
-from django.db.models import Q
+from django.db.models import Q, F
+from django.db.models.functions import ExtractYear
 from django.core.paginator import Paginator
 from rest_framework.decorators import api_view
 from django.db.models.functions import Substr, StrIndex
@@ -61,6 +63,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 
 from django.views.decorators.cache import cache_control
+
+# Ajoutez ces imports pour WhatsApp et SMS
+from twilio.rest import Client
 
 logger = logging.getLogger(__name__)
 
@@ -869,17 +874,30 @@ def get_available_years(request):
 
 @login_required
 def toutes_les_doleances(request):
+    current_year = timezone.now().year
+
+    # Extraire les années non nulles
     years = Doleance.objects.annotate(year=ExtractYear('date_transmission')) \
+        .filter(year__isnull=False) \
         .values_list('year', flat=True) \
         .distinct() \
         .order_by('-year')
+
+    # Convertir en liste et ajouter l'année courante si elle n'est pas présente
+    years = list(years)
+    if current_year not in years:
+        years.append(current_year)
+
+    # Trier la liste en ignorant les valeurs None
+    years.sort(key=lambda x: (x is None, x), reverse=True)
+
     months = [
         (1, 'Janvier'), (2, 'Février'), (3, 'Mars'), (4, 'Avril'),
         (5, 'Mai'), (6, 'Juin'), (7, 'Juillet'), (8, 'Août'),
         (9, 'Septembre'), (10, 'Octobre'), (11, 'Novembre'), (12, 'Décembre')
     ]
-    current_year = datetime.now().year
-    current_month = datetime.now().month
+    current_month = timezone.now().month
+
     return render(request, 'gmao/toutes_les_doleances.html', {
         'years': years,
         'months': months,
@@ -898,15 +916,31 @@ def get_doleances_data(request):
     doleances_query = Doleance.objects.all()
 
     if year and year != 'all':
-        doleances_query = doleances_query.filter(date_transmission__year=year)
+        try:
+            year = int(year)
+            doleances_query = doleances_query.filter(date_transmission__year=year)
+        except ValueError:
+            # Log the error or handle invalid year input
+            pass
 
     if month and month != 'all':
-        doleances_query = doleances_query.filter(date_transmission__month=month)
+        try:
+            month = int(month)
+            doleances_query = doleances_query.filter(date_transmission__month=month)
+        except ValueError:
+            # Log the error or handle invalid month input
+            pass
 
     if start_date and end_date:
-        doleances_query = doleances_query.filter(
-            date_transmission__range=[start_date, end_date]
-        )
+        try:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+            doleances_query = doleances_query.filter(
+                date_transmission__range=[start_date, end_date]
+            )
+        except ValueError:
+            # Log the error or handle invalid date format
+            pass
 
     doleances = doleances_query.exclude(statut='NEW').order_by('-date_transmission')
 
@@ -915,7 +949,7 @@ def get_doleances_data(request):
         'ndi': d.ndi,
         'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
         'statut': d.statut,
-        'station': d.station.libelle_station,
+        'station': d.station.libelle_station if d.station else '',
         'element': d.element,
         'panne_declarer': d.panne_declarer,
         'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
