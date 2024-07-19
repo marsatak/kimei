@@ -131,7 +131,7 @@
         $(document).ready(function () {
             let doleanceTable;
             const flatpickrConfig = {
-                dateFormat: "d/m/Y",
+                dateFormat: "Y-m-d",
                 maxDate: "today",
                 theme: "dark"
             };
@@ -151,8 +151,8 @@
                 }
             });
 
-            flatpickr("#startDate", flatpickrConfig);
-            flatpickr("#endDate", flatpickrConfig);
+            {% comment %} flatpickr("#startDate", flatpickrConfig);
+             flatpickr("#endDate", flatpickrConfig);{% endcomment %}
 
             function initializeTable(year, month) {
                 if ($.fn.DataTable.isDataTable('#toutesDoléances')) {
@@ -164,7 +164,7 @@
 
                 doleanceTable = $('#toutesDoléances').DataTable({
                     ajax: {
-                        url: '{% url 'gmao:get_doleances_data' %}',
+                        url: '{% url "gmao:get_doleances_data" %}',
                         data: function (d) {
                             d.year = year;
                             d.month = month;
@@ -174,9 +174,8 @@
                         dataSrc: function (json) {
                             $('#loadingIndicator').hide();
                             $('#toutesDoléances').show();
-                            return json.data || [];
+                            return json.data;
                         }
-
                     },
                     columns: [
                         {
@@ -247,9 +246,10 @@
                         }
                     },
                 });
+
                 $('#toutesDoléances tbody').on('click', 'td.details-control button', function () {
-                    const tr = $(this).closest('tr');
-                    const row = doleanceTable.row(tr);
+                    var tr = $(this).closest('tr');
+                    var row = doleanceTable.row(tr);
 
                     if (row.child.isShown()) {
                         row.child.hide();

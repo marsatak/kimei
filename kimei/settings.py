@@ -125,6 +125,7 @@ WSGI_APPLICATION = 'kimei.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.dummy',
 
     },
     'auth_db': {

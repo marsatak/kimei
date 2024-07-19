@@ -42,7 +42,7 @@ from gmao.serializers import (
     AppareilDistributionSerializer
 )
 from django.db import IntegrityError
-
+from dateutil.relativedelta import relativedelta
 from gmao_teams.models import EquipePersonnel, DoleanceEquipe, Equipe
 from .models import Piece, UnitePiece, TypePiece
 from gmao_teams.models import Equipe
@@ -876,6 +876,8 @@ def get_available_years(request):
         return JsonResponse({'error': 'Erreur serveur inattendue'}, status=500)
 
 
+# ##################### Début Toules les Doléances ######################
+
 @login_required
 def toutes_les_doleances(request):
     current_year = timezone.now().year
@@ -910,72 +912,184 @@ def toutes_les_doleances(request):
     })
 
 
+# ##################### Fin Toutes les doléances ######################
+
+
 @login_required
 def get_doleances_data(request):
-    year = request.GET.get('year')
-    month = request.GET.get('month')
-    start_date = request.GET.get('startDate')
-    end_date = request.GET.get('endDate')
+    logger.info("Début de get_doleances_data")
+    try:
+        year = request.GET.get('year')
+        month = request.GET.get('month')
+        start_date = request.GET.get('startDate')
+        end_date = request.GET.get('endDate')
 
-    doleances_query = Doleance.objects.all()
+        doleances_query = Doleance.objects.using('kimei_db').exclude(statut='NEW')
 
-    if year and year != 'all':
-        try:
-            year = int(year)
-            doleances_query = doleances_query.filter(date_transmission__year=year)
-        except ValueError:
-            # Log the error or handle invalid year input
-            pass
+        if start_date and end_date:
+            doleances_query = doleances_query.filter(date_debut__range=(start_date, end_date))
 
-    if month and month != 'all':
-        try:
-            month = int(month)
-            doleances_query = doleances_query.filter(date_transmission__month=month)
-        except ValueError:
-            # Log the error or handle invalid month input
-            pass
-
-    # if start_date and end_date:
-    #     try:
-    #         start_date = datetime.strptime(start_date, '%d/%m/%Y').date()
-    #         end_date = datetime.strptime(end_date, '%d/%m/%Y').date()
-    #         doleances_query = doleances_query.filter(
-    #             date_transmission__range=[start_date, end_date]
-    #         )
-    #     except ValueError:
-    #         # Log the error or handle invalid date format
-    #         pass
-    if start_date and end_date:
-        try:
-            start_date = parse_datetime(start_date)
-            end_date = parse_datetime(end_date)
-            if start_date and end_date:
-                start_date = timezone.make_aware(start_date)
+        # Si aucune date n'est spécifiée, utiliser le mois et l'année en cours
+        if not any([year, month, start_date, end_date]):
+            today = timezone.now()
+            start_of_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            end_of_month = (start_of_month + relativedelta(months=1) - relativedelta(days=1)).replace(hour=23,
+                                                                                                      minute=59,
+                                                                                                      second=59)
+            doleances_query = doleances_query.filter(date_transmission__range=(start_of_month, end_of_month))
+            logger.info(f"Filtrage par défaut: du {start_of_month} au {end_of_month}")
+        else:
+            if year and year != 'all':
+                doleances_query = doleances_query.filter(date_transmission__year=int(year))
+            if month and month != 'all':
+                doleances_query = doleances_query.filter(date_transmission__month=int(month))
+            if isinstance(start_date, str):
+                start_date = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
+                start_date = timezone.make_aware(start_date)  # Make it timezone-aware
+            if isinstance(end_date, str):
+                end_date = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
                 end_date = timezone.make_aware(end_date)
-                doleances_query = doleances_query.filter(
-                    date_transmission__range=[start_date, end_date]
-                )
-        except ValueError:
-            pass
+            doleances_query = doleances_query.filter(date_transmission__range=(start_date, end_date))
 
-    doleances = doleances_query.exclude(statut='NEW').order_by('-date_transmission')
+        doleances = doleances_query.order_by('-date_transmission')
 
-    data = [{
-        'id': d.id,
-        'ndi': d.ndi,
-        'date_transmission': d.date_transmission.strftime('%d/%m/%Y %H:%M'),
-        'statut': d.statut,
-        'station': d.station.libelle_station if d.station else '',
-        'element': d.element,
-        'panne_declarer': d.panne_declarer,
-        'date_deadline': d.date_deadline.strftime('%d/%m/%Y %H:%M') if d.date_deadline else '',
-        'commentaire': d.commentaire,
-    } for d in doleances]
+        logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
 
-    return JsonResponse({'data': data})
+        data = []
+        for doleance in doleances:
+            doleance_data = {
+                'id': doleance.id,
+                'ndi': doleance.ndi,
+                'date_transmission': timezone.localtime(doleance.date_transmission).strftime('%d/%m/%Y %H:%M'),
+                'statut': doleance.statut,
+                'station': doleance.station.libelle_station if doleance.station else '',
+                'element': doleance.element,
+                'panne_declarer': doleance.panne_declarer,
+                'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
+                    '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
+                'commentaire': doleance.commentaire,
+            }
+            data.append(doleance_data)
+
+        logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
+        return JsonResponse({'data': data}, safe=False)
+
+    except Exception as e:
+        logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
+        return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
 
 
-# #####################Début Test de récupération de la liste des interventions######################
+# def get_doleances_data(request):
+#     logger.info("Début de get_doleances_data")
+#     try:
+#         today = timezone.localtime(timezone.now()).date()
+#         start_datetime = timezone.make_aware(datetime.combine(today, time.min))
+#         end_datetime = timezone.make_aware(datetime.combine(today, time.max))
+#
+#         if request.user.role == 'ADMIN':
+#             start_date = request.GET.get('startDate')
+#             end_date = request.GET.get('endDate')
+#
+#             if start_date and end_date:
+#                 logger.info(f"Filtrage par date : du {start_date} au {end_date}")
+#                 start_datetime = timezone.make_aware(
+#                     datetime.combine(datetime.strptime(start_date, '%Y-%m-%d'), time.min))
+#                 end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%Y-%m-%d'), time.max))
+#
+#         logger.info(f"Filtrage pour la période : du {start_datetime} au {end_datetime}")
+#
+#         date_filter = Q(date_transmission__range=(start_datetime, end_datetime))
+#
+#         doleances = Doleance.objects.using('kimei_db').filter(date_filter).exclude(statut='NEW').order_by(
+#             '-date_transmission')
+#
+#         logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
+#
+#         data = []
+#         for doleance in doleances:
+#             doleance_data = {
+#                 'id': doleance.id,
+#                 'ndi': doleance.ndi,
+#                 'date_transmission': timezone.localtime(doleance.date_transmission).strftime('%d/%m/%Y %H:%M'),
+#                 'statut': doleance.statut,
+#                 'station': doleance.station.libelle_station if doleance.station else '',
+#                 'element': doleance.element,
+#                 'panne_declarer': doleance.panne_declarer,
+#                 'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
+#                     '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
+#                 'commentaire': doleance.commentaire,
+#                 'appelant': doleance.appelant.nom_appelant if doleance.appelant else '',
+#                 'transmission': doleance.type_transmission,
+#                 'bt': doleance.bt,
+#             }
+#             data.append(doleance_data)
+#
+#         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
+#         logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
+#         return JsonResponse({'data': data}, safe=False)
+#
+#     except Exception as e:
+#         logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
+#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
+
+
+# @login_required
+# def get_doleances_data(request):
+#     logger.info("Début de get_doleances_data")
+#     try:
+#         today = timezone.localtime(timezone.now()).date()
+#         start_datetime = timezone.make_aware(datetime.combine(today, time.min))
+#         end_datetime = timezone.make_aware(datetime.combine(today, time.max))
+#
+#         if request.user.role == 'ADMIN':
+#             start_date = request.GET.get('startDate')
+#             end_date = request.GET.get('endDate')
+#
+#             if start_date and end_date:
+#                 logger.info(f"Filtrage par date : du {start_date} au {end_date}")
+#                 start_datetime = timezone.make_aware(
+#                     datetime.combine(datetime.strptime(start_date, '%d/%m/%Y'), time.min))
+#                 end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%d/%m/%Y'), time.max))
+#
+#         logger.info(f"Filtrage pour la période : du {start_datetime} au {end_datetime}")
+#
+#         date_filter = Q(date_transmission__range=(start_datetime, end_datetime))
+#
+#         doleances = Doleance.objects.using('kimei_db').filter(date_filter).exclude(statut='NEW').order_by(
+#             '-date_transmission')
+#
+#         logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
+#
+#         data = []
+#         for doleance in doleances:
+#             doleance_data = {
+#                 'id': doleance.id,
+#                 'ndi': doleance.ndi,
+#                 'date_transmission': timezone.localtime(doleance.date_transmission).strftime('%d/%m/%Y %H:%M'),
+#                 'statut': doleance.statut,
+#                 'station': doleance.station.libelle_station if doleance.station else '',
+#                 'element': doleance.element,
+#                 'panne_declarer': doleance.panne_declarer,
+#                 'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
+#                     '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
+#                 'commentaire': doleance.commentaire,
+#                 'appelant': doleance.appelant.nom_appelant if doleance.appelant else '',
+#                 'transmission': doleance.type_transmission,
+#                 'bt': doleance.bt,
+#             }
+#             data.append(doleance_data)
+#
+#         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
+#         logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
+#         return JsonResponse({'data': data}, safe=False)
+#
+#     except Exception as e:
+#         logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
+#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
+
+
+# ##################### Début Toutes les Interventions ######################
+
 @login_required
 def get_interventions_data(request):
     logger.info("Début de get_interventions_data")
@@ -1064,6 +1178,9 @@ def get_interventions_data(request):
     except Exception as e:
         logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
+
+
+# ##################### Fin Toutes les Interventions ######################
 
 
 # @login_required
