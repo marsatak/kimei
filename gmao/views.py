@@ -26,6 +26,9 @@ from django.db.models import Prefetch
 from django.utils import timezone
 from datetime import timedelta
 from datetime import datetime, time
+
+from django.utils.dateparse import parse_datetime
+
 from accounts.models import Employee, AbstractUser
 from gmao.forms import DoleanceForm
 from gmao.models import (
@@ -932,15 +935,27 @@ def get_doleances_data(request):
             # Log the error or handle invalid month input
             pass
 
+    # if start_date and end_date:
+    #     try:
+    #         start_date = datetime.strptime(start_date, '%d/%m/%Y').date()
+    #         end_date = datetime.strptime(end_date, '%d/%m/%Y').date()
+    #         doleances_query = doleances_query.filter(
+    #             date_transmission__range=[start_date, end_date]
+    #         )
+    #     except ValueError:
+    #         # Log the error or handle invalid date format
+    #         pass
     if start_date and end_date:
         try:
-            start_date = datetime.strptime(start_date, '%d/%m/%Y').date()
-            end_date = datetime.strptime(end_date, '%d/%m/%Y').date()
-            doleances_query = doleances_query.filter(
-                date_transmission__range=[start_date, end_date]
-            )
+            start_date = parse_datetime(start_date)
+            end_date = parse_datetime(end_date)
+            if start_date and end_date:
+                start_date = timezone.make_aware(start_date)
+                end_date = timezone.make_aware(end_date)
+                doleances_query = doleances_query.filter(
+                    date_transmission__range=[start_date, end_date]
+                )
         except ValueError:
-            # Log the error or handle invalid date format
             pass
 
     doleances = doleances_query.exclude(statut='NEW').order_by('-date_transmission')
