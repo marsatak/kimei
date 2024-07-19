@@ -42,6 +42,7 @@ class DoleanceForm(forms.ModelForm):
         ('S', 'Sous Contrat'),
         ('H', 'Hors Contrat'),
         ('D', 'Devis'),
+        ('C', 'Conso'),
         ('P', 'Préventive'),
     ]
 
@@ -216,7 +217,7 @@ class DoleanceForm(forms.ModelForm):
             instance.ndi = existing_instance.ndi
             instance.date_transmission = existing_instance.date_transmission
             instance.statut = existing_instance.statut
-            
+
         if commit:
             instance.save()
 
