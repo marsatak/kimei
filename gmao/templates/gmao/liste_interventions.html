@@ -196,7 +196,12 @@
                         {data: 'station'},
                         {data: 'panne'},
                         {data: 'resolution'},
-                        {data: 'numero_fiche'},
+                        {
+                            data: 'numero_fiche',
+                            render: function (data, type, row) {
+                                return data.split('00');
+                            }
+                        },
                         {data: 'debut_travail'},
                         {data: 'fin_travail'},
                         {data: 'statut'},
