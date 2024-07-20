@@ -101,6 +101,7 @@ def login_view(request):
                     # Mettre à jour le statut de l'employé seulement s'il n'est pas en INT ou ATT
                     if employee.statut not in ['INT', 'ATT']:
                         employee.statut = 'PRS'
+                        employee.save(using='auth_db')
 
                 # Mettre à jour last_login
                 employee.last_login = timezone.now()
