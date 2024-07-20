@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha Autocapitalize input">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_interventions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/toutes_les_doleances.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
-    </list>
+    <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha All doléances" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -244,15 +235,7 @@
       <workItem from="1721365766258" duration="10176000" />
       <workItem from="1721381909776" duration="5516000" />
       <workItem from="1721453545487" duration="235000" />
-      <workItem from="1721453841520" duration="15759000" />
-    </task>
-    <task id="LOCAL-00183" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720633109525</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1720633109525</updated>
+      <workItem from="1721453841520" duration="16594000" />
     </task>
     <task id="LOCAL-00184" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -638,7 +621,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721463838951</updated>
     </task>
-    <option name="localTasksCounter" value="232" />
+    <task id="LOCAL-00232" summary="Version Alpha All doléances">
+      <option name="closed" value="true" />
+      <created>1721473134405</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1721473134406</updated>
+    </task>
+    <option name="localTasksCounter" value="233" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +651,8 @@
     <MESSAGE value="First commit" />
     <MESSAGE value="Version Alpha" />
     <MESSAGE value="Version Alpha Autocapitalize input" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version Alpha Autocapitalize input" />
+    <MESSAGE value="Version Alpha All doléances" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version Alpha All doléances" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/kimei$Daphne.coverage" NAME="Daphne Coverage Results" MODIFIED="1719644698145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
