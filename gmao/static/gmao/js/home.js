@@ -103,11 +103,12 @@ $(document).ready(function () {
                             return data;
                         }
                     },
-                    {responsivePriority: 1, targets: 1}, // NDI
-                    {responsivePriority: 2, targets: 3}, // Statut
-                    {responsivePriority: 3, targets: 6}, // Panne déclarée
-                    {responsivePriority: 4, targets: 8}, // Actions
-                    {responsivePriority: 10000, targets: [2, 4, 5, 7]}
+                    {responsivePriority: 1, targets: 0}, // NDI
+                    {responsivePriority: 2, targets: 2}, // Statut
+                    {responsivePriority: 3, targets: 5}, // Panne déclarée
+                    {responsivePriority: 4, targets: 8},
+                    {responsivePriority: 5, targets: 1},// Actions
+                    {responsivePriority: 10000, targets: [2, 4, 6, 7]}
                 ]
             });
         }
