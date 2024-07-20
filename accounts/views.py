@@ -82,6 +82,7 @@ def login_view(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             try:
                 # Utiliser 'kimei_db' pour Personnel
@@ -91,6 +92,9 @@ def login_view(request):
                 today = timezone.now().date()
                 employee = Employee.objects.using('auth_db').get(id=user.id)
                 first_login_of_day = employee.last_login is None or employee.last_login.date() < today
+                logger.info(f"User authenticated: {user.username}")
+                logger.info(f"First login of day: {first_login_of_day}")
+                logger.info(f"Employee status before update: {employee.statut}")
 
                 if first_login_of_day:
                     # Mettre à jour le statut du personnel seulement s'il n'est pas en INT ou ATT
@@ -102,12 +106,12 @@ def login_view(request):
                     if employee.statut not in ['INT', 'ATT']:
                         employee.statut = 'PRS'
                         employee.save(using='auth_db')
+                        logger.info(f"Employee status updated to: {employee.statut}")
 
                 # Mettre à jour last_login
                 employee.last_login = timezone.now()
                 employee.save(using='auth_db')
-
-                # Connexion de l'utilisateur
+                logger.info(f"Employee status after all updates: {employee.statut}")  # Connexion de l'utilisateur
                 login(request, user)
                 request.session['last_activity'] = timezone.now().isoformat()
 
