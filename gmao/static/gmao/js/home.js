@@ -44,7 +44,7 @@ $(document).ready(function () {
                     dataSrc: ""
                 },
                 columns: [
-                    {data: "ndi", width: "7%%"},
+                    {data: "ndi", width: "5%%"},
                     {
                         data: "date_transmission", width: "8%",
                         render: function (data) {
@@ -52,7 +52,7 @@ $(document).ready(function () {
                         }
                     },
                     {data: "statut", width: "3%"},
-                    {data: "station.libelle_station", width: "8%"},
+                    {data: "station.libelle_station", width: "10%"},
                     {data: 'element', width: "17%"},
                     {
                         data: 'panne_declarer', width: "24%",
@@ -83,13 +83,7 @@ $(document).ready(function () {
                         }
                     },
                 ],
-                responsive: {
-                    details: {
-                        display: $.fn.dataTable.Responsive.display.childRowImmediate,
-                        type: 'none',
-                        target: ''
-                    }
-                },
+                responsive: true,
                 autoWidth: false,
                 ordering: false,
                 language: {
