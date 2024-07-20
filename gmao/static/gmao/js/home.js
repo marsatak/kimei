@@ -52,7 +52,15 @@ $(document).ready(function () {
                         }
                     },
                     {data: "statut", width: "3%"},
-                    {data: "station.libelle_station", width: "10%"},
+                    {
+                        data: "station.libelle_station", width: "10%",
+                        render: function (data, type, row) {
+                            if (type === 'display' && data != null && data.length > 15) {
+                                return `<span title="${data}">${data.substr(0, 15)}...</span>`;
+                            }
+                            return data;
+                        }
+                    },
                     {data: 'element', width: "17%"},
                     {
                         data: 'panne_declarer', width: "24%",
