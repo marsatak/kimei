@@ -103,6 +103,7 @@ class Client(models.Model):
 
     class Meta:
         managed = False
+        app_label = 'gmao'
         db_table = 'client'
 
     def __str__(self):

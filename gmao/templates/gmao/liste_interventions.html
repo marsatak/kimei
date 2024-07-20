@@ -71,6 +71,12 @@
                     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">Liste des interventions {{ current_date }}</h4>
                         {% if is_admin %}
+                            <div class="d-flex align-items-center">
+                                <label for="clientFilter"></label><select id="clientFilter" class="form-control mr-2">
+                                <option value="">Tous les clients</option>
+                                <!-- Les options seront remplies dynamiquement -->
+                            </select>
+                            </div>
                             <div class="filter-container">
                                 <label for="startDate"></label><input type="text" id="startDate"
                                                                       class="form-control form-control-sm flatpickr-input"
@@ -145,6 +151,19 @@
             });
 
             let table;
+            $.ajax({
+                url: '{% url "gmao:get_clients" %}',
+                type: 'GET',
+                success: function (response) {
+                    var select = $('#clientFilter');
+                    $.each(response.clients, function (index, client) {
+                        select.append($('<option></option>').val(client.id).text(client.nom_client));
+                    });
+                }
+            });
+            $('#clientFilter').change(function () {
+                table.ajax.reload();
+            });
 
             function initializeDataTable() {
                 if ($.fn.DataTable.isDataTable('#interventionsTable')) {
@@ -169,6 +188,7 @@
                         data: function (d) {
                             d.startDate = $('#startDate').val();
                             d.endDate = $('#endDate').val();
+                            d.client = $('#clientFilter').val();
                         }
                     },
                     columns: [

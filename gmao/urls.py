@@ -38,6 +38,7 @@ urlpatterns = [
     path('home/interventions/', views.liste_interventions, name='liste_interventions'),
 
     path('home/intervention/<int:intervention_id>/terminer/', views.terminer_travail, name='terminer_travail'),
+    path('get-clients/', views.get_clients, name='get_clients'),
     path('home/get-interventions-data/', views.get_interventions_data, name='get_interventions_data'),
 
     # path('home/intervention/creer/', views.creer_intervention, name='creer_intervention'),

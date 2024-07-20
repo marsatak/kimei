@@ -63,7 +63,7 @@
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Toutes les Doléances</h5>
-                    <div class="filter-container">
+                    {% comment %}<div class="filter-container">
                         <label for="yearSelect">Année:</label>
                         <select id="yearSelect" class="form-select form-select-sm">
                             {% for year in years %}
@@ -79,13 +79,65 @@
                             {% endfor %}
                         </select>
                         <button id="showAllYear" class="btn btn-secondary btn-sm">Toute l'année</button>
-                        <input type="text" id="startDate" class="form-control form-control-sm flatpickr-input"
-                               placeholder="Date début">
-                        <input type="text" id="endDate" class="form-control form-control-sm flatpickr-input"
-                               placeholder="Date fin">
-                        {% comment %}<input type="date" id="startDate" class="form-control form-control-sm">
-                        <input type="date" id="endDate" class="form-control form-control-sm">{% endcomment %}
+                        <label for="startDate"></label><input type="text" id="startDate"
+                                                              class="form-control form-control-sm flatpickr-input"
+                                                              placeholder="Date début">
+                        <label for="endDate"></label><input type="text" id="endDate"
+                                                            class="form-control form-control-sm flatpickr-input"
+                                                            placeholder="Date fin">
+                        <input type="date" id="startDate" class="form-control form-control-sm">
+                        <input type="date" id="endDate" class="form-control form-control-sm">
                         <button id="exportDateRange" class="btn btn-info btn-sm">Exporter plage</button>
+                    </div>{% endcomment %}
+                    <div class="filter-container mb-3">
+                        <div class="row g-2">
+                            <div class="col-md-2">
+                                <label for="yearFilter" class="form-label small">Année:</label>
+                                <select id="yearFilter" class="form-select form-select-sm">
+                                    <option value="">Toutes</option>
+                                    {% for year in years %}
+                                        <option value="{{ year }}"
+                                                {% if year == current_year %}selected{% endif %}>{{ year }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="monthFilter" class="form-label small">Mois:</label>
+                                <select id="monthFilter" class="form-select form-select-sm">
+                                    <option value="">Tous</option>
+                                    {% for month in months %}
+                                        <option value="{{ month.0 }}"
+                                                {% if month.0 == current_month %}selected{% endif %}>{{ month.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="clientFilter" class="form-label small">Client:</label>
+                                <select id="clientFilter" class="form-select form-select-sm">
+                                    <option value="">Tous les clients</option>
+                                    <!-- Les options seront remplies dynamiquement -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md-5">
+                                <label class="form-label small">&nbsp;</label>
+                                <!-- Espace vide pour aligner avec les autres éléments -->
+                                <div class="d-flex">
+                                    <button id="filterButton" class="btn btn-primary btn-xs me-1">
+                                        <i class="fas fa-filter"></i>
+                                    </button>
+                                    <button id="resetButton" class="btn btn-secondary btn-xs me-1">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                    <button id="exportButton" class="btn btn-success btn-xs">
+                                        <i class="fas fa-file-export"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -325,4 +377,38 @@
             initializeTable(year, 'all');
         });
     </script>
+    {#    Filtre des doléances#}
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '{% url "gmao:get_clients" %}',
+                type: 'GET',
+                success: function (response) {
+                    const select = $('#clientFilter');
+                    $.each(response.clients, function (index, client) {
+                        select.append($('<option></option>').val(client.id).text(client.nom_client));
+                    });
+                }
+            });
+            $('#filterButton').click(function () {
+                table.ajax.reload();
+            });
+
+            $('#resetButton').click(function () {
+                $('#yearFilter').val('');
+                $('#monthFilter').val('');
+                $('#clientFilter').val('');
+                table.ajax.reload();
+            });
+
+            $('#exportButton').click(function () {
+                const year = $('#yearFilter').val();
+                const month = $('#monthFilter').val();
+                const client = $('#clientFilter').val();
+                {#window.location.href = '{% url "gmao:export_doleances" %}?year=' + year + '&month=' + month + '&client=' + client;#}
+            });
+
+        });
+    </script>
+
 {% endblock extra_js %}
