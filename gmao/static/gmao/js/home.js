@@ -104,7 +104,7 @@ $(document).ready(function () {
                         }
                     },
                     {responsivePriority: 1, targets: 0}, // NDI
-                    {responsivePriority: 2, targets: 2}, // Statut
+                    {responsivePriority: 2, targets: 3}, // Statut
                     {responsivePriority: 3, targets: 5}, // Panne déclarée
                     {responsivePriority: 4, targets: 8},
                     {responsivePriority: 5, targets: 1},// Actions
