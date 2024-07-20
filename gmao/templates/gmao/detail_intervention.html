@@ -120,8 +120,9 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ intervention.doleance.ndi }} - {{ intervention.doleance.statut }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ intervention.doleance.station.client }}
-                            - {{ intervention.doleance.station.libelle_station }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {{ intervention.doleance.station.libelle_station }}-{{ intervention.doleance.element }}
+                        </h6>
                         <p>{{ intervention.doleance.panne_declarer }}</p>
                         {% if not intervention.is_done %}
                             {% csrf_token %}
@@ -174,7 +175,7 @@
                                     <div class="step-indicator">
                                         <i class="fas fa-check"></i>
                                     </div>
-                                    <span class="step-label">Début</span>
+                                    <span class="step-label">Départ</span>
                                     <span id="top_depart"
                                           class="timestamp">{{ intervention.top_depart|date:"d/m/Y H:i" }}</span>
                                 </div>
@@ -182,7 +183,7 @@
                                     <div class="step-indicator">
                                         <i class="fas fa-check"></i>
                                     </div>
-                                    <span class="step-label">Travail</span>
+                                    <span class="step-label">Début</span>
                                     <span id="top_debut"
                                           class="timestamp">{{ intervention.top_debut|date:"d/m/Y H:i"|default:"Non commencé" }}</span>
                                 </div>
@@ -272,7 +273,8 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="heure_fin">Heure de fin :</label>
-                            <input type="text" class="form-control flatpickr-datetime" id="heure_fin" name="heure_fin">
+                            <input type="text" class="form-control flatpickr-datetime" id="heure_fin" name="heure_fin"
+                                   value="{{ intervention.top_terminer }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="panne_declaree">Panne déclarée :</label>
@@ -280,7 +282,7 @@
                                       readonly>{{ intervention.doleance.panne_declarer }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description_panne">Description de la panne constatée :</label>
+                            <label for="description_panne">Analyses Techniques :</label>
                             <textarea class="form-control" id="description_panne" name="description_panne" rows="3"
                                       required></textarea>
                         </div>

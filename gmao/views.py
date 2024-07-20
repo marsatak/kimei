@@ -1,6 +1,6 @@
 import json
 import logging
-
+import re
 from datetime import datetime
 from django.contrib import messages
 from django.urls import reverse
@@ -776,16 +776,40 @@ def detail_intervention(request, intervention_id):
         'techniciens': techniciens,
         'is_today': is_today,
         'user_assigned': user_assigned,
+        'heure_actuelle': timezone.now().strftime('%H:%M'),
     }
     return render(request, 'gmao/detail_intervention.html', context)
 
 
 # #####################Début Procédure de clôture######################
+def capitalizeSentences(string):
+    if not string:
+        return string
+    # Divise la chaîne en phrases
+    sentences = re.split(r'([.!?]\s*)', string)
+
+    # Capitalise la première lettre de chaque phrase
+    capitalized = []
+    for i in range(0, len(sentences), 2):
+        sentence = sentences[i].strip()
+        if sentence:
+            sentence = sentence[0].upper() + sentence[1:]
+        if i + 1 < len(sentences):
+            sentence += sentences[i + 1]  # Ajoute la ponctuation
+        capitalized.append(sentence)
+    return ''.join(capitalized)
+
+
 @csrf_exempt
 @require_POST
 def terminer_travail(request, intervention_id):
     try:
         intervention = get_object_or_404(Intervention, id=intervention_id)
+        intervention.description_panne = capitalizeSentences(request.POST.get('description_panne', ''))
+        intervention.resolution = capitalizeSentences(request.POST.get('resolution', ''))
+        intervention.observations = capitalizeSentences(request.POST.get('observations', ''))
+        intervention.pieces_changees = capitalizeSentences(request.POST.get('pieces_changees', ''))
+        new_element = capitalizeSentences(request.POST.get('element', ''))
 
         statut_final = request.POST.get('statut_final', '').upper()
 
@@ -822,7 +846,16 @@ def terminer_travail(request, intervention_id):
         intervention.pieces_changees = request.POST.get('pieces_changees', '').upper()
         new_element = request.POST.get('element', '').upper()
         intervention.top_terminer = timezone.now()
+        heure_fin = request.POST.get('heure_fin')
+        if not heure_fin:
+            return JsonResponse({'success': False, 'message': 'L\'heure de fin est requise'})
 
+        # Convertir l'heure de fin en objet datetime
+        heure_fin = timezone.make_aware(datetime.strptime(heure_fin, '%H:%M'))
+
+        # Utiliser l'heure de fin fournie pour calculer top_terminer
+        date_aujourdhui = timezone.now().date()
+        intervention.top_terminer = timezone.make_aware(datetime.combine(date_aujourdhui, heure_fin.time()))
         # Calculer la durée de l'intervention
         if intervention.top_debut:
             duree = intervention.top_terminer - intervention.top_debut

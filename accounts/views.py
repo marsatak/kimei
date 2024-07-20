@@ -20,6 +20,15 @@ import logging
 
 from gmao.models import Personnel  # Assurez-vous d'importer le modèle Personnel
 from .models import Employee
+from django.utils import timezone
+from django.db import transaction
+from gmao.models import Pointage
+from django.utils import timezone
+from accounts.models import Employee
+from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 # DÉBOGGAGE
 logger = logging.getLogger(__name__)
@@ -64,6 +73,8 @@ def change_password(request):
 
 
 # ###################### DÉBUT TRAITEMEMENT DE L'AUTHENTIFICATION #############################
+
+
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_view(request):
@@ -72,28 +83,77 @@ def login_view(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            request.session['last_activity'] = timezone.now().isoformat()
-            # Mise à jour du statut de l'utilisateur
-            user.statut = 'PRS'
-            user.save()
-
-            # Mise à jour du statut du personnel correspondant
             try:
-                personnel = Personnel.objects.get(matricule=user.matricule)
-                personnel.statut = 'PRS'
-                personnel.save()
-            except Personnel.DoesNotExist:
-                # Log this error or handle it as appropriate for your application
-                pass
+                # Utiliser 'kimei_db' pour Personnel
+                personnel = Personnel.objects.using('kimei_db').get(matricule=user.matricule)
 
-            if user.first_login:
-                return redirect('accounts:change_password')
+                # Vérifier si c'est la première connexion de la journée
+                today = timezone.now().date()
+                employee = Employee.objects.using('auth_db').get(id=user.id)
+                first_login_of_day = employee.last_login is None or employee.last_login.date() < today
 
-            return redirect('gmao:home')
+                if first_login_of_day:
+                    # Mettre à jour le statut du personnel seulement s'il n'est pas en INT ou ATT
+                    if personnel.statut not in ['INT', 'ATT']:
+                        personnel.statut = 'PRS'
+                        personnel.save(using='kimei_db')
+
+                    # Mettre à jour le statut de l'employé seulement s'il n'est pas en INT ou ATT
+                    if employee.statut not in ['INT', 'ATT']:
+                        employee.statut = 'PRS'
+
+                # Mettre à jour last_login
+                employee.last_login = timezone.now()
+                employee.save(using='auth_db')
+
+                # Connexion de l'utilisateur
+                login(request, user)
+                request.session['last_activity'] = timezone.now().isoformat()
+
+                if user.first_login:
+                    return redirect('accounts:change_password')
+
+                return redirect('gmao:home')
+
+            except ObjectDoesNotExist:
+                return render(request, 'registration/login.html', {'error': 'Utilisateur ou personnel non trouvé'})
+
         else:
-            return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
+            return render(request, 'registration/login.html', {'error': 'Identifiants invalides'})
+
     return render(request, 'registration/login.html')
+
+
+# @csrf_exempt
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             request.session['last_activity'] = timezone.now().isoformat()
+#             # Mise à jour du statut de l'utilisateur
+#             user.statut = 'PRS'
+#             user.save()
+#
+#             # Mise à jour du statut du personnel correspondant
+#             try:
+#                 personnel = Personnel.objects.get(matricule=user.matricule)
+#                 personnel.statut = 'PRS'
+#                 personnel.save()
+#             except Personnel.DoesNotExist:
+#                 # Log this error or handle it as appropriate for your application
+#                 pass
+#
+#             if user.first_login:
+#                 return redirect('accounts:change_password')
+#
+#             return redirect('gmao:home')
+#         else:
+#             return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
+#     return render(request, 'registration/login.html')
 
 
 # ###################### FIN TRAITEMEMENT DE L'AUTHENTIFICATION #############################
@@ -139,7 +199,7 @@ def logout_view(request):
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
         # user.session_key = None
-        # user.statut = 'ABS'
+        user.statut = 'ABS'
         user.save()
     # Assurez-vous que la session est complètement effacée
     request.session.flush()

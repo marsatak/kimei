@@ -211,6 +211,20 @@ $(document).ready(function () {
             this.value = this.value.slice(0, 5);
         }
     });
+
+    /* INTERVENTIONFORM POUR ADMIN */
+
+    function capitalizeSentences(string) {
+        return string.replace(/(^\s*\w|[.!?]\s*\w)/g, function (c) {
+            return c.toUpperCase();
+        });
+    }
+
+
+    $('#interventionForm input[type="text"], #interventionForm textarea').on('blur', function () {
+        console.log("Capitalizing sentences for:", this.value);
+        this.value = capitalizeSentences(this.value);
+    });
     $('#interventionForm').submit(function (e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -221,6 +235,10 @@ $(document).ready(function () {
             e.preventDefault();
             return false;
         }
+        // Calculer la durée de l'intervention
+        const endTime = new Date();
+        const duration = calculateDuration(interventionStartTime, endTime);
+        formData.append('duree_intervention', duration);
         $.ajax({
             url: '/home/intervention/' + interventionId + '/terminer/',
             type: 'POST',
@@ -243,7 +261,7 @@ $(document).ready(function () {
         });
     });
     let flatpickrInstance;
-
+    let interventionStartTime;
     $('#interventionFormModal').on('show.bs.modal', function () {
         if (flatpickrInstance) {
             flatpickrInstance.destroy();
@@ -259,7 +277,21 @@ $(document).ready(function () {
                 console.log("Flatpickr initialized with:", dateStr);  // Pour le débogage
             }
         });
+        const now = new Date();
+        const currentTime = now.getHours().toString().padStart(2, '0') + ':' +
+            now.getMinutes().toString().padStart(2, '0');
+
+        // Définir l'heure de fin comme l'heure actuelle
+        $('#heure_fin').val(currentTime);
+
     });
+
+    function calculateDuration(start, end) {
+        const diff = end - start; // différence en millisecondes
+        const hours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    }
 
     function getCookie(name) {
         var cookieValue = null;
