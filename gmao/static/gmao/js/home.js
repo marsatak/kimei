@@ -84,7 +84,6 @@ $(document).ready(function () {
                     },
                 ],
                 responsive: {
-                    true,
                     details: {
                         display: $.fn.dataTable.Responsive.display.childRowImmediate,
                         type: 'none',
