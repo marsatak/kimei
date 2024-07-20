@@ -91,7 +91,13 @@ $(document).ready(function () {
                         }
                     },
                 ],
-                responsive: true,
+                responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                        type: 'none',
+                        target: ''
+                    }
+                },
                 autoWidth: false,
                 ordering: false,
                 language: {
