@@ -43,6 +43,10 @@ from gmao.serializers import (
     PosteSerializer, PersonnelSerializer, PointageSerializer,
     AppareilDistributionSerializer
 )
+from django.views.decorators.http import require_http_methods
+from .models import AppareilDistribution, Station, ModeleAd
+from django.db.models import Prefetch
+from .models import Pistolet
 from django.db import IntegrityError
 from dateutil.relativedelta import relativedelta
 from gmao_teams.models import EquipePersonnel, DoleanceEquipe, Equipe
@@ -253,6 +257,8 @@ def getDoleanceEncours(request):
 
 
 # ##################### Fin Liste des dléances en cours ######################
+
+
 # ##################### Début Equipes et leurs doléances ######################
 
 
@@ -325,16 +331,6 @@ def mark_depart(request, personnel_id):
     except Personnel.DoesNotExist:
         return JsonResponse({'success': False, 'message': 'Personnel non trouvé'}, status=404)
 
-
-# #####################Liste Personnel######################
-# @api_view(['GET'])
-# def getPersonnel(request):
-#     try:
-#         personnels = Personnel.objects.filter(is_active=True)
-#         personnels_serializer = PersonnelSerializer(personnels, many=True)
-#         return Response(personnels_serializer.data, content_type='application/json; charset=UTF-8')
-#     except Exception as e:
-#         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # #####################Début Liste Personnel######################
 @api_view(['GET'])
@@ -487,6 +483,7 @@ def create_doleance(request):
 
 
 # #####################Fin Création doléance######################
+
 # #####################Début Liste des doléances######################
 @require_GET
 def get_doleance(request, doleance_id):
@@ -512,6 +509,7 @@ def get_doleance(request, doleance_id):
 
 
 # #####################Fin Liste des doléances#####################
+
 # #####################Début Procédure de maj des doléances######################
 @csrf_exempt
 @require_POST
@@ -949,46 +947,6 @@ def toutes_les_doleances(request):
     return render(request, 'gmao/toutes_les_doleances.html', context)
 
 
-# @login_required
-# def toutes_les_doleances(request):
-#     current_year = timezone.now().year
-#
-#     # Extraire les années non nulles
-#     years = Doleance.objects.annotate(year=ExtractYear('date_transmission')) \
-#         .filter(year__isnull=False) \
-#         .values_list('year', flat=True) \
-#         .distinct() \
-#         .order_by('-year')
-#
-#     # Convertir en liste et ajouter l'année courante si elle n'est pas présente
-#     years = list(years)
-#     if current_year not in years:
-#         years.append(current_year)
-#
-#     # Trier la liste en ignorant les valeurs None
-#     years.sort(key=lambda x: (x is None, x), reverse=True)
-#
-#     months = [
-#         (1, 'Janvier'), (2, 'Février'), (3, 'Mars'), (4, 'Avril'),
-#         (5, 'Mai'), (6, 'Juin'), (7, 'Juillet'), (8, 'Août'),
-#         (9, 'Septembre'), (10, 'Octobre'), (11, 'Novembre'), (12, 'Décembre')
-#     ]
-#     current_month = timezone.now().month
-#
-#     return render(request, 'gmao/toutes_les_doleances.html', {
-#         'years': years,
-#         'months': months,
-#         'current_year': current_year,
-#         'current_month': current_month
-#     })
-
-
-# ##################### Fin Toutes les doléances ######################
-
-
-# ##################### Début Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
-
-
 def get_doleances_data(request):
     current_date = timezone.now()
 
@@ -1042,261 +1000,6 @@ def get_doleances_data(request):
 
     return JsonResponse({'data': data})
 
-
-# ##################### Backup 2 Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
-
-# @login_required
-# def get_doleances_data(request):
-#     logger.info("Début de get_doleances_data")
-#     try:
-#         year = request.GET.get('year')
-#         month = request.GET.get('month')
-#         start_date = request.GET.get('startDate')
-#         end_date = request.GET.get('endDate')
-#         client_id = request.GET.get('client')
-#
-#         logger.info(f"Paramètres reçus : année={year}, mois={month}, client={client_id}")
-#
-#         doleances_query = Doleance.objects.using('kimei_db').exclude(statut='NEW')
-#
-#         if start_date and end_date:
-#             try:
-#                 start_datetime = timezone.make_aware(datetime.strptime(start_date, "%d/%m/%Y %H:%M"))
-#                 end_datetime = timezone.make_aware(datetime.strptime(end_date, "%d/%m/%Y %H:%M"))
-#                 doleances_query = doleances_query.filter(date_debut__range=(start_datetime, end_datetime))
-#             except ValueError:
-#                 logger.warning(f"Format de date invalide - startDate: {start_date}, endDate: {end_date}")
-#
-#         # Si aucune date n'est spécifiée, utiliser le mois et l'année en cours
-#         if not any([year, month, start_date, end_date]):
-#             today = timezone.now()
-#             start_of_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-#             end_of_month = (start_of_month + relativedelta(months=1) - relativedelta(days=1)).replace(hour=23,
-#                                                                                                       minute=59,
-#                                                                                                       second=59)
-#             doleances_query = doleances_query.filter(date_transmission__range=(start_of_month, end_of_month))
-#             logger.info(f"Filtrage par défaut: du {start_of_month} au {end_of_month}")
-#         else:
-#             if year and year != 'all':
-#                 doleances_query = doleances_query.filter(date_transmission__year=int(year))
-#             if month and month != 'all':
-#                 doleances_query = doleances_query.filter(date_transmission__month=int(month))
-#
-#         if client_id:
-#             doleances_query = doleances_query.filter(station__client_id=client_id)
-#         # logger.info(f"Requête SQL : {doleances_query.query}")
-#         doleances = doleances_query.order_by('-date_transmission')
-#
-#         logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
-#
-#         data = []
-#         for doleance in doleances:
-#             doleance_data = {
-#                 'id': doleance.id,
-#                 'ndi': doleance.ndi,
-#                 'date_transmission': timezone.localtime(doleance.date_transmission).strftime(
-#                     '%d/%m/%Y %H:%M') if doleance.date_transmission else '',
-#                 'statut': doleance.statut,
-#                 'station': doleance.station.libelle_station if doleance.station else '',
-#                 'element': doleance.element,
-#                 'panne_declarer': doleance.panne_declarer,
-#                 'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
-#                     '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
-#                 'commentaire': doleance.commentaire,
-#             }
-#             data.append(doleance_data)
-#
-#         logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
-#         return JsonResponse(
-#             {
-#                 'data': data,
-#                 'recordsTotal': len(data),
-#                 'recordsFiltered': len(data),
-#                 'draw': request.GET.get('draw', '1')
-#             }, safe=False)
-#
-#     except Exception as e:
-#         logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
-#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
-
-# ##################### Backup 1 Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
-
-# @login_required
-# def get_doleances_data(request):
-#     logger.info("Début de get_doleances_data")
-#     try:
-#         year = request.GET.get('year')
-#         month = request.GET.get('month')
-#         start_date = request.GET.get('startDate')
-#         end_date = request.GET.get('endDate')
-#
-#         doleances_query = Doleance.objects.using('kimei_db').exclude(statut='NEW')
-#
-#         if start_date and end_date:
-#             doleances_query = doleances_query.filter(date_debut__range=(start_date, end_date))
-#
-#         # Si aucune date n'est spécifiée, utiliser le mois et l'année en cours
-#         if not any([year, month, start_date, end_date]):
-#             today = timezone.now()
-#             start_of_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-#             end_of_month = (start_of_month + relativedelta(months=1) - relativedelta(days=1)).replace(hour=23,
-#                                                                                                       minute=59,
-#                                                                                                       second=59)
-#             doleances_query = doleances_query.filter(date_transmission__range=(start_of_month, end_of_month))
-#             logger.info(f"Filtrage par défaut: du {start_of_month} au {end_of_month}")
-#         else:
-#             if year and year != 'all':
-#                 doleances_query = doleances_query.filter(date_transmission__year=int(year))
-#             if month and month != 'all':
-#                 doleances_query = doleances_query.filter(date_transmission__month=int(month))
-#             if isinstance(start_date, str):
-#                 start_date = datetime.strptime(start_date, "%d/%m/%Y %H:%M")
-#                 start_date = timezone.make_aware(start_date)  # Make it timezone-aware
-#             if isinstance(end_date, str):
-#                 end_date = datetime.strptime(end_date, "%d/%m/%Y %H:%M")
-#                 end_date = timezone.make_aware(end_date)
-#             doleances_query = doleances_query.filter(date_transmission__range=(start_date, end_date))
-#
-#         doleances = doleances_query.order_by('-date_transmission')
-#
-#         logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
-#
-#         data = []
-#         for doleance in doleances:
-#             doleance_data = {
-#                 'id': doleance.id,
-#                 'ndi': doleance.ndi,
-#                 'date_transmission': timezone.localtime(doleance.date_transmission).strftime('%d/%m/%Y %H:%M'),
-#                 'statut': doleance.statut,
-#                 'station': doleance.station.libelle_station if doleance.station else '',
-#                 'element': doleance.element,
-#                 'panne_declarer': doleance.panne_declarer,
-#                 'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
-#                     '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
-#                 'commentaire': doleance.commentaire,
-#             }
-#             data.append(doleance_data)
-#
-#         logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
-#         return JsonResponse({'data': data}, safe=False)
-#
-#     except Exception as e:
-#         logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
-#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
-# ##################### FIn Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
-
-
-# def get_doleances_data(request):
-#     logger.info("Début de get_doleances_data")
-#     try:
-#         today = timezone.localtime(timezone.now()).date()
-#         start_datetime = timezone.make_aware(datetime.combine(today, time.min))
-#         end_datetime = timezone.make_aware(datetime.combine(today, time.max))
-#
-#         if request.user.role == 'ADMIN':
-#             start_date = request.GET.get('startDate')
-#             end_date = request.GET.get('endDate')
-#
-#             if start_date and end_date:
-#                 logger.info(f"Filtrage par date : du {start_date} au {end_date}")
-#                 start_datetime = timezone.make_aware(
-#                     datetime.combine(datetime.strptime(start_date, '%Y-%m-%d'), time.min))
-#                 end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%Y-%m-%d'), time.max))
-#
-#         logger.info(f"Filtrage pour la période : du {start_datetime} au {end_datetime}")
-#
-#         date_filter = Q(date_transmission__range=(start_datetime, end_datetime))
-#
-#         doleances = Doleance.objects.using('kimei_db').filter(date_filter).exclude(statut='NEW').order_by(
-#             '-date_transmission')
-#
-#         logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
-#
-#         data = []
-#         for doleance in doleances:
-#             doleance_data = {
-#                 'id': doleance.id,
-#                 'ndi': doleance.ndi,
-#                 'date_transmission': timezone.localtime(doleance.date_transmission).strftime('%d/%m/%Y %H:%M'),
-#                 'statut': doleance.statut,
-#                 'station': doleance.station.libelle_station if doleance.station else '',
-#                 'element': doleance.element,
-#                 'panne_declarer': doleance.panne_declarer,
-#                 'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
-#                     '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
-#                 'commentaire': doleance.commentaire,
-#                 'appelant': doleance.appelant.nom_appelant if doleance.appelant else '',
-#                 'transmission': doleance.type_transmission,
-#                 'bt': doleance.bt,
-#             }
-#             data.append(doleance_data)
-#
-#         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
-#         logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
-#         return JsonResponse({'data': data}, safe=False)
-#
-#     except Exception as e:
-#         logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
-#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
-
-
-# @login_required
-# def get_doleances_data(request):
-#     logger.info("Début de get_doleances_data")
-#     try:
-#         today = timezone.localtime(timezone.now()).date()
-#         start_datetime = timezone.make_aware(datetime.combine(today, time.min))
-#         end_datetime = timezone.make_aware(datetime.combine(today, time.max))
-#
-#         if request.user.role == 'ADMIN':
-#             start_date = request.GET.get('startDate')
-#             end_date = request.GET.get('endDate')
-#
-#             if start_date and end_date:
-#                 logger.info(f"Filtrage par date : du {start_date} au {end_date}")
-#                 start_datetime = timezone.make_aware(
-#                     datetime.combine(datetime.strptime(start_date, '%d/%m/%Y'), time.min))
-#                 end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%d/%m/%Y'), time.max))
-#
-#         logger.info(f"Filtrage pour la période : du {start_datetime} au {end_datetime}")
-#
-#         date_filter = Q(date_transmission__range=(start_datetime, end_datetime))
-#
-#         doleances = Doleance.objects.using('kimei_db').filter(date_filter).exclude(statut='NEW').order_by(
-#             '-date_transmission')
-#
-#         logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
-#
-#         data = []
-#         for doleance in doleances:
-#             doleance_data = {
-#                 'id': doleance.id,
-#                 'ndi': doleance.ndi,
-#                 'date_transmission': timezone.localtime(doleance.date_transmission).strftime('%d/%m/%Y %H:%M'),
-#                 'statut': doleance.statut,
-#                 'station': doleance.station.libelle_station if doleance.station else '',
-#                 'element': doleance.element,
-#                 'panne_declarer': doleance.panne_declarer,
-#                 'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
-#                     '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
-#                 'commentaire': doleance.commentaire,
-#                 'appelant': doleance.appelant.nom_appelant if doleance.appelant else '',
-#                 'transmission': doleance.type_transmission,
-#                 'bt': doleance.bt,
-#             }
-#             data.append(doleance_data)
-#
-#         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
-#         logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
-#         return JsonResponse({'data': data}, safe=False)
-#
-#     except Exception as e:
-#         logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
-#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
-
-
-# ##################### Début Toutes les Interventions ######################
-# ##################### Fin Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
 
 @login_required
 def get_clients(request):
@@ -1400,177 +1103,6 @@ def get_interventions_data(request):
 
 
 # ##################### Fin Toutes les Interventions ######################
-
-
-# @login_required
-# def get_interventions_data(request):
-#     start_date = request.GET.get('startDate')
-#     end_date = request.GET.get('endDate')
-#     if start_date and end_date:
-#         date_filter = Q(top_depart__date__range=[start_date, end_date]) | \
-#                       Q(top_debut__date__range=[start_date, end_date]) | \
-#                       Q(top_terminer__date__range=[start_date, end_date])
-#     else:
-#
-#         today = timezone.now().date()
-#         logger.info("Filtrage aujourd'hui: %s", today)
-#         date_filter = Q(top_depart__date=today) | Q(top_debut__date=today) | Q(top_terminer__date=today)
-#
-#     if request.user.role == 'ADMIN':
-#         interventions = Intervention.objects.filter(date_filter)
-#         total_interventions = Intervention.objects.count()
-#         logger.info(f"Nombre total d'interventions : {total_interventions}")
-#         filtered_interventions = Intervention.objects.filter(date_filter)
-#         logger.info(f"Nombre d'interventions après filtrage : {filtered_interventions.count()}")
-#         all_interventions = Intervention.objects.all()
-#         for intervention in all_interventions:
-#             logger.info(
-#                 f"Intervention ID: {intervention.id}, Date: {intervention.top_depart.date() if intervention.top_depart else 'N/A'}")
-#         from django.conf import settings
-#         logger.info(f"Fuseau horaire Django : {settings.TIME_ZONE}")
-#         logger.info(f"Heure actuelle du serveur : {timezone.now()}")
-#         for intervention in Intervention.objects.all():
-#             logger.info(f"Intervention ID: {intervention.id}")
-#             logger.info(f"  top_depart: {intervention.top_depart}")
-#             logger.info(f"  top_debut: {intervention.top_debut}")
-#             logger.info(f"  top_terminer: {intervention.top_terminer}")
-#
-#     elif request.user.role == 'TECH':
-#         try:
-#
-#             personnel = Personnel.objects.get(matricule=request.user.matricule)
-#             interventions = Intervention.objects.filter(
-#                 date_filter,
-#                 id__in=InterventionPersonnel.objects.filter(personnel=personnel).values('intervention_id')
-#             )
-#         except Personnel.DoesNotExist:
-#             interventions = Intervention.objects.none()
-#     else:
-#         interventions = Intervention.objects.none()
-#
-#     interventions = interventions.order_by('-top_depart')
-#
-#     data = []
-#     for intervention in interventions:
-#         techniciens = InterventionPersonnel.objects.filter(intervention=intervention).select_related('personnel')
-#         techniciens_list = ", ".join(
-#             [f"{t.personnel.nom_personnel} {t.personnel.prenom_personnel}" for t in techniciens])
-#
-#         data.append({
-#             'id': intervention.id,
-#             'appelant': intervention.doleance.appelant.nom_appelant if intervention.doleance.appelant else '',
-#             'ndi': intervention.doleance.ndi if intervention.doleance else '',
-#             'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
-#             'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
-#             'prise_en_charge': intervention.top_depart.strftime('%d/%m/%Y %H:%M') if intervention.top_depart else '',
-#             'debut_travail': intervention.top_debut.strftime('%d/%m/%Y %H:%M') if intervention.top_debut else '',
-#             'fin_travail': intervention.top_terminer.strftime('%d/%m/%Y %H:%M') if intervention.top_terminer else '',
-#             # 'statut': 'Terminée' if intervention.is_done else 'En cours' if intervention.is_half_done else 'Non commencée',
-#             'statut': intervention.doleance.statut,
-#             'techniciens': techniciens_list,
-#             'duree': str(intervention.duree_intervention) if intervention.duree_intervention else '',
-#             'kilometrage_depart': str(
-#                 intervention.kilometrage_depart_debut) if intervention.kilometrage_depart_debut else '',
-#             'kilometrage_retour': str(intervention.kilometrage_home) if intervention.kilometrage_home else '',
-#             'numero_fiche': intervention.numero_fiche if intervention.numero_fiche else '',
-#             'resolution': intervention.resolution if intervention.resolution else ''
-#         })
-#
-#     return JsonResponse({'data': data})
-# #####################Fin Test de récupération de la liste des interventions######################
-
-# #####################Début Affichage de la liste des interventions######################
-# @login_required
-# def get_interventions_data(request):
-#     logger.info("Début de get_interventions_data")
-#     start_date = request.GET.get('startDate')
-#     end_date = request.GET.get('endDate')
-#
-#     try:
-#         if start_date and end_date:
-#             logger.info(f"Filtrage par date : du {start_date} au {end_date}")
-#             start_datetime = timezone.make_aware(datetime.combine(datetime.strptime(start_date, '%d/%m/%Y'), time.min))
-#             end_datetime = timezone.make_aware(datetime.combine(datetime.strptime(end_date, '%d/%m/%Y'), time.max))
-#         else:
-#             today = timezone.localtime(timezone.now()).date()
-#             logger.info(f"Filtrage pour aujourd'hui : {today}")
-#             start_datetime = timezone.make_aware(datetime.combine(today, time.min))
-#             end_datetime = timezone.make_aware(datetime.combine(today, time.max))
-#
-#         date_filter = (Q(top_depart__range=(start_datetime, end_datetime)) |
-#                        Q(top_debut__range=(start_datetime, end_datetime)) |
-#                        Q(top_terminer__range=(start_datetime, end_datetime)))
-#
-#         # Vérification du nombre d'interventions avant l'application du filtre
-#         total_interventions = Intervention.objects.count()
-#         logger.info(f"Nombre total d'interventions : {total_interventions}")
-#
-#         # Application du filtre en fonction du rôle de l'utilisateur
-#         if request.user.role == 'ADMIN':
-#             interventions = Intervention.objects.filter(date_filter)
-#         elif request.user.role == 'TECH':
-#             interventions = Intervention.objects.filter(
-#                 date_filter,
-#                 interventionpersonnel__personnel__matricule=request.user.matricule
-#             ).distinct()
-#         else:
-#             interventions = Intervention.objects.none()
-#
-#         interventions = interventions.select_related('doleance', 'doleance__station')
-#         if not interventions.exists():
-#             return JsonResponse({'data': []})
-#         logger.info(f"Nombre d'interventions après filtrage : {interventions.count()}")
-#
-#         data = []
-#         for intervention in interventions:
-#             logger.info(
-#                 f"Dates brutes - ID: {intervention.id}, top_depart: {intervention.top_depart}, top_debut: {intervention.top_debut}, top_terminer: {intervention.top_terminer}")
-#
-#             # Récupérer les techniciens pour chaque intervention
-#             techniciens = InterventionPersonnel.objects.filter(intervention=intervention).select_related('personnel')
-#             techniciens_list = ", ".join(
-#                 [f"{t.personnel.nom_personnel} {t.personnel.prenom_personnel}" for t in techniciens])
-#
-#             intervention_data = {
-#                 'id': intervention.id,
-#                 'appelant': intervention.doleance.appelant.nom_appelant if intervention.doleance.appelant else '',
-#                 'transmission': intervention.doleance.type_transmission,
-#                 'bt': intervention.doleance.bt if intervention.doleance else '',
-#                 'ndi': intervention.doleance.ndi if intervention.doleance else '',
-#                 'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
-#                 'element': intervention.doleance.element if intervention.doleance else '',
-#                 'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
-#                 'statut': intervention.doleance.statut if intervention.doleance else '',
-#                 'resolution': intervention.resolution if intervention.resolution else '',
-#                 'date_transmission': intervention.doleance.date_transmission.strftime('%d/%m/%Y %H:%M')
-#                 if intervention.doleance.date_transmission else '',
-#                 'date_deadline': intervention.doleance.date_deadline.strftime('%d/%m/%Y %H:%M')
-#                 if intervention.doleance.date_deadline else '',
-#                 'prise_en_charge': timezone.localtime(intervention.top_depart).strftime(
-#                     '%d/%m/%Y %H:%M') if intervention.top_depart else '',
-#                 'debut_travail': timezone.localtime(intervention.top_debut).strftime(
-#                     '%d/%m/%Y %H:%M') if intervention.top_debut else '',
-#                 'fin_travail': timezone.localtime(intervention.top_terminer).strftime(
-#                     '%d/%m/%Y %H:%M') if intervention.top_terminer else '',
-#                 'numero_fiche': intervention.numero_fiche if intervention.numero_fiche else '',
-#
-#                 'techniciens': techniciens_list,
-#                 'duree_de_travail': str(intervention.duree_intervention) if intervention.duree_intervention else '',
-#                 'kilometrage_depart': str(
-#                     intervention.kilometrage_depart_debut) if intervention.kilometrage_depart_debut else '',
-#                 'commentaires': intervention.doleance.commentaire if intervention.doleance else '',
-#                 'kilometrage_retour': str(intervention.kilometrage_home) if intervention.kilometrage_home else '',
-#             }
-#             data.append(intervention_data)
-#
-#             logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
-#         logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
-#         logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
-#         return JsonResponse({'data': data}, safe=False)
-#
-#     except Exception as e:
-#         logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
-#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
 
 
 # #####################Fin Affichage de la liste des interventions######################
@@ -1777,6 +1309,7 @@ def get_technicien_portfolio(request):
     })
 
 
+# #####################Début Liste PDR ######################
 @login_required
 def toutes_les_pieces(request):
     return render(request, 'gmao/toutes_les_pieces.html')
@@ -1808,3 +1341,146 @@ def get_pieces_data(request):
 
     # Retourner les données au format JSON
     return JsonResponse({'data': formatted_data}, safe=False)
+
+
+# ##################### Fin Liste PDR ######################
+
+
+# #####################Début Ajout éléments ######################
+
+@login_required
+def liste_appareils_distributeurs(request):
+    return render(request, 'gmao/liste_appareils_distributeurs.html')
+
+
+@login_required
+@require_http_methods(["POST"])
+def ajouter_distributeur(request):
+    try:
+        data = json.loads(request.body)
+        station = Station.objects.get(id=data['station'])
+        modele_ad = ModeleAd.objects.get(id=data['modele_ad'])
+
+        distributeur = AppareilDistribution.objects.create(
+            piste=station.piste_set.first(),
+            modele_ad=modele_ad,
+            num_serie=data['num_serie'],
+            type_contrat=data['type_contrat'],
+            face_principal=data['face_principal'],
+            face_secondaire=data['face_secondaire']
+        )
+
+        faces_data = data.get('faces', {})
+        for face, pistolet_data in faces_data.items():
+            Pistolet.objects.create(
+                appareil_distribution=distributeur,
+                orientation=face[0],  # R ou L
+                produit_id=pistolet_data['produit'],
+                date_flexible=pistolet_data.get('date_flexible', '')
+            )
+
+        return JsonResponse({'success': True, 'message': 'Distributeur ajouté avec succès'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})
+
+
+@login_required
+@require_http_methods(["POST"])
+def update_distributeur(request, distributeur_id):
+    try:
+        data = json.loads(request.body)
+        distributeur = AppareilDistribution.objects.get(id=distributeur_id)
+        distributeur.piste = Station.objects.get(id=data['station']).piste_set.first()
+        distributeur.modele_ad = ModeleAd.objects.get(id=data['modele_ad'])
+        distributeur.num_serie = data['num_serie']
+        distributeur.type_contrat = data['type_contrat']
+        distributeur.face_principal = data['face_principal']
+        distributeur.face_secondaire = data['face_secondaire']
+        distributeur.save()
+
+        # Supprimer les anciens pistolets
+        distributeur.pistolet_set.all().delete()
+
+        # Ajouter les nouveaux pistolets
+        faces_data = data.get('faces', {})
+        for face, pistolet_data in faces_data.items():
+            Pistolet.objects.create(
+                appareil_distribution=distributeur,
+                orientation=face[0],  # R ou L
+                produit_id=pistolet_data['produit'],
+                date_flexible=pistolet_data.get('date_flexible', '')
+            )
+
+        return JsonResponse({'success': True, 'message': 'Distributeur mis à jour avec succès'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})
+
+
+@login_required
+def get_distributeur(request, distributeur_id):
+    try:
+        distributeur = AppareilDistribution.objects.get(id=distributeur_id)
+        pistolets = distributeur.pistolet_set.all().order_by('orientation')
+
+        data = {
+            'id': distributeur.id,
+            'station': distributeur.piste.station.id,
+            'modele_ad': distributeur.modele_ad.id,
+            'num_serie': distributeur.num_serie,
+            'type_contrat': distributeur.type_contrat,
+            'face_principal': distributeur.face_principal,
+            'face_secondaire': distributeur.face_secondaire,
+            'pistolets': [
+                {
+                    'id': p.id,
+                    'orientation': p.orientation,
+                    'produit': p.produit.id,
+                    'date_flexible': p.date_flexible
+                } for p in pistolets
+            ]
+        }
+        return JsonResponse(data)
+    except AppareilDistribution.DoesNotExist:
+        return JsonResponse({'error': 'Distributeur non trouvé'}, status=404)
+
+
+@login_required
+def get_appareils_distributeurs_data(request):
+    appareils = AppareilDistribution.objects.all().select_related('piste__station', 'modele_ad')
+    data = []
+    for appareil in appareils:
+        pistolets = appareil.pistolet_set.all().order_by('orientation')
+        pistolets_info = [
+            f"{p.orientation}{index + 1}-{appareil.num_serie}{p.orientation}-{p.produit.code_produit}-{appareil.type_contrat[0]} *{p.date_flexible or 'ILLI'}*"
+            for index, p in enumerate(pistolets)
+        ]
+        appareil_data = {
+            'id': appareil.id,
+            'piste': f"{appareil.piste.station.libelle_station} - AD {appareil.face_principal}/{appareil.face_secondaire}",
+            'modele_ad': str(appareil.modele_ad),
+            'num_serie': appareil.num_serie,
+            'type_contrat': appareil.type_contrat,
+            'pistolets': '<br>'.join(pistolets_info)
+        }
+        data.append(appareil_data)
+    return JsonResponse({"data": data}, safe=False)
+
+
+@login_required
+def get_stations(request):
+    stations = Station.objects.all().values('id', 'libelle_station')
+    return JsonResponse(list(stations), safe=False)
+
+
+@login_required
+def get_modeles_ad(request):
+    modeles = ModeleAd.objects.all().values('id', 'libelle_modele')
+    return JsonResponse(list(modeles), safe=False)
+
+
+@login_required
+def get_produits(request):
+    produits = Produit.objects.all().values('id', 'nom_produit')
+    return JsonResponse(list(produits), safe=False)
+
+# #####################Fin Ajout éléments ######################

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Liste des Appareils Distributeurs{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Liste des Appareils Distributeurs</h2>
+        <table id="appareilsTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Piste</th>
+                <th>Modèle</th>
+                <th>Numéro de série</th>
+                <th>Type de contrat</th>
+                <th>Pistolets</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script>
+        $(document).ready(function () {
+            $('#appareilsTable').DataTable({
+                "ajax": {
+                    "url": "{% url 'gmao:get_appareils_distributeurs_data' %}",
+                    "dataSrc": "data"
+                },
+                "columns": [
+                    {"data": "id"},
+                    {"data": "piste"},
+                    {"data": "modele_ad"},
+                    {"data": "num_serie"},
+                    {"data": "type_contrat"},
+                    {
+                        "data": "pistolets",
+                        "render": function (data, type, row) {
+                            return data;  // Cette colonne contient déjà du HTML
+                        }
+                    }
+                ],
+                "processing": true,
+                "serverSide": false,
+                "language": {
+                    //"url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                }
+            });
+        });
+    </script>
+{% endblock %}

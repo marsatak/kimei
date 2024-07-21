@@ -216,7 +216,7 @@ $(document).ready(function () {
         }
     }
 
-    function loadTechniciensDisponibles() {
+    /*function loadTechniciensDisponibles() {
         $.get(GET_TECHNICIENS_DISPONIBLES_URL, function (data) {
             let html = '';
             data.techniciens.forEach(function (tech) {
@@ -228,8 +228,34 @@ $(document).ready(function () {
             });
             $('#listeTechniciensDisponibles').html(html);
         });
+    }*/
+    function loadTechniciensDisponibles() {
+        console.log('Fonction loadTechniciensDisponibles appelée');
+        let searchQuery = $('#searchTechniciens').val();
+        console.log('Valeur de recherche:', searchQuery);
+
+        $.get(GET_TECHNICIENS_DISPONIBLES_URL, {search: searchQuery}, function (data) {
+            console.log('Données reçues:', data);
+            let html = '';
+            data.techniciens.forEach(function (tech) {
+                html += `
+            <li class="list-group-item">
+                ${tech.nom_personnel} ${tech.prenom_personnel}
+                <button class="btn btn-sm btn-success affecter-technicien float-right" data-id="${tech.id}">Affecter</button>
+            </li>`;
+            });
+            console.log('HTML généré:', html);
+            $('#listeTechniciensDisponibles').html(html);
+            console.log('Liste mise à jour');
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error('Erreur lors du chargement des techniciens:', textStatus, errorThrown);
+        });
     }
 
+    $('#searchTechniciens').on('input', function () {
+        console.log('searchTechniciens input event:', $(this).val());
+        loadTechniciensDisponibles();
+    });
 
     function loadDoleancesNonAttribuees() {
         let searchQuery = $('#searchDoleances').val();

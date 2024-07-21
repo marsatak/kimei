@@ -1,0 +1,88 @@
+let pistoletCounter = 0;
+
+function addPistoletField(pistolet = null) {
+const index = pistoletCounter++;
+const pistoletHtml = `
+<div class="pistolet-group mb-3">
+    <h6>Pistolet ${index + 1}</h6>
+    <div class="form-row">
+        <div class="col">
+            <label>Orientation</label>
+            <select class="form-control" name="pistolets[${index}][orientation]" required>
+                <option value="R">Right</option>
+                <option value="L">Left</option>
+            </select>
+        </div>
+        <div class="col">
+            <label>Produit</label>
+            <select class="form-control" name="pistolets[${index}][produit]" required>
+            </select>
+        </div>
+        <div class="col">
+            <label>Date flexible</label>
+            <input type="text" class="form-control" name="pistolets[${index}][date_flexible]" placeholder="ex: 1Q15">
+        </div>
+        <div class="col">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-danger form-control remove-pistolet">Supprimer</button>
+        </div>
+    </div>
+</div>
+`;
+$('#pistoletsContainer').append(pistoletHtml);
+
+// Si un pistolet est fourni, remplissez les champs
+if (pistolet) {
+const $lastPistolet = $('.pistolet-group').last();
+$lastPistolet.find('select[name$="[orientation]"]').val(pistolet.orientation);
+$lastPistolet.find('select[name$="[produit]"]').val(pistolet.produit);
+$lastPistolet.find('input[name$="[date_flexible]"]').val(pistolet.date_flexible);
+}
+
+loadProduits(index);
+}
+
+$('#addPistolet').click(function() {
+addPistoletField();
+});
+
+$(document).on('click', '.remove-pistolet', function() {
+$(this).closest('.pistolet-group').remove();
+});
+
+function loadProduits(index) {
+$.get('/get-produits/', function(data) {
+var options = '
+<option value="">Sélectionnez un produit</option>';
+data.forEach(function(produit) {
+options += `
+<option value="${produit.id}">${produit.nom_produit}</option>`;
+});
+$(`select[name="pistolets[${index}][produit]"]`).html(options);
+});
+}
+
+// Modifier la fonction de chargement des données du distributeur
+function loadDistributeurData(distributeurId) {
+$.get('/get-distributeur/' + distributeurId + '/', function(data) {
+$('#distributeurModalLabel').text('Modifier un distributeur');
+$('#distributeurId').val(data.id);
+$('#station').val(data.station);
+$('#modele_ad').val(data.modele_ad);
+$('#num_serie').val(data.num_serie);
+$('#type_contrat').val(data.type_contrat);
+$('#face_principal').val(data.face_principal);
+$('#face_secondaire').val(data.face_secondaire);
+
+// Vider le conteneur de pistolets existant
+$('#pistoletsContainer').empty();
+pistoletCounter = 0;
+
+// Ajouter les pistolets existants
+data.pistolets.forEach(function(pistolet) {
+addPistoletField(pistolet);
+});
+
+$('#distributeurModal').modal('show');
+});
+}

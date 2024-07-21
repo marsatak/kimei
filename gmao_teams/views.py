@@ -39,86 +39,6 @@ def liste_equipes(request):
     return JsonResponse({'equipes': list(equipes.values())})
 
 
-# @login_required
-# @user_passes_test(lambda u: u.role == 'ADMIN')
-# def get_equipe_details(request, equipe_id):
-#     equipe = get_object_or_404(Equipe.objects.using('teams_db'), id=equipe_id)
-#     personnel_ids = list(equipe.get_personnel_ids())
-#     doleance_ids = list(equipe.get_doleance_ids())
-#
-#     techniciens = Personnel.objects.using('kimei_db').filter(id__in=personnel_ids)
-#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
-#
-#     return JsonResponse({
-#         'nom': equipe.nom,
-#         'description': equipe.description,
-#         'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel')),
-#         'doleances': list(doleances.values('id', 'ndi', 'panne_declarer'))
-#     })
-
-
-# @login_required
-# @user_passes_test(lambda u: u.role == 'ADMIN')
-# def get_equipe_details(request, equipe_id):
-#     equipe = get_object_or_404(Equipe.objects.using('teams_db'), id=equipe_id)
-#
-#     # Récupérer les techniciens de l'équipe
-#     personnel_ids = list(equipe.get_personnel_ids())
-#     techniciens = Personnel.objects.using('kimei_db').filter(id__in=personnel_ids)
-#
-#     # Récupérer les doléances associées à l'équipe
-#     doleance_ids = list(
-#         DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe).values_list('doleance_id', flat=True))
-#     doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
-#
-#     # Préparer les données des techniciens
-#     techniciens_data = [
-#         {
-#             'id': tech.id,
-#             'nom': tech.nom_personnel,
-#             'prenom': tech.prenom_personnel,
-#             'matricule': tech.matricule,
-#             'statut': tech.statut,
-#             'poste': tech.poste.nom_poste if tech.poste else None
-#         }
-#         for tech in techniciens
-#     ]
-#
-#     # Préparer les données des doléances
-#     doleances_data = [
-#         {
-#             'id': dol.id,
-#             'ndi': dol.ndi,
-#             'statut': dol.statut,
-#             'panne_declarer': dol.panne_declarer,
-#             'date_transmission': dol.date_transmission.isoformat() if dol.date_transmission else None,
-#             'date_deadline': dol.date_deadline.isoformat() if dol.date_deadline else None,
-#             'station': {
-#                 'id': dol.station.id,
-#                 'libelle': dol.station.libelle_station,
-#                 'client': dol.station.client.nom_client if dol.station.client else None
-#             },
-#             'element': dol.element,
-#             'commentaire': dol.commentaire
-#         }
-#         for dol in doleances
-#     ]
-#
-#     # Construire la réponse JSON
-#     equipe_details = {
-#         'id': equipe.id,
-#         'nom': equipe.nom,
-#         'description': equipe.description,
-#         'techniciens': techniciens_data,
-#         'doleances': doleances_data
-#     }
-#
-#     return JsonResponse(equipe_details)
-
-
-logger = logging.getLogger(__name__)
-
-
 @login_required
 @user_passes_test(lambda u: u.role == 'ADMIN')
 def get_equipe_details(request, equipe_id):
@@ -269,6 +189,8 @@ def retirer_doleance(request, equipe_id):
 @login_required
 @user_passes_test(lambda u: u.role == 'ADMIN')
 def get_techniciens_disponibles(request):
+    search_query = request.GET.get('search', '')
+    logger.info(f"Recherche de techniciens avec la requête : {search_query}")
     # Obtenez d'abord tous les IDs des techniciens déjà affectés
     techniciens_affectes = list(EquipePersonnel.objects.using('teams_db').values_list('personnel_id', flat=True))
 
@@ -280,8 +202,17 @@ def get_techniciens_disponibles(request):
 
     )
                    .exclude(id__in=techniciens_affectes))
-
-    return JsonResponse({'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))})
+    if search_query:
+        techniciens = techniciens.filter(
+            Q(nom_personnel__icontains=search_query) |
+            Q(prenom_personnel__icontains=search_query) |
+            Q(matricule__icontains=search_query)
+        )
+    # logger.info(f"Nombre de techniciens trouvés : {techniciens.count()}")
+    # return JsonResponse({'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))})
+    techniciens_data = list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))
+    logger.info(f"Données des techniciens : {techniciens_data}")
+    return JsonResponse({'techniciens': techniciens_data})
 
 
 @login_required
