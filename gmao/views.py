@@ -66,6 +66,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 from django.views.decorators.cache import cache_control
 from django.db import models
+from django.db.models import Min, Max
+from dateutil.relativedelta import relativedelta
 
 # Ajoutez ces imports pour WhatsApp et SMS
 # from twilio.rest import Client
@@ -812,7 +814,7 @@ def terminer_travail(request, intervention_id):
         intervention.resolution = capitalizeSentences(request.POST.get('resolution', ''))
         intervention.observations = capitalizeSentences(request.POST.get('observations', ''))
         intervention.pieces_changees = capitalizeSentences(request.POST.get('pieces_changees', ''))
-        new_element = capitalizeSentences(request.POST.get('element', ''))
+        # new_element = capitalizeSentences(request.POST.get('element', ''))
 
         statut_final = request.POST.get('statut_final', '').upper()
 
@@ -913,8 +915,6 @@ def get_available_years(request):
 
 
 # ##################### Début Toules les Doléances ######################
-from django.db.models import Min, Max
-from django.utils import timezone
 
 
 def toutes_les_doleances(request):
@@ -980,10 +980,6 @@ def toutes_les_doleances(request):
 
 
 # ##################### Début Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
-from django.http import JsonResponse
-from django.utils import timezone
-from .models import Doleance, Client
-from dateutil.relativedelta import relativedelta
 
 
 def get_doleances_data(request):

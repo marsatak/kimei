@@ -28,9 +28,6 @@
             margin-bottom: 0;
         }
 
-        .form-select, .form-control {
-            width: auto;
-        }
 
         @media (max-width: 768px) {
             .filter-container {
@@ -52,7 +49,7 @@
             word-break: break-word;
         }
 
-        #interventionsTable .techniciens-cell {
+        #interventionsTable {
             max-width: 150px; /* Ajustez selon vos besoins */
         }
     </style>
@@ -155,7 +152,7 @@
                 url: '{% url "gmao:get_clients" %}',
                 type: 'GET',
                 success: function (response) {
-                    var select = $('#clientFilter');
+                    const select = $('#clientFilter');
                     $.each(response.clients, function (index, client) {
                         select.append($('<option></option>').val(client.id).text(client.nom_client));
                     });
@@ -198,7 +195,7 @@
                         {data: 'resolution'},
                         {
                             data: 'numero_fiche',
-                            
+
                         },
                         {data: 'debut_travail'},
                         {data: 'fin_travail'},
