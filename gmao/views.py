@@ -225,8 +225,8 @@ def getDoleanceEncours(request):
         doleances = (
             (Doleance.objects.all()).using('kimei_db')
             .exclude(statut='TER')
-            .order_by('-date_deadline').filter(
-            )
+            .order_by('-date_transmission')
+            .order_by('-date_deadline')
         )
         print(datetime.now().month)
         print(datetime.now().year)
