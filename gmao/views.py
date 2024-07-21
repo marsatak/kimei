@@ -64,8 +64,8 @@ from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
-
 from django.views.decorators.cache import cache_control
+from django.db import models
 
 # Ajoutez ces imports pour WhatsApp et SMS
 # from twilio.rest import Client
@@ -219,11 +219,14 @@ def home(request):
 def getDoleanceEncours(request):
     try:
         doleances = (
-            (Doleance.objects.all())
+            (Doleance.objects.all()).using('kimei_db')
             .exclude(statut='TER')
             .order_by('-date_deadline').filter(
-            ))
-
+            )
+        )
+        print(datetime.now().month)
+        print(datetime.now().year)
+        print(doleances)
         doleances_data = []
         for doleance in doleances:
             doleance_dict = DoleanceSerializer(doleance).data
@@ -910,113 +913,203 @@ def get_available_years(request):
 
 
 # ##################### Début Toules les Doléances ######################
+from django.db.models import Min, Max
+from django.utils import timezone
 
-@login_required
+
 def toutes_les_doleances(request):
-    current_year = timezone.now().year
+    current_date = timezone.now()
+    current_year = current_date.year
+    current_month = current_date.month
+    min_year = Doleance.objects.using('kimei_db').aggregate(Min('date_transmission__year'))[
+                   'date_transmission__year__min'] or current_year
+    max_year = Doleance.objects.using('kimei_db').aggregate(Max('date_transmission__year'))[
+                   'date_transmission__year__max'] or current_year
 
-    # Extraire les années non nulles
-    years = Doleance.objects.annotate(year=ExtractYear('date_transmission')) \
-        .filter(year__isnull=False) \
-        .values_list('year', flat=True) \
-        .distinct() \
-        .order_by('-year')
-
-    # Convertir en liste et ajouter l'année courante si elle n'est pas présente
-    years = list(years)
-    if current_year not in years:
-        years.append(current_year)
-
-    # Trier la liste en ignorant les valeurs None
-    years.sort(key=lambda x: (x is None, x), reverse=True)
+    years = range(min_year, max_year + 1)
 
     months = [
         (1, 'Janvier'), (2, 'Février'), (3, 'Mars'), (4, 'Avril'),
         (5, 'Mai'), (6, 'Juin'), (7, 'Juillet'), (8, 'Août'),
         (9, 'Septembre'), (10, 'Octobre'), (11, 'Novembre'), (12, 'Décembre')
     ]
-    current_month = timezone.now().month
-
-    return render(request, 'gmao/toutes_les_doleances.html', {
+    context = {
         'years': years,
         'months': months,
         'current_year': current_year,
         'current_month': current_month
-    })
+    }
+    return render(request, 'gmao/toutes_les_doleances.html', context)
+
+
+# @login_required
+# def toutes_les_doleances(request):
+#     current_year = timezone.now().year
+#
+#     # Extraire les années non nulles
+#     years = Doleance.objects.annotate(year=ExtractYear('date_transmission')) \
+#         .filter(year__isnull=False) \
+#         .values_list('year', flat=True) \
+#         .distinct() \
+#         .order_by('-year')
+#
+#     # Convertir en liste et ajouter l'année courante si elle n'est pas présente
+#     years = list(years)
+#     if current_year not in years:
+#         years.append(current_year)
+#
+#     # Trier la liste en ignorant les valeurs None
+#     years.sort(key=lambda x: (x is None, x), reverse=True)
+#
+#     months = [
+#         (1, 'Janvier'), (2, 'Février'), (3, 'Mars'), (4, 'Avril'),
+#         (5, 'Mai'), (6, 'Juin'), (7, 'Juillet'), (8, 'Août'),
+#         (9, 'Septembre'), (10, 'Octobre'), (11, 'Novembre'), (12, 'Décembre')
+#     ]
+#     current_month = timezone.now().month
+#
+#     return render(request, 'gmao/toutes_les_doleances.html', {
+#         'years': years,
+#         'months': months,
+#         'current_year': current_year,
+#         'current_month': current_month
+#     })
 
 
 # ##################### Fin Toutes les doléances ######################
 
 
 # ##################### Début Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
+from django.http import JsonResponse
+from django.utils import timezone
+from .models import Doleance, Client
+from dateutil.relativedelta import relativedelta
 
 
-@login_required
 def get_doleances_data(request):
-    logger.info("Début de get_doleances_data")
-    try:
-        year = request.GET.get('year')
-        month = request.GET.get('month')
-        start_date = request.GET.get('startDate')
-        end_date = request.GET.get('endDate')
-        client_id = request.GET.get('client')
+    year = request.GET.get('year')
+    month = request.GET.get('month')
+    client_id = request.GET.get('client')
 
-        doleances_query = Doleance.objects.using('kimei_db').exclude(statut='NEW')
+    doleances_query = Doleance.objects.using('kimei_db').exclude(statut='NEW')
 
-        if start_date and end_date:
-            try:
-                start_datetime = timezone.make_aware(datetime.strptime(start_date, "%d/%m/%Y %H:%M"))
-                end_datetime = timezone.make_aware(datetime.strptime(end_date, "%d/%m/%Y %H:%M"))
-                doleances_query = doleances_query.filter(date_debut__range=(start_datetime, end_datetime))
-            except ValueError:
-                logger.warning(f"Format de date invalide - startDate: {start_date}, endDate: {end_date}")
+    if year and year != 'all':
+        doleances_query = doleances_query.filter(date_transmission__year=int(year))
 
-        # Si aucune date n'est spécifiée, utiliser le mois et l'année en cours
-        if not any([year, month, start_date, end_date]):
-            today = timezone.now()
-            start_of_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-            end_of_month = (start_of_month + relativedelta(months=1) - relativedelta(days=1)).replace(hour=23,
-                                                                                                      minute=59,
-                                                                                                      second=59)
-            doleances_query = doleances_query.filter(date_transmission__range=(start_of_month, end_of_month))
-            logger.info(f"Filtrage par défaut: du {start_of_month} au {end_of_month}")
+    if month and month != 'all':
+        if year and year != 'all':
+            start_date = timezone.make_aware(timezone.datetime(int(year), int(month), 1))
+            end_date = start_date + relativedelta(months=1)
         else:
-            if year and year != 'all':
-                doleances_query = doleances_query.filter(date_transmission__year=int(year))
-            if month and month != 'all':
-                doleances_query = doleances_query.filter(date_transmission__month=int(month))
+            current_date = timezone.now()
+            start_date = timezone.make_aware(current_date.replace(month=int(month), day=1))
+            end_date = start_date + relativedelta(months=1)
 
-        if client_id:
-            doleances_query = doleances_query.filter(station__client_id=client_id)
+        doleances_query = doleances_query.filter(date_transmission__gte=start_date, date_transmission__lt=end_date)
 
-        doleances = doleances_query.order_by('-date_transmission')
+    if client_id:
+        doleances_query = doleances_query.filter(station__client_id=client_id)
 
-        logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
+    doleances = doleances_query.order_by('-date_transmission')
 
-        data = []
-        for doleance in doleances:
-            doleance_data = {
-                'id': doleance.id,
-                'ndi': doleance.ndi,
-                'date_transmission': timezone.localtime(doleance.date_transmission).strftime(
-                    '%d/%m/%Y %H:%M') if doleance.date_transmission else '',
-                'statut': doleance.statut,
-                'station': doleance.station.libelle_station if doleance.station else '',
-                'element': doleance.element,
-                'panne_declarer': doleance.panne_declarer,
-                'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
-                    '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
-                'commentaire': doleance.commentaire,
-            }
-            data.append(doleance_data)
+    data = []
+    for doleance in doleances:
+        doleance_data = {
+            'id': doleance.id,
+            'ndi': doleance.ndi,
+            'date_transmission': timezone.localtime(doleance.date_transmission).strftime(
+                '%d/%m/%Y %H:%M') if doleance.date_transmission else '',
+            'statut': doleance.statut,
+            'station': doleance.station.libelle_station if doleance.station else '',
+            'element': doleance.element,
+            'panne_declarer': doleance.panne_declarer,
+            'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
+                '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
+            'commentaire': doleance.commentaire,
+            'actions': f'<button class="btn btn-primary btn-sm view-doleance" data-id="{doleance.id}">Voir</button>'
+        }
+        data.append(doleance_data)
 
-        logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
-        return JsonResponse({'data': data}, safe=False)
+    return JsonResponse({'data': data})
 
-    except Exception as e:
-        logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
-        return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
 
+# ##################### Backup 2 Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
+
+# @login_required
+# def get_doleances_data(request):
+#     logger.info("Début de get_doleances_data")
+#     try:
+#         year = request.GET.get('year')
+#         month = request.GET.get('month')
+#         start_date = request.GET.get('startDate')
+#         end_date = request.GET.get('endDate')
+#         client_id = request.GET.get('client')
+#
+#         logger.info(f"Paramètres reçus : année={year}, mois={month}, client={client_id}")
+#
+#         doleances_query = Doleance.objects.using('kimei_db').exclude(statut='NEW')
+#
+#         if start_date and end_date:
+#             try:
+#                 start_datetime = timezone.make_aware(datetime.strptime(start_date, "%d/%m/%Y %H:%M"))
+#                 end_datetime = timezone.make_aware(datetime.strptime(end_date, "%d/%m/%Y %H:%M"))
+#                 doleances_query = doleances_query.filter(date_debut__range=(start_datetime, end_datetime))
+#             except ValueError:
+#                 logger.warning(f"Format de date invalide - startDate: {start_date}, endDate: {end_date}")
+#
+#         # Si aucune date n'est spécifiée, utiliser le mois et l'année en cours
+#         if not any([year, month, start_date, end_date]):
+#             today = timezone.now()
+#             start_of_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+#             end_of_month = (start_of_month + relativedelta(months=1) - relativedelta(days=1)).replace(hour=23,
+#                                                                                                       minute=59,
+#                                                                                                       second=59)
+#             doleances_query = doleances_query.filter(date_transmission__range=(start_of_month, end_of_month))
+#             logger.info(f"Filtrage par défaut: du {start_of_month} au {end_of_month}")
+#         else:
+#             if year and year != 'all':
+#                 doleances_query = doleances_query.filter(date_transmission__year=int(year))
+#             if month and month != 'all':
+#                 doleances_query = doleances_query.filter(date_transmission__month=int(month))
+#
+#         if client_id:
+#             doleances_query = doleances_query.filter(station__client_id=client_id)
+#         # logger.info(f"Requête SQL : {doleances_query.query}")
+#         doleances = doleances_query.order_by('-date_transmission')
+#
+#         logger.info(f"Nombre de doléances après filtrage : {doleances.count()}")
+#
+#         data = []
+#         for doleance in doleances:
+#             doleance_data = {
+#                 'id': doleance.id,
+#                 'ndi': doleance.ndi,
+#                 'date_transmission': timezone.localtime(doleance.date_transmission).strftime(
+#                     '%d/%m/%Y %H:%M') if doleance.date_transmission else '',
+#                 'statut': doleance.statut,
+#                 'station': doleance.station.libelle_station if doleance.station else '',
+#                 'element': doleance.element,
+#                 'panne_declarer': doleance.panne_declarer,
+#                 'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
+#                     '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
+#                 'commentaire': doleance.commentaire,
+#             }
+#             data.append(doleance_data)
+#
+#         logger.info(f"Nombre total de doléances renvoyées : {len(data)}")
+#         return JsonResponse(
+#             {
+#                 'data': data,
+#                 'recordsTotal': len(data),
+#                 'recordsFiltered': len(data),
+#                 'draw': request.GET.get('draw', '1')
+#             }, safe=False)
+#
+#     except Exception as e:
+#         logger.error(f"Erreur dans get_doleances_data: {str(e)}", exc_info=True)
+#         return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)
+
+# ##################### Backup 1 Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
 
 # @login_required
 # def get_doleances_data(request):
@@ -1193,6 +1286,7 @@ def get_doleances_data(request):
 
 
 # ##################### Début Toutes les Interventions ######################
+# ##################### Fin Liste des doléances MANDE FA TSY AFFICHER COTE FRONT ######################
 
 @login_required
 def get_clients(request):
