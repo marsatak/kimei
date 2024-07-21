@@ -26,6 +26,8 @@ from django.db.models import Prefetch
 from django.utils import timezone
 from datetime import timedelta
 from datetime import datetime, time
+from django.db.models import CharField, Value as V
+from django.db.models.functions import Substr
 
 from django.utils.dateparse import parse_datetime
 
@@ -897,21 +899,26 @@ def terminer_travail(request, intervention_id):
 # #####################Fin Procédure de clôture######################
 
 
-@login_required
-@require_GET
-def get_available_years(request):
-    try:
-        years = (
-            Doleance.objects.using('kimei_db')
-            .annotate(year=ExtractYear('date_transmission'))
-            .values_list('year', flat=True)
-            .distinct()
-            .order_by('-year')
-        )
-        return JsonResponse({'years': list(years)})
-    except Exception as e:
-        logger.error(f"Erreur dans get_available_years: {str(e)}", exc_info=True)
-        return JsonResponse({'error': 'Erreur serveur inattendue'}, status=500)
+def get_available_years():
+    # Assuming date_transmission is a CharField storing dates in 'YYYY-MM-DD' format
+    years_queryset = Doleance.objects.exclude(date_transmission__isnull=True).annotate(
+        year=Substr('date_transmission', 1, 4)
+    ).values_list('year', flat=True).distinct().order_by('-year')
+
+    # Convert QuerySet to a list of years, ensuring they are integers
+    years = [int(year) for year in years_queryset if year.isdigit()]
+
+    # Debug: Print the years to verify
+    print("Years queryset:", years)
+
+    # If the queryset is empty, add the current year as a fallback
+    if not years:
+        current_year = timezone.now().year
+        years.append(current_year)
+
+    print("les années:", years)
+
+    return years
 
 
 # ##################### Début Toules les Doléances ######################
@@ -921,12 +928,13 @@ def toutes_les_doleances(request):
     current_date = timezone.now()
     current_year = current_date.year
     current_month = current_date.month
-    min_year = Doleance.objects.using('kimei_db').aggregate(Min('date_transmission__year'))[
-                   'date_transmission__year__min'] or current_year
-    max_year = Doleance.objects.using('kimei_db').aggregate(Max('date_transmission__year'))[
-                   'date_transmission__year__max'] or current_year
-
-    years = range(min_year, max_year + 1)
+    # min_year = Doleance.objects.using('kimei_db').aggregate(Min('date_transmission__year'))[
+    #                'date_transmission__year__min'] or current_year
+    # max_year = Doleance.objects.using('kimei_db').aggregate(Max('date_transmission__year'))[
+    #                'date_transmission__year__max'] or current_year
+    # years = range(min_year, max_year + 1)
+    years = get_available_years()
+    print("les années:", years)
 
     months = [
         (1, 'Janvier'), (2, 'Février'), (3, 'Mars'), (4, 'Avril'),
@@ -983,6 +991,8 @@ def toutes_les_doleances(request):
 
 
 def get_doleances_data(request):
+    current_date = timezone.now()
+
     year = request.GET.get('year')
     month = request.GET.get('month')
     client_id = request.GET.get('client')
@@ -994,11 +1004,16 @@ def get_doleances_data(request):
 
     if month and month != 'all':
         if year and year != 'all':
-            start_date = timezone.make_aware(timezone.datetime(int(year), int(month), 1))
+
+            # Assuming `month` is a variable containing the month number
+            # and `current_date` is the current timezone-aware datetime object
+            start_date = current_date.replace(month=int(month), day=1, hour=0, minute=0, second=0, microsecond=0)
             end_date = start_date + relativedelta(months=1)
         else:
-            current_date = timezone.now()
-            start_date = timezone.make_aware(current_date.replace(month=int(month), day=1))
+
+            # Assuming `month` is a variable containing the month number
+            # and `current_date` is the current timezone-aware datetime object
+            start_date = current_date.replace(month=int(month), day=1, hour=0, minute=0, second=0, microsecond=0)
             end_date = start_date + relativedelta(months=1)
 
         doleances_query = doleances_query.filter(date_transmission__gte=start_date, date_transmission__lt=end_date)
