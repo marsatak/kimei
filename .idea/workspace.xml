@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha All doléances AD">
-      <change afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs_mande_Admin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,15 +242,7 @@
       <workItem from="1721533009970" duration="33870000" />
       <workItem from="1721640303294" duration="235000" />
       <workItem from="1721655491981" duration="2025000" />
-      <workItem from="1721671132183" duration="1023000" />
-    </task>
-    <task id="LOCAL-00210" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1720685519357</created>
-      <option name="number" value="00210" />
-      <option name="presentableId" value="LOCAL-00210" />
-      <option name="project" value="LOCAL" />
-      <updated>1720685519357</updated>
+      <workItem from="1721671132183" duration="1851000" />
     </task>
     <task id="LOCAL-00211" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -641,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721589259874</updated>
     </task>
-    <option name="localTasksCounter" value="259" />
+    <task id="LOCAL-00259" summary="Version Alpha All doléances AD">
+      <option name="closed" value="true" />
+      <created>1721672635623</created>
+      <option name="number" value="00259" />
+      <option name="presentableId" value="LOCAL-00259" />
+      <option name="project" value="LOCAL" />
+      <updated>1721672635624</updated>
+    </task>
+    <option name="localTasksCounter" value="260" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

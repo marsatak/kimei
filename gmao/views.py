@@ -1488,17 +1488,23 @@ def get_appareils_distributeurs_data(request):
         equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
 
         if equipe:
-            doleance_ids = DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe.equipe).values_list(
-                'doleance_id', flat=True)
+            # Forcer l'évaluation de la requête interne
+            doleance_ids = list(DoleanceEquipe.objects.using('teams_db')
+                                .filter(equipe=equipe.equipe)
+                                .values_list('doleance_id', flat=True))
+
             doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
             doleances = filter_active_doleances(doleances)
-            station_ids = doleances.values_list('station_id', flat=True).distinct()
-            appareils = AppareilDistribution.objects.filter(piste__station_id__in=station_ids).select_related(
-                'piste__station', 'modele_ad')
+
+            # Forcer l'évaluation de station_ids
+            station_ids = list(doleances.values_list('station_id', flat=True).distinct())
+
+            appareils = AppareilDistribution.objects.using('kimei_db').filter(
+                piste__station_id__in=station_ids).select_related('piste__station', 'modele_ad')
         else:
             return JsonResponse({"data": []})
     else:
-        appareils = AppareilDistribution.objects.all().select_related('piste__station', 'modele_ad')
+        appareils = AppareilDistribution.objects.using('kimei_db').all().select_related('piste__station', 'modele_ad')
 
     data = []
     for appareil in appareils:
