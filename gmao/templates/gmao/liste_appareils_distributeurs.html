@@ -22,7 +22,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="distributeurModalLabel">Ajouter/Modifier un distributeur</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -72,7 +72,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                     <button type="button" class="btn btn-primary" id="sauvegarderDistributeur">Enregistrer</button>
                 </div>
             </div>
@@ -95,7 +95,7 @@
 $(document).ready(function() {
     function loadAppareils() {
         $.ajax({
-            url: "{% url 'get_appareils_distributeurs_data' %}",
+            url: "{% url 'gmao:get_appareils_distributeurs_data' %}",
             type: 'GET',
             success: function(response) {
                 var appareilsHtml = '';
@@ -150,7 +150,7 @@ $(document).ready(function() {
         `;
         $(`#${containerId}`).append(newField);
 
-        $.get("{% url 'get_produits' %}", function(data) {
+        $.get("{% url 'gmao:get_produits' %}", function(data) {
             $(`#${containerId} .produit:last`).html(data.map(produit => `<option value="${produit.id}">${produit.nom_produit}</option>`).join(''));
         });
     }
@@ -192,7 +192,7 @@ $(document).ready(function() {
         });
 
         $.ajax({
-            url: id ? "{% url 'update_distributeur' 0 %}".replace('0', id) : "{% url 'ajouter_distributeur' %}",
+            url: id ? "{% url 'gmao:update_distributeur' 0 %}".replace('0', id) : "{% url 'gmao:ajouter_distributeur' %}",
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),
@@ -216,7 +216,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.modifier-appareil', function() {
         var id = $(this).data('id');
-        $.get("{% url 'get_distributeur' 0 %}".replace('0', id), function(data) {
+        $.get("{% url 'gmao:get_distributeur' 0 %}".replace('0', id), function(data) {
             $('#distributeurForm').data('id', id);
             $('#station').val(data.station);
             $('#modele').val(data.modele_ad);
@@ -247,10 +247,10 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.supprimer-appareil', function() {
-        var id = $(this).data('id');
+        const id = $(this).data('id');
         if (confirm('Êtes-vous sûr de vouloir supprimer ce distributeur ?')) {
             $.ajax({
-                url: "{% url 'supprimer_distributeur' 0 %}".replace('0', id),
+                url: "{% url 'gmao:supprimer_distributeur' 0 %}".replace('0', id),
                 type: 'POST',
                 headers: {'X-CSRFToken': '{{ csrf_token }}'},
                 success: function(response) {
@@ -268,11 +268,11 @@ $(document).ready(function() {
     });
     {% endif %}
 
-    $.get("{% url 'get_stations' %}", function(data) {
+    $.get("{% url 'gmao:get_stations' %}", function(data) {
         $('#station').html(data.map(station => `<option value="${station.id}">${station.libelle_station}</option>`).join(''));
     });
 
-    $.get("{% url 'get_modeles_ad' %}", function(data) {
+    $.get("{% url 'gmao:get_modeles_ad' %}", function(data) {
         $('#modele').html(data.map(modele => `<option value="${modele.id}">${modele.libelle_modele}</option>`).join(''));
     });
 });
