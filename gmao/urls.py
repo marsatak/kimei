@@ -54,6 +54,7 @@ urlpatterns = [
          name='get_appareils_distributeurs_data'),
     path('ajouter-distributeur/', views.ajouter_distributeur, name='ajouter_distributeur'),
     path('update-distributeur/<int:distributeur_id>/', views.update_distributeur, name='update_distributeur'),
+    path('supprimer-distributeur/<int:distributeur_id>/', views.supprimer_distributeur, name='supprimer_distributeur'),
     path('get-distributeur/<int:distributeur_id>/', views.get_distributeur, name='get_distributeur'),
     path('get-stations/', views.get_stations, name='get_stations'),
     path('get-modeles-ad/', views.get_modeles_ad, name='get_modeles_ad'),

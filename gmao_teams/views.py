@@ -14,6 +14,8 @@ from gmao.utils import filter_active_doleances
 
 import logging
 
+logger = logging.getLogger(__name__)
+
 
 @login_required
 @user_passes_test(lambda u: u.role == 'ADMIN')
@@ -190,7 +192,7 @@ def retirer_doleance(request, equipe_id):
 @user_passes_test(lambda u: u.role == 'ADMIN')
 def get_techniciens_disponibles(request):
     search_query = request.GET.get('search', '')
-    logger.info(f"Recherche de techniciens avec la requête : {search_query}")
+    # logger.info(f"Recherche de techniciens avec la requête : {search_query}")
     # Obtenez d'abord tous les IDs des techniciens déjà affectés
     techniciens_affectes = list(EquipePersonnel.objects.using('teams_db').values_list('personnel_id', flat=True))
 
@@ -211,7 +213,7 @@ def get_techniciens_disponibles(request):
     # logger.info(f"Nombre de techniciens trouvés : {techniciens.count()}")
     # return JsonResponse({'techniciens': list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))})
     techniciens_data = list(techniciens.values('id', 'nom_personnel', 'prenom_personnel'))
-    logger.info(f"Données des techniciens : {techniciens_data}")
+    # logger.info(f"Données des techniciens : {techniciens_data}")
     return JsonResponse({'techniciens': techniciens_data})
 
 

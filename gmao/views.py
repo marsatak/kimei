@@ -74,6 +74,7 @@ from django.views.decorators.cache import cache_control
 from django.db import models
 from django.db.models import Min, Max
 from dateutil.relativedelta import relativedelta
+import logging
 
 # Ajoutez ces imports pour WhatsApp et SMS
 # from twilio.rest import Client
@@ -1417,6 +1418,19 @@ def update_distributeur(request, distributeur_id):
 
 
 @login_required
+@require_http_methods(["POST"])
+def supprimer_distributeur(request, distributeur_id):
+    try:
+        distributeur = AppareilDistribution.objects.get(id=distributeur_id)
+        distributeur.delete()
+        return JsonResponse({'success': True, 'message': 'Distributeur supprimé avec succès'})
+    except AppareilDistribution.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Distributeur non trouvé'}, status=404)
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+
+@login_required
 def get_distributeur(request, distributeur_id):
     try:
         distributeur = AppareilDistribution.objects.get(id=distributeur_id)
@@ -1444,9 +1458,48 @@ def get_distributeur(request, distributeur_id):
         return JsonResponse({'error': 'Distributeur non trouvé'}, status=404)
 
 
+# @login_required
+# def get_appareils_distributeurs_data(request):
+#     appareils = AppareilDistribution.objects.all().select_related('piste__station', 'modele_ad')
+#     data = []
+#     for appareil in appareils:
+#         pistolets = appareil.pistolet_set.all().order_by('orientation')
+#         pistolets_info = [
+#             f"{p.orientation}{index + 1}-{appareil.num_serie}{p.orientation}-{p.produit.code_produit}-{appareil.type_contrat[0]} *{p.date_flexible or 'ILLI'}*"
+#             for index, p in enumerate(pistolets)
+#         ]
+#         appareil_data = {
+#             'id': appareil.id,
+#             'piste': f"{appareil.piste.station.libelle_station} - AD {appareil.face_principal}/{appareil.face_secondaire}",
+#             'modele_ad': str(appareil.modele_ad),
+#             'num_serie': appareil.num_serie,
+#             'type_contrat': appareil.type_contrat,
+#             'pistolets': '<br>'.join(pistolets_info)
+#         }
+#         data.append(appareil_data)
+#     return JsonResponse({"data": data}, safe=False)
 @login_required
 def get_appareils_distributeurs_data(request):
-    appareils = AppareilDistribution.objects.all().select_related('piste__station', 'modele_ad')
+    user = request.user
+
+    if user.role == 'TECH':
+        # Obtenir les doléances du technicien
+        personnel = Personnel.objects.using('kimei_db').get(matricule=user.matricule)
+        equipe = EquipePersonnel.objects.using('teams_db').filter(personnel_id=personnel.id).first()
+
+        if equipe:
+            doleance_ids = DoleanceEquipe.objects.using('teams_db').filter(equipe=equipe.equipe).values_list(
+                'doleance_id', flat=True)
+            doleances = Doleance.objects.using('kimei_db').filter(id__in=doleance_ids)
+            doleances = filter_active_doleances(doleances)
+            station_ids = doleances.values_list('station_id', flat=True).distinct()
+            appareils = AppareilDistribution.objects.filter(piste__station_id__in=station_ids).select_related(
+                'piste__station', 'modele_ad')
+        else:
+            return JsonResponse({"data": []})
+    else:
+        appareils = AppareilDistribution.objects.all().select_related('piste__station', 'modele_ad')
+
     data = []
     for appareil in appareils:
         pistolets = appareil.pistolet_set.all().order_by('orientation')

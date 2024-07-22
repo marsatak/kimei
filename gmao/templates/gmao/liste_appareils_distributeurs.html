@@ -3,16 +3,16 @@
 
 {% block title %}Liste des Appareils Distributeurs{% endblock %}
 
-{% block extra_css %}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-{% endblock %}
-
 {% block content %}
-    <div class="container-fluid mt-4">
-        <h2>Liste des Appareils Distributeurs</h2>
-        <button id="ajouterDistributeurBtn" class="btn btn-primary mb-3">Ajouter un distributeur</button>
-        <table id="appareilsTable" class="table table-striped table-bordered">
-            <thead>
+<div class="container-fluid mt-4">
+    <h2>Liste des Appareils Distributeurs</h2>
+
+    {% if user.role == 'ADMIN' %}
+    <button id="ajouterDistributeur" class="btn btn-primary mb-3">Ajouter un distributeur</button>
+    {% endif %}
+
+    <table id="tableDistributeurs" class="table table-striped table-bordered">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Station - AD</th>
@@ -20,280 +20,257 @@
                 <th>Numéro de série</th>
                 <th>Type de contrat</th>
                 <th>Pistolets</th>
+                {% if user.role == 'ADMIN' %}
                 <th>Actions</th>
+                {% endif %}
             </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
+        </thead>
+        <tbody>
+            <!-- Les données seront chargées ici dynamiquement -->
+        </tbody>
+    </table>
+</div>
 
-    <!-- Modal pour ajouter/modifier un distributeur -->
-    <div id="distributeurModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="distributeurModalLabel">Ajouter/Modifier un distributeur</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="distributeurForm">
-                        {% csrf_token %}
-                        <input type="hidden" id="distributeurId" name="distributeurId">
+{% if user.role == 'ADMIN' %}
+<!-- Modal pour ajouter/modifier un distributeur -->
+<div id="distributeurModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="distributeurModalLabel">Ajouter/Modifier un distributeur</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="distributeurForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="station">Station</label>
+                        <select class="form-control" id="station" required>
+                            <!-- Options seront chargées dynamiquement -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modele">Modèle</label>
+                        <select class="form-control" id="modele" required>
+                            <!-- Options seront chargées dynamiquement -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="numSerie">Numéro de série</label>
+                        <input type="text" class="form-control" id="numSerie" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="typeContrat">Type de contrat</label>
+                        <select class="form-control" id="typeContrat" required>
+                            <option value="Sous Contrat">Sous Contrat</option>
+                            <option value="Hors Contrat">Hors Contrat</option>
+                        </select>
+                    </div>
+                    <div id="faces">
                         <div class="form-group">
-                            <label for="station">Station</label>
-                            <select class="form-control" id="station" name="station" required>
-                                <!-- Options will be loaded dynamically -->
-                            </select>
+                            <label for="facePrincipale">Numéro Face Principale</label>
+                            <input type="number" class="form-control" id="facePrincipale" required>
                         </div>
-                        <div class="form-group">
-                            <label for="modele_ad">Modèle</label>
-                            <select class="form-control" id="modele_ad" name="modele_ad" required>
-                                <!-- Options will be loaded dynamically -->
-                            </select>
+                        <h6>Face Primaire (R)</h6>
+                        <div id="facePrimaireContainer">
+                            <!-- Champs pour les pistolets de la face primaire seront ajoutés ici -->
                         </div>
-                        <div class="form-group">
-                            <label for="num_serie">Numéro de série</label>
-                            <input type="text" class="form-control" id="num_serie" name="num_serie" required>
+                        <button type="button" class="btn btn-secondary" id="ajouterPistoletPrimaire">Ajouter pistolet face primaire</button>
+
+                        <div class="form-group mt-3">
+                            <label for="faceSecondaire">Numéro Face Secondaire</label>
+                            <input type="number" class="form-control" id="faceSecondaire" required>
                         </div>
-                        <div class="form-group">
-                            <label for="type_contrat">Type de contrat</label>
-                            <select class="form-control" id="type_contrat" name="type_contrat" required>
-                                <option value="S">Sous Contrat</option>
-                                <option value="H">Hors Contrat</option>
-                            </select>
+                        <h6 class="mt-3">Face Secondaire (L)</h6>
+                        <div id="faceSecondaireContainer">
+                            <!-- Champs pour les pistolets de la face secondaire seront ajoutés ici -->
                         </div>
-                        <div id="faces">
-                            <div class="form-group">
-                                <label for="face_principal">Numéro Face Principale</label>
-                                <input type="number" class="form-control" id="face_principal" name="face_principal"
-                                       required>
-                            </div>
-                            <h6>Face Primaire (R)</h6>
-                            <div id="facePrimaireContainer"></div>
-                            <button type="button" class="btn btn-secondary" id="addFacePrimaire">Ajouter pistolet face
-                                primaire
-                            </button>
-                            <div class="form-group">
-                                <label for="face_secondaire">Numéro Face Secondaire</label>
-                                <input type="number" class="form-control" id="face_secondaire" name="face_secondaire"
-                                       required>
-                            </div>
-                            <h6 class="mt-3">Face Secondaire (L)</h6>
-                            <div id="faceSecondaireContainer"></div>
-                            <button type="button" class="btn btn-secondary" id="addFaceSecondaire">Ajouter pistolet face
-                                secondaire
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" id="saveDistributeur">Enregistrer</button>
-                </div>
+                        <button type="button" class="btn btn-secondary" id="ajouterPistoletSecondaire">Ajouter pistolet face secondaire</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" id="sauvegarderDistributeur">Enregistrer</button>
             </div>
         </div>
     </div>
+</div>
+{% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            const table = $('#appareilsTable').DataTable({
-                "ajax": {
-                    "url": "{% url 'gmao:get_appareils_distributeurs_data' %}",
-                    "dataSrc": "data"
-                },
-                "columns": [
-                    {"data": "id"},
-                    {"data": "piste"},
-                    {"data": "modele_ad"},
-                    {"data": "num_serie"},
-                    {"data": "type_contrat"},
-                    {"data": "pistolets"},
-                    {
-                        "data": null,
-                        "render": function (data, type, row) {
-                            return '<button class="btn btn-sm btn-warning edit-distributeur" data-id="' + row.id + '">Modifier</button>';
-                        }
-                    }
-                ],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
-                }
-            });
-            let productsLoaded = false;
-            let products = [];
-            let faceCounter = {R: 0, L: 0};
-
-            function loadAllProducts() {
-                return new Promise((resolve, reject) => {
-                    if (productsLoaded) {
-                        resolve(products);
-                    } else {
-                        $.get("{% url 'gmao:get_produits' %}", function(data) {
-                            products = data;
-                            productsLoaded = true;
-                            resolve(products);
-                        }).fail(reject);
-                    }
-                });
-            }
-
-            function loadDistributeurData(distributeurId) {
-                $.get("{% url 'gmao:get_distributeur' 0 %}".replace('0', distributeurId), function(data) {
-                    $('#distributeurModalLabel').text('Modifier un distributeur');
-                    $('#distributeurId').val(data.id);
-                    $('#station').val(data.station);
-                    $('#modele_ad').val(data.modele_ad);
-                    $('#num_serie').val(data.num_serie);
-                    $('#type_contrat').val(data.type_contrat);
-                    $('#face_principal').val(data.face_principal);
-                    $('#face_secondaire').val(data.face_secondaire);
-
-                    $('#facePrimaireContainer').empty();
-                    $('#faceSecondaireContainer').empty();
-                    faceCounter = {R: 0, L: 0};
-
-                    loadAllProducts().then(() => {
-                        data.pistolets.forEach(function(pistolet) {
-                            addFaceField(pistolet.orientation[0], pistolet);
-                        });
-                    });
-
-                    $('#distributeurModal').modal('show');
-                });
-            }
-
-            function addFaceField(face, pistolet = null) {
-                const index = ++faceCounter[face];
-                const container = face === 'R' ? '#facePrimaireContainer' : '#faceSecondaireContainer';
-                const faceHtml = `
-                    <div class="face-group mb-3">
-                        <h6>${face}${index}</h6>
-                        <div class="form-row">
-                            <div class="col">
-                                <label>Produit</label>
-                                <select class="form-control" name="faces[${face}${index}][produit]" required>
-                                    <option value="">Sélectionnez un produit</option>
-                                    ${products.map(p => `<option value="${p.id}">${p.nom_produit}</option>`).join('')}
-                                </select>
-                            </div>
-                            <div class="col">
-                                <label>Date flexible</label>
-                                <input type="text" class="form-control" name="faces[${face}${index}][date_flexible]" placeholder="ex: 1Q15">
-                            </div>
-                            <div class="col">
-                                <label>&nbsp;</label>
-                                <button type="button" class="btn btn-danger form-control remove-face">Supprimer</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                $(container).append(faceHtml);
-
-                if (pistolet) {
-                    const $lastFace = $(`${container} .face-group`).last();
-                    $lastFace.find(`select[name="faces[${face}${index}][produit]"]`).val(pistolet.produit);
-                    $lastFace.find(`input[name="faces[${face}${index}][date_flexible]"]`).val(pistolet.date_flexible);
+<script>
+$(document).ready(function() {
+    const table = $('#tableDistributeurs').DataTable({
+        ajax: {
+            url: "{% url 'gmao:get_appareils_distributeurs_data' %}",
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: 'id' },
+            { data: 'piste' },
+            { data: 'modele_ad' },
+            { data: 'num_serie' },
+            { data: 'type_contrat' },
+            { data: 'pistolets' },
+            {% if user.role == 'ADMIN' %}
+            {
+                data: null,
+                render: function(data, type, row) {
+                    return '<button class="btn btn-sm btn-warning edit-distributeur" data-id="' + row.id + '">Modifier</button> ' +
+                           '<button class="btn btn-sm btn-danger delete-distributeur" data-id="' + row.id + '">Supprimer</button>';
                 }
             }
+            {% endif %}
+        ]
+    });
 
-            $('#ajouterDistributeurBtn').click(function() {
-                $('#distributeurModalLabel').text('Ajouter un distributeur');
-                $('#distributeurForm')[0].reset();
-                $('#distributeurId').val('');
-                $('#facePrimaireContainer').empty();
-                $('#faceSecondaireContainer').empty();
-                faceCounter = {R: 0, L: 0};
-                loadAllProducts().then(() => {
-                    $('#distributeurModal').modal('show');
-                });
-            });
+    {% if user.role == 'ADMIN' %}
+    // Chargement des stations et modèles pour le formulaire
+    $.get("{% url 'gmao:get_stations' %}", function(data) {
+        $('#station').html(data.map(station => `<option value="${station.id}">${station.libelle_station}</option>`).join(''));
+    });
 
-            $('#addFacePrimaire').click(function() {
-                addFaceField('R');
-            });
+    $.get("{% url 'gmao:get_modeles_ad' %}", function(data) {
+        $('#modele').html(data.map(modele => `<option value="${modele.id}">${modele.libelle_modele}</option>`).join(''));
+    });
 
-            $('#addFaceSecondaire').click(function() {
-                addFaceField('L');
-            });
+    // Fonction pour ajouter un champ de pistolet
+    function ajouterChampPistolet(containerId, orientation) {
+        const newField = `
+            <div class="form-row pistolet-row">
+                <div class="col">
+                    <select class="form-control produit" required>
+                        <!-- Options seront chargées dynamiquement -->
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="date" class="form-control date-flexible">
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-danger btn-sm remove-pistolet">Supprimer</button>
+                </div>
+            </div>
+        `;
+        $(`#${containerId}`).append(newField);
 
-            $(document).on('click', '.remove-face', function() {
-                const faceGroup = $(this).closest('.face-group');
-                const face = faceGroup.find('h6').text()[0]; // R ou L
-                faceGroup.remove();
-                updateFaceIndexes(face);
-            });
+        // Charger les produits pour le nouveau champ
+        $.get("{% url 'gmao:get_produits' %}", function(data) {
+            $(`#${containerId} .produit:last`).html(data.map(produit => `<option value="${produit.id}">${produit.nom_produit}</option>`).join(''));
+        });
+    }
 
-            function updateFaceIndexes(face) {
-                const container = face === 'R' ? '#facePrimaireContainer' : '#faceSecondaireContainer';
-                $(container).find('.face-group').each(function(index) {
-                    const newIndex = index + 1;
-                    $(this).find('h6').text(`${face}${newIndex}`);
-                    $(this).find('select, input').each(function() {
-                        const name = $(this).attr('name');
-                        const newName = name.replace(/faces\[([RL])\d+]/, `faces[${face}${newIndex}]`);
-                        $(this).attr('name', newName);
-                    });
-                });
-                faceCounter[face] = $(container).find('.face-group').length;
+    $('#ajouterPistoletPrimaire').click(() => ajouterChampPistolet('facePrimaireContainer', 'R'));
+    $('#ajouterPistoletSecondaire').click(() => ajouterChampPistolet('faceSecondaireContainer', 'L'));
+
+    $(document).on('click', '.remove-pistolet', function() {
+        $(this).closest('.pistolet-row').remove();
+    });
+
+    // Gérer l'ajout d'un nouveau distributeur
+    $('#ajouterDistributeur').click(function() {
+        $('#distributeurForm')[0].reset();
+        $('#distributeurModal').modal('show');
+    });
+
+    // Sauvegarder le distributeur
+    $('#sauvegarderDistributeur').click(function() {
+        const formData = {
+            station: $('#station').val(),
+            modele_ad: $('#modele').val(),
+            num_serie: $('#numSerie').val(),
+            type_contrat: $('#typeContrat').val(),
+            face_principal: $('#facePrincipale').val(),
+            face_secondaire: $('#faceSecondaire').val(),
+            faces: {
+                R: [],
+                L: []
             }
+        };
 
-            function loadStations() {
-                $.get("{% url 'gmao:get_stations' %}", function (data) {
-                    let options = '<option value="">Sélectionnez une station</option>';
-                    data.forEach(function (station) {
-                        options += `<option value="${station.id}">${station.libelle_station}</option>`;
-                    });
-                    $('#station').html(options);
-                });
-            }
-
-            function loadModeles() {
-                $.get("{% url 'gmao:get_modeles_ad' %}", function (data) {
-                    let options = '<option value="">Sélectionnez un modèle</option>';
-                    data.forEach(function (modele) {
-                        options += `<option value="${modele.id}">${modele.libelle_modele}</option>`;
-                    });
-                    $('#modele_ad').html(options);
-                });
-            }
-
-            loadStations();
-            loadModeles();
-
-            $('#appareilsTable').on('click', '.edit-distributeur', function () {
-                const distributeurId = $(this).data('id');
-                loadDistributeurData(distributeurId);
-            });
-            $('#saveDistributeur').click(function () {
-                const formData = new FormData($('#distributeurForm')[0]);
-                const distributeurId = $('#distributeurId').val();
-                const url = distributeurId ? "{% url 'gmao:update_distributeur' 0 %}".replace('0', distributeurId) : "{% url 'gmao:ajouter_distributeur' %}";
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        if (response.success) {
-                            $('#distributeurModal').modal('hide');
-                            table.ajax.reload();
-                        } else {
-                            alert('Erreur : ' + response.message);
-                        }
-                    },
-                    error: function () {
-                        alert('Une erreur est survenue');
-                    }
-                });
+        $('#facePrimaireContainer .pistolet-row').each(function() {
+            formData.faces.R.push({
+                produit: $(this).find('.produit').val(),
+                date_flexible: $(this).find('.date-flexible').val()
             });
         });
-    </script>
+
+        $('#faceSecondaireContainer .pistolet-row').each(function() {
+            formData.faces.L.push({
+                produit: $(this).find('.produit').val(),
+                date_flexible: $(this).find('.date-flexible').val()
+            });
+        });
+
+        $.ajax({
+            url: "{% url 'gmao:ajouter_distributeur' %}",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                if (response.success) {
+                    $('#distributeurModal').modal('hide');
+                    table.ajax.reload();
+                } else {
+                    alert('Erreur : ' + response.message);
+                }
+            },
+            error: function() {
+                alert('Une erreur est survenue lors de la sauvegarde.');
+            }
+        });
+    });
+
+    // Gérer la modification d'un distributeur
+    $('#tableDistributeurs').on('click', '.edit-distributeur', function() {
+        const id = $(this).data('id');
+        $.get("{% url 'gmao:get_distributeur' 0 %}".replace('0', id), function(data) {
+            $('#station').val(data.station);
+            $('#modele').val(data.modele_ad);
+            $('#numSerie').val(data.num_serie);
+            $('#typeContrat').val(data.type_contrat);
+            $('#facePrincipale').val(data.face_principal);
+            $('#faceSecondaire').val(data.face_secondaire);
+
+            $('#facePrimaireContainer').empty();
+            $('#faceSecondaireContainer').empty();
+
+            data.pistolets.forEach(function(pistolet) {
+                const containerId = pistolet.orientation === 'R' ? 'facePrimaireContainer' : 'faceSecondaireContainer';
+                ajouterChampPistolet(containerId, pistolet.orientation);
+                $(`#${containerId} .pistolet-row:last .produit`).val(pistolet.produit);
+                $(`#${containerId} .pistolet-row:last .date-flexible`).val(pistolet.date_flexible);
+            });
+
+            $('#distributeurModal').modal('show');
+        });
+    });
+
+    // Gérer la suppression d'un distributeur
+    $('#tableDistributeurs').on('click', '.delete-distributeur', function() {
+        const id = $(this).data('id');
+        if (confirm('Êtes-vous sûr de vouloir supprimer ce distributeur ?')) {
+            $.ajax({
+                url: "{% url 'gmao:supprimer_distributeur' 0 %}".replace('0', id),
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        table.ajax.reload();
+                    } else {
+                        alert('Erreur : ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('Une erreur est survenue lors de la suppression.');
+                }
+            });
+        }
+    });
+    {% endif %}
+});
+</script>
 {% endblock %}
