@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha All doléances AD">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -241,15 +242,7 @@
       <workItem from="1721533009970" duration="33870000" />
       <workItem from="1721640303294" duration="235000" />
       <workItem from="1721655491981" duration="2025000" />
-      <workItem from="1721671132183" duration="3849000" />
-    </task>
-    <task id="LOCAL-00214" summary="Version Alpha">
-      <option name="closed" value="true" />
-      <created>1721139164638</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1721139164639</updated>
+      <workItem from="1721671132183" duration="4135000" />
     </task>
     <task id="LOCAL-00215" summary="Version Alpha">
       <option name="closed" value="true" />
@@ -635,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721675141480</updated>
     </task>
-    <option name="localTasksCounter" value="263" />
+    <task id="LOCAL-00263" summary="Version Alpha All doléances AD">
+      <option name="closed" value="true" />
+      <created>1721675405019</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1721675405019</updated>
+    </task>
+    <option name="localTasksCounter" value="264" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
