@@ -1458,26 +1458,6 @@ def get_distributeur(request, distributeur_id):
         return JsonResponse({'error': 'Distributeur non trouvé'}, status=404)
 
 
-# @login_required
-# def get_appareils_distributeurs_data(request):
-#     appareils = AppareilDistribution.objects.all().select_related('piste__station', 'modele_ad')
-#     data = []
-#     for appareil in appareils:
-#         pistolets = appareil.pistolet_set.all().order_by('orientation')
-#         pistolets_info = [
-#             f"{p.orientation}{index + 1}-{appareil.num_serie}{p.orientation}-{p.produit.code_produit}-{appareil.type_contrat[0]} *{p.date_flexible or 'ILLI'}*"
-#             for index, p in enumerate(pistolets)
-#         ]
-#         appareil_data = {
-#             'id': appareil.id,
-#             'piste': f"{appareil.piste.station.libelle_station} - AD {appareil.face_principal}/{appareil.face_secondaire}",
-#             'modele_ad': str(appareil.modele_ad),
-#             'num_serie': appareil.num_serie,
-#             'type_contrat': appareil.type_contrat,
-#             'pistolets': '<br>'.join(pistolets_info)
-#         }
-#         data.append(appareil_data)
-#     return JsonResponse({"data": data}, safe=False)
 @login_required
 def get_appareils_distributeurs_data(request):
     user = request.user
@@ -1510,7 +1490,7 @@ def get_appareils_distributeurs_data(request):
     for appareil in appareils:
         pistolets = appareil.pistolet_set.all().order_by('orientation')
         pistolets_info = [
-            f"{p.orientation}{index + 1}-{appareil.num_serie}{p.orientation}-{p.produit.code_produit}-{appareil.type_contrat[0]} *{p.date_flexible or 'ILLI'}*"
+            f"{appareil.num_serie}{p.orientation}-{p.produit.code_produit}-{appareil.type_contrat[0]} *{p.date_flexible or 'ILLI'}*"
             for index, p in enumerate(pistolets)
         ]
         appareil_data = {
