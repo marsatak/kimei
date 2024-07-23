@@ -1,6 +1,5 @@
-
 body {
-    padding-top: 56px; /* Ajustez cette valeur selon la hauteur de votre navbar */
+    padding-top: 56px; /* Remettons cette valeur */
 }
 
 .fixed-top {
@@ -9,18 +8,9 @@ body {
     right: 0;
     left: 0;
     z-index: 1030;
-}
-
-.fixed-top {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
 }
 
-/* Pour s'assurer que le contenu ne soit pas caché sous la navbar fixe */
-.container-fluid {
-    padding-top: 70px;
-}
-
-/* Ajuster le footer pour qu'il reste en bas */
 html, body {
     height: 100%;
 }
@@ -39,4 +29,4 @@ html, body {
     flex-shrink: 0;
 }
 
-/* ... autres styles ... */
+/* Autres styles personnalisés */
