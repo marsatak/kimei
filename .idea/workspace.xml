@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha Navbar avec équipements">
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,15 +242,7 @@
       <workItem from="1721640303294" duration="235000" />
       <workItem from="1721655491981" duration="2025000" />
       <workItem from="1721671132183" duration="7355000" />
-      <workItem from="1721753261192" duration="4506000" />
-    </task>
-    <task id="LOCAL-00231" summary="Version Alpha Autocapitalize input">
-      <option name="closed" value="true" />
-      <created>1721463838950</created>
-      <option name="number" value="00231" />
-      <option name="presentableId" value="LOCAL-00231" />
-      <option name="project" value="LOCAL" />
-      <updated>1721463838951</updated>
+      <workItem from="1721753261192" duration="5202000" />
     </task>
     <task id="LOCAL-00232" summary="Version Alpha All doléances">
       <option name="closed" value="true" />
@@ -636,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721757751089</updated>
     </task>
-    <option name="localTasksCounter" value="280" />
+    <task id="LOCAL-00280" summary="Version Alpha Navbar avec équipements">
+      <option name="closed" value="true" />
+      <created>1721758094815</created>
+      <option name="number" value="00280" />
+      <option name="presentableId" value="LOCAL-00280" />
+      <option name="project" value="LOCAL" />
+      <updated>1721758094815</updated>
+    </task>
+    <option name="localTasksCounter" value="281" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
