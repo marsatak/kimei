@@ -123,36 +123,6 @@ WSGI_APPLICATION = 'kimei.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.dummy',
-#
-#     },
-#     'auth_db': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'auth_db_name',
-#         'USER': 'Daniel',
-#         'PASSWORD': 'Mei*2030',
-#         'HOST': 'kimei.softether.net',
-#     },
-#     'kimei_db': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'testkimei',
-#         'USER': 'Daniel',
-#         'PASSWORD': 'Mei*2030',
-#         'HOST': 'kimei.softether.net',
-#
-#         #        'HOST': 'localhostt',
-#     },
-#     'teams_db': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'teams',
-#         'USER': 'Daniel',
-#         'PASSWORD': 'Mei*2030',
-#         'HOST': 'kimei.softether.net',
-#         # 'HOST': 'kimei.softether.net',
-#     },
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.dummy',
@@ -161,27 +131,57 @@ DATABASES = {
     'auth_db': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'auth_db_name',
-        'USER': 'root',
-        'PASSWORD': 'Mei*2080',
-        'HOST': 'localhost',
+        'USER': 'Daniel',
+        'PASSWORD': 'Mei*2030',
+        'HOST': 'kimei.softether.net',
     },
     'kimei_db': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'testkimei',
-        'USER': 'root',
-        'PASSWORD': 'Mei*2080',
-        'HOST': 'localhost',
+        'USER': 'Daniel',
+        'PASSWORD': 'Mei*2030',
+        'HOST': 'kimei.softether.net',
 
         #        'HOST': 'localhostt',
     },
     'teams_db': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'teams',
-        'USER': 'root',
-        'PASSWORD': 'Mei*2080',
-        'HOST': 'localhost',
+        'USER': 'Daniel',
+        'PASSWORD': 'Mei*2030',
+        'HOST': 'kimei.softether.net',
+        # 'HOST': 'kimei.softether.net',
     },
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.dummy',
+#
+#     },
+#     'auth_db': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'auth_db_name',
+#         'USER': 'root',
+#         'PASSWORD': 'Mei*2080',
+#         'HOST': 'localhost',
+#     },
+#     'kimei_db': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'testkimei',
+#         'USER': 'root',
+#         'PASSWORD': 'Mei*2080',
+#         'HOST': 'localhost',
+#
+#         #        'HOST': 'localhostt',
+#     },
+#     'teams_db': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'teams',
+#         'USER': 'root',
+#         'PASSWORD': 'Mei*2080',
+#         'HOST': 'localhost',
+#     },
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
