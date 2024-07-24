@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha Navbar avec équipements">
+    <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha Navbar avec équipements AD">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao_teams/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -242,15 +244,8 @@
       <workItem from="1721640303294" duration="235000" />
       <workItem from="1721655491981" duration="2025000" />
       <workItem from="1721671132183" duration="7355000" />
-      <workItem from="1721753261192" duration="5202000" />
-    </task>
-    <task id="LOCAL-00232" summary="Version Alpha All doléances">
-      <option name="closed" value="true" />
-      <created>1721473134405</created>
-      <option name="number" value="00232" />
-      <option name="presentableId" value="LOCAL-00232" />
-      <option name="project" value="LOCAL" />
-      <updated>1721473134406</updated>
+      <workItem from="1721753261192" duration="7732000" />
+      <workItem from="1721806510928" duration="1807000" />
     </task>
     <task id="LOCAL-00233" summary="Version Alpha All doléances">
       <option name="closed" value="true" />
@@ -636,7 +631,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721758094815</updated>
     </task>
-    <option name="localTasksCounter" value="281" />
+    <task id="LOCAL-00281" summary="Version Alpha Navbar avec équipements AD">
+      <option name="closed" value="true" />
+      <created>1721758935011</created>
+      <option name="number" value="00281" />
+      <option name="presentableId" value="LOCAL-00281" />
+      <option name="project" value="LOCAL" />
+      <updated>1721758935011</updated>
+    </task>
+    <option name="localTasksCounter" value="282" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -663,7 +666,8 @@
     <MESSAGE value="Version Alpha All doléances AD" />
     <MESSAGE value="Version Alpha Navbar sans équipements" />
     <MESSAGE value="Version Alpha Navbar avec équipements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version Alpha Navbar avec équipements" />
+    <MESSAGE value="Version Alpha Navbar avec équipements AD" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version Alpha Navbar avec équipements AD" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/kimei$Daphne.coverage" NAME="Daphne Coverage Results" MODIFIED="1719644698145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

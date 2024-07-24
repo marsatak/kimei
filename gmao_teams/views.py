@@ -228,10 +228,11 @@ def get_doleances_non_attribuees(request):
     # Ensuite, sélectionnez les doléances qui ne sont pas dans cette liste
     doleances = (Doleance.objects.using('kimei_db')
                  .filter(
-        Q(id__in=doleances_attribuees, statut__in=['ATP', 'ATD'], intervention__top_terminer__date=today) |
+        Q(id__in=doleances_attribuees, statut__in=['ATP', 'ATD']) |
         ~Q(id__in=doleances_attribuees)
     )
-                 .exclude(statut='TER'))
+                 .exclude(statut='TER')
+                 .distinct())
 
     # Appliquer le filtre de recherche
     if search_query:
