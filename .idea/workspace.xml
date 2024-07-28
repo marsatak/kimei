@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha Filtre Add_update AD">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/liste_appareils_distributeurs.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,15 +247,7 @@
       <workItem from="1721848239054" duration="417000" />
       <workItem from="1721972624382" duration="609000" />
       <workItem from="1722012037310" duration="464000" />
-      <workItem from="1722176905628" duration="8364000" />
-    </task>
-    <task id="LOCAL-00235" summary="Version Alpha All doléances">
-      <option name="closed" value="true" />
-      <created>1721473832173</created>
-      <option name="number" value="00235" />
-      <option name="presentableId" value="LOCAL-00235" />
-      <option name="project" value="LOCAL" />
-      <updated>1721473832173</updated>
+      <workItem from="1722176905628" duration="9187000" />
     </task>
     <task id="LOCAL-00236" summary="Version Alpha All doléances">
       <option name="closed" value="true" />
@@ -643,7 +633,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722184823725</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <task id="LOCAL-00284" summary="Version Alpha Filtre Add_update AD">
+      <option name="closed" value="true" />
+      <created>1722186595802</created>
+      <option name="number" value="00284" />
+      <option name="presentableId" value="LOCAL-00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1722186595802</updated>
+    </task>
+    <option name="localTasksCounter" value="285" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
