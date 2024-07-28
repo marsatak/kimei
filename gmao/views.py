@@ -1431,8 +1431,17 @@ def update_distributeur(request, distributeur_id):
         distributeur.modele_ad = ModeleAd.objects.get(id=data['modele_ad'])
         distributeur.num_serie = data['num_serie']
         distributeur.type_contrat = type_contrat
-        distributeur.face_principal = data['face_principal']
-        distributeur.face_secondaire = data['face_secondaire']
+
+        face_principal = data.get('face_principal')
+        face_secondaire = data.get('face_secondaire')
+
+        distributeur.face_principal = int(face_principal) if face_principal else None
+        distributeur.face_secondaire = int(face_secondaire) if face_secondaire else None
+
+        if 'annee_installation' in data:
+            distributeur.annee_installation = data['annee_installation']
+        if 'is_face_unique' in data:
+            distributeur.is_face_unique = data['is_face_unique']
         distributeur.save()
 
         # Supprimer les anciens pistolets
@@ -1445,7 +1454,8 @@ def update_distributeur(request, distributeur_id):
                 appareil_distribution=distributeur,
                 orientation=face[0],  # R ou L
                 produit_id=pistolet_data['produit'],
-                date_flexible=pistolet_data.get('date_flexible', '')
+                date_flexible=pistolet_data.get('date_flexible', ''),
+                type_contrat=type_contrat
             )
 
         return JsonResponse({'success': True, 'message': 'Distributeur mis à jour avec succès'})

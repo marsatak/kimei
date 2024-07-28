@@ -272,30 +272,6 @@
                 const distributeurId = $(this).data('id');
                 loadDistributeurData(distributeurId);
             });
-            {% comment %}$('#saveDistributeur').click(function () {
-                const formData = new FormData($('#distributeurForm')[0]);
-                const distributeurId = $('#distributeurId').val();
-                const url = distributeurId ? "{% url 'gmao:update_distributeur' 0 %}".replace('0', distributeurId) : "{% url 'gmao:ajouter_distributeur' %}";
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        if (response.success) {
-                            $('#distributeurModal').modal('hide');
-                            table.ajax.reload();
-                        } else {
-                            alert('Erreur : ' + response.message);
-                        }
-                    },
-                    error: function () {
-                        alert('Une erreur est survenue');
-                    }
-                });
-            });{% endcomment %}
             $('#saveDistributeur').click(function () {
                 const distributeurId = $('#distributeurId').val();
                 const url = distributeurId ? "{% url 'gmao:update_distributeur' 0 %}".replace('0', distributeurId) : "{% url 'gmao:ajouter_distributeur' %}";
