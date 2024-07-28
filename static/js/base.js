@@ -25,6 +25,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 openDropdown.classList.remove('show');
             });
         }
+        var equipmentsDropdownToggle = document.getElementById('navbarDropdownEquipements');
+
+        if (equipmentsDropdownToggle) {
+            equipmentsDropdownToggle.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                equipmentsDropdown.classList.toggle('show');
+            });
+        }
     });
 
     // Assurer la fermeture des autres dropdowns lorsqu'on utilise le bouton hamburger

@@ -1354,19 +1354,36 @@ def liste_appareils_distributeurs(request):
     return render(request, 'gmao/liste_appareils_distributeurs.html')
 
 
+@csrf_exempt
 @login_required
 @require_http_methods(["POST"])
 def ajouter_distributeur(request):
     try:
-        data = json.loads(request.body)
+
+        print("Raw request body:", request.body)
+
+        data = json.loads(request.body.decode('utf-8'))
         station = Station.objects.get(id=data['station'])
         modele_ad = ModeleAd.objects.get(id=data['modele_ad'])
 
+        piste = Piste.objects.get(station=station)
+
+        type_contrat = data.get('type_contrat', 'Sous Contrat')
+
+        if type_contrat == 'Sous Contrat':
+            type_contrat = 'S'
+        elif type_contrat == 'Hors Contrat':
+            type_contrat = 'H'
+        else:
+            type_contrat = 'S'
+
+        print("Parsed JSON data:", data)
+
         distributeur = AppareilDistribution.objects.create(
-            piste=station.piste_set.first(),
+            piste=piste,
             modele_ad=modele_ad,
             num_serie=data['num_serie'],
-            type_contrat=data['type_contrat'],
+            type_contrat=type_contrat,
             face_principal=data['face_principal'],
             face_secondaire=data['face_secondaire']
         )
@@ -1381,20 +1398,39 @@ def ajouter_distributeur(request):
             )
 
         return JsonResponse({'success': True, 'message': 'Distributeur ajouté avec succès'})
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'message': 'Données JSON invalides'})
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
 
 
+@csrf_exempt
 @login_required
 @require_http_methods(["POST"])
 def update_distributeur(request, distributeur_id):
     try:
-        data = json.loads(request.body)
+        data = json.loads(request.body.decode('utf-8'))
+
         distributeur = AppareilDistribution.objects.get(id=distributeur_id)
-        distributeur.piste = Station.objects.get(id=data['station']).piste_set.first()
+        station = Station.objects.get(id=data['station'])
+
+        try:
+            piste = Piste.objects.get(station=station)
+        except Piste.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'La station sélectionnée n\'a pas de piste associée'})
+
+        type_contrat_frontend = data.get('type_contrat')
+        if type_contrat_frontend == 'Sous Contrat':
+            type_contrat = 'S'
+        elif type_contrat_frontend == 'Hors Contrat':
+            type_contrat = 'H'
+        else:
+            type_contrat = 'S'
+
+        distributeur.piste = piste
         distributeur.modele_ad = ModeleAd.objects.get(id=data['modele_ad'])
         distributeur.num_serie = data['num_serie']
-        distributeur.type_contrat = data['type_contrat']
+        distributeur.type_contrat = type_contrat
         distributeur.face_principal = data['face_principal']
         distributeur.face_secondaire = data['face_secondaire']
         distributeur.save()

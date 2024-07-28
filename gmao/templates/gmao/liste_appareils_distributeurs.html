@@ -272,7 +272,7 @@
                 const distributeurId = $(this).data('id');
                 loadDistributeurData(distributeurId);
             });
-            $('#saveDistributeur').click(function () {
+            {% comment %}$('#saveDistributeur').click(function () {
                 const formData = new FormData($('#distributeurForm')[0]);
                 const distributeurId = $('#distributeurId').val();
                 const url = distributeurId ? "{% url 'gmao:update_distributeur' 0 %}".replace('0', distributeurId) : "{% url 'gmao:ajouter_distributeur' %}";
@@ -292,6 +292,53 @@
                         }
                     },
                     error: function () {
+                        alert('Une erreur est survenue');
+                    }
+                });
+            });{% endcomment %}
+            $('#saveDistributeur').click(function () {
+                const distributeurId = $('#distributeurId').val();
+                const url = distributeurId ? "{% url 'gmao:update_distributeur' 0 %}".replace('0', distributeurId) : "{% url 'gmao:ajouter_distributeur' %}";
+
+                // Collecter les données du formulaire
+                const formData = {
+                    station: $('#station').val(),
+                    modele_ad: $('#modele_ad').val(),
+                    num_serie: $('#num_serie').val(),
+                    type_contrat: $('input[name="type_contrat"]:checked').val(),
+                    face_principal: $('#face_principal').val(),
+                    face_secondaire: $('#face_secondaire').val(),
+                    faces: {}
+                };
+
+                // Collecter les données des pistolets
+                $('.face-group').each(function() {
+                    const faceKey = $(this).find('h6').text();
+                    formData.faces[faceKey] = {
+                        produit: $(this).find('select[name^="faces"]').val(),
+                        date_flexible: $(this).find('input[name^="faces"]').val()
+                    };
+                });
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#distributeurModal').modal('hide');
+                            table.ajax.reload();
+                        } else {
+                            alert('Erreur : ' + response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Erreur AJAX:', error);
+                        console.error('Réponse du serveur:', xhr.responseText);
                         alert('Une erreur est survenue');
                     }
                 });
