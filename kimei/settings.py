@@ -76,6 +76,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
 }
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
@@ -205,7 +206,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr-fr'
 
-TIME_ZONE = 'Indian/Antananarivo'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
