@@ -56,6 +56,8 @@ urlpatterns = [
     path('update-distributeur/<int:distributeur_id>/', views.update_distributeur, name='update_distributeur'),
     path('supprimer-distributeur/<int:distributeur_id>/', views.supprimer_distributeur, name='supprimer_distributeur'),
     path('get-distributeur/<int:distributeur_id>/', views.get_distributeur, name='get_distributeur'),
+
+    path('liste-cuves/', views.liste_cuves, name='liste_cuves'),
     path('get-stations/', views.get_stations, name='get_stations'),
     path('get-modeles-ad/', views.get_modeles_ad, name='get_modeles_ad'),
     path('get-produits/', views.get_produits, name='get_produits'),

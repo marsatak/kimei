@@ -1348,6 +1348,7 @@ def get_pieces_data(request):
 
 
 # #####################Début Ajout éléments ######################
+#### DEBUT AD ####
 
 @login_required
 def liste_appareils_distributeurs(request):
@@ -1550,6 +1551,17 @@ def get_appareils_distributeurs_data(request):
         data.append(appareil_data)
     return JsonResponse({"data": data}, safe=False)
 
+
+#### FIN AD ####
+
+#### DEBUT CUVE ####
+
+@login_required
+def liste_cuves(request):
+    return render(request, 'gmao/liste_cuves.html')
+
+
+#### FIN CUVE ####
 
 @login_required
 def get_stations(request):
