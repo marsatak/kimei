@@ -1071,7 +1071,7 @@ def get_interventions_data(request):
                 'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
                 'element': intervention.doleance.element if intervention.doleance else '',
                 'panne': intervention.doleance.panne_declarer if intervention.doleance else '',
-                'statut': intervention.doleance.statut if intervention.doleance else '',
+                'statut': intervention.etat_doleance if intervention.etat_doleance else '',
                 'resolution': intervention.resolution if intervention.resolution else '',
                 'date_transmission': intervention.doleance.date_transmission.strftime('%d/%m/%Y %H:%M')
                 if intervention.doleance.date_transmission else '',
