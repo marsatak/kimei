@@ -124,36 +124,6 @@ WSGI_APPLICATION = 'kimei.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.dummy',
-#
-#     },
-#     'auth_db': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'auth_db_name',
-#         'USER': 'Daniel',
-#         'PASSWORD': 'Mei*2030',
-#         'HOST': 'kimei.softether.net',
-#     },
-#     'kimei_db': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'fastmei',
-#         'USER': 'Daniel',
-#         'PASSWORD': 'Mei*2030',
-#         'HOST': 'kimei.softether.net',
-#
-#         #        'HOST': 'localhostt',
-#     },
-#     'teams_db': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'teams',
-#         'USER': 'Daniel',
-#         'PASSWORD': 'Mei*2030',
-#         'HOST': 'kimei.softether.net',
-#         # 'HOST': 'kimei.softether.net',
-#     },
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.dummy',
@@ -168,10 +138,10 @@ DATABASES = {
     },
     'kimei_db': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mei',
-        'USER': 'root',
-        # 'PASSWORD': 'Mei*2030',
-        'HOST': '192.168.30.41',
+        'NAME': 'fastmei',
+        'USER': 'Daniel',
+        'PASSWORD': 'Mei*2030',
+        'HOST': 'kimei.softether.net',
 
         #        'HOST': 'localhostt',
     },
@@ -184,6 +154,36 @@ DATABASES = {
         # 'HOST': 'kimei.softether.net',
     },
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.dummy',
+#
+#     },
+#     'auth_db': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'auth_db_name',
+#         'USER': 'Daniel',
+#         'PASSWORD': 'Mei*2030',
+#         'HOST': 'kimei.softether.net',
+#     },
+#     'kimei_db': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mei',
+#         'USER': 'root',
+#         # 'PASSWORD': 'Mei*2030',
+#         'HOST': '192.168.30.41',
+#
+#         #        'HOST': 'localhostt',
+#     },
+#     'teams_db': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'teams',
+#         'USER': 'Daniel',
+#         'PASSWORD': 'Mei*2030',
+#         'HOST': 'kimei.softether.net',
+#         # 'HOST': 'kimei.softether.net',
+#     },
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.dummy',

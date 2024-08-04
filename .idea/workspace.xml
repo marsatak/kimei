@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha List_intervention_display">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -259,15 +258,7 @@
       <workItem from="1722703615788" duration="1623000" />
       <workItem from="1722708028455" duration="12000" />
       <workItem from="1722708103432" duration="1491000" />
-      <workItem from="1722744944291" duration="1786000" />
-    </task>
-    <task id="LOCAL-00240" summary="Version Alpha All doléances">
-      <option name="closed" value="true" />
-      <created>1721494127224</created>
-      <option name="number" value="00240" />
-      <option name="presentableId" value="LOCAL-00240" />
-      <option name="project" value="LOCAL" />
-      <updated>1721494127224</updated>
+      <workItem from="1722744944291" duration="1968000" />
     </task>
     <task id="LOCAL-00241" summary="Version Alpha All doléances">
       <option name="closed" value="true" />
@@ -653,7 +644,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722709587797</updated>
     </task>
-    <option name="localTasksCounter" value="289" />
+    <task id="LOCAL-00289" summary="Version Alpha List_intervention_display">
+      <option name="closed" value="true" />
+      <created>1722746795943</created>
+      <option name="number" value="00289" />
+      <option name="presentableId" value="LOCAL-00289" />
+      <option name="project" value="LOCAL" />
+      <updated>1722746795951</updated>
+    </task>
+    <option name="localTasksCounter" value="290" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
