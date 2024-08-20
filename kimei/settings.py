@@ -138,7 +138,7 @@ DATABASES = {
     },
     'kimei_db': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fastmei',
+        'NAME': 'i2e',
         'USER': 'Daniel',
         'PASSWORD': 'Mei*2030',
         'HOST': 'kimei.softether.net',
