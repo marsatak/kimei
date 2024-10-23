@@ -11,6 +11,7 @@ $(document).ready(function () {
             });
         });
     });
+    p
 
     function offsetAnchor() {
         if (location.hash.length !== 0) {
@@ -149,9 +150,11 @@ $(document).ready(function () {
             html += `
             <div class="col-md-4 mb-4">
                 <div class="card h-100" style="width: 90%;">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title mb-0">${equipe.nom}</h5>
-                    </div>
+                    <a href="/equipes/gestion-equipes">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">${equipe.nom}</h5>
+                        </div>
+                    </a>
                     <div class="card-body">
                         ${equipe.description}
                         <h6 class="mt-3">Techniciens :</h6>

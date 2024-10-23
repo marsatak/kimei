@@ -123,6 +123,8 @@ def affecter_technicien(request, equipe_id):
 
         logger.info(f"ID du technicien: {technicien_id}")
         technicien = get_object_or_404(Personnel, id=technicien_id)
+        technicien.statut = "ATT"
+        technicien.save()
 
         # Vérifiez si l'affectation existe déjà
         if EquipePersonnel.objects.filter(equipe=equipe, personnel_id=technicien.id).exists():
@@ -172,6 +174,9 @@ def retirer_technicien(request, equipe_id):
     if request.method == 'POST':
         equipe = get_object_or_404(Equipe, id=equipe_id)
         technicien_id = request.POST.get('technicien')
+        technicien = get_object_or_404(Personnel, id=technicien_id)
+        technicien.statut = "PRS"
+        technicien.save()
         EquipePersonnel.objects.filter(equipe=equipe, personnel_id=technicien_id).delete()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False}, status=400)

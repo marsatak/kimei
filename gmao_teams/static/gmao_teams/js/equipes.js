@@ -12,7 +12,7 @@ $(document).ready(function () {
     function toggleSpinner(spinnerId, show) {
         const spinner = document.getElementById(spinnerId);
         if (spinner) {
-            spinner.style.display = show ? 'inline-block' : 'none';
+            spinner.style.display = show ? 'none' : 'inline-block';
         }
     }
 
@@ -244,9 +244,9 @@ $(document).ready(function () {
                 <button class="btn btn-sm btn-success affecter-technicien float-right" data-id="${tech.id}">Affecter</button>
             </li>`;
             });
-            console.log('HTML généré:', html);
+            //console.log('HTML généré:', html);
             $('#listeTechniciensDisponibles').html(html);
-            console.log('Liste mise à jour');
+            //console.log('Liste mise à jour');
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Erreur lors du chargement des techniciens:', textStatus, errorThrown);
         });
@@ -304,7 +304,7 @@ $(document).ready(function () {
                 'X-CSRFToken': getCSRFToken(),
             },
             success: function (data) {
-                console.log("Réponse reçue:", data);
+                //console.log("Réponse reçue:", data);
                 if (data.success) {
                     console.log("Affectation réussie");
                     loadEquipeDetails(currentEquipeId);
