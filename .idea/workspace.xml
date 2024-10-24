@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha List_intervention_display">
-      <change beforePath="$PROJECT_DIR$/.idea/kimei.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kimei.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/templates/gmao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/templates/gmao/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/templates/gmao_teams/gestion_equipes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kimei/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kimei/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +59,9 @@
     &quot;accountId&quot;: &quot;e5632c1d-891f-4cca-bdea-3842bc34b24d&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -282,7 +278,8 @@
       <workItem from="1729518015695" duration="262000" />
       <workItem from="1729518311023" duration="61000" />
       <workItem from="1729518663668" duration="7051000" />
-      <workItem from="1729526334712" duration="27341000" />
+      <workItem from="1729526334712" duration="29225000" />
+      <workItem from="1729671447684" duration="10699000" />
     </task>
     <task id="LOCAL-00242" summary="Version Alpha All doléances">
       <option name="closed" value="true" />

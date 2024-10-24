@@ -9,11 +9,22 @@ $(document).ready(function () {
         });
     });
 
-    function toggleSpinner(spinnerId, show) {
+    /*function toggleSpinner(spinnerId, show) {
         const spinner = document.getElementById(spinnerId);
         if (spinner) {
-            spinner.style.display = show ? 'none' : 'inline-block';
+            spinner.style.display = show ? "none" : "inline-block";
         }
+    }*/
+
+    function toggleSpinnerOn(spinnerId) {
+        const spinner = document.getElementById(spinnerId);
+        spinner.style.display = "inline-block";
+    }
+
+    function toggleSpinnerOff(spinnerId) {
+        const spinner = document.getElementById(spinnerId);
+        spinner.style.display = "none";
+
     }
 
     $.ajaxSetup({
@@ -143,6 +154,7 @@ $(document).ready(function () {
         </li>`;
         });
         $(listId).html(html);
+        toggleSpinnerOff('technicienEquipeSpinner');
     }
 
     /*function updateDoleancesList(doleances, listId) {
@@ -250,6 +262,7 @@ $(document).ready(function () {
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Erreur lors du chargement des techniciens:', textStatus, errorThrown);
         });
+        toggleSpinnerOff('technicienDispoSpinner');
     }
 
     $('#searchTechniciens').on('input', function () {
@@ -295,7 +308,8 @@ $(document).ready(function () {
 
         let technicienId = $(this).data('id');
         console.log("Tentative d'affectation du technicien:", technicienId, "à l'équipe:", currentEquipeId);
-        toggleSpinner('technicienEquipeSpinner', true);
+        //toggleSpinner('technicienEquipeSpinner', true);
+        toggleSpinnerOn('technicienEquipeSpinner');
         $.ajax({
             url: AFFECTER_TECHNICIEN_URL.replace('0', currentEquipeId),
             type: 'POST',
@@ -319,7 +333,6 @@ $(document).ready(function () {
                 alert("Une erreur est survenue lors de l'affectation du technicien. Veuillez vérifier la console pour plus de détails.");
             }
         });
-        toggleSpinner('technicienEquipeSpinner', false);
     });
 
     $(document).on('click', '.attribuer-doleance', function () {
@@ -336,15 +349,15 @@ $(document).ready(function () {
 
     $(document).on('click', '.retirer-technicien', function () {
         let technicienId = $(this).data('id');
-        toggleSpinner('technicienDispoSpinner', true);
+        toggleSpinnerOn('technicienDispoSpinner');
         $.post(RETIRER_TECHNICIEN_URL.replace('0', currentEquipeId),
             {technicien: technicienId},
             function (data) {
                 if (data.success) {
                     loadEquipeDetails(currentEquipeId);
                 }
-            });
-        toggleSpinner('technicienDispoSpinner', false);
+            })
+        //toggleSpinner('technicienDispoSpinner', false);
 
     });
 

@@ -138,7 +138,7 @@ def home(request):
         'form': form,
         'user_role': request.user.role,
     }
-    print(request.user.role)
+    # print(request.user.role)
 
     # if request.user.role == 'ADMIN':
     #     doleances = Doleance.objects.using('kimei_db').all()
