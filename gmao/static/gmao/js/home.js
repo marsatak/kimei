@@ -11,7 +11,6 @@ $(document).ready(function () {
             });
         });
     });
-    p
 
     function offsetAnchor() {
         if (location.hash.length !== 0) {

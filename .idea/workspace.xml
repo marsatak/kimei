@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0278ecd8-2221-451b-8371-ddd43a1d5528" name="Changes" comment="Version Alpha List_intervention_display">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/static/accounts/img/logo_mei.png" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/static/accounts/img/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/accounts/change_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/registration/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao_teams/static/gmao_teams/js/equipes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/gmao/static/gmao/js/home.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,7 +281,13 @@
       <workItem from="1729518311023" duration="61000" />
       <workItem from="1729518663668" duration="7051000" />
       <workItem from="1729526334712" duration="29225000" />
-      <workItem from="1729671447684" duration="10699000" />
+      <workItem from="1729671447684" duration="13716000" />
+      <workItem from="1729790846313" duration="604000" />
+      <workItem from="1729792824445" duration="456000" />
+      <workItem from="1730110688204" duration="29000" />
+      <workItem from="1730112688863" duration="790000" />
+      <workItem from="1730204523414" duration="664000" />
+      <workItem from="1730205508734" duration="2985000" />
     </task>
     <task id="LOCAL-00242" summary="Version Alpha All doléances">
       <option name="closed" value="true" />

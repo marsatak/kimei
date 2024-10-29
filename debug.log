@@ -23808,3 +23808,1435 @@ Technicien 10 affecté avec succès à l'équipe 1
 "GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
 "GET /get-technicien-portfolio/ HTTP/1.1" 200 61
 "GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23342
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23342
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+User authenticated: 058
+First login of day: True
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23342
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23342
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+- Broken pipe from ('127.0.0.1', 50788)
+- Broken pipe from ('127.0.0.1', 50788)
+"GET /api/get-doleances-data/?year=2024&month=10&client=&_=1729793025339 HTTP/1.1" 200 56484
+"GET /api/get-doleances-data/?year=2024&month=10&client=&_=1729793025339 HTTP/1.1" 200 56484
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15721
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /api/get-doleances-data/?year=2024&month=10&client=&_=1729793070925 HTTP/1.1" 200 56484
+"GET /api/get-doleances-data/?year=2024&month=10&client=&_=1729793070925 HTTP/1.1" 200 56484
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+User authenticated: 058
+First login of day: True
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/css/main.css HTTP/1.1" 304 0
+"GET /static/css/main.css HTTP/1.1" 304 0
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 304 0
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 304 0
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 304 0
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 304 0
+"GET /static/js/jquery.js HTTP/1.1" 304 0
+"GET /static/js/jquery.js HTTP/1.1" 304 0
+"GET /static/js/popper.js HTTP/1.1" 304 0
+"GET /static/js/popper.js HTTP/1.1" 304 0
+"GET /static/js/bootstrap.js HTTP/1.1" 304 0
+"GET /static/js/bootstrap.js HTTP/1.1" 304 0
+"GET /static/js/base.js HTTP/1.1" 304 0
+"GET /static/js/base.js HTTP/1.1" 304 0
+"GET /static/js/nav.js HTTP/1.1" 304 0
+"GET /static/js/nav.js HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+"GET /static/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 304 0
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 304 0
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23342
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23342
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 304 0
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 304 0
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+- Broken pipe from ('127.0.0.1', 63048)
+- Broken pipe from ('127.0.0.1', 63048)
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+- Broken pipe from ('127.0.0.1', 63070)
+- Broken pipe from ('127.0.0.1', 63070)
+- Broken pipe from ('127.0.0.1', 63071)
+- Broken pipe from ('127.0.0.1', 63071)
+- Broken pipe from ('127.0.0.1', 63075)
+- Broken pipe from ('127.0.0.1', 63075)
+- Broken pipe from ('127.0.0.1', 63074)
+- Broken pipe from ('127.0.0.1', 63074)
+- Broken pipe from ('127.0.0.1', 63077)
+- Broken pipe from ('127.0.0.1', 63077)
+- Broken pipe from ('127.0.0.1', 63076)
+- Broken pipe from ('127.0.0.1', 63076)
+"GET /home/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /home/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+User authenticated: 058
+First login of day: False
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST /accounts/login/?next=/home/ HTTP/1.1" 302 0
+"POST /accounts/login/?next=/home/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23335
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23335
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1730113225886 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730113225886 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730113225885 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730113225885 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730113225888 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730113225888 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730113225887 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730113225887 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730113225889 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730113225889 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730113225890 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730113225890 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730113225891 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730113225891 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730113225892 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730113225892 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730113225893 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730113225893 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730113225894 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730113225894 HTTP/1.1" 200 5241
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+User authenticated: 058
+First login of day: True
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23335
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23335
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204427583 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204427583 HTTP/1.1" 500 39
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730204427584 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204427584 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204454532 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204454532 HTTP/1.1" 500 39
+"GET /home/getPersonnel/?_=1730204454533 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204454533 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21885
+"GET /home/interventions/ HTTP/1.1" 200 21885
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-10-29 00:00:00+00:00 au 2024-10-29 23:59:59.999999+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1730204492021 HTTP/1.1" 200 12
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1730204492021 HTTP/1.1" 200 12
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/getPersonnel/?_=1730204498225 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204498225 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204498224 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204498224 HTTP/1.1" 500 39
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204551198 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204551198 HTTP/1.1" 500 39
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730204551199 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204551199 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204594069 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204594069 HTTP/1.1" 500 39
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730204594070 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204594070 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+User authenticated: 058
+First login of day: False
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204617009 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204617009 HTTP/1.1" 500 39
+"GET /home/getPersonnel/?_=1730204617010 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204617010 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204617011 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204617011 HTTP/1.1" 500 39
+"GET /home/getPersonnel/?_=1730204617012 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204617012 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204696946 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204696946 HTTP/1.1" 500 39
+"GET /home/getPersonnel/?_=1730204696947 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204696947 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+- Broken pipe from ('127.0.0.1', 57292)
+- Broken pipe from ('127.0.0.1', 57292)
+- Broken pipe from ('127.0.0.1', 57282)
+- Broken pipe from ('127.0.0.1', 57282)
+User authenticated: 058
+First login of day: False
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23335
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23335
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10799
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204792056 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204792056 HTTP/1.1" 500 39
+- Broken pipe from ('127.0.0.1', 57462)
+- Broken pipe from ('127.0.0.1', 57462)
+"GET /home/getPersonnel/?_=1730204792057 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204792057 HTTP/1.1" 200 5241
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204792058 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204792058 HTTP/1.1" 500 39
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1730204792059 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204792059 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /accounts/login/?next=/home/ HTTP/1.1" 200 2567
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204874881 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204874881 HTTP/1.1" 500 39
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730204874882 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204874882 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730204933476 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730204933476 HTTP/1.1" 500 39
+"GET /home/getPersonnel/?_=1730204933477 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730204933477 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+Not Found: /home/get-doleance-en-cours
+Not Found: /home/get-doleance-en-cours
+"GET /home/get-doleance-en-cours HTTP/1.1" 404 16151
+"GET /home/get-doleance-en-cours HTTP/1.1" 404 16151
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+Not Found: /home/get-doleance
+Not Found: /home/get-doleance
+"GET /home/get-doleance HTTP/1.1" 404 16124
+"GET /home/get-doleance HTTP/1.1" 404 16124
+Not Found: /home/getDoleanceEnCours
+Not Found: /home/getDoleanceEnCours
+"GET /home/getDoleanceEnCours HTTP/1.1" 404 16142
+"GET /home/getDoleanceEnCours HTTP/1.1" 404 16142
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours HTTP/1.1" 500 5547
+"GET /home/getDoleanceEncours HTTP/1.1" 500 5547
+"GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+"GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+"GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+"GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+"GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+"GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+"GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+"GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+"GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+"GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+"GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+"GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+"GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+"GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+"GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+"GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+"GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+"GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+"GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+"GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+"GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+"GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+"GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+"GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+Not Found: /home/getDoleanceEncours/all
+Not Found: /home/getDoleanceEncours/all
+"GET /home/getDoleanceEncours/all HTTP/1.1" 404 16154
+"GET /home/getDoleanceEncours/all HTTP/1.1" 404 16154
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours HTTP/1.1" 500 5547
+"GET /home/getDoleanceEncours HTTP/1.1" 500 5547
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+User authenticated: 058
+First login of day: False
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+- Broken pipe from ('127.0.0.1', 57581)
+- Broken pipe from ('127.0.0.1', 57581)
+- Broken pipe from ('127.0.0.1', 57589)
+- Broken pipe from ('127.0.0.1', 57589)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+Internal Server Error: /home/getDoleanceEncours
+Internal Server Error: /home/getDoleanceEncours
+"GET /home/getDoleanceEncours?_=1730205389817 HTTP/1.1" 500 39
+"GET /home/getDoleanceEncours?_=1730205389817 HTTP/1.1" 500 39
+"GET /home/getPersonnel/?_=1730205389818 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205389818 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2567
+"GET / HTTP/1.1" 200 2567
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo_mei.png HTTP/1.1" 200 6374
+- Broken pipe from ('127.0.0.1', 49878)
+- Broken pipe from ('127.0.0.1', 49878)
+- Broken pipe from ('127.0.0.1', 49882)
+- Broken pipe from ('127.0.0.1', 49882)
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16106
+"GET /favicon.ico HTTP/1.1" 404 16106
+Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 644, in connect
+    sock = socket.create_connection(
+        (self.host, self.port), self.connect_timeout, **kwargs
+    )
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\cache.py", line 40, in _cache_controlled
+    response = viewfunc(request, *args, **kw)
+  File "D:\Project\GitHub\kimei\accounts\views.py", line 84, in login_view
+    user = authenticate(request, username=username, password=password)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\debug.py", line 42, in sensitive_variables_wrapper
+    return func(*func_args, **func_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 77, in authenticate
+    user = backend.authenticate(request, **credentials)
+  File "D:\Project\GitHub\kimei\accounts\auth.py", line 10, in authenticate
+    user = UserModel.objects.get(matricule=username)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1560, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 330, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 306, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 288, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 644, in connect
+    sock = socket.create_connection(
+        (self.host, self.port), self.connect_timeout, **kwargs
+    )
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\cache.py", line 40, in _cache_controlled
+    response = viewfunc(request, *args, **kw)
+  File "D:\Project\GitHub\kimei\accounts\views.py", line 84, in login_view
+    user = authenticate(request, username=username, password=password)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\debug.py", line 42, in sensitive_variables_wrapper
+    return func(*func_args, **func_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 77, in authenticate
+    user = backend.authenticate(request, **credentials)
+  File "D:\Project\GitHub\kimei\accounts\auth.py", line 10, in authenticate
+    user = UserModel.objects.get(matricule=username)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1560, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 330, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 306, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 288, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+"POST / HTTP/1.1" 500 257536
+"POST / HTTP/1.1" 500 257536
+Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 644, in connect
+    sock = socket.create_connection(
+        (self.host, self.port), self.connect_timeout, **kwargs
+    )
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\cache.py", line 40, in _cache_controlled
+    response = viewfunc(request, *args, **kw)
+  File "D:\Project\GitHub\kimei\accounts\views.py", line 84, in login_view
+    user = authenticate(request, username=username, password=password)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\debug.py", line 42, in sensitive_variables_wrapper
+    return func(*func_args, **func_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 77, in authenticate
+    user = backend.authenticate(request, **credentials)
+  File "D:\Project\GitHub\kimei\accounts\auth.py", line 10, in authenticate
+    user = UserModel.objects.get(matricule=username)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1560, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 330, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 306, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 288, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 644, in connect
+    sock = socket.create_connection(
+        (self.host, self.port), self.connect_timeout, **kwargs
+    )
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Users\Rindra.MEI\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\cache.py", line 40, in _cache_controlled
+    response = viewfunc(request, *args, **kw)
+  File "D:\Project\GitHub\kimei\accounts\views.py", line 84, in login_view
+    user = authenticate(request, username=username, password=password)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\views\decorators\debug.py", line 42, in sensitive_variables_wrapper
+    return func(*func_args, **func_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 77, in authenticate
+    user = backend.authenticate(request, **credentials)
+  File "D:\Project\GitHub\kimei\accounts\auth.py", line 10, in authenticate
+    user = UserModel.objects.get(matricule=username)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1560, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 330, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 306, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 288, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 358, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\pymysql\connections.py", line 711, in connect
+    raise exc
+django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)")
+"POST / HTTP/1.1" 500 257536
+"POST / HTTP/1.1" 500 257536
+User authenticated: 058
+First login of day: False
+Employee status before update: ATT
+Employee status after all updates: ATT
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+- Broken pipe from ('127.0.0.1', 49995)
+- Broken pipe from ('127.0.0.1', 49995)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851862 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851862 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1730205851861 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851861 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851864 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851864 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730205851863 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851863 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851866 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851866 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730205851865 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851865 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851868 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851868 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730205851867 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851867 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851870 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851870 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730205851869 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851869 HTTP/1.1" 200 419232
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851872 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851872 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730205851871 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851871 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851874 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851874 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730205851873 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851873 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1730205851876 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851876 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1730205851875 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851875 HTTP/1.1" 200 419232
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851877 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851877 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851878 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851878 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851879 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851879 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851880 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851880 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851881 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851881 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851882 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851882 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851883 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851883 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851884 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851884 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851885 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851885 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851886 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851886 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851887 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851887 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851888 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851888 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851889 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851889 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851890 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851890 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851891 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851891 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851892 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851892 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851893 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851893 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851894 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851894 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851895 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851895 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851896 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851896 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851897 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851897 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851898 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851898 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851899 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851899 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851900 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851900 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851901 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851901 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851902 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851902 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851903 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851903 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851904 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851904 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851905 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851905 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851906 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851906 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851907 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851907 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851908 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851908 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851909 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851909 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851910 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851910 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851911 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851911 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851912 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851912 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851913 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851913 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851914 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851914 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851915 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851915 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851916 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851916 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851917 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851917 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851918 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851918 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851919 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851919 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851920 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851920 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851921 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851921 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851922 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851922 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851923 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851923 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851924 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851924 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851925 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851925 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851926 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851926 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851927 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851927 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851928 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851928 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851929 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851929 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851930 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851930 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851931 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851931 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851932 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851932 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851933 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851933 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851934 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851934 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851935 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851935 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851936 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851936 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851937 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851937 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851938 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851938 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851939 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851939 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851940 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851940 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851941 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851941 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851942 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851942 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851943 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851943 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851944 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851944 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851945 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851945 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851946 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851946 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1730205851947 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730205851947 HTTP/1.1" 200 419232
+"GET /home/getPersonnel/?_=1730205851948 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730205851948 HTTP/1.1" 200 5241
+"GET /home/ HTTP/1.1" 200 49367
+"GET /home/ HTTP/1.1" 200 49367
+- Broken pipe from ('127.0.0.1', 50012)
+- Broken pipe from ('127.0.0.1', 50012)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+- Broken pipe from ('127.0.0.1', 51361)
+- Broken pipe from ('127.0.0.1', 51361)
+"GET /home/getPersonnel/?_=1730208513899 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1730208513899 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1730208513898 HTTP/1.1" 200 419232
+"GET /home/getDoleanceEncours?_=1730208513898 HTTP/1.1" 200 419232
