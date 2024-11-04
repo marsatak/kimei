@@ -140,6 +140,11 @@
                                         data-intervention-id="{{ intervention.id }}">Annuler
                                 </button>
                             </div>
+
+                        {% elif intervention.numero_fiche %}
+                            <button class="btn btn-primary" id="modifier-intervention"
+                                    data-intervention-id="{{ intervention.id }}">Modifier
+                            </button>
                         {% endif %}
                     </div>
                 </div>
@@ -249,7 +254,10 @@
                             <div class="form-group col-md-6">
                                 <label for="numero_fiche">Numéro de fiche :</label>
                                 <input type="text" class="form-control" id="numero_fiche"
-                                       name="numero_fiche" pattern="\d{5}" maxlength="5" inputmode="numeric" required>
+                                       name="numero_fiche" pattern="\d{7}" maxlength="7" inputmode="numeric"
+                                        {% if intervention.numero_fiche %}
+                                       value="{{ intervention.numero_fiche }}"
+                                        {% endif %} required>
                             </div>
                         </div>
                         <div class="form-row">
@@ -261,20 +269,22 @@
                             <div class="form-group col-md-6">
                                 <label for="date">Date :</label>
                                 <input type="text" class="form-control" id="date" name="date"
-                                       value="{{ intervention.top_debut|date:'d/m/Y' }}" readonly>
+                                       value="{{ intervention.top_debut|date:'d/m/Y' }}"
+                                       {% if not intervention.numero_fiche %}readonly{% endif %}>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="heure_debut">Heure de début :</label>
                                 <input type="text" class="form-control" id="heure_debut" name="heure_debut"
-                                       value="{{ intervention.top_debut|time:'H:i' }}" readonly>
+                                       value="{{ intervention.top_debut|time:'H:i' }}"
+                                       {% if not intervention.numero_fiche %}readonly{% endif %}>
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="heure_fin">Heure de fin :</label>
                             <input type="text" class="form-control flatpickr-datetime" id="heure_fin" name="heure_fin"
-                                   value="{{ intervention.top_terminer }}" readonly>
+                                   value="{{ intervention.top_terminer }}">
                         </div>
                         <div class="form-group">
                             <label for="panne_declaree">Panne déclarée :</label>
@@ -284,7 +294,7 @@
                         <div class="form-group">
                             <label for="description_panne">Analyses Techniques :</label>
                             <textarea class="form-control" id="description_panne" name="description_panne" rows="3"
-                                      required></textarea>
+                                      disabled></textarea>
                         </div>
                         <div class="form-group">
                             <label for="element">Élément :</label>
@@ -294,17 +304,18 @@
                         </div>
                         <div class="form-group">
                             <label for="resolution">Résolution :</label>
-                            <textarea class="form-control" id="resolution" name="resolution" rows="3"
-                                      required></textarea>
+                            <textarea class="form-control" id="resolution" name="resolution" rows="3" required
+                            >{% if intervention.resolution %}{{ intervention.resolution }}{% endif %}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="observations">Observations :</label>
-                            <textarea class="form-control" id="observations" name="observations" rows="3"></textarea>
+                            <textarea class="form-control" id="observations" name="observations"
+                                      rows="3" readonly></textarea>
                         </div>
                         <div class="form-group">
                             <label for="pieces_changees">Pièces changées :</label>
                             <textarea class="form-control" id="pieces_changees" name="pieces_changees"
-                                      rows="3"></textarea>
+                                      rows="3" disabled></textarea>
                         </div>
                         <div class="form-group">
                             <label for="statut_final">Statut final de l'intervention :</label>
@@ -315,7 +326,13 @@
                                 <option value="ATD">Attente Devis (ATD)</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4">Terminer l'intervention</button>
+                        <button type="submit" class="btn btn-primary mt-4">
+                            {% if intervention.numero_fiche %}
+                                Modifier l'intervention
+                            {% else %}
+                                Terminer l'intervention
+                            {% endif %}
+                        </button>
                     </form>
                 </div>
             </div>

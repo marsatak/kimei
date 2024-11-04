@@ -76,7 +76,7 @@ class DoleanceForm(forms.ModelForm):
     class Meta:
         model = Doleance
         fields = [
-            'client', 'station', 'appelant', 'type_transmission',
+            'client', 'station', 'appelant', 'date_transmission', 'type_transmission',
             'panne_declarer', 'element', 'type_contrat', 'date_deadline', 'commentaire']
 
     def clean(self):
@@ -91,6 +91,7 @@ class DoleanceForm(forms.ModelForm):
         self.fields['element'].choices = [('', 'Sélectionnez un élément')]
         if not self.instance.pk:
             # Si c'est une nouvelle instance, définir la valeur par défaut
+            self.fields['date_transmission'].widget.attrs['class'] = 'flatpickr'
             self.fields['date_deadline'].widget.attrs['class'] = 'flatpickr'
 
         if 'client' in self.data:

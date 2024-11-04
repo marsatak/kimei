@@ -495,6 +495,7 @@ def get_doleance(request, doleance_id):
             'client': doleance.station.client.id,
             'station': doleance.station.id,
             'appelant': doleance.appelant.id if doleance.appelant else None,
+            'date_transmission': doleance.date_transmission,
             'type_transmission': doleance.type_transmission,
             'panne_declarer': doleance.panne_declarer,
             'element': doleance.element,
@@ -532,6 +533,15 @@ def update_doleance(request, doleance_id):
             updated_doleance.panne_declarer = form.cleaned_data['panne_declarer'].upper()
             updated_doleance.commentaire = form.cleaned_data.get('commentaire', '')
 
+            # Gestion de la transmission
+            if 'date_transmission' in form.cleaned_data and form.cleaned_data['date_transmission']:
+                date_transmission = form.cleaned_data['date_transmission']
+                if timezone.is_naive(date_transmission):
+                    updated_doleance.date_transmission = timezone.make_aware(date_transmission,
+                                                                             timezone.get_current_timezone())
+                else:
+                    updated_doleance.date_transmission = timezone.localtime(date_transmission)
+
             # Gestion de la date_deadline
             if 'date_deadline' in form.cleaned_data and form.cleaned_data['date_deadline']:
                 date_deadline = form.cleaned_data['date_deadline']
@@ -565,6 +575,7 @@ def update_doleance(request, doleance_id):
 
 # #####################Fin Procédure de maj des doléances######################
 # #####################Début Liste Stations######################
+
 def load_stations(request):
     client_id = request.GET.get('client')
     if not client_id:

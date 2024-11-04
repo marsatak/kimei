@@ -120,17 +120,17 @@ $(document).ready(function () {
 
 
     function loadElements(stationId) {
-        console.log("Loading elements for station:", stationId);
+        //("Loading elements for station:", stationId);
         const currentElement = $("#element").val();
-        console.log("Current element:", currentElement);
+        //console.log("Current element:", currentElement);
 
         $.ajax({
             url: '/home/load-elements/',
             data: {'station': stationId},
             dataType: 'json',
             success: function (data) {
-                console.log(JSON.stringify(data, null, 2));
-                console.log("Received elements data:", data);
+                //console.log(JSON.stringify(data, null, 2));
+                //console.log("Received elements data:", data);
                 const elementSelect = $('#element');
                 elementSelect.empty();
 
@@ -169,8 +169,8 @@ $(document).ready(function () {
 
                 elementSelect.val(currentElement);
 
-                console.log("Select options:", elementSelect.find('option').length);
-                console.log("Select value:", elementSelect.val());
+                //console.log("Select options:", elementSelect.find('option').length);
+                //console.log("Select value:", elementSelect.val());
             },
             error: function (xhr, status, error) {
                 console.error("Erreur lors du chargement des éléments:", error);
@@ -179,12 +179,12 @@ $(document).ready(function () {
     }
 
     $('#commencer-travail').on('click', function () {
-        console.log('travail')
+        //console.log('travail')
         const interventionId = $(this).data('intervention-id');
         commencerIntervention(interventionId);
     });
 
-    $('#terminer-travail').on('click', function () {
+    $('#terminer-travail , #modifier-intervention').on('click', function () {
 
         const interventionId = $(this).data('intervention-id');
         const stationId = interventionData ? interventionData.station_id : null;
@@ -199,7 +199,7 @@ $(document).ready(function () {
 
     $('#annuler-intervention').click(function (e) {
         e.preventDefault();
-        console.log("annuler")
+        //console.log("annuler")
         annulerIntervention($(this).data('intervention-id'));
     });
     $('#numero_fiche').on('input', function (e) {
@@ -207,8 +207,8 @@ $(document).ready(function () {
         this.value = this.value.replace(/[^0-9]/g, '');
 
         // Limite la longueur à 5 chiffres
-        if (this.value.length > 5) {
-            this.value = this.value.slice(0, 5);
+        if (this.value.length > 7) {
+            this.value = this.value.slice(0, 7);
         }
     });
 
@@ -222,7 +222,7 @@ $(document).ready(function () {
 
 
     $('#interventionForm input[type="text"], #interventionForm textarea').on('blur', function () {
-        console.log("Capitalizing sentences for:", this.value);
+        //console.log("Capitalizing sentences for:", this.value);
         this.value = capitalizeSentences(this.value);
     });
     $('#interventionForm').submit(function (e) {
@@ -230,8 +230,8 @@ $(document).ready(function () {
         const formData = new FormData(this);
         const interventionId = $('#interventionFormModal').data('intervention-id');
         const numeroFiche = $('#numero_fiche').val()
-        if (!/^\d{5}$/.test(numeroFiche)) {
-            alert("Le numéro de fiche doit contenir exactement 5 chiffres.");
+        if (!/^\d{7}$/.test(numeroFiche)) {
+            alert("Le numéro de fiche doit contenir exactement 7 chiffres.");
             e.preventDefault();
             return false;
         }
@@ -268,13 +268,14 @@ $(document).ready(function () {
         }
 
         flatpickrInstance = flatpickr("#heure_fin", {
+            allowInput: true,
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i",
             time_24hr: true,
             defaultDate: new Date(),  // Utilise la date et l'heure courantes
             onReady: function (selectedDates, dateStr, instance) {
-                console.log("Flatpickr initialized with:", dateStr);  // Pour le débogage
+                //console.log("Flatpickr initialized with:", dateStr);  // Pour le débogage
             }
         });
         const now = new Date();

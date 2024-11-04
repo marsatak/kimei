@@ -53,6 +53,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'gmao_teams:gestion_equipes' %}">Gestion des équipes</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Stations</a>
+                        </li>
                     {% elif user.role == 'TECH' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'gmao:liste_interventions' %}">Liste des interventions</a>

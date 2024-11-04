@@ -352,6 +352,7 @@
             $('#id_client').val('').trigger('change');
 
             // Réinitialiser les autres champs si nécessaire
+            $('#div_id_date_transmission').attr('hidden', true).data('flatpickr');
             $('#id_type_transmission').val('');
             $('#id_panne_declarer').val('');
             $('#id_type_contrat').val('');
@@ -493,7 +494,7 @@
         }
 
         function fillDoleanceForm(doleance) {
-            console.log("Remplissage du formulaire avec les données:", doleance);
+            //console.log("Remplissage du formulaire avec les données:", doleance);
             $('#id_doleance_id').val(doleance.id);
             $('#id_client').val(doleance.client).trigger('change');
 
@@ -512,10 +513,11 @@
 
                 $('#id_element').val(doleance.element);
 
-                console.log("Station sélectionnée:", $('#id_station').val());
-                console.log("Appelant sélectionné:", $('#id_appelant').val());
-                console.log("Élément sélectionné:", $('#id_element').val());
+                //console.log("Station sélectionnée:", $('#id_station').val());
+                //console.log("Appelant sélectionné:", $('#id_appelant').val());
+                //console.log("Élément sélectionné:", $('#id_element').val());
 
+                $('#id_date_transmission').val(doleance.date_transmission);
                 $('#id_type_transmission').val(doleance.type_transmission);
                 $('#id_panne_declarer').val(doleance.panne_declarer);
                 $('#id_type_contrat').val(doleance.type_contrat);
@@ -564,7 +566,7 @@
                 enableTime: true,
                 dateFormat: "d/m/Y H:i",
                 time_24hr: true,
-                minDate: "today",
+                //minDate: "today",
                 defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
                 allowInput: true,
                 locale: "fr",

@@ -364,7 +364,7 @@ $(document).ready(function () {
 
     //  REFRESH SUR LES DOLEANCES
     function refreshDoleanceTable() {
-        console.log("Refreshing doleanceTable");
+        //console.log("Refreshing doleanceTable");
         if (doleanceTable) {
             doleanceTable.ajax.reload(null, false);
         } else {

@@ -147,7 +147,7 @@ $(document).ready(function () {
 
 
     function loadTechnicienPortfolio() {
-        console.log("Chargement du portfolio du technicien...");
+        //console.log("Chargement du portfolio du technicien...");
         $.ajax({
             url: '/get-technicien-portfolio/',
             type: 'GET',
