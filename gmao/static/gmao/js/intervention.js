@@ -260,14 +260,39 @@ $(document).ready(function () {
             }
         });
     });
-    let flatpickrInstance;
+    let flatpickrDate;
+    let flatpickrDebut;
+    let flatpickrFin;
     let interventionStartTime;
     $('#interventionFormModal').on('show.bs.modal', function () {
-        if (flatpickrInstance) {
-            flatpickrInstance.destroy();
+        if (flatpickrDebut || flatpickrFin || flatpickrDate) {
+            flatpickrDate.destroy();
+            flatpickrDebut.destroy();
+            flatpickrFin.destroy();
         }
 
-        flatpickrInstance = flatpickr("#heure_fin", {
+        flatpickrDate = flatpickr("#date", {
+            allowInput: true,
+            enableCalendar: true,
+            dateFormat: "d/m/yy",
+            time_24hr: true,
+            onReady: function (selectedDates, dateStr, instance) {
+                //console.log("Flatpickr initialized with:", dateStr);  // Pour le débogage
+            }
+        });
+
+        flatpickrDebut = flatpickr("#heure_debut", {
+            allowInput: true,
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            onReady: function (selectedDates, dateStr, instance) {
+                //console.log("Flatpickr initialized with:", dateStr);  // Pour le débogage
+            }
+        });
+
+        flatpickrFin = flatpickr("#heure_fin", {
             allowInput: true,
             enableTime: true,
             noCalendar: true,

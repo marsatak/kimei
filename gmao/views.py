@@ -833,8 +833,13 @@ def capitalizeSentences(string):
 @csrf_exempt
 @require_POST
 def terminer_travail(request, intervention_id):
+    global date
     try:
         intervention = get_object_or_404(Intervention, id=intervention_id)
+        if not intervention.numero_fiche:
+            isModification = False
+        else:
+            isModification = True
         intervention.description_panne = capitalizeSentences(request.POST.get('description_panne', ''))
         intervention.resolution = capitalizeSentences(request.POST.get('resolution', ''))
         intervention.observations = capitalizeSentences(request.POST.get('observations', ''))
@@ -866,6 +871,13 @@ def terminer_travail(request, intervention_id):
             intervention.numero_fiche = numero_fiche_complet
         except ValueError:
             return JsonResponse({'success': False, 'message': 'Le numéro de fiche doit être un nombre entier'})
+        if isModification:
+            date = request.POST.get('date')
+            date = timezone.make_aware(datetime.strptime(date, '%d/%m/%Y'))
+            heure_debut = request.POST.get('heure_debut')
+            heure_debut = timezone.make_aware(datetime.strptime(heure_debut, '%H:%M'))
+            date_debut = timezone.make_aware(datetime.combine(date.date(), heure_debut.time()))
+            intervention.top_debut = date_debut
 
         # Le reste du code pour mettre à jour l'intervention
         intervention.is_done = True
@@ -885,7 +897,10 @@ def terminer_travail(request, intervention_id):
 
         # Utiliser l'heure de fin fournie pour calculer top_terminer
         date_aujourdhui = timezone.now().date()
-        intervention.top_terminer = timezone.make_aware(datetime.combine(date_aujourdhui, heure_fin.time()))
+        if not isModification:
+            intervention.top_terminer = timezone.make_aware(datetime.combine(date_aujourdhui, heure_fin.time()))
+        else:
+            intervention.top_terminer = timezone.make_aware(datetime.combine(date.date(), heure_fin.time()))
         # Calculer la durée de l'intervention
         if intervention.top_debut:
             duree = intervention.top_terminer - intervention.top_debut

@@ -60602,3 +60602,2378 @@ Watching for file changes with StatReloader
 "GET /home/getDoleanceEncours?_=1731686877224 HTTP/1.1" 200 419139
 "GET /home/getPersonnel/?_=1731686877225 HTTP/1.1" 200 5241
 "GET /home/getPersonnel/?_=1731686877225 HTTP/1.1" 200 5241
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2563
+"GET / HTTP/1.1" 200 2563
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+User authenticated: 058
+First login of day: True
+Employee status before update: PRS
+Employee status updated to: PRS
+Employee status after all updates: PRS
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733228575085 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733228575085 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733228577751 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733228577751 HTTP/1.1" 200 5241
+- Broken pipe from ('127.0.0.1', 55570)
+- Broken pipe from ('127.0.0.1', 55570)
+"GET /home/getDoleanceEncours?_=1733228577750 HTTP/1.1" 200 419139
+"GET /home/getDoleanceEncours?_=1733228577750 HTTP/1.1" 200 419139
+"GET /home/devis/generate-devis/16359/ HTTP/1.1" 200 8409
+"GET /home/devis/generate-devis/16359/ HTTP/1.1" 200 8409
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733228593839 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733228593839 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733228607184 HTTP/1.1" 200 12
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733228607184 HTTP/1.1" 200 12
+- Broken pipe from ('127.0.0.1', 55581)
+- Broken pipe from ('127.0.0.1', 55581)
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+- Broken pipe from ('127.0.0.1', 55582)
+- Broken pipe from ('127.0.0.1', 55582)
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733228625969 HTTP/1.1" 200 12
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733228625969 HTTP/1.1" 200 12
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733228636719 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733228636719 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733228636718 HTTP/1.1" 200 419139
+"GET /home/getDoleanceEncours?_=1733228636718 HTTP/1.1" 200 419139
+"GET /home/get-doleance/16359/ HTTP/1.1" 200 298
+"GET /home/get-doleance/16359/ HTTP/1.1" 200 298
+Tentative de chargement des appelants pour le client_id: 1
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+Nombre d'appelants trouvés: 11
+Tentative de chargement des appelants pour le client_id: 1
+Nombre d'appelants trouvés: 11
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+"GET /home/load-elements/?station=151 HTTP/1.1" 200 157
+"GET /home/load-elements/?station=151 HTTP/1.1" 200 157
+"GET /home/get-doleance/16359/ HTTP/1.1" 200 298
+"GET /home/get-doleance/16359/ HTTP/1.1" 200 298
+Tentative de chargement des appelants pour le client_id: 1
+Tentative de chargement des appelants pour le client_id: 1
+Nombre d'appelants trouvés: 11
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+Nombre d'appelants trouvés: 11
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+"GET /home/ajax/load-stations/?client=1 HTTP/1.1" 200 1605
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/ajax/load-appelants/?client=1 HTTP/1.1" 200 808
+"GET /home/load-elements/?station=151 HTTP/1.1" 200 157
+"GET /home/load-elements/?station=151 HTTP/1.1" 200 157
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"POST /home/declencher-intervention/16350/ HTTP/1.1" 200 108
+"POST /home/declencher-intervention/16350/ HTTP/1.1" 200 108
+- Broken pipe from ('127.0.0.1', 55672)
+- Broken pipe from ('127.0.0.1', 55672)
+"GET /home/intervention/24926/ HTTP/1.1" 200 28059
+"GET /home/intervention/24926/ HTTP/1.1" 200 28059
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13163
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13163
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733228707391 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733228707391 HTTP/1.1" 200 12
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: None, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733228711756 HTTP/1.1" 200 566
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733228711756 HTTP/1.1" 200 566
+"GET /home/intervention/24926/ HTTP/1.1" 200 28059
+"GET /home/intervention/24926/ HTTP/1.1" 200 28059
+"POST /home/commencer-intervention/24926/ HTTP/1.1" 200 144
+"POST /home/commencer-intervention/24926/ HTTP/1.1" 200 144
+"GET /home/intervention/24926/ HTTP/1.1" 200 28139
+"GET /home/intervention/24926/ HTTP/1.1" 200 28139
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13163
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13163
+- Broken pipe from ('127.0.0.1', 55811)
+- Broken pipe from ('127.0.0.1', 55811)
+- Broken pipe from ('127.0.0.1', 55800)
+- Broken pipe from ('127.0.0.1', 55800)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733229434232 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733229434232 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:00:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229436032 HTTP/1.1" 200 625
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229436032 HTTP/1.1" 200 625
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 55810)
+- Broken pipe from ('127.0.0.1', 55810)
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733229755183 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733229755183 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:00:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229757567 HTTP/1.1" 200 625
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229757567 HTTP/1.1" 200 625
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 55851)
+- Broken pipe from ('127.0.0.1', 55851)
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733229780896 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733229780896 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:42:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229783117 HTTP/1.1" 200 624
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229783117 HTTP/1.1" 200 624
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 55868)
+- Broken pipe from ('127.0.0.1', 55868)
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733229851034 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733229851034 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733229851033 HTTP/1.1" 200 419063
+"GET /home/getDoleanceEncours?_=1733229851033 HTTP/1.1" 200 419063
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"POST /home/declencher-intervention/16346/ HTTP/1.1" 200 108
+"POST /home/declencher-intervention/16346/ HTTP/1.1" 200 108
+"GET /home/intervention/24927/ HTTP/1.1" 200 28143
+"GET /home/intervention/24927/ HTTP/1.1" 200 28143
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:42:00+00:00
+Dates brutes - ID: 24927, top_depart: 2024-12-03 12:44:25+00:00, top_debut: None, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229869125 HTTP/1.1" 200 1221
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733229869125 HTTP/1.1" 200 1221
+"GET /home/intervention/24927/ HTTP/1.1" 200 28143
+"GET /home/intervention/24927/ HTTP/1.1" 200 28143
+"POST /home/commencer-intervention/24927/ HTTP/1.1" 200 144
+"POST /home/commencer-intervention/24927/ HTTP/1.1" 200 144
+"GET /home/intervention/24927/ HTTP/1.1" 200 28223
+"GET /home/intervention/24927/ HTTP/1.1" 200 28223
+"GET /home/load-elements/?station=37 HTTP/1.1" 200 246
+"GET /home/load-elements/?station=37 HTTP/1.1" 200 246
+"GET /home/intervention/24927/ HTTP/1.1" 302 0
+"GET /home/intervention/24927/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24927/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24927/ HTTP/1.1" 200 2563
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+- Broken pipe from ('127.0.0.1', 56007)
+- Broken pipe from ('127.0.0.1', 56007)
+- Broken pipe from ('127.0.0.1', 56014)
+- Broken pipe from ('127.0.0.1', 56014)
+- Broken pipe from ('127.0.0.1', 56015)
+- Broken pipe from ('127.0.0.1', 56015)
+- Broken pipe from ('127.0.0.1', 56017)
+- Broken pipe from ('127.0.0.1', 56016)
+- Broken pipe from ('127.0.0.1', 56017)
+- Broken pipe from ('127.0.0.1', 56019)
+- Broken pipe from ('127.0.0.1', 56018)
+- Broken pipe from ('127.0.0.1', 56016)
+- Broken pipe from ('127.0.0.1', 56019)
+- Broken pipe from ('127.0.0.1', 56018)
+- Broken pipe from ('127.0.0.1', 56020)
+- Broken pipe from ('127.0.0.1', 56020)
+- Broken pipe from ('127.0.0.1', 56021)
+- Broken pipe from ('127.0.0.1', 56021)
+- Broken pipe from ('127.0.0.1', 56022)
+- Broken pipe from ('127.0.0.1', 56022)
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:42:00+00:00
+Dates brutes - ID: 24927, top_depart: 2024-12-03 12:44:25+00:00, top_debut: 2024-12-03 12:44:36+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230303670 HTTP/1.1" 200 1239
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230303670 HTTP/1.1" 200 1239
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:42:00+00:00
+Dates brutes - ID: 24927, top_depart: 2024-12-03 12:44:25+00:00, top_debut: 2024-12-03 12:44:36+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230314144 HTTP/1.1" 200 1239
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230314144 HTTP/1.1" 200 1239
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56024)
+- Broken pipe from ('127.0.0.1', 56024)
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+- Broken pipe from ('127.0.0.1', 56038)
+- Broken pipe from ('127.0.0.1', 56038)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733230385346 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733230385346 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:30:00+00:00
+Dates brutes - ID: 24927, top_depart: 2024-12-03 12:44:25+00:00, top_debut: 2024-12-03 12:44:36+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230388921 HTTP/1.1" 200 1240
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230388921 HTTP/1.1" 200 1240
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+- Broken pipe from ('127.0.0.1', 56051)
+- Broken pipe from ('127.0.0.1', 56051)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733230428869 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733230428869 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733230428868 HTTP/1.1" 200 418353
+"GET /home/getDoleanceEncours?_=1733230428868 HTTP/1.1" 200 418353
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733230428871 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733230428871 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1733230428870 HTTP/1.1" 200 418353
+"GET /home/getDoleanceEncours?_=1733230428870 HTTP/1.1" 200 418353
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733230428873 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733230428873 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1733230428872 HTTP/1.1" 200 418353
+"GET /home/getDoleanceEncours?_=1733230428872 HTTP/1.1" 200 418353
+"GET /home/getPersonnel/?_=1733230428875 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733230428875 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733230428874 HTTP/1.1" 200 418353
+"GET /home/getDoleanceEncours?_=1733230428874 HTTP/1.1" 200 418353
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+- Broken pipe from ('127.0.0.1', 56076)
+- Broken pipe from ('127.0.0.1', 56076)
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733230661965 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733230661965 HTTP/1.1" 200 12
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:53:00+00:00
+Dates brutes - ID: 24927, top_depart: 2024-12-03 12:44:25+00:00, top_debut: 2024-12-03 12:44:36+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230668213 HTTP/1.1" 200 1239
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733230668213 HTTP/1.1" 200 1239
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56149)
+- Broken pipe from ('127.0.0.1', 56150)
+- Broken pipe from ('127.0.0.1', 56149)
+- Broken pipe from ('127.0.0.1', 56150)
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:53:00+00:00
+Dates brutes - ID: 24927, top_depart: 2024-12-03 12:44:25+00:00, top_debut: 2024-12-03 12:44:36+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231425435 HTTP/1.1" 200 1239
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231425435 HTTP/1.1" 200 1239
+"GET /home/intervention/24927/ HTTP/1.1" 200 28223
+"GET /home/intervention/24927/ HTTP/1.1" 200 28223
+"POST /home/intervention/24927/annuler/ HTTP/1.1" 200 99
+"POST /home/intervention/24927/annuler/ HTTP/1.1" 200 99
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733231438056 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733231438056 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:53:00+00:00
+- Broken pipe from ('127.0.0.1', 56153)
+- Broken pipe from ('127.0.0.1', 56153)
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231449611 HTTP/1.1" 200 624
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231449611 HTTP/1.1" 200 624
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733231458976 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733231458976 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733231458975 HTTP/1.1" 200 418358
+"GET /home/getDoleanceEncours?_=1733231458975 HTTP/1.1" 200 418358
+"GET /home/getPersonnel/?_=1733231458978 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733231458978 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733231458977 HTTP/1.1" 200 418358
+"GET /home/getDoleanceEncours?_=1733231458977 HTTP/1.1" 200 418358
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733231458980 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733231458980 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1733231458979 HTTP/1.1" 200 418358
+"GET /home/getDoleanceEncours?_=1733231458979 HTTP/1.1" 200 418358
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:53:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231610304 HTTP/1.1" 200 624
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231610304 HTTP/1.1" 200 624
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/intervention/24926/ HTTP/1.1" 200 27731
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56177)
+- Broken pipe from ('127.0.0.1', 56177)
+- Broken pipe from ('127.0.0.1', 56160)
+- Broken pipe from ('127.0.0.1', 56160)
+- Broken pipe from ('127.0.0.1', 56199)
+- Broken pipe from ('127.0.0.1', 56199)
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/intervention/24926/ HTTP/1.1" 200 27717
+"GET /home/intervention/24926/ HTTP/1.1" 200 27717
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+User authenticated: 058
+First login of day: False
+Employee status before update: PRS
+Employee status after all updates: PRS
+"POST /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 302 0
+"POST /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 12:53:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231966903 HTTP/1.1" 200 624
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733231966903 HTTP/1.1" 200 624
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13163
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13163
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+- Broken pipe from ('127.0.0.1', 56299)
+- Broken pipe from ('127.0.0.1', 56299)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+- Broken pipe from ('127.0.0.1', 56665)
+- Broken pipe from ('127.0.0.1', 56665)
+- Broken pipe from ('127.0.0.1', 56666)
+- Broken pipe from ('127.0.0.1', 56666)
+- Broken pipe from ('127.0.0.1', 56658)
+- Broken pipe from ('127.0.0.1', 56658)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56669)
+- Broken pipe from ('127.0.0.1', 56669)
+- Broken pipe from ('127.0.0.1', 56673)
+- Broken pipe from ('127.0.0.1', 56673)
+- Broken pipe from ('127.0.0.1', 56674)
+- Broken pipe from ('127.0.0.1', 56674)
+- Broken pipe from ('127.0.0.1', 56675)
+- Broken pipe from ('127.0.0.1', 56675)
+- Broken pipe from ('127.0.0.1', 56676)
+- Broken pipe from ('127.0.0.1', 56676)
+- Broken pipe from ('127.0.0.1', 56677)
+- Broken pipe from ('127.0.0.1', 56677)
+- Broken pipe from ('127.0.0.1', 56678)
+- Broken pipe from ('127.0.0.1', 56678)
+- Broken pipe from ('127.0.0.1', 56679)
+- Broken pipe from ('127.0.0.1', 56679)
+- Broken pipe from ('127.0.0.1', 56680)
+- Broken pipe from ('127.0.0.1', 56680)
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+User authenticated: 058
+First login of day: False
+Employee status before update: PRS
+Employee status after all updates: PRS
+"POST /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 302 0
+"POST /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13703
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13703
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+- Broken pipe from ('127.0.0.1', 56766)
+- Broken pipe from ('127.0.0.1', 56766)
+- Broken pipe from ('127.0.0.1', 56772)
+- Broken pipe from ('127.0.0.1', 56772)
+- Broken pipe from ('127.0.0.1', 56775)
+- Broken pipe from ('127.0.0.1', 56775)
+- Broken pipe from ('127.0.0.1', 56776)
+- Broken pipe from ('127.0.0.1', 56776)
+- Broken pipe from ('127.0.0.1', 56777)
+- Broken pipe from ('127.0.0.1', 56777)
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13703
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13703
+- Broken pipe from ('127.0.0.1', 56779)
+- Broken pipe from ('127.0.0.1', 56779)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56793)
+- Broken pipe from ('127.0.0.1', 56793)
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+User authenticated: 058
+First login of day: False
+Employee status before update: PRS
+Employee status after all updates: PRS
+"POST /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 302 0
+"POST /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+- Broken pipe from ('127.0.0.1', 56815)
+- Broken pipe from ('127.0.0.1', 56815)
+- Broken pipe from ('127.0.0.1', 56817)
+- Broken pipe from ('127.0.0.1', 56817)
+- Broken pipe from ('127.0.0.1', 56814)
+- Broken pipe from ('127.0.0.1', 56814)
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13705
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13705
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56816)
+- Broken pipe from ('127.0.0.1', 56816)
+- Broken pipe from ('127.0.0.1', 56802)
+- Broken pipe from ('127.0.0.1', 56802)
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /home/intervention/24926/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13707
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13707
+- Broken pipe from ('127.0.0.1', 56843)
+- Broken pipe from ('127.0.0.1', 56843)
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+- Broken pipe from ('127.0.0.1', 56836)
+- Broken pipe from ('127.0.0.1', 56836)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13711
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13711
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13601
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13601
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /home/intervention/24926/ HTTP/1.1" 200 27736
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13601
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13601
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+- Broken pipe from ('127.0.0.1', 56891)
+- Broken pipe from ('127.0.0.1', 56891)
+- Broken pipe from ('127.0.0.1', 56892)
+- Broken pipe from ('127.0.0.1', 56892)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733234057519 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733234057519 HTTP/1.1" 200 5241
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56898)
+- Broken pipe from ('127.0.0.1', 56898)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27738
+"GET /home/intervention/24926/ HTTP/1.1" 200 27738
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+- Broken pipe from ('127.0.0.1', 56936)
+- Broken pipe from ('127.0.0.1', 56936)
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:54:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733234084420 HTTP/1.1" 200 625
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733234084420 HTTP/1.1" 200 625
+- Broken pipe from ('127.0.0.1', 56907)
+- Broken pipe from ('127.0.0.1', 56907)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27738
+"GET /home/intervention/24926/ HTTP/1.1" 200 27738
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733234141427 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733234141427 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:55:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733234143390 HTTP/1.1" 200 625
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733234143390 HTTP/1.1" 200 625
+"GET /home/intervention/24926/ HTTP/1.1" 200 27738
+"GET /home/intervention/24926/ HTTP/1.1" 200 27738
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 56964)
+- Broken pipe from ('127.0.0.1', 56964)
+Internal Server Error: /home/intervention/24926/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 811, in detail_intervention
+    return render(request, 'gmao/detail_intervention.html', context)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 484, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 482, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 703, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ':' from 'intervention.top_debut|date:'
+Internal Server Error: /home/intervention/24926/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 811, in detail_intervention
+    return render(request, 'gmao/detail_intervention.html', context)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 484, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 482, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 703, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ':' from 'intervention.top_debut|date:'
+"GET /home/intervention/24926/ HTTP/1.1" 500 255495
+"GET /home/intervention/24926/ HTTP/1.1" 500 255495
+- Broken pipe from ('127.0.0.1', 57045)
+- Broken pipe from ('127.0.0.1', 57045)
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /home/intervention/24926/ HTTP/1.1" 200 27721
+"GET /home/intervention/24926/ HTTP/1.1" 200 27721
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13595
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13595
+- Broken pipe from ('127.0.0.1', 57044)
+- Broken pipe from ('127.0.0.1', 57044)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 57043)
+- Broken pipe from ('127.0.0.1', 57043)
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24926/ HTTP/1.1" 200 2563
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+- Broken pipe from ('127.0.0.1', 57065)
+- Broken pipe from ('127.0.0.1', 57065)
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13995
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 13995
+- Broken pipe from ('127.0.0.1', 57067)
+- Broken pipe from ('127.0.0.1', 57067)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14049
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14049
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 304 0
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14042
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14042
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14043
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14043
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733234743968 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733234743968 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 1
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:55:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733234746993 HTTP/1.1" 200 625
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733234746993 HTTP/1.1" 200 625
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 57076)
+- Broken pipe from ('127.0.0.1', 57076)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /home/intervention/24926/ HTTP/1.1" 200 27752
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733234908220 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733234908220 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733234908219 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733234908219 HTTP/1.1" 200 419080
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"POST /home/declencher-intervention/16350/ HTTP/1.1" 200 108
+"POST /home/declencher-intervention/16350/ HTTP/1.1" 200 108
+- Broken pipe from ('127.0.0.1', 57137)
+- Broken pipe from ('127.0.0.1', 57137)
+"GET /home/intervention/24928/ HTTP/1.1" 200 28104
+"GET /home/intervention/24928/ HTTP/1.1" 200 28104
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"POST /home/commencer-intervention/24928/ HTTP/1.1" 200 144
+"POST /home/commencer-intervention/24928/ HTTP/1.1" 200 144
+"GET /home/intervention/24928/ HTTP/1.1" 200 28184
+"GET /home/intervention/24928/ HTTP/1.1" 200 28184
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/intervention/24928/ HTTP/1.1" 302 0
+"GET /home/intervention/24928/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 200 2563
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+User authenticated: 058
+First login of day: False
+Employee status before update: PRS
+Employee status after all updates: PRS
+"POST /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 302 0
+"POST /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733235028587 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733235028587 HTTP/1.1" 200 5241
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733235032965 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733235032965 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:55:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733235036361 HTTP/1.1" 200 1202
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733235036361 HTTP/1.1" 200 1202
+"GET /home/intervention/24928/ HTTP/1.1" 200 28184
+"GET /home/intervention/24928/ HTTP/1.1" 200 28184
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 57166)
+- Broken pipe from ('127.0.0.1', 57166)
+- Broken pipe from ('127.0.0.1', 57140)
+- Broken pipe from ('127.0.0.1', 57140)
+"GET /home/intervention/24928/ HTTP/1.1" 302 0
+"GET /home/intervention/24928/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 200 2563
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+User authenticated: 058
+First login of day: False
+Employee status before update: PRS
+Employee status after all updates: PRS
+"POST /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 302 0
+"POST /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733235075595 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733235075595 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733235075594 HTTP/1.1" 200 419179
+"GET /home/getDoleanceEncours?_=1733235075594 HTTP/1.1" 200 419179
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:55:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733235086958 HTTP/1.1" 200 1202
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733235086958 HTTP/1.1" 200 1202
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 57215)
+- Broken pipe from ('127.0.0.1', 57215)
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /home/intervention/24928/ HTTP/1.1" 302 0
+"GET /home/intervention/24928/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 200 2563
+"GET /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 200 2563
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/css/login.css HTTP/1.1" 200 2311
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+"GET /static/django-browser-reload/reload-worker.js HTTP/1.1" 200 2711
+User authenticated: 058
+First login of day: False
+Employee status before update: PRS
+Employee status after all updates: PRS
+"POST /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 302 0
+"POST /accounts/login/?next=/home/intervention/24928/ HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/main.css HTTP/1.1" 200 454
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 155850
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/fontawesomefree/css/fontawesome.css HTTP/1.1" 200 113367
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/popper.js HTTP/1.1" 200 60095
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/jquery.js HTTP/1.1" 200 296028
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/bootstrap.js HTTP/1.1" 200 153594
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/nav.js HTTP/1.1" 200 1547
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/js/base.js HTTP/1.1" 200 2066
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/home.js HTTP/1.1" 200 23667
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/gmao/js/teams.js HTTP/1.1" 200 10801
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/css/dashboard.css HTTP/1.1" 200 1767
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/brands.css HTTP/1.1" 200 24566
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/fontawesomefree/css/solid.css HTTP/1.1" 200 625
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/gmao/css/main.css HTTP/1.1" 200 6986
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/fontawesomefree/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 156496
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733235157783 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733235157783 HTTP/1.1" 200 5241
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+- Broken pipe from ('127.0.0.1', 57212)
+- Broken pipe from ('127.0.0.1', 57212)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733235165021 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733235165021 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /static/js/French.json HTTP/1.1" 200 1056
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:55:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733235168944 HTTP/1.1" 200 1202
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733235168944 HTTP/1.1" 200 1202
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+- Broken pipe from ('127.0.0.1', 57251)
+- Broken pipe from ('127.0.0.1', 57251)
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+"GET /static/css/bootstrap.min.css.map HTTP/1.1" 200 589892
+Internal Server Error: /home/intervention/24928/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 811, in detail_intervention
+    return render(request, 'gmao/detail_intervention.html', context)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 194, in parse
+    retval = self.expression()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 205, in expression
+    left = t.nud(self)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 148, in nud
+    raise parser.error_class("Unexpected end of expression in if tag.")
+django.template.exceptions.TemplateSyntaxError: Unexpected end of expression in if tag.
+Internal Server Error: /home/intervention/24928/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 811, in detail_intervention
+    return render(request, 'gmao/detail_intervention.html', context)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 194, in parse
+    retval = self.expression()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 205, in expression
+    left = t.nud(self)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 148, in nud
+    raise parser.error_class("Unexpected end of expression in if tag.")
+django.template.exceptions.TemplateSyntaxError: Unexpected end of expression in if tag.
+Internal Server Error: /home/intervention/24928/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 811, in detail_intervention
+    return render(request, 'gmao/detail_intervention.html', context)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 194, in parse
+    retval = self.expression()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 205, in expression
+    left = t.nud(self)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 148, in nud
+    raise parser.error_class("Unexpected end of expression in if tag.")
+django.template.exceptions.TemplateSyntaxError: Unexpected end of expression in if tag.
+Internal Server Error: /home/intervention/24928/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 811, in detail_intervention
+    return render(request, 'gmao/detail_intervention.html', context)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 194, in parse
+    retval = self.expression()
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 205, in expression
+    left = t.nud(self)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\template\smartif.py", line 148, in nud
+    raise parser.error_class("Unexpected end of expression in if tag.")
+django.template.exceptions.TemplateSyntaxError: Unexpected end of expression in if tag.
+"GET /home/intervention/24928/ HTTP/1.1" 500 260302
+"GET /home/intervention/24928/ HTTP/1.1" 500 260302
+- Broken pipe from ('127.0.0.1', 53360)
+- Broken pipe from ('127.0.0.1', 53360)
+- Broken pipe from ('127.0.0.1', 53361)
+- Broken pipe from ('127.0.0.1', 53361)
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/modal.js HTTP/1.1" 200 1648
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+"GET /static/gmao/js/intervention.js HTTP/1.1" 200 14074
+- Broken pipe from ('127.0.0.1', 53368)
+- Broken pipe from ('127.0.0.1', 53368)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2563
+"GET / HTTP/1.1" 200 2563
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+"GET /static/accounts/img/logo.png HTTP/1.1" 200 6374
+- Broken pipe from ('127.0.0.1', 64173)
+- Broken pipe from ('127.0.0.1', 64173)
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+User authenticated: 058
+First login of day: False
+Employee status before update: PRS
+Employee status after all updates: PRS
+"POST / HTTP/1.1" 302 0
+"POST / HTTP/1.1" 302 0
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+- Broken pipe from ('127.0.0.1', 64177)
+- Broken pipe from ('127.0.0.1', 64177)
+- Broken pipe from ('127.0.0.1', 64210)
+- Broken pipe from ('127.0.0.1', 64210)
+- Broken pipe from ('127.0.0.1', 64208)
+- Broken pipe from ('127.0.0.1', 64208)
+- Broken pipe from ('127.0.0.1', 64209)
+- Broken pipe from ('127.0.0.1', 64209)
+- Broken pipe from ('127.0.0.1', 64215)
+- Broken pipe from ('127.0.0.1', 64215)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+- Broken pipe from ('127.0.0.1', 64227)
+- Broken pipe from ('127.0.0.1', 64227)
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733241864630 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241864630 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1733241864629 HTTP/1.1" 200 419179
+"GET /home/getDoleanceEncours?_=1733241864629 HTTP/1.1" 200 419179
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+- Broken pipe from ('127.0.0.1', 64219)
+- Broken pipe from ('127.0.0.1', 64219)
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733241884567 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733241884567 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2023&month=12&client=&_=1733241884568 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2023&month=12&client=&_=1733241884568 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=all&month=12&client=&_=1733241884569 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=all&month=12&client=&_=1733241884569 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=all&month=1&client=&_=1733241884570 HTTP/1.1" 200 104943
+"GET /api/get-doleances-data/?year=all&month=1&client=&_=1733241884570 HTTP/1.1" 200 104943
+"GET /api/get-doleances-data/?year=all&month=12&client=&_=1733241884571 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=all&month=12&client=&_=1733241884571 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733241884572 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733241884572 HTTP/1.1" 200 12
+- Broken pipe from ('127.0.0.1', 64226)
+- Broken pipe from ('127.0.0.1', 64226)
+"GET /api/get-doleances-data/?year=2023&month=all&client=&_=1733241884574 HTTP/1.1" 200 1332107
+"GET /api/get-doleances-data/?year=2023&month=all&client=&_=1733241884574 HTTP/1.1" 200 1332107
+Internal Server Error: /api/get-doleances-data/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 1012, in get_doleances_data
+    for doleance in doleances:
+                    ^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 121, in __iter__
+    for row in compiler.results_iter(results):
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1500, in apply_converters
+    value = converter(value, expression, connection)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\operations.py", line 331, in convert_datetimefield_value
+    value = timezone.make_aware(value, self.connection.timezone)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\timezone.py", line 290, in make_aware
+    if is_aware(value):
+       ~~~~~~~~^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\timezone.py", line 256, in is_aware
+    return value.utcoffset() is not None
+           ^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'utcoffset'
+Internal Server Error: /api/get-doleances-data/
+Traceback (most recent call last):
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Project\GitHub\kimei\gmao\views.py", line 1012, in get_doleances_data
+    for doleance in doleances:
+                    ^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\query.py", line 121, in __iter__
+    for row in compiler.results_iter(results):
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1500, in apply_converters
+    value = converter(value, expression, connection)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\db\backends\mysql\operations.py", line 331, in convert_datetimefield_value
+    value = timezone.make_aware(value, self.connection.timezone)
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\timezone.py", line 290, in make_aware
+    if is_aware(value):
+       ~~~~~~~~^^^^^^^
+  File "D:\Project\GitHub\kimei\venv\Lib\site-packages\django\utils\timezone.py", line 256, in is_aware
+    return value.utcoffset() is not None
+           ^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'utcoffset'
+"GET /api/get-doleances-data/?year=all&month=all&client=&_=1733241884575 HTTP/1.1" 500 119505
+"GET /api/get-doleances-data/?year=all&month=all&client=&_=1733241884575 HTTP/1.1" 500 119505
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 13:55:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733241935489 HTTP/1.1" 200 1202
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733241935489 HTTP/1.1" 200 1202
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /home/intervention/24926/ HTTP/1.1" 200 27733
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+0009775
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+- Broken pipe from ('127.0.0.1', 64267)
+- Broken pipe from ('127.0.0.1', 64267)
+- Broken pipe from ('127.0.0.1', 64294)
+- Broken pipe from ('127.0.0.1', 64294)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733241966848 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966848 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733241966847 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966847 HTTP/1.1" 200 419080
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733241966850 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966850 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1733241966849 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966849 HTTP/1.1" 200 419080
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733241966852 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966852 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1733241966851 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966851 HTTP/1.1" 200 419080
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733241966854 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966854 HTTP/1.1" 200 5241
+"GET /home/getDoleanceEncours?_=1733241966853 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966853 HTTP/1.1" 200 419080
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966855 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966855 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966856 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966856 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966857 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966857 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966858 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966858 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966859 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966859 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966860 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966860 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966861 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966861 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966862 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966862 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966863 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966863 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966864 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966864 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966865 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966865 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966866 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966866 HTTP/1.1" 200 5241
+"GET / HTTP/1.1" 200 2563
+"GET / HTTP/1.1" 200 2563
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /favicon.ico HTTP/1.1" 404 16510
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966867 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966867 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966868 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966868 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966869 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966869 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966870 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966870 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966871 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966871 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966872 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966872 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966873 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966873 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966874 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966874 HTTP/1.1" 200 5241
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733241966875 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733241966875 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733241966876 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733241966876 HTTP/1.1" 200 5241
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+- Broken pipe from ('127.0.0.1', 49266)
+- Broken pipe from ('127.0.0.1', 49266)
+- Broken pipe from ('127.0.0.1', 49270)
+- Broken pipe from ('127.0.0.1', 49270)
+- Broken pipe from ('127.0.0.1', 49272)
+- Broken pipe from ('127.0.0.1', 49272)
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 16:05:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+- Broken pipe from ('127.0.0.1', 49271)
+- Broken pipe from ('127.0.0.1', 49271)
+- Broken pipe from ('127.0.0.1', 49279)
+- Broken pipe from ('127.0.0.1', 49279)
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 16:05:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733242926083 HTTP/1.1" 200 1203
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733242926083 HTTP/1.1" 200 1203
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+True
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733242965880 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733242965880 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733242965879 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733242965879 HTTP/1.1" 200 419080
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733242965881 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733242965881 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733242965882 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733242965882 HTTP/1.1" 200 5241
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+- Broken pipe from ('127.0.0.1', 49364)
+- Broken pipe from ('127.0.0.1', 49364)
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733243113964 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733243113964 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 16:22:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733243125547 HTTP/1.1" 200 1203
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733243125547 HTTP/1.1" 200 1203
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+- Broken pipe from ('127.0.0.1', 49426)
+- Broken pipe from ('127.0.0.1', 49426)
+- Broken pipe from ('127.0.0.1', 49424)
+- Broken pipe from ('127.0.0.1', 49424)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+- Broken pipe from ('127.0.0.1', 49645)
+- Broken pipe from ('127.0.0.1', 49645)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 80
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 80
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 80
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 80
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 80
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 80
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+2024-12-03
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+- Broken pipe from ('127.0.0.1', 49853)
+- Broken pipe from ('127.0.0.1', 49853)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+2024-12-03
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+- Broken pipe from ('127.0.0.1', 49903)
+- Broken pipe from ('127.0.0.1', 49903)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+2024-12-03
+2024-12-03 16:45:00+00:00
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+- Broken pipe from ('127.0.0.1', 49980)
+- Broken pipe from ('127.0.0.1', 49980)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+01/12/2424
+2024-12-03 16:48:00+00:00
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 107
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 107
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+"GET /static/django-browser-reload/reload-listener.js HTTP/1.1" 200 623
+- Broken pipe from ('127.0.0.1', 50156)
+- Broken pipe from ('127.0.0.1', 50156)
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 108
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 108
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /static/img/logo.ico HTTP/1.1" 200 67646
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 108
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 108
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 109
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 109
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+2424-12-01 00:00:00+03:00
+2024-12-03 16:50:00+00:00
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733245454944 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733245454944 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733245454943 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733245454943 HTTP/1.1" 200 419080
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getDoleanceEncours?_=1733245454945 HTTP/1.1" 200 419080
+"GET /home/getDoleanceEncours?_=1733245454945 HTTP/1.1" 200 419080
+"GET /home/getPersonnel/?_=1733245454946 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733245454946 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Début de get_interventions_data
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 17:04:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733245533680 HTTP/1.1" 200 1203
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733245533680 HTTP/1.1" 200 1203
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733245580337 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733245580337 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2024-12-03 12:36:37+00:00, top_terminer: 2024-12-03 17:05:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733245584680 HTTP/1.1" 200 1203
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733245584680 HTTP/1.1" 200 1203
+- Broken pipe from ('127.0.0.1', 51015)
+- Broken pipe from ('127.0.0.1', 51015)
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/intervention/24926/ HTTP/1.1" 200 27735
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2424-12-01 13:00:00+00:00, top_terminer: 2024-12-03 17:08:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733245730571 HTTP/1.1" 200 1210
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733245730571 HTTP/1.1" 200 1210
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

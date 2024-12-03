@@ -278,7 +278,7 @@
                                 <label for="heure_debut">Heure de début :</label>
                                 <input type="text" class="form-control" id="heure_debut"
                                        name="heure_debut"
-                                       value="{{ intervention.top_debut|time:'H:i' }}"
+                                       value="{{ intervention.top_debut|date:'H:i' }}"
                                        {% if not intervention.numero_fiche %}readonly{% endif %}>
                             </div>
                         </div>
