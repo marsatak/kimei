@@ -62977,3 +62977,176 @@ D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
 D:\Project\GitHub\kimei\gmao\views.py changed, reloading.
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+"GET /home/intervention/24926/ HTTP/1.1" 200 27761
+"GET /home/intervention/24926/ HTTP/1.1" 200 27761
+"GET /home/intervention/24926/ HTTP/1.1" 200 27761
+"GET /home/intervention/24926/ HTTP/1.1" 200 27761
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24926/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+- Broken pipe from ('127.0.0.1', 51138)
+- Broken pipe from ('127.0.0.1', 51138)
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+- Broken pipe from ('127.0.0.1', 51173)
+- Broken pipe from ('127.0.0.1', 51173)
+- Broken pipe from ('127.0.0.1', 51175)
+- Broken pipe from ('127.0.0.1', 51175)
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2424-12-01 13:00:00+00:00, top_terminer: 2424-12-01 17:04:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: None
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246108629 HTTP/1.1" 200 1203
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246108629 HTTP/1.1" 200 1203
+- Broken pipe from ('127.0.0.1', 51172)
+- Broken pipe from ('127.0.0.1', 51172)
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /home/intervention/24928/ HTTP/1.1" 200 28165
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 88
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 88
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 88
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 88
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 88
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 88
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 156
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 156
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 156
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 156
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2424-12-01 13:00:00+00:00, top_terminer: 2424-12-01 17:04:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2024-12-03 14:08:58+00:00, top_terminer: 2024-12-03 16:55:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246240032 HTTP/1.1" 200 1235
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246240032 HTTP/1.1" 200 1235
+"GET /home/intervention/24928/ HTTP/1.1" 200 27728
+"GET /home/intervention/24928/ HTTP/1.1" 200 27728
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24928/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733246277665 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733246277665 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 2
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2424-12-01 13:00:00+00:00, top_terminer: 2424-12-01 17:04:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2424-12-03 14:08:00+00:00, top_terminer: 2424-12-03 17:17:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246279832 HTTP/1.1" 200 1238
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246279832 HTTP/1.1" 200 1238
+- Broken pipe from ('127.0.0.1', 51174)
+- Broken pipe from ('127.0.0.1', 51174)
+"GET /home/intervention/24928/ HTTP/1.1" 200 27733
+"GET /home/intervention/24928/ HTTP/1.1" 200 27733
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /static/gmao/js/intervention.js HTTP/1.1" 304 0
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/load-elements/?station=14 HTTP/1.1" 200 1111
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/getPersonnel/?_=1733246309307 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733246309307 HTTP/1.1" 200 5241
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getDoleanceEncours?_=1733246309306 HTTP/1.1" 200 419081
+"GET /home/getDoleanceEncours?_=1733246309306 HTTP/1.1" 200 419081
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"GET /home/get-techniciens-disponibles/ HTTP/1.1" 200 601
+"POST /home/declencher-intervention/16346/ HTTP/1.1" 200 108
+"POST /home/declencher-intervention/16346/ HTTP/1.1" 200 108
+"GET /home/intervention/24929/ HTTP/1.1" 200 28140
+"GET /home/intervention/24929/ HTTP/1.1" 200 28140
+"POST /home/commencer-intervention/24929/ HTTP/1.1" 200 144
+"POST /home/commencer-intervention/24929/ HTTP/1.1" 200 144
+"GET /home/intervention/24929/ HTTP/1.1" 200 28220
+"GET /home/intervention/24929/ HTTP/1.1" 200 28220
+"GET /home/load-elements/?station=37 HTTP/1.1" 200 246
+"GET /home/load-elements/?station=37 HTTP/1.1" 200 246
+"POST /home/intervention/24929/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24929/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733246367825 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733246367825 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 3
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2424-12-01 13:00:00+00:00, top_terminer: 2424-12-01 17:04:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2424-12-03 14:08:00+00:00, top_terminer: 2424-12-03 17:17:00+00:00
+Dates brutes - ID: 24929, top_depart: 2024-12-03 17:18:44+00:00, top_debut: 2024-12-03 17:18:57+00:00, top_terminer: 2024-12-03 17:33:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246369991 HTTP/1.1" 200 1875
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246369991 HTTP/1.1" 200 1875
+"GET /home/intervention/24929/ HTTP/1.1" 200 27782
+"GET /home/intervention/24929/ HTTP/1.1" 200 27782
+"GET /home/load-elements/?station=37 HTTP/1.1" 200 246
+"GET /home/load-elements/?station=37 HTTP/1.1" 200 246
+- Broken pipe from ('127.0.0.1', 51242)
+- Broken pipe from ('127.0.0.1', 51242)
+"POST /home/intervention/24929/terminer/ HTTP/1.1" 200 75
+"POST /home/intervention/24929/terminer/ HTTP/1.1" 200 75
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/ HTTP/1.1" 200 50118
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /home/get-equipes-data/ HTTP/1.1" 200 764
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /get-technicien-portfolio/ HTTP/1.1" 200 61
+"GET /home/getPersonnel/?_=1733246392238 HTTP/1.1" 200 5241
+"GET /home/getPersonnel/?_=1733246392238 HTTP/1.1" 200 5241
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /home/interventions/ HTTP/1.1" 200 21968
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+Début de get_interventions_data
+Filtrage pour la période : du 2024-12-03 00:00:00+03:00 au 2024-12-03 23:59:59.999999+03:00
+Nombre d'interventions après filtrage : 3
+Dates brutes - ID: 24926, top_depart: 2024-12-03 12:24:16+00:00, top_debut: 2424-12-01 13:00:00+00:00, top_terminer: 2424-12-01 17:04:00+00:00
+Dates brutes - ID: 24928, top_depart: 2024-12-03 14:08:51+00:00, top_debut: 2424-12-03 14:08:00+00:00, top_terminer: 2424-12-03 17:17:00+00:00
+Dates brutes - ID: 24929, top_depart: 2024-12-03 17:18:44+00:00, top_debut: 2424-12-03 17:18:00+00:00, top_terminer: 2424-12-03 17:19:00+00:00
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246393649 HTTP/1.1" 200 1865
+"GET /home/get-interventions-data/?startDate=&endDate=&client=&_=1733246393649 HTTP/1.1" 200 1865
+- Broken pipe from ('127.0.0.1', 51241)
+- Broken pipe from ('127.0.0.1', 51241)
+"GET /home/intervention/24929/ HTTP/1.1" 200 27753
+"GET /home/intervention/24929/ HTTP/1.1" 200 27753
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+"GET /home/toutes-les-doleances/ HTTP/1.1" 200 15803
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /get-clients/ HTTP/1.1" 200 446
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733246408668 HTTP/1.1" 200 12
+"GET /api/get-doleances-data/?year=2024&month=12&client=&_=1733246408668 HTTP/1.1" 200 12
