@@ -91,8 +91,11 @@ class DoleanceForm(forms.ModelForm):
         self.fields['element'].choices = [('', 'Sélectionnez un élément')]
         if not self.instance.pk:
             # Si c'est une nouvelle instance, définir la valeur par défaut
-            self.fields['date_transmission'].widget.attrs['class'] = 'flatpickr'
             self.fields['date_deadline'].widget.attrs['class'] = 'flatpickr'
+
+        if not self.instance.pk:
+            # Si c'est une nouvelle instance, définir la valeur par défaut
+            self.fields['date_transmission'].widget.attrs['class'] = 'flatpickr'
 
         if 'client' in self.data:
             try:

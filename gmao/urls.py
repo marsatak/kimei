@@ -59,6 +59,9 @@ urlpatterns = [
 
     path('liste-cuves/', views.liste_cuves, name='liste_cuves'),
     path('get-stations/', views.get_stations, name='get_stations'),
+
+    path('home/stations/', views.liste_stations, name='liste_stations'),
+
     path('get-modeles-ad/', views.get_modeles_ad, name='get_modeles_ad'),
     path('get-produits/', views.get_produits, name='get_produits'),
     path('home/toutes-les-pieces/', views.toutes_les_pieces, name='toutes_les_pieces'),
@@ -85,6 +88,8 @@ urlpatterns = [
     path('mark-arrivee/<int:personnel_id>/', views.mark_arrivee, name='mark_arrivee'),
     path('mark-depart/<int:personnel_id>/', views.mark_depart, name='mark_depart'),
     path('home/getPersonnel/<int:id>/', views.updatePersonnel, name='update-personnel'),
+
+    path('home/devis/generate-devis/<int:doleance_id>/', views.generate_devis, name='generate-devis'),
 
     # path('home/doleanceEdit2/<int:id>', views.doleanceEdit2, name='doleanceEdit2'),
     # path('home/doleanceEdit/<int:id>/', views.doleanceEdit, name='doleanceEdit'),

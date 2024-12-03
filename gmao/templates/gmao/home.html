@@ -360,6 +360,11 @@
             $('#id_commentaire').val('');
 
             // Réinitialiser flatpickr si utilisé
+            if ($('#div_id_date_transmission').data('flatpickr')) {
+                $('#div_id_date_transmission').flatpickr().clear();
+            }
+
+            // Réinitialiser flatpickr si utilisé
             if ($('#id_date_deadline').data('flatpickr')) {
                 $('#id_date_deadline').flatpickr().clear();
             }

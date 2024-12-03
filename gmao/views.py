@@ -1,14 +1,21 @@
+import io
 import json
 import logging
+import os
 import re
 from datetime import datetime
+
+from aiohttp.web_fileresponse import FileResponse
+from aiohttp.web_response import json_response
 from django.contrib import messages
 from django.urls import reverse
 from django.core.cache import cache
+from django.utils.archive import extract
+from openpyxl.reader.excel import load_workbook
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.shortcuts import render, redirect
@@ -16,7 +23,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import csrf_exempt
-from excel_response import ExcelResponse
 from django.db.models import Q, F
 from django.db.models.functions import ExtractYear
 from django.core.paginator import Paginator
@@ -28,6 +34,7 @@ from datetime import timedelta
 from datetime import datetime, time
 from django.db.models import CharField, Value as V
 from django.db.models.functions import Substr
+from openpyxl import Workbook
 
 from django.utils.dateparse import parse_datetime
 
@@ -44,6 +51,8 @@ from gmao.serializers import (
     AppareilDistributionSerializer
 )
 from django.views.decorators.http import require_http_methods
+
+from kimei import settings
 from .models import AppareilDistribution, Station, ModeleAd
 from django.db.models import Prefetch
 from .models import Pistolet
@@ -518,13 +527,14 @@ def get_doleance(request, doleance_id):
 def update_doleance(request, doleance_id):
     try:
         doleance = get_object_or_404(Doleance, id=doleance_id)
-        logger.info(f"Tentative de mise à jour de la doléance {doleance_id}")
-        logger.info(f"Données reçues : {request.POST}")
+        # logger.info(f"Tentative de mise à jour de la doléance {doleance_id}")
+        # logger.info(f"Données reçues : {request.POST}")
         current_statut = doleance.statut
+        contrat = doleance.type_contrat
 
         form = DoleanceForm(request.POST, instance=doleance)
         if form.is_valid():
-            logger.info("Formulaire valide, sauvegarde en cours")
+            # logger.info("Formulaire valide, sauvegarde en cours")
             updated_doleance = form.save(commit=False)
 
             updated_doleance.statut = current_statut
@@ -542,6 +552,10 @@ def update_doleance(request, doleance_id):
                 else:
                     updated_doleance.date_transmission = timezone.localtime(date_transmission)
 
+            # Regeneration NDI
+            if contrat != updated_doleance.type_contrat:
+                updated_doleance.ndi = (doleance.ndi[:-1]) + updated_doleance.type_contrat
+
             # Gestion de la date_deadline
             if 'date_deadline' in form.cleaned_data and form.cleaned_data['date_deadline']:
                 date_deadline = form.cleaned_data['date_deadline']
@@ -551,7 +565,7 @@ def update_doleance(request, doleance_id):
                     updated_doleance.date_deadline = timezone.localtime(date_deadline)
 
             updated_doleance.save()
-            logger.info(f"Doléance {doleance_id} mise à jour avec succès")
+            # logger.info(f"Doléance {doleance_id} mise à jour avec succès")
             return JsonResponse({
                 'success': True,
                 'message': 'Doléance mise à jour avec succès',
@@ -560,13 +574,13 @@ def update_doleance(request, doleance_id):
                 'element': updated_doleance.element
             })
         else:
-            logger.error(f"Erreurs de formulaire : {form.errors}")
+            # logger.error(f"Erreurs de formulaire : {form.errors}")
             return JsonResponse({
                 'success': False,
                 'errors': form.errors
             })
     except Exception as e:
-        logger.exception(f"Erreur lors de la mise à jour de la doléance {doleance_id}")
+        # logger.exception(f"Erreur lors de la mise à jour de la doléance {doleance_id}")
         return JsonResponse({
             'success': False,
             'message': str(e)
@@ -1104,9 +1118,9 @@ def get_interventions_data(request):
             }
             data.append(intervention_data)
 
-            logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
-        logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
-        logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
+            # logger.info(f"Intervention ajoutée - ID: {intervention.id}, top_depart: {intervention.top_depart}")
+        # logger.info(f"Données complètes avant envoi : {json.dumps(data, default=str)}")
+        # logger.info(f"Nombre total d'interventions renvoyées : {len(data)}")
         return JsonResponse({'data': data}, safe=False)
 
     except Exception as e:
@@ -1122,25 +1136,25 @@ def get_interventions_data(request):
 @login_required
 @require_POST
 def prendre_en_charge(request, doleance_id):
-    logger.info(f"Tentative de prise en charge de la doléance {doleance_id}")
+    # logger.info(f"Tentative de prise en charge de la doléance {doleance_id}")
     try:
         doleance = get_object_or_404(Doleance.objects.using('kimei_db'), id=doleance_id)
-        logger.info(f"Doléance trouvée: {doleance} {doleance.statut}")
+        # logger.info(f"Doléance trouvée: {doleance} {doleance.statut}")
 
         if doleance.statut not in ['NEW', 'ATP', 'ATD']:
             return JsonResponse({'success': False, 'message': 'Cette doléance ne peut pas être prise en charge'})
 
         technicien = Personnel.objects.using('kimei_db').get(matricule=request.user.matricule)
-        logger.info(f"Technicien trouvé: {technicien}")
+        # logger.info(f"Technicien trouvé: {technicien}")
 
         equipe_personnel = EquipePersonnel.objects.using('teams_db').filter(personnel_id=technicien.id).first()
-        logger.info(f"EquipePersonnel trouvé: {equipe_personnel}")
+        # logger.info(f"EquipePersonnel trouvé: {equipe_personnel}")
 
         if not equipe_personnel:
             return JsonResponse({'success': False, 'message': 'Ce technicien n\'appartient à aucune équipe'})
 
         equipe = equipe_personnel.equipe
-        logger.info(f"Équipe trouvée: {equipe}")
+        # logger.info(f"Équipe trouvée: {equipe}")
 
         # Vérifier si la doléance est déjà associée à une équipe
         # existing_association = DoleanceEquipe.objects.using('teams_db').filter(doleance_id=doleance.id).first()
@@ -1165,7 +1179,7 @@ def prendre_en_charge(request, doleance_id):
             is_going_home=False,
             etat_doleance='ATT'
         )
-        logger.info(f"Intervention créée: {intervention}")
+        # logger.info(f"Intervention créée: {intervention}")
 
         doleance.statut = 'ATT'
         doleance.save(using='kimei_db')
@@ -1576,7 +1590,8 @@ def liste_cuves(request):
 
 @login_required
 def get_stations(request):
-    stations = Station.objects.all().values('id', 'libelle_station')
+    stations = Station.objects.all().values('id', 'client__nom_client', 'province_station', 'libelle_station',
+                                            'type_contrat')
     return JsonResponse(list(stations), safe=False)
 
 
@@ -1591,4 +1606,57 @@ def get_produits(request):
     produits = Produit.objects.all().values('id', 'nom_produit')
     return JsonResponse(list(produits), safe=False)
 
+
 # #####################Fin Ajout éléments ######################
+
+# Liste Stations
+@login_required
+def liste_stations(request):
+    return render(request, 'gmao/liste_stations.html')
+
+
+@login_required
+def generate_devis(request, doleance_id):
+    try:
+        doleance = Doleance.objects.get(id=doleance_id)
+        filename = doleance.ndi.replace("/", "-")
+        filename = filename + "-" + doleance.station.libelle_station + ".xlsx"
+        devis = os.path.join(settings.STATIC_URL, 'files/devis.xlsx')
+        wb = load_workbook(devis)
+        ws = wb.active
+        ws['C3'] = doleance.ndi
+        ws['C6'] = doleance.station.client.nom_client + " / " + doleance.station.libelle_station
+        ws['C7'] = doleance.panne_declarer
+        match doleance.type_contrat:
+            case "S":
+                ws['J3'] = "Sous Contrat"
+            case "H":
+                ws['J3'] = "Hors Contrat"
+            case "D":
+                ws['J3'] = "Devis"
+            case "C":
+                ws['J3'] = "Conso"
+            case "P":
+                ws['J3'] = "Préventive"
+            case _:
+                ws['J3'] = "Erreur"
+        deadline = doleance.date_deadline.strftime('%d/%m/%Y %H:%M')
+        ws['C8'] = deadline
+        wb.save(devis)
+        if os.path.exists(devis):
+            with open(devis, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(filename)
+                return response
+        raise Http404
+    except Doleance.DoesNotExist:
+        return JsonResponse({'error': 'Doleance erreur'}, status=404)
+    # filename = doleance.ndi
+    # logger.info(filename)
+
+    # if os.path.exists(file_path):
+    #    with open(file_path, 'rb') as fh:
+    #        response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+    #        response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+    #        return response
+    # raise Http404

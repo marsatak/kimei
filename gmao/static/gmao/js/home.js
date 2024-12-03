@@ -80,13 +80,18 @@ $(document).ready(function () {
                         render: function (data, type, row) {
                             let actions = '';
                             if (row.statut === 'NEW' || row.statut === 'ATD' || row.statut === 'ATP') {
-                                actions += '<button class="btn btn-primary btn-sm declencher-intervention mr-1" data-id="' + row.id + '">' +
+                                actions += '<button class="btn btn-primary btn-sm declencher-intervention mr-1 " data-id="' + row.id + '">' +
                                     '<i class="fas fa-arrow-alt-circle-up"></i>' +
                                     '</button>';
                             }
-                            actions += '<button class="btn btn-warning btn-sm update-doleance mr-1 mx-1" data-id="' + row.id + '">' +
+                            actions += '<button class="btn btn-warning btn-sm update-doleance mr-1" data-id="' + row.id + '">' +
                                 '<i class="fas fa-edit"></i>' +
                                 '</button>';
+                            actions += '<a class="btn btn-info btn-sm devis-doleance mr-1" ' +
+                                'href="/home/devis/generate-devis/' + row.id + '/' +
+                                '">' +
+                                '<i class="fas fa-file-excel"></i>' +
+                                '</a>';
                             return actions;
                         }
                     },
