@@ -8,6 +8,7 @@ from datetime import datetime
 from aiohttp.web_fileresponse import FileResponse
 from aiohttp.web_response import json_response
 from django.contrib import messages
+from django.core import serializers
 from django.urls import reverse
 from django.core.cache import cache
 from django.utils.archive import extract
@@ -998,7 +999,7 @@ def get_doleances_data(request):
     doleances_query = Doleance.objects.using('kimei_db').exclude(statut='NEW')
 
     if year and year != 'all':
-        doleances_query = doleances_query.filter(date_transmission__year=int(year))
+        doleances_query = doleances_query.filter(date_fin__year=int(year))
 
     if month and month != 'all':
         if year and year != 'all':
@@ -1014,18 +1015,23 @@ def get_doleances_data(request):
             start_date = current_date.replace(month=int(month), day=1, hour=0, minute=0, second=0, microsecond=0)
             end_date = start_date + relativedelta(months=1)
 
-        doleances_query = doleances_query.filter(date_transmission__gte=start_date, date_transmission__lt=end_date)
+        doleances_query = doleances_query.filter(date_fin__gte=start_date, date_fin__lt=end_date)
 
     if client_id:
         doleances_query = doleances_query.filter(station__client_id=client_id)
 
-    doleances = doleances_query.order_by('-date_transmission')
+    doleances = doleances_query.order_by('-date_fin')
 
     data = []
     for doleance in doleances:
         doleance_data = {
             'id': doleance.id,
             'ndi': doleance.ndi,
+            'nombre_interventions': f'<button class="btn btn-primary" onclick="fillIntervention({doleance.id})" data-bs-toggle="modal" data-bs-target="#vue-interventions">'
+                                    f'Details <span class="badge bg-dark">'
+                                    f'{doleance.intervention_set.all().count()}'
+                                    f'</span>'
+                                    f'</button>',
             'date_transmission': timezone.localtime(doleance.date_transmission).strftime(
                 '%d/%m/%Y %H:%M') if doleance.date_transmission else '',
             'statut': doleance.statut,
@@ -1034,8 +1040,12 @@ def get_doleances_data(request):
             'panne_declarer': doleance.panne_declarer,
             'date_deadline': timezone.localtime(doleance.date_deadline).strftime(
                 '%d/%m/%Y %H:%M') if doleance.date_deadline else '',
+            'date_debut': timezone.localtime(doleance.date_debut).strftime(
+                '%d/%m/%Y %H:%M') if doleance.date_debut else '',
+            'date_fin': timezone.localtime(doleance.date_fin).strftime(
+                '%d/%m/%Y %H:%M') if doleance.date_fin else '',
             'commentaire': doleance.commentaire,
-            'actions': f'<button class="btn btn-primary btn-sm view-doleance" data-id="{doleance.id}">Voir</button>'
+            # 'actions': f'<button class="btn btn-primary btn-sm view-doleance" data-id="{doleance.id}">Voir</button>'
         }
         data.append(doleance_data)
 
@@ -1675,3 +1685,59 @@ def generate_devis(request, doleance_id):
     #        response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
     #        return response
     # raise Http404
+
+
+@login_required
+def interventions_doleance(request, doleance_id):
+    try:
+        if doleance_id:
+            interventions = Intervention.objects.filter(doleance_id=doleance_id)
+        else:
+            interventions = Intervention.objects.none()
+
+        # interventions = interventions.select_related('doleance', 'doleance__station')
+        if not interventions.exists():
+            return JsonResponse({'data': []})
+
+        data = []
+        for intervention in interventions:
+            # Récupérer les techniciens pour chaque intervention
+            techniciens_intervention = InterventionPersonnel.objects.filter(intervention=intervention).select_related(
+                'personnel')
+            techniciens_list = ", ".join(
+                [f"{t.personnel.nom_personnel} {t.personnel.prenom_personnel}" for t in techniciens_intervention])
+
+            intervention_data = {
+                # 'id': intervention.id,
+                # 'appelant': intervention.doleance.appelant.nom_appelant if intervention.doleance.appelant else '',
+                # 'bt': intervention.doleance.bt if intervention.doleance else '',
+                # 'ndi': intervention.doleance.ndi if intervention.doleance else '',
+                # 'station': intervention.doleance.station.libelle_station if intervention.doleance and intervention.doleance.station else '',
+                # 'element': intervention.doleance.element if intervention.doleance else '',
+                'statut': intervention.etat_doleance if intervention.etat_doleance else '',
+                'resolution': intervention.resolution if intervention.resolution else '',
+                # 'date_transmission': intervention.doleance.date_transmission.strftime('%d/%m/%Y %H:%M')
+                # if intervention.doleance.date_transmission else '',
+                # 'date_deadline': intervention.doleance.date_deadline.strftime('%d/%m/%Y %H:%M')
+                # if intervention.doleance.date_deadline else '',
+                'depart': timezone.localtime(intervention.top_depart).strftime(
+                    '%d/%m/%Y %H:%M') if intervention.top_depart else '',
+                'debut': timezone.localtime(intervention.top_debut).strftime(
+                    '%d/%m/%Y %H:%M') if intervention.top_debut else '',
+                'fin': timezone.localtime(intervention.top_terminer).strftime(
+                    '%d/%m/%Y %H:%M') if intervention.top_terminer else '',
+                'numero_fiche': intervention.numero_fiche if intervention.numero_fiche else '',
+                'techniciens': techniciens_list,
+                'duree_de_travail': str(intervention.duree_intervention) if intervention.duree_intervention else '',
+                'kilometrage_depart': str(
+                    intervention.kilometrage_depart_debut) if intervention.kilometrage_depart_debut else '',
+                'commentaires': intervention.doleance.commentaire if intervention.doleance else '',
+                'kilometrage_retour': str(intervention.kilometrage_home) if intervention.kilometrage_home else '',
+            }
+            data.append(intervention_data)
+
+        return JsonResponse({'data': data})
+
+    except Exception as e:
+        logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
+        return JsonResponse({'error': 'Une erreur est survenue lors de la récupération des données'}, status=500)

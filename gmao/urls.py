@@ -36,6 +36,8 @@ urlpatterns = [
     # path('home/liste-interventions/', views.liste_interventions, name='liste_interventions'),
     path('home/intervention/<int:intervention_id>/', views.detail_intervention, name='detail_intervention'),
     path('home/interventions/', views.liste_interventions, name='liste_interventions'),
+    path('home/toutes-les-doleances/interventions-doleance/<int:doleance_id>/', views.interventions_doleance,
+         name='interventions_doleance'),
 
     path('home/intervention/<int:intervention_id>/terminer/', views.terminer_travail, name='terminer_travail'),
     path('get-clients/', views.get_clients, name='get_clients'),

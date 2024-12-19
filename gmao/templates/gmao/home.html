@@ -6,6 +6,10 @@
 
 
 {% block extra_css %}
+    flatpickr-wrapper
+    {
+
+    }
     <!-- ... autres styles ... -->
     {{ block.super }}
 
@@ -575,8 +579,12 @@
                 defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
                 allowInput: true,
                 locale: "fr",
+                static: true,
                 onClose: function (selectedDates, dateStr, instance) {
-                    instance.close();
+                    if (instance) {
+                        instance.close()
+                    }
+                    //instance.close();
                 }
             });
         }

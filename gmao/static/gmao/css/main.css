@@ -378,3 +378,91 @@ body {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
 }
+
+.flatpickr-wrapper {
+    display: block !important;
+}
+
+/* timeline */
+.progress-container {
+    position: relative;
+    padding: 0;
+    margin: 30px 0;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #e0e0e0;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #28a745;
+    transition: width 0.3s ease;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+.progress-step {
+    text-align: center;
+    flex: 1;
+}
+
+.step-indicator {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    margin: 0 auto 5px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-step.active .step-indicator {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.step-indicator i {
+    color: #fff;
+}
+
+.progress-step.active .step-indicator i {
+    display: inline-block;
+}
+
+.step-label {
+    font-size: 0.85rem;
+    display: block;
+    color: #999;
+}
+
+.progress-step.active .step-label {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.timestamp {
+    font-size: 0.75rem;
+    display: block;
+    margin-top: 5px;
+    color: #666;
+}
