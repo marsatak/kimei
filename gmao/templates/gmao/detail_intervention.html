@@ -285,7 +285,7 @@
                         <div class="form-group col-md-6">
                             <label for="heure_fin">Heure de fin :</label>
                             <input type="text" class="form-control flatpickr-datetime" id="heure_fin" name="heure_fin"
-                                   value="{{ intervention.top_terminer }}">
+                                   value="{{ intervention.top_terminer|date:'H:i' }}">
                         </div>
                         <div class="form-group">
                             <label for="panne_declaree">Panne déclarée :</label>
@@ -322,9 +322,15 @@
                             <label for="statut_final">Statut final de l'intervention :</label>
                             <select class="form-control" id="statut_final" name="statut_final" required>
                                 <option value="">Choisissez un statut</option>
-                                <option value="TER">Terminé (TER)</option>
-                                <option value="ATP">Attente Pièces (ATP)</option>
-                                <option value="ATD">Attente Devis (ATD)</option>
+                                <option {% if intervention.etat_doleance == "TER" %} selected="selected"{% endif %}
+                                                                                     value="TER">Terminé (TER)
+                                </option>
+                                <option {% if intervention.etat_doleance == "ATP" %} selected="selected"{% endif %}
+                                                                                     value="ATP">Attente Pièces (ATP)
+                                </option>
+                                <option {% if intervention.etat_doleance == "ATD" %} selected="selected"{% endif %}
+                                                                                     value="ATD">Attente Devis (ATD)
+                                </option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary mt-4">

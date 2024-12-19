@@ -274,7 +274,7 @@ $(document).ready(function () {
         flatpickrDate = flatpickr("#date", {
             allowInput: true,
             enableCalendar: true,
-            dateFormat: "d/m/yy",
+            dateFormat: "d/m/Y",
             time_24hr: true,
             onReady: function (selectedDates, dateStr, instance) {
                 //console.log("Flatpickr initialized with:", dateStr);  // Pour le débogage
@@ -298,7 +298,7 @@ $(document).ready(function () {
             noCalendar: true,
             dateFormat: "H:i",
             time_24hr: true,
-            defaultDate: new Date(),  // Utilise la date et l'heure courantes
+            //defaultDate: new Date(),  // Utilise la date et l'heure courantes
             onReady: function (selectedDates, dateStr, instance) {
                 //console.log("Flatpickr initialized with:", dateStr);  // Pour le débogage
             }
@@ -306,9 +306,16 @@ $(document).ready(function () {
         const now = new Date();
         const currentTime = now.getHours().toString().padStart(2, '0') + ':' +
             now.getMinutes().toString().padStart(2, '0');
+        const existingTime = document.getElementById('heure_fin').value;
 
         // Définir l'heure de fin comme l'heure actuelle
-        $('#heure_fin').val(currentTime);
+        if (existingTime) {
+            $('#heure_fin').val(existingTime);
+        } else {
+            $('#heure_fin').val(currentTime)
+        }
+        //$('#heure_fin').val(currentTime);
+        //$('#heure_fin').val();
 
     });
 

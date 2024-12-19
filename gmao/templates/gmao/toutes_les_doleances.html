@@ -20,6 +20,11 @@
 {% block extra_css %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <style>
+        .progress-bar {
+            background-color: #e0e0e0 !important;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -68,20 +73,45 @@
                             <thead>
                             <tr>
                                 <th>NDI</th>
+                                <th>Interventions</th>
                                 <th>Date de transmission</th>
                                 <th>Statut</th>
                                 <th>Station</th>
                                 <th>Élément</th>
                                 <th>Panne déclarée</th>
                                 <th>Date limite</th>
+                                <th>Date début</th>
+                                <th>Date fin</th>
                                 <th>Commentaire</th>
-                                <th>Actions</th>
+                                <!--th>Actions</th!-->
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="vue-interventions" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Liste des interventions</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="intervention-content">
+                    <div class="d-flex align-items-center">
+                        <strong>Loading...</strong>
+                        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
@@ -105,14 +135,17 @@
                 },
                 "columns": [
                     {"data": "ndi"},
+                    {"data": "nombre_interventions"},
                     {"data": "date_transmission"},
                     {"data": "statut"},
                     {"data": "station"},
                     {"data": "element"},
                     {"data": "panne_declarer"},
                     {"data": "date_deadline"},
+                    {"data": "date_debut"},
+                    {"data": "date_fin"},
                     {"data": "commentaire"},
-                    {"data": "actions"}
+                    //{"data": "actions"}
                 ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/French.json"
@@ -136,6 +169,119 @@
                     });
                 }
             });
+
+            $("#vue-interventions").on('hidden.bs.modal', function () {
+                const content = $("#intervention-content");
+                content.empty();
+                const spinner = '<div class="d-flex align-items-center">' +
+                    '<strong>Loading...</strong>' +
+                    '<div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>' +
+                    '</div>';
+                content.append(spinner);
+            });
+
         });
+
+        function fillIntervention(id) {
+            $.ajax({
+                url: 'interventions-doleance/' + id + '/',
+                dataType: 'json',
+                success: function (data) {
+                    const content = $("#intervention-content");
+                    content.empty();
+                    $.each(data, function (index, value) {
+                        $.each(value, function (index, value) {
+                            var departCl, debutCl, finCl;
+                            if (value.depart) {
+                                departCl = 'active';
+                            } else departCl = '';
+                            if (value.debut) {
+                                debutCl = 'active';
+                            } else debutCl = '';
+                            if (value.fin) {
+                                finCl = 'active';
+                            } else finCl = '';
+                            const card = '<div class="card">' +
+                                '<div class="card-header bg-primary text-white"> Intervention ' + (index + 1) + ' - ' + value.statut + '</div>' +
+                                '<div class="card-body">' +
+                                //Progress container
+                                '<div class="progress-container">' +
+                                '<div class="progress-bar"></div>' +
+                                //Progress steps
+                                '<div class="progress-steps">' +
+                                //Progress step1
+                                '<div class="progress-step ' + departCl + '" data-step="1">' +
+                                '<div class="step-indicator">' +
+                                '<i class="fas fa-check"></i>' +
+                                '</div>' +
+                                '<span class="step-label">Départ</span>' +
+                                '<span id="top_depart" class="timestamp">' + value.depart + '</span>' +
+                                '</div>' +
+                                //Progress step 1 Fin
+                                //Progress step2
+                                '<div class="progress-step ' + debutCl + '" data-step="2">' +
+                                '<div class="step-indicator">' +
+                                '<i class="fas fa-check"></i>' +
+                                '</div>' +
+                                '<span class="step-label">Début</span>' +
+                                '<span id="top_debut" class="timestamp">' + value.debut + '</span>' +
+                                '</div>' +
+                                //Progress step 2 Fin
+                                //Progress step3
+                                '<div class="progress-step ' + finCl + '" data-step="2">' +
+                                '<div class="step-indicator">' +
+                                '<i class="fas fa-check"></i>' +
+                                '</div>' +
+                                '<span class="step-label">Fin</span>' +
+                                '<span id="top_debut" class="timestamp">' + value.fin + '</span>' +
+                                '</div>' +
+                                //Progress step 3 Fin
+                                '</div>' +
+                                //Progress steps fin
+                                '</div>' +
+                                //Progress container fin
+                                //Infos plus
+                                '<div class="container">' +
+                                //row
+                                '<div class ="row">' +
+                                '<div class="col">' +
+                                '<p><strong><u>Durée</u> : </strong>' +
+                                '<span>' + Math.floor(value.duree_de_travail / 3600) + ' h ' + Math.floor((value.duree_de_travail % 3600) / 60) + ' mn</span>' +
+                                '</p>' +
+                                '</div>' +
+                                '<div class="col">' +
+                                '<p><strong><u>Statut</u> : </strong>' +
+                                '<span>' + value.statut + '</span>' +
+                                '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                //row fin
+                                //row 2
+                                '<div class ="row">' +
+                                '<p><strong><u>Techniciens</u> : </strong>' +
+                                '<span>' + value.techniciens + '</span>' +
+                                '</p>' +
+                                '</div>' +
+                                //row 2 fin
+                                //row 3
+                                '<div class ="row">' +
+                                '<p><strong><u>Resolution</u> : </strong>' +
+                                '<span>' + value.resolution + '</span>' +
+                                '</p>' +
+                                '</div>' +
+                                //row 3 fin
+                                '</div>' +
+                                //Infos plus fin
+                                '</div>' +
+                                '</div>';
+                            content.append(card);
+                        })
+                    })
+                },
+                error: function () {
+                    alert("Erreur");
+                }
+            })
+        }
     </script>
 {% endblock extra_js %}

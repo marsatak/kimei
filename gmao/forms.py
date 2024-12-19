@@ -239,7 +239,7 @@ class InterventionForm(forms.ModelForm):
 
     class Meta:
         model = Intervention
-        fields = ['doleance', 'top_depart', 'top_debut', 'top_terminer', 'resolution']
+        fields = ['doleance', 'top_depart', 'top_debut', 'top_terminer', 'resolution', 'etat_doleance']
         widgets = {
             'top_depart': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'top_debut': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
