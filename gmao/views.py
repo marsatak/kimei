@@ -962,7 +962,7 @@ def get_available_years():
 
 # ##################### Début Toules les Doléances ######################
 
-
+@login_required
 def toutes_les_doleances(request):
     current_date = timezone.now()
     current_year = current_date.year
@@ -1692,6 +1692,7 @@ def interventions_doleance(request, doleance_id):
     try:
         if doleance_id:
             interventions = Intervention.objects.filter(doleance_id=doleance_id)
+            ndi = Doleance.objects.get(id=doleance_id).ndi
         else:
             interventions = Intervention.objects.none()
 
@@ -1736,7 +1737,7 @@ def interventions_doleance(request, doleance_id):
             }
             data.append(intervention_data)
 
-        return JsonResponse({'data': data})
+        return JsonResponse({'data': data, 'ndi': ndi})
 
     except Exception as e:
         logger.error(f"Erreur dans get_interventions_data: {str(e)}", exc_info=True)
